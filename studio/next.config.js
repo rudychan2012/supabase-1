@@ -17,7 +17,8 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/sign-in',
+        // destination: '/sign-in',
+        destination: '/projects',
         permanent: false,
       },
       {

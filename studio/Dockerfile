@@ -7,6 +7,12 @@
 #    docker builder prune
 
 FROM node:16-slim as base
+
+RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list
+RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
+RUN sed -i "s/security.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
+RUN npm config set registry https://registry.npmmirror.com
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     build-essential \
@@ -14,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 FROM base as builder
 WORKDIR /usr/src/app
-COPY package*.json .
+COPY package*.json ./
 COPY turbo.json .
 COPY packages packages
 COPY studio studio
@@ -42,5 +48,5 @@ RUN npm clean-install \
 FROM node:16-slim as production
 COPY --from=productionprep /app /app
 WORKDIR /app/studio
-EXPOSE 3000
+EXPOSE 3333
 CMD ["npm", "run", "start"]

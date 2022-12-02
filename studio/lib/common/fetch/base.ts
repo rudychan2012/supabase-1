@@ -104,8 +104,10 @@ export async function constructHeaders(requestId: string, optionHeaders?: { [pro
 
   const hasAuthHeader = !isUndefined(optionHeaders) && 'Authorization' in optionHeaders
   if (!hasAuthHeader) {
-    const accessToken = await getAccessToken()
-    if (accessToken) headers.Authorization = `Bearer ${accessToken}`
+    // TODO
+    // const accessToken = await getAccessToken()
+    // if (accessToken) headers.Authorization = `Bearer ${accessToken}`
+    headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjY5NTY0ODAwLAogICAgImV4cCI6IDE4MjczMzEyMDAKfQ.q8_-9rBUl5ouv4RmL5MkV_kqBtKfRN2dRSzYQVQMzIg`
   }
 
   return headers
