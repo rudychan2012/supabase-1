@@ -20,6 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   // Platform specific endpoint
+
   const response = {
     id: 1,
     primary_email: 'johndoe@supabase.io',
@@ -38,14 +39,15 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
             ref: 'default',
             name: process.env.DEFAULT_PROJECT_NAME || 'Default Project',
             organization_id: 1,
-            cloud_provider: 'localhost',
+            cloud_provider: process.env.NODE_ENV === 'development' ? process.env.POSTGRES_HOST : 'localhost',
             status: 'ACTIVE_HEALTHY',
             region: 'local',
             connectionString: IS_PLATFORM
               ? createEncryptedDbConnectionString({
                   db_user_supabase: 'postgres',
                   db_dns_name: undefined,
-                  db_host: 'localhost',
+                  // @ts-ignore
+                  db_host: process.env.NODE_ENV === 'development' ? process.env.POSTGRES_HOST : 'localhost',
                   db_pass_supabase: String(process.env.POSTGRES_PASSWORD),
                   db_port: 5432,
                   db_name: 'postgres',

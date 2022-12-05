@@ -112,7 +112,8 @@ class StorageExplorerStore {
   /* Methods which are commonly used + For better readability */
 
   initializeSupabaseClient = (serviceKey, serviceEndpoint) => {
-    this.supabaseClient = createClient(`https://${serviceEndpoint}`, serviceKey, {
+    const endpoint = process.env.NODE_ENV === 'development' ? `http://${serviceEndpoint}` : `https://${serviceEndpoint}`
+    this.supabaseClient = createClient(endpoint, serviceKey, {
       auth: {
         persistSession: false,
         autoRefreshToken: false,

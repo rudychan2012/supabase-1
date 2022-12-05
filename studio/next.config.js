@@ -17,33 +17,32 @@ const nextConfig = {
     return [
       {
         source: '/',
-        // destination: '/sign-in',
-        destination: '/projects',
+        destination: '/project/default',
         permanent: false,
       },
       {
         source: '/register',
-        destination: '/sign-up',
+        destination: '/project/default',
         permanent: false,
       },
       {
         source: '/signup',
-        destination: '/sign-up',
+        destination: '/project/default',
         permanent: false,
       },
       {
         source: '/signin',
-        destination: '/sign-in',
+        destination: '/project/default',
         permanent: false,
       },
       {
         source: '/login',
-        destination: '/sign-in',
+        destination: '/project/default',
         permanent: false,
       },
       {
         source: '/log-in',
-        destination: '/sign-in',
+        destination: '/project/default',
         permanent: false,
       },
       {
