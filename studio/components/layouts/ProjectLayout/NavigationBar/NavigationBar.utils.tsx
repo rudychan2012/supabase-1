@@ -96,22 +96,22 @@ export const generateProductRoutes = (ref?: string, project?: ProjectBase): Rout
           ? buildingUrl
           : `/project/${ref}/storage/buckets`),
     },
-    ...(IS_PLATFORM
-      ? [
-          {
-            key: 'functions',
-            label: 'Edge Functions',
-            icon: <IconCode size={18} strokeWidth={2} />,
-            link:
-              ref &&
-              (isProjectPaused
-                ? homeUrl
-                : isProjectBuilding
-                ? buildingUrl
-                : `/project/${ref}/functions`),
-          },
-        ]
-      : []),
+    // ...(IS_PLATFORM
+    //   ? [
+    //       {
+    //         key: 'functions',
+    //         label: 'Edge Functions',
+    //         icon: <IconCode size={18} strokeWidth={2} />,
+    //         link:
+    //           ref &&
+    //           (isProjectPaused
+    //             ? homeUrl
+    //             : isProjectBuilding
+    //             ? buildingUrl
+    //             : `/project/${ref}/functions`),
+    //       },
+    //     ]
+    //   : []),
   ]
 }
 
@@ -123,38 +123,38 @@ export const generateOtherRoutes = (ref?: string, project?: ProjectBase): Route[
   const buildingUrl = `/project/${ref}/building`
 
   return [
-    ...(IS_PLATFORM
-      ? [
-          {
-            key: 'reports',
-            label: 'Reports',
-            icon: <IconBarChart size={18} strokeWidth={2} />,
-            link:
-              ref &&
-              (isProjectPaused
-                ? homeUrl
-                : isProjectBuilding
-                ? buildingUrl
-                : `/project/${ref}/reports`),
-          },
-        ]
-      : []),
-    ...(IS_PLATFORM
-      ? [
-          {
-            key: 'logs',
-            label: 'Logs',
-            icon: <IconList size={18} strokeWidth={2} />,
-            link:
-              ref &&
-              (isProjectPaused
-                ? homeUrl
-                : isProjectBuilding
-                ? buildingUrl
-                : `/project/${ref}/logs/explorer`),
-          },
-        ]
-      : []),
+    // ...(IS_PLATFORM
+    //   ? [
+    //       {
+    //         key: 'reports',
+    //         label: 'Reports',
+    //         icon: <IconBarChart size={18} strokeWidth={2} />,
+    //         link:
+    //           ref &&
+    //           (isProjectPaused
+    //             ? homeUrl
+    //             : isProjectBuilding
+    //             ? buildingUrl
+    //             : `/project/${ref}/reports`),
+    //       },
+    //     ]
+    //   : []),
+    // ...(IS_PLATFORM
+    //   ? [
+    //       {
+    //         key: 'logs',
+    //         label: 'Logs',
+    //         icon: <IconList size={18} strokeWidth={2} />,
+    //         link:
+    //           ref &&
+    //           (isProjectPaused
+    //             ? homeUrl
+    //             : isProjectBuilding
+    //             ? buildingUrl
+    //             : `/project/${ref}/logs/explorer`),
+    //       },
+    //     ]
+    //   : []),
     {
       key: 'api',
       label: 'API Docs',

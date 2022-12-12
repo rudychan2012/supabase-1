@@ -26,6 +26,41 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: '/account/:ref',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
+        source: '/join',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
+        source: '/new',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
+        source: '/new/:ref',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
+        source: '/org/:ref',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
+        source: '/support/new',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
+        source: '/vercel/:ref',
+        destination: '/project/default',
+        permanent: true,
+      },
+      {
         source: '/register',
         destination: '/project/default',
         permanent: true,

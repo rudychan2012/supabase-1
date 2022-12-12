@@ -110,9 +110,9 @@ export default class UiStore implements IUiStore {
       this.themeOption = localStorageThemeOption
       return this.setTheme('light')
     }
-    window.localStorage.setItem('theme', 'dark')
-    this.themeOption = 'dark'
-    this.setTheme('dark')
+    window.localStorage.setItem('theme', 'light')
+    this.themeOption = 'light'
+    this.setTheme('light')
   }
 
   setTheme(theme: 'dark' | 'light') {

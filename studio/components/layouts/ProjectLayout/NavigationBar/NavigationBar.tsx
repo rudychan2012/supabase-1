@@ -83,42 +83,43 @@ const NavigationBar: FC<Props> = ({}) => {
           />
         ))}
       </ul>
-      <ul className="flex flex-col space-y-2">
-        <Dropdown
-          side="right"
-          align="start"
-          overlay={
-            <>
-              {IS_PLATFORM && (
-                <>
-                  <Link href="/account/me">
-                    <Dropdown.Item key="header" icon={<IconSettings size={14} strokeWidth={1.5} />}>
-                      Account Preferences
-                    </Dropdown.Item>
-                  </Link>
-                  <Dropdown.Separator />
-                </>
-              )}
-              <Dropdown.Label>Theme</Dropdown.Label>
-              <Dropdown.RadioGroup
-                key="theme"
-                value={ui.themeOption}
-                onChange={(e: any) => ui.onThemeOptionChange(e)}
-              >
-                <Dropdown.Radio value="system">System default</Dropdown.Radio>
-                <Dropdown.Radio value="dark">Dark</Dropdown.Radio>
-                <Dropdown.Radio value="light">Light</Dropdown.Radio>
-              </Dropdown.RadioGroup>
-            </>
-          }
-        >
-          <Button as="span" type="text" size="tiny">
-            <div className="py-1">
-              <IconUser size={18} strokeWidth={2} />
-            </div>
-          </Button>
-        </Dropdown>
-      </ul>
+
+      {/*<ul className="flex flex-col space-y-2">*/}
+      {/*  <Dropdown*/}
+      {/*    side="right"*/}
+      {/*    align="start"*/}
+      {/*    overlay={*/}
+      {/*      <>*/}
+      {/*        {IS_PLATFORM && (*/}
+      {/*          <>*/}
+      {/*            <Link href="/account/me">*/}
+      {/*              <Dropdown.Item key="header" icon={<IconSettings size={14} strokeWidth={1.5} />}>*/}
+      {/*                Account Preferences*/}
+      {/*              </Dropdown.Item>*/}
+      {/*            </Link>*/}
+      {/*            <Dropdown.Separator />*/}
+      {/*          </>*/}
+      {/*        )}*/}
+      {/*        <Dropdown.Label>Theme</Dropdown.Label>*/}
+      {/*        <Dropdown.RadioGroup*/}
+      {/*          key="theme"*/}
+      {/*          value={ui.themeOption}*/}
+      {/*          onChange={(e: any) => ui.onThemeOptionChange(e)}*/}
+      {/*        >*/}
+      {/*          <Dropdown.Radio value="system">System default</Dropdown.Radio>*/}
+      {/*          <Dropdown.Radio value="dark">Dark</Dropdown.Radio>*/}
+      {/*          <Dropdown.Radio value="light">Light</Dropdown.Radio>*/}
+      {/*        </Dropdown.RadioGroup>*/}
+      {/*      </>*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    <Button as="span" type="text" size="tiny">*/}
+      {/*      <div className="py-1">*/}
+      {/*        <IconUser size={18} strokeWidth={2} />*/}
+      {/*      </div>*/}
+      {/*    </Button>*/}
+      {/*  </Dropdown>*/}
+      {/*</ul>*/}
     </div>
   )
 }

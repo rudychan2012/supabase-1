@@ -20,18 +20,18 @@ export const generateSettingsMenu = (ref: string, project?: ProjectBase): Produc
     {
       title: 'Project Settings',
       items: [
-        {
-          name: 'General',
-          key: 'general',
-          url: `/project/${ref}/settings/general`,
-          items: [],
-        },
-        {
-          name: 'Database',
-          key: 'database',
-          url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/database`,
-          items: [],
-        },
+        // {
+        //   name: 'General',
+        //   key: 'general',
+        //   url: `/project/${ref}/settings/general`,
+        //   items: [],
+        // },
+        // {
+        //   name: 'Database',
+        //   key: 'database',
+        //   url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/database`,
+        //   items: [],
+        // },
         {
           name: 'API',
           key: 'api',
@@ -60,34 +60,34 @@ export const generateSettingsMenu = (ref: string, project?: ProjectBase): Produc
           : []),
       ],
     },
-    ...(IS_PLATFORM
-      ? [
-          {
-            title: 'Billing',
-            items: [
-              {
-                name: 'Subscription',
-                key: 'subscription',
-                url: isProjectBuilding
-                  ? buildingUrl
-                  : `/project/${ref}/settings/billing/subscription`,
-                items: [],
-              },
-              {
-                name: 'Usage',
-                key: 'usage',
-                url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/billing/usage`,
-                items: [],
-              },
-              {
-                name: 'Invoices',
-                key: 'invoices',
-                url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/billing/invoices`,
-                items: [],
-              },
-            ],
-          },
-        ]
-      : []),
+    // ...(IS_PLATFORM
+    //   ? [
+    //       {
+    //         title: 'Billing',
+    //         items: [
+    //           {
+    //             name: 'Subscription',
+    //             key: 'subscription',
+    //             url: isProjectBuilding
+    //               ? buildingUrl
+    //               : `/project/${ref}/settings/billing/subscription`,
+    //             items: [],
+    //           },
+    //           {
+    //             name: 'Usage',
+    //             key: 'usage',
+    //             url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/billing/usage`,
+    //             items: [],
+    //           },
+    //           {
+    //             name: 'Invoices',
+    //             key: 'invoices',
+    //             url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/billing/invoices`,
+    //             items: [],
+    //           },
+    //         ],
+    //       },
+    //     ]
+    //   : []),
   ]
 }

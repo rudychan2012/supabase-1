@@ -39,23 +39,23 @@ export const generateDatabaseMenu = (project?: Project): ProductMenuGroup[] => {
           url: `/project/${ref}/database/replication`,
           items: [],
         },
-        ...(showHooksRoute
-          ? [
-              {
-                name: 'Webhooks',
-                key: 'hooks',
-                url: `/project/${ref}/database/hooks`,
-                items: [],
-                isPreview: true,
-              },
-            ]
-          : []),
-        {
-          name: 'Backups',
-          key: 'backups',
-          url: `/project/${ref}/database/backups/scheduled`,
-          items: [],
-        },
+        // ...(showHooksRoute
+        //   ? [
+        //       {
+        //         name: 'Webhooks',
+        //         key: 'hooks',
+        //         url: `/project/${ref}/database/hooks`,
+        //         items: [],
+        //         isPreview: true,
+        //       },
+        //     ]
+        //   : []),
+        // {
+        //   name: 'Backups',
+        //   key: 'backups',
+        //   url: `/project/${ref}/database/backups/scheduled`,
+        //   items: [],
+        // },
       ],
     },
   ]

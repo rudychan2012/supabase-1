@@ -99,7 +99,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                 it completely, or just the features you need.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 md:gap-y-0 xl:grid-cols-4">
+            <div className="grid grid-cols-1 md:grid-cols-1 md:gap-4 md:gap-y-0 xl:grid-cols-3">
               <Panel>
                 <Panel.Content className="flex flex-col space-y-4 md:px-3">
                   <div className="flex items-center space-x-3">
@@ -168,40 +168,41 @@ const NewProjectPanel: FC<Props> = ({}) => {
                 </Panel.Content>
               </Panel>
 
-              <Panel>
-                <Panel.Content className="flex flex-col space-y-4 md:px-3">
-                  <div className="flex items-center space-x-3">
-                    <div className="rounded bg-scale-600 p-1.5 text-scale-1000 shadow-sm">
-                      <IconCode strokeWidth={2} size={16} />
-                    </div>
-                    <h5>Edge Functions</h5>
-                  </div>
-                  <div className="flex md:min-h-[50px] xl:min-h-[75px]">
-                    <p className="text-sm text-scale-1000">
-                      Write custom code without deploying or scaling servers, with fast deploy times
-                      and low latency.
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Link href={`/project/${ref}/functions`}>
-                      <a>
-                        <Button type="default">Explore Functions</Button>
-                      </a>
-                    </Link>
-                    <Link href="https://supabase.com/docs/guides/functions">
-                      <a target="_blank" rel="noreferrer">
-                        <Button
-                          className="translate-y-[1px]"
-                          icon={<IconExternalLink size={14} />}
-                          type="default"
-                        >
-                          About Functions
-                        </Button>
-                      </a>
-                    </Link>
-                  </div>
-                </Panel.Content>
-              </Panel>
+              {/*<Panel>*/}
+              {/*  <Panel.Content className="flex flex-col space-y-4 md:px-3">*/}
+              {/*    <div className="flex items-center space-x-3">*/}
+              {/*      <div className="rounded bg-scale-600 p-1.5 text-scale-1000 shadow-sm">*/}
+              {/*        <IconCode strokeWidth={2} size={16} />*/}
+              {/*      </div>*/}
+              {/*      <h5>Edge Functions</h5>*/}
+              {/*    </div>*/}
+              {/*    <div className="flex md:min-h-[50px] xl:min-h-[75px]">*/}
+              {/*      <p className="text-sm text-scale-1000">*/}
+              {/*        Write custom code without deploying or scaling servers, with fast deploy times*/}
+              {/*        and low latency.*/}
+              {/*      </p>*/}
+              {/*    </div>*/}
+              {/*    <div className="flex items-center space-x-2">*/}
+              {/*      <Link href={`/project/${ref}/functions`}>*/}
+              {/*        <a>*/}
+              {/*          <Button type="default">Explore Functions</Button>*/}
+              {/*        </a>*/}
+              {/*      </Link>*/}
+              {/*      <Link href="https://supabase.com/docs/guides/functions">*/}
+              {/*        <a target="_blank" rel="noreferrer">*/}
+              {/*          <Button*/}
+              {/*            className="translate-y-[1px]"*/}
+              {/*            icon={<IconExternalLink size={14} />}*/}
+              {/*            type="default"*/}
+              {/*          >*/}
+              {/*            About Functions*/}
+              {/*          </Button>*/}
+              {/*        </a>*/}
+              {/*      </Link>*/}
+              {/*    </div>*/}
+              {/*  </Panel.Content>*/}
+              {/*</Panel>*/}
+
               <Panel>
                 <Panel.Content className="flex flex-col space-y-4 md:px-3">
                   <div className="flex items-center space-x-4">
