@@ -18,32 +18,32 @@ const nextConfig = {
       {
         source: '/',
         destination: '/project/default',
-        permanent: false,
+        permanent: true,
+      },
+      {
+        source: '/projects',
+        destination: '/project/default',
+        permanent: true
       },
       {
         source: '/register',
         destination: '/project/default',
-        permanent: false,
+        permanent: true,
       },
       {
         source: '/signup',
         destination: '/project/default',
-        permanent: false,
+        permanent: true,
       },
       {
         source: '/signin',
         destination: '/project/default',
-        permanent: false,
+        permanent: true,
       },
       {
-        source: '/login',
+        source: '/project/_/:ref',
         destination: '/project/default',
-        permanent: false,
-      },
-      {
-        source: '/log-in',
-        destination: '/project/default',
-        permanent: false,
+        permanent: true,
       },
       {
         source: '/project/:ref/auth',
@@ -162,7 +162,8 @@ const sentryWebpackPluginOptions = {
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports =
-  process.env.NEXT_PUBLIC_IS_PLATFORM === 'true'
-    ? withSentryConfig(moduleExports, sentryWebpackPluginOptions)
-    : withPlugins([withTM()], nextConfig)
+// module.exports =
+//   process.env.NEXT_PUBLIC_IS_PLATFORM === 'true'
+//     ? withSentryConfig(moduleExports, sentryWebpackPluginOptions)
+//     : withPlugins([withTM()], nextConfig)
+module.exports = withPlugins([[withBundleAnalyzer({})], withTM()], nextConfig)
