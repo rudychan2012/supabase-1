@@ -21,9 +21,14 @@ const AutoSchemaForm = observer(() => {
   const formId = 'auth-config-general-form'
   const [hidden, setHidden] = useState(true)
 
-  const showMfaSso = useFlag('mfaSso')
-  const canUpdateConfig = checkPermissions(PermissionAction.UPDATE, 'custom_config_gotrue')
+  const enablePermissions = useFlag('enablePermissions')
+  const isOwner = ui.selectedOrganization?.is_owner
 
+  const showMfaSso = useFlag('mfaSso')
+  // const canUpdateConfig = checkPermissions(PermissionAction.UPDATE, 'custom_config_gotrue')
+  const canUpdateConfig = enablePermissions
+      ? checkPermissions(PermissionAction.UPDATE, 'custom_config_gotrue')
+      : isOwner
   const INITIAL_VALUES = {
     DISABLE_SIGNUP: !authConfig.config.DISABLE_SIGNUP,
     SITE_URL: authConfig.config.SITE_URL,
@@ -96,7 +101,7 @@ const AutoSchemaForm = observer(() => {
               description="Configure authentication sessions for your users"
             />
             <FormPanel
-              disabled={true}
+              disabled={!canUpdateConfig}
               footer={
                 <div className="flex py-4 px-8">
                   <FormActions
@@ -104,7 +109,6 @@ const AutoSchemaForm = observer(() => {
                     isSubmitting={isSubmitting}
                     hasChanges={hasChanges}
                     handleReset={handleReset}
-                    disabled={!canUpdateConfig}
                     helper={
                       !canUpdateConfig
                         ? 'You need additional permissions to update authentication settings'

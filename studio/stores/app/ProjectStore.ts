@@ -83,7 +83,7 @@ export default class ProjectStore extends PostgresMetaInterface<Project> {
       const headers = constructHeaders(this.headers)
       const response = await get(url, { headers })
       if (!response.error) {
-        const subscriptionInfo = response as {
+        const subscriptionInfo = response.data as {
           tier: {
             supabase_prod_id: string
           }
