@@ -22,8 +22,6 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
         actions: [
             'analytics:Read',
             'auth:Execute',
-            'billing:Read',
-            'billing:Write',
             'write:Create',
             'write:Delete',
             'functions:Read',
@@ -46,7 +44,7 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
             'tenant:Sql:Write:Update',
             'write:Update',
         ],
-        resources: ['projects', 'reboot', 'tables', 'back_ups', 'custom_config_postgrest', 'custom_config_gotrue', 'triggers', 'functions', 'extensions', 'publications', 'physical_backups', 'auth.users', 'policies', 'user_content', 'logflare', 'service_api_keys', 'queue_job.projects.update_jwt', 'field.jwt_secret'],
+        resources: ['projects', 'reboot', 'tables', 'back_ups', 'custom_config_postgrest', 'custom_config_gotrue', 'triggers', 'functions', 'extensions', 'publications', 'physical_backups', 'auth.users', 'policies', 'user_content', 'logflare', 'service_api_keys', 'field.jwt_secret'],
         condition: null,
         organization_id: 1
     }])

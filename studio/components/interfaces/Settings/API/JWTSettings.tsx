@@ -54,10 +54,11 @@ const JWTSettings: FC<Props> = ({}) => {
     useState<boolean>(false)
 
   const canReadJWTSecret = checkPermissions(PermissionAction.READ, 'field.jwt_secret')
-  const canGenerateNewJWTSecret = checkPermissions(
-    PermissionAction.INFRA_EXECUTE,
-    'queue_job.projects.update_jwt'
-  )
+  // const canGenerateNewJWTSecret = checkPermissions(
+  //   PermissionAction.INFRA_EXECUTE,
+  //   'queue_job.projects.update_jwt'
+  // )
+  const canGenerateNewJWTSecret = false
 
   const {
     changeTrackingId,

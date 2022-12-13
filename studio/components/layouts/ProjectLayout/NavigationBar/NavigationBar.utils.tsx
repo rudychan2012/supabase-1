@@ -169,7 +169,7 @@ export const generateOtherRoutes = (ref?: string, project?: ProjectBase): Route[
             key: 'settings',
             label: 'Project Settings',
             icon: <IconSettings size={18} strokeWidth={2} />,
-            link: ref && `/project/${ref}/settings/general`,
+            link: ref && `/project/${ref}/settings/api`,
           },
         ]
       : []),

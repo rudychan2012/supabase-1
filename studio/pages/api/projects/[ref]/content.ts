@@ -14,6 +14,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return handlePost(req, res)
     case 'PATCH':
       return handlePatch(req, res)
+    case 'DELETE':
+      return handleDelete(req, res)
     default:
       res.setHeader('Allow', ['GET', 'POST', 'PATCH'])
       res.status(405).json({ data: null, error: { message: `Method ${method} Not Allowed` } })
@@ -50,5 +52,9 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
   // Platform specific endpoint
+  return res.status(200).json({})
+}
+
+const handleDelete = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json({})
 }
