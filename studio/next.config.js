@@ -97,7 +97,7 @@ const nextConfig = {
       },
       {
         source: '/project/:ref/settings',
-        destination: '/project/:ref/settings/general',
+        destination: '/project/:ref/settings/api',
         permanent: true,
       },
       {

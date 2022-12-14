@@ -32,44 +32,49 @@ const ProjectDropdown = () => {
   const router = useRouter()
   const sanitizedRoute = sanitizeRoute(router.route, router.query)
 
-  return IS_PLATFORM ? (
-    <Dropdown
-      side="bottom"
-      align="start"
-      overlay={
-        <>
-          {selectedOrganizationProjects
-            .filter((x: any) => x.status !== PROJECT_STATUS.INACTIVE)
-            .sort((a: any, b: any) => a.name.localeCompare(b.name))
-            .map((x: any) => (
-              <Link
-                key={x.ref}
-                href={sanitizedRoute?.replace('[ref]', x.ref) ?? `/project/${x.ref}`}
-                passHref
-              >
-                <a className="block">
-                  <Dropdown.Item>{x.name}</Dropdown.Item>
-                </a>
-              </Link>
-            ))}
-          <Popover.Separator />
-          <Link href={`/new/${selectedOrganizationSlug}`}>
-            <a className="block">
-              <Dropdown.Item icon={<IconPlus size="tiny" />}>New project</Dropdown.Item>
-            </a>
-          </Link>
-        </>
-      }
-    >
-      <Button as="span" type="text" size="tiny" className="my-1">
+  return (
+      <Button as="span" type="text" size="tiny">
         {selectedProject.name}
       </Button>
-    </Dropdown>
-  ) : (
-    <Button as="span" type="text" size="tiny">
-      {selectedProject.name}
-    </Button>
   )
+  // return IS_PLATFORM ? (
+  //   <Dropdown
+  //     side="bottom"
+  //     align="start"
+  //     overlay={
+  //       <>
+  //         {selectedOrganizationProjects
+  //           .filter((x: any) => x.status !== PROJECT_STATUS.INACTIVE)
+  //           .sort((a: any, b: any) => a.name.localeCompare(b.name))
+  //           .map((x: any) => (
+  //             <Link
+  //               key={x.ref}
+  //               href={sanitizedRoute?.replace('[ref]', x.ref) ?? `/project/${x.ref}`}
+  //               passHref
+  //             >
+  //               <a className="block">
+  //                 <Dropdown.Item>{x.name}</Dropdown.Item>
+  //               </a>
+  //             </Link>
+  //           ))}
+  //         <Popover.Separator />
+  //         <Link href={`/new/${selectedOrganizationSlug}`}>
+  //           <a className="block">
+  //             <Dropdown.Item icon={<IconPlus size="tiny" />}>New project</Dropdown.Item>
+  //           </a>
+  //         </Link>
+  //       </>
+  //     }
+  //   >
+  //     <Button as="span" type="text" size="tiny" className="my-1">
+  //       {selectedProject.name}
+  //     </Button>
+  //   </Dropdown>
+  // ) : (
+  //   <Button as="span" type="text" size="tiny">
+  //     {selectedProject.name}
+  //   </Button>
+  // )
 }
 
 export default observer(ProjectDropdown)

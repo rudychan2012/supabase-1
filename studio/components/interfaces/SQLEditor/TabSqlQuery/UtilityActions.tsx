@@ -63,7 +63,7 @@ const UtilityActions: FC<Props> = ({ updateSqlSnippet }) => {
         </Tooltip.Root>
       )}
       <SavingIndicator updateSqlSnippet={updateSqlSnippet} />
-      {IS_PLATFORM && canCreateSQLSnippet && <FavouriteButton />}
+      {/*{IS_PLATFORM && canCreateSQLSnippet && <FavouriteButton />}*/}
       <SizeToggleButton />
       <Button
         onClick={executeQuery}
