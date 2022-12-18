@@ -30,13 +30,13 @@ const SchemaTable: FC<Props> = ({
         head={
           <>
             <Table.th key="name" className="w-1/3 space-x-4">
-              Name
+              名称
             </Table.th>
             <Table.th key="arguments" className="hidden md:table-cell">
-              Arguments
+              参数
             </Table.th>
             <Table.th key="return_type" className="hidden lg:table-cell">
-              Return type
+              返回类型
             </Table.th>
             <Table.th key="buttons" className="w-1/6"></Table.th>
           </>

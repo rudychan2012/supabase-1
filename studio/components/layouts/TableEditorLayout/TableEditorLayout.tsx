@@ -58,7 +58,7 @@ const TableEditorLayout: FC<Props> = ({
   if (!canReadTables) {
     return (
       <ProjectLayout>
-        <NoPermission isFullPage resourceText="view tables from this project" />
+        <NoPermission isFullPage resourceText="查看此项目中的表" />
       </ProjectLayout>
     )
   }
@@ -74,7 +74,7 @@ const TableEditorLayout: FC<Props> = ({
   return (
     <ProjectLayout
       isLoading={!loaded || isUndefined(selectedSchema)}
-      product="Table editor"
+      product="表编辑器"
       productMenu={
         <TableEditorMenu
           selectedSchema={selectedSchema}

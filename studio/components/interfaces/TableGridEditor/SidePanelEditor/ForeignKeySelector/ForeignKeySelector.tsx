@@ -111,14 +111,15 @@ const ForeignKeySelector: FC<Props> = ({
       // @ts-ignore
       header={
         <span>
-          Edit foreign key relation for{' '}
+          为
           <span className="text-code">{get(column, ['name'], '')}</span>
+          编辑外键{' '}
         </span>
       }
       customFooter={
         <ActionBar
-          backButtonLabel="Cancel"
-          applyButtonLabel="Save"
+          backButtonLabel="取消"
+          applyButtonLabel="保存"
           closePanel={closePanel}
           applyFunction={onSaveChanges}
         />
@@ -128,16 +129,14 @@ const ForeignKeySelector: FC<Props> = ({
         <div className="space-y-6">
           <InformationBox
             icon={<IconHelpCircle size="large" strokeWidth={1.5} />}
-            title="What are foreign keys?"
-            description={`Foreign keys help maintain referential integrity of your data by ensuring that no
-                one can insert rows into the table that do not have a matching entry to another
-                table.`}
+            title="什么是外键？"
+            description={`外键通过确保无法向表中插入没有与另一个表相匹配条目的行数据来维护数据的引用完整性。`}
             url="https://www.postgresql.org/docs/current/tutorial-fk.html"
-            urlLabel="Postgres Foreign Key Documentation"
+            urlLabel="Postgres 外键文档"
           />
 
           <Listbox
-            label="Select a table to reference to"
+            label="选择要引用的表"
             value={selectedTable?.id}
             error={errors.table}
             onChange={(value: string) => updateSelectedTable(Number(value))}
@@ -166,7 +165,7 @@ const ForeignKeySelector: FC<Props> = ({
               // @ts-ignore
               label={
                 <div>
-                  Select a column from <code>{selectedForeignKey?.table}</code> to reference to
+                  从 <code>{selectedForeignKey?.table}</code> 中选择一列来关联
                 </div>
               }
               error={errors.column}

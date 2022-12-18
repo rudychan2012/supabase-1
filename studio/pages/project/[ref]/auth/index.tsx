@@ -7,6 +7,6 @@ const Authentication: NextPageWithLayout = () => {
   return <>{/* <h1>Use this as a template for authentication pages</h1> */}</>
 }
 
-Authentication.getLayout = (page) => <AuthLayout title="Authentication">{page}</AuthLayout>
+Authentication.getLayout = (page) => <AuthLayout title="认证">{page}</AuthLayout>
 
 export default observer(Authentication)

@@ -33,7 +33,7 @@ const PolicyRow: FC<Props> = ({
           <p className="text-sm text-scale-1200">{policy.name}</p>
         </div>
         <div className="flex items-center space-x-2">
-          <p className="text-scale-1000 text-sm">Applied to:</p>
+          <p className="text-scale-1000 text-sm">应用到：</p>
           {policy.roles.map((role, i) => (
             <code key={`policy-${role}-${i}`} className="text-scale-1000 text-xs">
               {role}
@@ -53,14 +53,14 @@ const PolicyRow: FC<Props> = ({
                   icon={<IconEdit size={14} />}
                   onClick={() => onSelectEditPolicy(policy)}
                 >
-                  Edit
+                  编辑
                 </Dropdown.Item>
                 <Dropdown.Separator />
                 <Dropdown.Item
                   icon={<IconTrash size={14} />}
                   onClick={() => onSelectDeletePolicy(policy)}
                 >
-                  Delete
+                  删除
                 </Dropdown.Item>
               </>
             }
@@ -91,7 +91,7 @@ const PolicyRow: FC<Props> = ({
                   ].join(' ')}
                 >
                   <span className="text-xs text-scale-1200">
-                    You need additional permissions to edit RLS policies
+                    您需要其他权限才能编辑 RLS 策略
                   </span>
                 </div>
               </Tooltip.Content>

@@ -66,7 +66,7 @@ const PageLayout = ({ children }: PropsWithChildren<{}>) => {
         this.totalUsers = 0
         this.users = []
         this.usersLoading = false
-        console.error(`Fetch user failed: ${response.error.message}`)
+        console.error(`获取用户失败：${response.error.message}`)
       } else {
         this.totalUsers = response.total
         this.users = response.users
@@ -92,14 +92,14 @@ const UsersPage: NextPageWithLayout = () => {
   const canReadUsers = checkPermissions(PermissionAction.TENANT_SQL_SELECT, 'auth.users')
 
   return !canReadUsers ? (
-    <NoPermission isFullPage resourceText="access your project's users" />
+    <NoPermission isFullPage resourceText="访问您项目的用户" />
   ) : (
     <Users />
   )
 }
 
 UsersPage.getLayout = (page) => (
-  <AuthLayout title="Auth">
+  <AuthLayout title="认证">
     <PageLayout>{page}</PageLayout>
   </AuthLayout>
 )

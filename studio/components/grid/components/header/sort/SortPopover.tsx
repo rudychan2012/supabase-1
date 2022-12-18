@@ -11,8 +11,8 @@ const SortPopover: FC = () => {
   const [{ sort: sorts }]: any = useUrlState({ arrayKeys: ['sort'] })
   const btnText =
     (sorts || []).length > 0
-      ? `Sorted by ${sorts.length} rule${sorts.length > 1 ? 's' : ''}`
-      : 'Sort'
+      ? `通过 ${sorts.length} 条规则排序`
+      : '排序'
 
   return (
     <Popover size="large" align="start" className="sb-grid-sort-popover" overlay={<Sort />}>
@@ -65,8 +65,8 @@ const Sort: FC = () => {
       ))}
       {formattedSorts.length === 0 && (
         <div className="space-y-1 px-3">
-          <h5 className="text-sm text-scale-1100">No sorts applied to this view</h5>
-          <p className="text-xs text-scale-900">Add a column below to sort the view</p>
+          <h5 className="text-sm text-scale-1100">没有应用于此表的排序</h5>
+          <p className="text-xs text-scale-900">在下面添加一列以对视图进行排序</p>
         </div>
       )}
 
@@ -89,7 +89,7 @@ const Sort: FC = () => {
             </Button>
           </DropdownControl>
         ) : (
-          <p className="text-sm text-scale-1100">All columns have been added</p>
+          <p className="text-sm text-scale-1100">已添加所有列</p>
         )}
       </div>
     </div>

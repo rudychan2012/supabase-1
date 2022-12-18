@@ -67,17 +67,17 @@ const FunctionList: FC<Props> = ({
                           icon={<IconFileText size="tiny" />}
                           onClick={() => router.push(`/project/${projectRef}/api?rpc=${x.name}`)}
                         >
-                          Client API docs
+                          客户端 API 文档
                         </Dropdown.Item>
                       )}
                       <Dropdown.Item icon={<IconEdit3 size="tiny" />} onClick={() => onEdit(x)}>
-                        Edit function
+                        编辑function
                       </Dropdown.Item>
                       <Dropdown.Item
                         icon={<IconTrash stroke="red" size="tiny" />}
                         onClick={() => onDelete(x)}
                       >
-                        Delete function
+                        删除 function
                       </Dropdown.Item>
                     </>
                   }
@@ -98,7 +98,7 @@ const FunctionList: FC<Props> = ({
                       ].join(' ')}
                     >
                       <span className="text-xs text-scale-1200">
-                        You need additional permissions to update functions
+                        您需要额外的权限才能更新函数
                       </span>
                     </div>
                   </Tooltip.Content>

@@ -38,11 +38,11 @@ const UserListItem: FC<Props> = ({ user, canRemoveUser }) => {
       </Table.td>
       <Table.td className="table-cell">
         {!isUserConfirmed ? (
-          <Badge color="yellow">Waiting for verification..</Badge>
+          <Badge color="yellow">等待认证..</Badge>
         ) : user.last_sign_in_at ? (
           lastSignedIn?.format('DD MMM, YYYY HH:mm')
         ) : (
-          'Never'
+          '从未登录'
         )}
       </Table.td>
       <Table.td className="table-cell">

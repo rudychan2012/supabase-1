@@ -34,7 +34,7 @@ const DateTimeInput: FC<Props> = ({ value, onChange, name, format, description }
         <div className="space-y-1">
           {description}
           {format.includes('tz') && (
-            <p>Your local timezone will be automatically applied ({dayjs().format('ZZ')})</p>
+            <p>您当地的时区将被自动应用({dayjs().format('ZZ')})</p>
           )}
         </div>
       }

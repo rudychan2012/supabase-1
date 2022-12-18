@@ -19,10 +19,10 @@ const PolicyEditorModalTitle: FC<Props> = ({
 }) => {
   const getTitle = () => {
     if (view === POLICY_MODAL_VIEWS.EDITOR || view === POLICY_MODAL_VIEWS.SELECTION) {
-      return `${isNewPolicy ? 'Adding new policy to' : 'Editing policy from'} ${schema}.${table}`
+      return `${isNewPolicy ? '添加新策略到' : '编辑策略'} ${schema}.${table}`
     }
     if (view === POLICY_MODAL_VIEWS.REVIEW) {
-      return `Reviewing policy to be ${isNewPolicy ? 'created' : 'updated'} on ${schema}.${table}`
+      return `将要${isNewPolicy ? '创建' : '更新'}${schema}.${table}中的策略`
     }
   }
   if (view === POLICY_MODAL_VIEWS.TEMPLATES) {
@@ -35,7 +35,7 @@ const PolicyEditorModalTitle: FC<Props> = ({
           >
             <IconChevronLeft strokeWidth={2} size={14} />
           </span>
-          <h4 className="m-0 text-lg">Select a template to use for your new policy</h4>
+          <h4 className="m-0 text-lg">选择用于新策略的模板</h4>
         </div>
       </div>
     )

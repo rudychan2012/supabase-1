@@ -61,7 +61,7 @@ const DefaultHeader: FC<DefaultHeaderProps> = ({ sorts, filters, onAddColumn, on
     if (!onAddColumn) return null
     return (
       <Button type="text" onClick={onAddColumn}>
-        New Column
+        插入列
       </Button>
     )
   }
@@ -70,7 +70,7 @@ const DefaultHeader: FC<DefaultHeaderProps> = ({ sorts, filters, onAddColumn, on
     if (!onAddRow) return null
     return (
       <Button size="tiny" icon={<IconPlus size={14} strokeWidth={2} />} onClick={onAddRow}>
-        Insert row
+        插入行
       </Button>
     )
   }

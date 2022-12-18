@@ -128,7 +128,7 @@ class SqlEditorStore {
       .map((snippet) => toJS(snippet))
 
     // add the welcome tab
-    let tabs = IS_PLATFORM ? [new Tab('Welcome', TAB_TYPES.WELCOME)] : []
+    let tabs = IS_PLATFORM ? [new Tab('欢迎', TAB_TYPES.WELCOME)] : []
 
     // add the tabs to array, but with structure the localStore expects
     snippets.forEach((snippet) => {
@@ -193,7 +193,7 @@ class SqlEditorStore {
 
   loadInitialData() {
     this.tabs = [
-      new Tab('Welcome', TAB_TYPES.WELCOME),
+      new Tab('欢迎', TAB_TYPES.WELCOME),
       // new Tab('scripts', TAB_TYPES.WELCOME),
       // new Tab('quickstarts', TAB_TYPES.WELCOME),
       new QueryTab(this.nextQueryTabName, TAB_TYPES.SQL_QUERY),
@@ -203,7 +203,7 @@ class SqlEditorStore {
 
   // for previous sql editor saved data
   loadLegacyTabs(values) {
-    let tabs = [new Tab('Welcome', TAB_TYPES.WELCOME)]
+    let tabs = [new Tab('欢迎', TAB_TYPES.WELCOME)]
     tabs = tabs.concat(
       values.map((x, index) => {
         const tab = new QueryTab(this.meta, `Query-${index + 1}`, TAB_TYPES.SQL_QUERY)

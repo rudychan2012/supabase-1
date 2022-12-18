@@ -19,7 +19,7 @@ export const AddColumn: CalculatedColumn<any, any> = {
   headerRenderer(props) {
     return (
       <AddColumnHeader
-        aria-label="Add New Row"
+        aria-label="添加新行"
         value={props.allRowsSelected}
         onChange={props.onAllRowsSelectionChange}
       />

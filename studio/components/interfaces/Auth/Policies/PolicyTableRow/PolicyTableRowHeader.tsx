@@ -45,7 +45,7 @@ const PolicyTableRowHeader: FC<Props> = ({
                 className="ml-2"
                 onClick={() => onSelectCreatePolicy(table)}
               >
-                New Policy
+                新建策略
               </Button>
             </Tooltip.Trigger>
             {!canCreatePolicies && (
@@ -58,7 +58,7 @@ const PolicyTableRowHeader: FC<Props> = ({
                   ].join(' ')}
                 >
                   <span className="text-xs text-scale-1200">
-                    You need additional permissions to create RLS policies
+                    需要其他权限才能创建 RLS 策略
                   </span>
                 </div>
               </Tooltip.Content>
@@ -71,7 +71,7 @@ const PolicyTableRowHeader: FC<Props> = ({
                 disabled={!canToggleRLS}
                 onClick={() => onSelectToggleRLS(table)}
               >
-                {table.rls_enabled ? 'Disable RLS' : 'Enable RLS'}
+                {table.rls_enabled ? '停用RLS' : '启用RLS'}
               </Button>
             </Tooltip.Trigger>
             {!canToggleRLS && (
@@ -84,7 +84,7 @@ const PolicyTableRowHeader: FC<Props> = ({
                   ].join(' ')}
                 >
                   <span className="text-xs text-scale-1200">
-                    You need additional permissions to toggle RLS
+                    您需要其他权限才能切换RLS
                   </span>
                 </div>
               </Tooltip.Content>

@@ -18,7 +18,7 @@ const ProjectUsageSection: FC = observer(({}) => {
         hideCollapse
         defaultVisibility
         icon={<IconAlertCircle strokeWidth={2} />}
-        title="There was an issue loading the usage details of your project"
+        title="加载项目的使用详情时出现问题"
       />
     )
   }
@@ -34,7 +34,7 @@ const ProjectUsageSection: FC = observer(({}) => {
       {isLoading ? (
         <div className="flex w-full items-center justify-center space-x-2">
           <IconLoader className="animate-spin" size={14} />
-          <p className="text-sm">Retrieving project usage statistics</p>
+          <p className="text-sm">检索项目使用统计信息</p>
         </div>
       ) : hasProjectData ? (
         <ProjectUsage />

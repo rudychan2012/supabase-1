@@ -154,13 +154,13 @@ const TableEditorPage: NextPage = () => {
       }
       ui.setNotification({
         category: 'success',
-        message: `Successfully deleted ${selectedTableToDelete.name}`,
+        message: `成功删除 ${selectedTableToDelete.name}`,
       })
     } catch (error: any) {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to delete ${selectedTableToDelete?.name}: ${error.message}`,
+        message: `删除 ${selectedTableToDelete?.name}: ${error.message} 失败`,
       })
     } finally {
       setIsDeleting(false)
@@ -196,16 +196,16 @@ const TableEditorPage: NextPage = () => {
       <ConfirmationModal
         danger
         visible={isDeleting && !isUndefined(selectedColumnToDelete)}
-        header={`Confirm deletion of column "${selectedColumnToDelete?.name}"`}
+        header={`确认删除列 "${selectedColumnToDelete?.name}"`}
         children={
           <Modal.Content>
             <p className="py-4 text-sm text-scale-1100">
-              Are you sure you want to delete the selected column? This action cannot be undone.
+              您确定要删除所选列吗？此操作无法撤消。
             </p>
           </Modal.Content>
         }
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        buttonLabel="删除"
+        buttonLoadingLabel="正在删除"
         onSelectCancel={() => setIsDeleting(false)}
         onSelectConfirm={onConfirmDeleteColumn}
       />
@@ -213,17 +213,17 @@ const TableEditorPage: NextPage = () => {
         danger
         visible={isDeleting && !isUndefined(selectedTableToDelete)}
         header={
-          <span className="break-words">{`Confirm deletion of table "${selectedTableToDelete?.name}"`}</span>
+          <span className="break-words">{`确认删除表 "${selectedTableToDelete?.name}"`}</span>
         }
         children={
           <Modal.Content>
             <p className="py-4 text-sm text-scale-1100">
-              Are you sure you want to delete the selected table? This action cannot be undone.
+              您确定要删除所选表格吗？此操作无法撤消。
             </p>
           </Modal.Content>
         }
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        buttonLabel="删除"
+        buttonLoadingLabel="正在删除"
         onSelectCancel={() => setIsDeleting(false)}
         onSelectConfirm={onConfirmDeleteTable}
       />

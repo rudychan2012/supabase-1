@@ -163,8 +163,8 @@ const TableEditor: FC<Props> = ({
       onConfirm={() => (resolve: () => void) => onSaveChanges(resolve)}
       customFooter={
         <ActionBar
-          backButtonLabel="Cancel"
-          applyButtonLabel="Save"
+          backButtonLabel="取消"
+          applyButtonLabel="保存"
           closePanel={closePanel}
           applyFunction={(resolve: () => void) => onSaveChanges(resolve)}
         />
@@ -180,7 +180,7 @@ const TableEditor: FC<Props> = ({
         <SidePanel.Content>
           <div className="space-y-10 py-6">
             <Input
-              label="Name"
+              label="名称"
               layout="horizontal"
               type="text"
               error={errors.name}
@@ -188,8 +188,8 @@ const TableEditor: FC<Props> = ({
               onChange={(event: any) => onUpdateField({ name: event.target.value })}
             />
             <Input
-              label="Description"
-              placeholder="Optional"
+              label="描述"
+              placeholder="可选的"
               layout="horizontal"
               type="text"
               value={tableFields?.comment ?? ''}
@@ -205,17 +205,16 @@ const TableEditor: FC<Props> = ({
               // @ts-ignore
               label={
                 <div className="flex items-center space-x-2">
-                  <span>Enable Row Level Security (RLS)</span>
-                  <Badge color="gray">Recommended</Badge>
+                  <span>启用行级安全 (RLS)</span>
+                  <Badge color="gray">推荐</Badge>
                 </div>
               }
               // @ts-ignore
               description={
                 <>
-                  Restrict access to your table by enabling RLS and writing Postgres policies.
+                  通过启用 RLS 和编写 Postgres 策略来限制对您的表的访问。
                   <br />
-                  If RLS is not enabled, anyone with the anon key can modify and delete your data.
-                </>
+                  如果未启用 RLS，任何拥有anon key的人都可以修改和删除您的数据。                </>
               }
               checked={tableFields.isRLSEnabled}
               onChange={() => onUpdateField({ isRLSEnabled: !tableFields.isRLSEnabled })}
@@ -223,8 +222,8 @@ const TableEditor: FC<Props> = ({
             />
             <Checkbox
               id="enable-realtime"
-              label="Enable Realtime"
-              description="Broadcast changes on this table to authorized subscribers"
+              label="启用 Realtime"
+              description="向授权订阅者广播此表的更改。"
               checked={tableFields.isRealtimeEnabled}
               onChange={() => onUpdateField({ isRealtimeEnabled: !tableFields.isRealtimeEnabled })}
               size="medium"

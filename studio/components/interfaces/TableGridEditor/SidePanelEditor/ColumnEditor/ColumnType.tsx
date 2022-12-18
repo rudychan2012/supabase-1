@@ -36,14 +36,14 @@ const ColumnType: FC<Props> = ({
       <Input
         readOnly
         disabled
-        label={showLabel ? 'Type' : ''}
+        label={showLabel ? '类型' : ''}
         layout={showLabel ? 'horizontal' : undefined}
         className="md:gap-x-0"
         size="small"
         value={value}
         descriptionText={
           showLabel
-            ? 'Custom non-native psql data types cannot currently be changed to a different data type via Supabase Studio'
+            ? '当前无法通过 Supabase Studio 将自定义非本地 psql 数据类型更改为不同的数据类型'
             : ''
         }
       />
@@ -73,7 +73,7 @@ const ColumnType: FC<Props> = ({
 
   return (
     <Listbox
-      label={showLabel ? 'Type' : ''}
+      label={showLabel ? '类型' : ''}
       layout={showLabel ? 'horizontal' : 'vertical'}
       value={value}
       size={size}
@@ -97,7 +97,7 @@ const ColumnType: FC<Props> = ({
         */}
       {enumTypes.length > 0 ? (
         <Listbox.Option disabled key="header-1" value="header-1" label="header-1">
-          User-defined Enumerated Types
+          用户定义的 Enumerated 类型
         </Listbox.Option>
       ) : (
         <></>
@@ -124,7 +124,7 @@ const ColumnType: FC<Props> = ({
       )}
 
       <Listbox.Option disabled value="header-2" label="header-2">
-        PostgreSQL Data Types
+        PostgreSQL数据类型
       </Listbox.Option>
 
       {POSTGRES_DATA_TYPE_OPTIONS.map((option: PostgresDataTypeOption) => (

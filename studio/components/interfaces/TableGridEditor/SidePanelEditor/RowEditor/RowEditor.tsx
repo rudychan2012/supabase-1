@@ -81,7 +81,7 @@ const RowEditor: FC<Props> = ({
     if (!row.value) {
       ui.setNotification({
         category: 'error',
-        message: `Please enter a value in the ${row.name} field first`,
+        message: `请现在 ${row.name} 中输入一个值`,
         duration: 4000,
       })
     }
@@ -108,7 +108,7 @@ const RowEditor: FC<Props> = ({
         setReferenceRow({ loading: false, foreignKey, row: undefined })
         return ui.setNotification({
           category: 'error',
-          message: `Unable to find the corresponding row in ${foreignKey.target_table_schema}.${foreignKey.target_table_name} where ${foreignKey.target_column_name} equals ${row.value}`,
+          message: `当 ${foreignKey.target_column_name} 等于 ${row.value}时，无法在 ${foreignKey.target_table_schema}.${foreignKey.target_table_name} 中找到相应的行`,
           duration: 4000,
         })
       }
@@ -188,9 +188,9 @@ const RowEditor: FC<Props> = ({
                 <SidePanel.Content>
                   <div className="space-y-10 py-6">
                     <div>
-                      <h3 className="text-base text-scale-1200">Optional Fields</h3>
+                      <h3 className="text-base text-scale-1200">可选字段</h3>
                       <p className="text-sm text-scale-900">
-                        These are columns that do not need any value
+                        这些是不需要任何值的列
                       </p>
                     </div>
                     {optionalFields.map((field: RowField) => {
@@ -233,8 +233,8 @@ const RowEditor: FC<Props> = ({
           <div className="flex-shrink">
             <ActionBar
               loading={loading}
-              backButtonLabel="Cancel"
-              applyButtonLabel="Save"
+              backButtonLabel="取消"
+              applyButtonLabel="保存"
               closePanel={closePanel}
             />
           </div>

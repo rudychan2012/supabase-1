@@ -29,7 +29,7 @@ const TriggersList: FC<any> = ({
     return (
       <div className="flex h-full w-full items-center justify-center space-x-2">
         <IconLoader className="animate-spin" size={14} />
-        <p className="text-sm text-scale-1000">Loading triggers...</p>
+        <p className="text-sm text-scale-1000">加载触发器...</p>
       </div>
     )
   }
@@ -37,7 +37,7 @@ const TriggersList: FC<any> = ({
   if (meta.triggers.hasError) {
     return (
       <div className="px-6 py-4 text-scale-1000">
-        <p>Error connecting to API</p>
+        <p>连接到 API 时出错</p>
         <p>{`${meta.triggers.error?.message ?? 'Unknown error'}`}</p>
       </div>
     )
@@ -48,18 +48,16 @@ const TriggersList: FC<any> = ({
       {triggers.length == 0 ? (
         <div className="flex h-full w-full items-center justify-center">
           <ProductEmptyState
-            title="Triggers"
-            ctaButtonLabel="Create a new trigger"
+            title="触发器"
+            ctaButtonLabel="创建新触发器"
             onClickCta={() => createTrigger()}
           >
             <AlphaPreview />
             <p className="text-sm text-scale-1100">
-              A PostgreSQL trigger is a function invoked automatically whenever an event associated
-              with a table occurs.
+              PostgreSQL 触发器是每当与表关联的事件发生时自动调用的函数。
             </p>
             <p className="text-sm text-scale-1100">
-              An event could be any of the following: INSERT, UPDATE, DELETE. A trigger is a special
-              user-defined function associated with a table.
+              事件可以是以下任何一种：INSERT、UPDATE、DELETE。触发器是与表关联的特殊的用户定义函数。
             </p>
           </ProductEmptyState>
         </div>
@@ -67,7 +65,7 @@ const TriggersList: FC<any> = ({
         <div className="w-full space-y-4 py-4">
           <div className="flex items-center justify-between px-6">
             <Input
-              placeholder="Filter by name"
+              placeholder="按名称过滤"
               size="small"
               icon={<IconSearch size="tiny" />}
               value={filterString}
@@ -76,7 +74,7 @@ const TriggersList: FC<any> = ({
             <Tooltip.Root delayDuration={0}>
               <Tooltip.Trigger>
                 <Button disabled={!canCreateTriggers} onClick={() => createTrigger()}>
-                  Create a new trigger
+                  创建新触发器
                 </Button>
               </Tooltip.Trigger>
               {!canCreateTriggers && (
@@ -89,7 +87,7 @@ const TriggersList: FC<any> = ({
                     ].join(' ')}
                   >
                     <span className="text-xs text-scale-1200">
-                      You need additional permissions to create triggers
+                      您需要额外的权限才能创建触发器
                     </span>
                   </div>
                 </Tooltip.Content>
@@ -98,9 +96,9 @@ const TriggersList: FC<any> = ({
           </div>
           {filteredTriggers.length <= 0 && (
             <div className="mx-auto flex max-w-lg items-center justify-center space-x-3 rounded border p-6 shadow-md dark:border-dark">
-              <p>No results match your filter query</p>
+              <p>没有结果符合您的筛选查询</p>
               <Button type="outline" onClick={() => setFilterString('')}>
-                Reset filter
+                重置过滤器
               </Button>
             </div>
           )}

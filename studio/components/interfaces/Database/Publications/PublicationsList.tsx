@@ -36,7 +36,7 @@ const PublicationsList: FC<Props> = ({ onSelectPublication = () => {} }) => {
   const toggleListenEvent = async (publication: any, event: any, currentStatus: any) => {
     const startStop = currentStatus ? 'stop' : 'start'
     confirmAlert({
-      title: 'Confirm',
+      title: '确认',
       message: `Are you sure you want to ${startStop} sending ${event} events for ${publication.name}?`,
       onAsyncConfirm: async () => {
         try {
@@ -67,7 +67,7 @@ const PublicationsList: FC<Props> = ({ onSelectPublication = () => {} }) => {
             <Input
               size="small"
               icon={<IconSearch size="tiny" />}
-              placeholder={'Filter'}
+              placeholder={'过滤'}
               value={filterString}
               onChange={(e) => setFilterString(e.target.value)}
             />
@@ -76,7 +76,7 @@ const PublicationsList: FC<Props> = ({ onSelectPublication = () => {} }) => {
             <div className="w-[500px]">
               <InformationBox
                 icon={<IconAlertCircle className="text-scale-1100" strokeWidth={2} />}
-                title="You need additional permissions to update database replications"
+                title="您需要额外的权限才能更新数据库复制"
               />
             </div>
           )}
@@ -88,21 +88,21 @@ const PublicationsList: FC<Props> = ({ onSelectPublication = () => {} }) => {
         <div className="overflow-hidden rounded">
           <Table
             head={[
-              <Table.th key="header.name">Name</Table.th>,
+              <Table.th key="header.name">名称</Table.th>,
               <Table.th key="header.id" className="hidden lg:table-cell">
-                System ID
+                系统 ID
               </Table.th>,
               <Table.th key="header.insert" className="text-center">
-                Insert
+                插入
               </Table.th>,
               <Table.th key="header.update" className="text-center">
-                Update
+                更新
               </Table.th>,
               <Table.th key="header.delete" className="text-center">
-                Delete
+                删除
               </Table.th>,
               <Table.th key="header.truncate" className="text-center">
-                Truncate
+                截断
               </Table.th>,
               <Table.th key="header.source" className="text-right">
                 Source
@@ -138,10 +138,8 @@ const PublicationsList: FC<Props> = ({ onSelectPublication = () => {} }) => {
                       onClick={() => onSelectPublication(x.id)}
                     >
                       {x.tables == null
-                        ? 'All tables'
-                        : `${x.tables.length} ${
-                            x.tables.length > 1 || x.tables.length == 0 ? 'tables' : 'table'
-                          }`}
+                        ? '所有表'
+                        : `${x.tables.length} 张表`}
                     </Button>
                   </div>
                 </Table.td>

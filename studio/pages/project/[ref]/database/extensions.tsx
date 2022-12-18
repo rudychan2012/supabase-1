@@ -10,7 +10,7 @@ import NoPermission from 'components/ui/NoPermission'
 const DatabaseExtensions: NextPageWithLayout = () => {
   const canReadExtensions = checkPermissions(PermissionAction.TENANT_SQL_ADMIN_READ, 'extensions')
   if (!canReadExtensions) {
-    return <NoPermission isFullPage resourceText="view database extensions" />
+    return <NoPermission isFullPage resourceText="查看数据库扩展" />
   }
 
   return <Extensions />

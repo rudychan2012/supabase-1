@@ -31,7 +31,7 @@ const RolesSettings: FC<Props> = ({ selectedRole, onSelectBack = () => {} }) => 
               inline-flex items-center border-b-2 border-green-500 p-1 text-sm font-medium text-typography-body-strong-light focus:outline-none dark:text-typography-body-strong-dark "
               aria-current="page"
             >
-              <span>Permissions</span>
+              <span>权限</span>
             </a>
           </nav>
         </div>
@@ -39,29 +39,29 @@ const RolesSettings: FC<Props> = ({ selectedRole, onSelectBack = () => {} }) => 
 
       <Panel>
         <Panel.Content className="flex w-full items-center justify-between">
-          <p className="text-sm">Super user</p>
+          <p className="text-sm">超级用户</p>
           <code className="text-sm">{selectedRole.is_superuser ? 'true' : 'false'}</code>
         </Panel.Content>
         <Divider light />
         <Panel.Content className="flex w-full items-center justify-between">
-          <p className="text-sm">User can login</p>
+          <p className="text-sm">用户可以登录</p>
           <code className="text-sm">{selectedRole.can_login ? 'true' : 'false'}</code>
         </Panel.Content>
         <Divider light />
         <Panel.Content className="flex w-full items-center justify-between">
-          <p className="text-sm">User can create databases</p>
+          <p className="text-sm">用户可以创建数据库</p>
           <code className="text-sm">{selectedRole.can_create_db ? 'true' : 'false'}</code>
         </Panel.Content>
         <Divider light />
         <Panel.Content className="flex w-full items-center justify-between">
           <p className="text-sm">
-            User can initiate streaming replication and put the system in and out of backup mode
+            用户可以开启 streaming replication 并可以使系统进入和退出备份模式
           </p>
           <code className="text-sm">{selectedRole.is_replication_role ? 'true' : 'false'}</code>
         </Panel.Content>
         <Divider light />
         <Panel.Content className="flex w-full items-center justify-between">
-          <p className="text-sm">User bypasses every row level security policy</p>
+          <p className="text-sm">用户绕过所有的行级安全策略</p>
           <code className="text-sm">{selectedRole.can_bypass_rls ? 'true' : 'false'}</code>
         </Panel.Content>
       </Panel>

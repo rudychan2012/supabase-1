@@ -62,7 +62,7 @@ const AuthPoliciesPage: NextPageWithLayout = () => {
   const canReadPolicies = checkPermissions(PermissionAction.TENANT_SQL_ADMIN_READ, 'policies')
 
   if (!canReadPolicies) {
-    return <NoPermission isFullPage resourceText="view this project's RLS policies" />
+    return <NoPermission isFullPage resourceText="查看应用的RLS策略" />
   }
 
   return (
@@ -72,7 +72,7 @@ const AuthPoliciesPage: NextPageWithLayout = () => {
           <div className="flex items-center justify-between">
             <Input
               size="small"
-              placeholder="Filter tables and policies"
+              placeholder="过滤表和策略"
               className="block w-64 text-sm placeholder-gray-400"
               value={policiesFilter}
               onChange={(e) => setPoliciesFilter(e.target.value)}
@@ -83,7 +83,7 @@ const AuthPoliciesPage: NextPageWithLayout = () => {
                 target="_blank"
                 href="https://supabase.com/docs/learn/auth-deep-dive/auth-row-level-security"
               >
-                What is RLS?
+                什么是RLS?
               </a>
             </Button>
           </div>
@@ -146,7 +146,7 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
   }
 
   const onSavePolicySuccess = async () => {
-    ui.setNotification({ category: 'success', message: 'Policy successfully saved!' })
+    ui.setNotification({ category: 'success', message: '策略保存成功!' })
     closePolicyEditorModal()
   }
 
@@ -161,7 +161,7 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
     if (res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to toggle RLS: ${res.error.message}`,
+        message: `起停RLS失败: ${res.error.message}`,
       })
     }
     closeConfirmModal()
@@ -172,7 +172,7 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
     if (res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Error adding policy: ${res.error.message}`,
+        message: `添加策略失败: ${res.error.message}`,
       })
       return true
     }
@@ -184,7 +184,7 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
     if (res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Error updating policy: ${res.error.message}`,
+        message: `更新策略失败: ${res.error.message}`,
       })
       return true
     }
@@ -196,10 +196,10 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
     if (typeof res !== 'boolean' && res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Error deleting policy: ${res.error.message}`,
+        message: `删除策略失败: ${res.error.message}`,
       })
     } else {
-      ui.setNotification({ category: 'success', message: 'Successfully deleted policy!' })
+      ui.setNotification({ category: 'success', message: '删除策略成功!' })
     }
     closeConfirmModal()
   }
@@ -224,32 +224,29 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
         <div className="flex-grow">
           <ProductEmptyState
             size="large"
-            title="Postgres Policies"
-            ctaButtonLabel="Create a table"
-            infoButtonLabel="What is RLS?"
+            title="Postgres策略"
+            ctaButtonLabel="创建表"
+            infoButtonLabel="什么是RLS?"
             infoButtonUrl="https://supabase.com/docs/guides/auth/row-level-security"
             onClickCta={() => router.push(`/project/${ref}/editor`)}
           >
             <div className="space-y-4">
               <InformationBox
-                title="What are policies?"
+                title="什么是策略？"
                 icon={<IconHelpCircle strokeWidth={2} />}
                 description={
                   <div className="space-y-2">
                     <p className="text-sm">
-                      Policies restrict, on a per-user basis, which rows can be returned by normal
-                      queries, or inserted, updated, or deleted by data modification commands.
+                      策略基于每个用户限制哪些行可以通过正常查询返回，或者通过修改命令插入、更新或删除。
                     </p>
                     <p className="text-sm">
-                      This is also known as Row-Level Security (RLS). Each policy is attached to a
-                      table, and the policy is executed everytime a time is accessed.
+                      这也称为行级安全性 (RLS)。每个策略附属在一张表上，每次访问该表时都会执行该策略。
                     </p>
                   </div>
                 }
               />
               <p className="text-sm text-scale-1100">
-                A table within the public schema is required before you can create a Row-Level
-                Security policy.
+                在创建行级安全策略之前，需要在public schema中建表.
               </p>
             </div>
           </ProductEmptyState>
@@ -273,10 +270,10 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
       <ConfirmModal
         danger
         visible={!isEmpty(selectedPolicyToDelete)}
-        title="Confirm to delete policy"
-        description={`This is permanent! Are you sure you want to delete the policy "${selectedPolicyToDelete.name}"`}
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        title="确认删除策略"
+        description={`这是永久性的！您确定要删除策略"${selectedPolicyToDelete.name}"吗？`}
+        buttonLabel="删除"
+        buttonLoadingLabel="正在删除"
         onSelectCancel={closeConfirmModal}
         onSelectConfirm={onDeletePolicy}
       />
@@ -284,12 +281,12 @@ const AuthPoliciesTables: FC<AuthPoliciesTablesProps> = observer(({ tables, hasP
       <ConfirmModal
         danger={selectedTableToToggleRLS.rls_enabled}
         visible={!isEmpty(selectedTableToToggleRLS)}
-        title={`Confirm to ${selectedTableToToggleRLS.rls_enabled ? 'disable' : 'enable'} RLS`}
-        description={`Are you sure you want to ${
-          selectedTableToToggleRLS.rls_enabled ? 'disable' : 'enable'
-        } row level security for the table "${selectedTableToToggleRLS.name}"?`}
-        buttonLabel="Confirm"
-        buttonLoadingLabel="Saving"
+        title={`确认${selectedTableToToggleRLS.rls_enabled ? '停用' : '启用'} RLS`}
+        description={`你确定要${
+          selectedTableToToggleRLS.rls_enabled ? '停用' : '启用'
+        }"${selectedTableToToggleRLS.name}"表的行级安全性?`}
+        buttonLabel="确认"
+        buttonLoadingLabel="保存中"
         onSelectCancel={closeConfirmModal}
         onSelectConfirm={onToggleRLS}
       />

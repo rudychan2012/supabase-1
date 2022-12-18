@@ -42,8 +42,8 @@ const InputField: FC<Props> = ({
               field.defaultValue === null
                 ? ''
                 : typeof field.defaultValue === 'string' && field.defaultValue.length === 0
-                ? 'Default: Empty string'
-                : `Default: ${field.defaultValue}`
+                ? '默认值：空字符串'
+                : `默认值: ${field.defaultValue}`
             }
             onChange={(event: any) => onUpdateField({ [field.name]: event.target.value })}
           />
@@ -106,7 +106,7 @@ const InputField: FC<Props> = ({
             onClick={onViewForeignKey}
             icon={<IconLink />}
           >
-            View data
+            查看数据
           </Button>
         }
       />
@@ -130,8 +130,8 @@ const InputField: FC<Props> = ({
             field.defaultValue === null
               ? ''
               : typeof field.defaultValue === 'string' && field.defaultValue.length === 0
-              ? 'Default: Empty string'
-              : `Default: ${field.defaultValue}`
+              ? '默认值：空字符串'
+              : `默认值：${field.defaultValue}`
           }
           onChange={(event: any) => onUpdateField({ [field.name]: event.target.value })}
         />
@@ -158,7 +158,7 @@ const InputField: FC<Props> = ({
             onClick={() => onEditJson({ column: field.name, jsonString: field.value })}
             icon={<IconEdit2 />}
           >
-            Edit JSON
+            编辑 JSON
           </Button>
         }
       />
@@ -192,9 +192,9 @@ const InputField: FC<Props> = ({
       value={field.value ?? ''}
       placeholder={
         field.isIdentity
-          ? 'Automatically generated as identity'
+          ? '自动生成身份标识'
           : field.defaultValue !== null
-          ? `Default: ${field.defaultValue}`
+          ? `默认值: ${field.defaultValue}`
           : ''
       }
       disabled={!isEditable}

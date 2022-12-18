@@ -143,8 +143,8 @@ class CreateFunctionStore implements ICreateFunctionStore {
 
   get title() {
     return this.formState.id
-      ? `Edit '${this.formState.originalName}' function`
-      : 'Add a new function'
+      ? `编辑 '${this.formState.originalName}' 函数`
+      : '添加新函数'
   }
 
   get isEditing() {
@@ -231,7 +231,7 @@ class CreateFunctionStore implements ICreateFunctionStore {
         case 'name': {
           if (isEmpty(x.value) || hasWhitespace(x.value)) {
             isValidated = false
-            return { ...x, error: 'Invalid function name' }
+            return { ...x, error: '函数名称无效' }
           } else {
             return x
           }
@@ -240,7 +240,7 @@ class CreateFunctionStore implements ICreateFunctionStore {
           const temp = x.value?.map((i: Dictionary<any>) => {
             if (isEmpty(i.name) || hasWhitespace(i.name)) {
               isValidated = false
-              return { ...i, error: 'Invalid argument name' }
+              return { ...i, error: '参数名称无效' }
             } else {
               return i
             }
@@ -253,11 +253,11 @@ class CreateFunctionStore implements ICreateFunctionStore {
             const error: any = { name: undefined, value: undefined }
             if (isEmpty(i.name) || hasWhitespace(i.name)) {
               isValidated = false
-              error.name = 'Invalid config name'
+              error.name = '无效的配置名称'
             }
             if (isEmpty(i.value)) {
               isValidated = false
-              error.value = 'Missing config value'
+              error.value = '缺少配置值'
             }
             return { ...i, error }
           })
@@ -322,8 +322,8 @@ const CreateFunction: FC<CreateFunctionProps> = ({ func, visible, setVisible }) 
         if (response.error) {
           ui.setNotification({
             category: 'error',
-            message: `Failed to create function: ${
-              response.error?.message ?? 'Submit request failed'
+            message: `创建函数失败：${
+              response.error?.message ?? '提交请求失败'
             }`,
           })
           _localState.setLoading(false)
@@ -341,7 +341,7 @@ const CreateFunction: FC<CreateFunctionProps> = ({ func, visible, setVisible }) 
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to create function: ${error.message}`,
+        message: `创建函数失败： ${error.message}`,
       })
       _localState.setLoading(false)
     }
@@ -408,9 +408,9 @@ const CreateFunction: FC<CreateFunctionProps> = ({ func, visible, setVisible }) 
                       <div className={`px-6`}>
                         <Toggle
                           onChange={() => _localState.toggleAdvancedVisible()}
-                          label="Show advanced settings"
+                          label="显示高级设置"
                           checked={_localState.advancedVisible}
-                          labelOptional="These are settings that might be familiar for postgres heavy users "
+                          labelOptional="这些是 postgres 资深用户可能熟悉的设置"
                         />
                       </div>
                       {/* advanced selections */}
@@ -469,9 +469,9 @@ const InputName: FC = observer(({}) => {
   return (
     <Input
       id="name"
-      label="Name of function"
+      label="函数名称"
       layout="horizontal"
-      placeholder="Name of function"
+      placeholder="函数名称"
       value={_localState!.formState.name.value}
       onChange={(e) =>
         _localState!.onFormChange({
@@ -481,7 +481,7 @@ const InputName: FC = observer(({}) => {
       }
       size="small"
       error={_localState!.formState.name.error}
-      descriptionText="Name will also be used for the function name in postgres"
+      descriptionText="名称也将用于 postgres 中的函数名称"
     />
   )
 })
@@ -504,14 +504,14 @@ const InputMultiArguments: FC<InputMultiArgumentsProps> = observer(({ readonly }
   return (
     <div>
       <div className="flex flex-col">
-        <h5 className="text-base text-scale-1200">Arguments</h5>
+        <h5 className="text-base text-scale-1200">参数</h5>
         <p className="text-sm text-scale-1100">
-          Arguments can be referenced in the function body using either names or numbers.
+          参数可以在函数体中以名称或索引被引用。
         </p>
       </div>
       <div className="space-y-2 pt-4">
         {readonly && isEmpty(_localState!.formState.args.value) && (
-          <span className="text-scale-900">No argument for this function</span>
+          <span className="text-scale-900">此函数没有参数</span>
         )}
         {_localState!.formState.args.value.map(
           (x: { name: string; type: string; error?: string }, idx: number) => (
@@ -528,7 +528,7 @@ const InputMultiArguments: FC<InputMultiArgumentsProps> = observer(({ readonly }
         {!readonly && (
           <div className="">
             <Button type="default" icon={<IconPlus />} onClick={onAddArgument} disabled={readonly}>
-              Add a new argument
+              添加一个新参数
             </Button>
           </div>
         )}
@@ -581,7 +581,7 @@ const InputArgument: FC<InputArgumentProps> = observer(({ idx, name, type, error
         id={`name-${idx}`}
         className="flex-1 flex-grow"
         value={name}
-        placeholder="Name of argument"
+        placeholder="参数名称"
         onChange={onNameChange}
         size="small"
         error={error}
@@ -651,7 +651,7 @@ const InputMultiConfigParams: FC = observer(({}) => {
       </div>
       <div className="pt-2">
         <Button type="default" icon={<IconPlus />} onClick={onAddArgument}>
-          Add a new config
+          添加新配置
         </Button>
       </div>
     </div>
@@ -700,7 +700,7 @@ const InputConfigParam: FC<InputConfigParamProps> = observer(({ idx, name, value
       <Input
         id={`name-${idx}`}
         className="flex-1"
-        placeholder="Name of config"
+        placeholder="配置名称"
         value={name}
         onChange={onNameChange}
         size="small"
@@ -709,7 +709,7 @@ const InputConfigParam: FC<InputConfigParamProps> = observer(({ idx, name, value
       <Input
         id={`value-${idx}`}
         className="flex-1"
-        placeholder="Value of config"
+        placeholder="配置值"
         value={value}
         onChange={onValueChange}
         size="small"
@@ -733,12 +733,12 @@ const InputDefinition: FC = observer(({}) => {
   return (
     <div className="space-y-4">
       <div className="flex flex-col">
-        <h5 className="text-base text-scale-1200">Definition</h5>
+        <h5 className="text-base text-scale-1200">定义</h5>
         <p className="text-sm text-scale-1100">
-          The language below should be written in `{_localState!.formState.language.value}`.
+          下面的编程语言应该写成 `{_localState!.formState.language.value}`.
         </p>
         <p className="text-sm text-scale-1100">
-          Change the language in the Advanced Settings below.
+          在下面的高级设置中更改编程语言。
         </p>
       </div>
       <div className="h-40 border dark:border-dark">
@@ -772,9 +772,9 @@ const SelectSchema: FC = observer(({}) => {
           value: e.target.value,
         })
       }
-      placeholder="Pick a schema"
+      placeholder="选择一个schema"
       size="small"
-      descriptionText="Tables made in the table editor will be in 'public'"
+      descriptionText="在表编辑器中创建的表会属于 'public'"
     >
       {_localState!.schemas.map((x) => (
         <Select.Option key={x.name} value={x.name}>
@@ -798,7 +798,7 @@ const SelectLanguage: FC = observer(({}) => {
     <div className="space-y-4">
       <Select
         id="language"
-        label="Language"
+        label="编程语言"
         layout="horizontal"
         value={_localState!.formState.language.value}
         onChange={(e) =>
@@ -807,7 +807,7 @@ const SelectLanguage: FC = observer(({}) => {
             value: e.target.value,
           })
         }
-        placeholder="Pick a language"
+        placeholder="选择一个language"
         size="small"
       >
         <Select.Option value="sql">sql</Select.Option>
@@ -835,7 +835,7 @@ const SelectReturnType: FC = observer(({}) => {
     <div className="space-y-4">
       <Select
         id="returnType"
-        label="Return type"
+        label="返回类型"
         layout="horizontal"
         value={_localState!.formState.returnType.value}
         onChange={(e) =>
@@ -894,7 +894,7 @@ const RadioSecurity: FC = observer(({}) => {
       <div className="space-y-4">
         <Radio.Group
           type="cards"
-          label="Type of security"
+          label="安全类型"
           layout="vertical"
           onChange={(event) => {
             _localState!.onFormChange({
@@ -912,14 +912,14 @@ const RadioSecurity: FC = observer(({}) => {
             label="SECURITY INVOKER"
             value="SECURITY_INVOKER"
             checked={!_localState!.formState.securityDefiner.value}
-            description="Function is to be executed with the privileges of the user that calls it."
+            description="函数将以调用它的用户的权限执行。"
           />
           <Radio
             id="SECURITY_DEFINER"
             label="SECURITY DEFINER"
             value="SECURITY_DEFINER"
             checked={_localState!.formState.securityDefiner.value}
-            description="Function is to be executed with the privileges of the user that created it."
+            description="函数将以创建它的用户的权限执行。"
           />
         </Radio.Group>
       </div>

@@ -5,25 +5,25 @@ const defaultTimeBasedExpressions: Suggestion[] = [
   {
     name: 'now()',
     value: 'now()',
-    description: 'Returns the current date and time',
+    description: '返回当前日期和时间',
   },
   {
     name: "(now() at time zone 'utc')",
     value: "(now() at time zone 'utc')",
-    description: 'Returns the current date and time based on the specified timezone',
+    description: '根据指定时区返回当前日期和时间',
   },
 ]
 
 const defaultTextBasedValues: Suggestion[] = [
   {
-    name: 'Set as NULL',
+    name: '设置为 NULL',
     value: null,
-    description: 'Set the default value as NULL value',
+    description: '将默认值设置为 NULL 值',
   },
   {
-    name: 'Set as empty string',
+    name: '设置为空字符串',
     value: '',
-    description: 'Set the default value as an empty string',
+    description: '将默认值设置为空字符串',
   },
 ]
 
@@ -34,7 +34,7 @@ export const typeExpressionSuggestions: Dictionary<Suggestion[]> = {
     {
       name: 'uuid_generate_v4()',
       value: 'uuid_generate_v4()',
-      description: 'Generates a version 4 UUID',
+      description: '生成版本 4 UUID',
     },
   ],
   time: [...defaultTimeBasedExpressions],

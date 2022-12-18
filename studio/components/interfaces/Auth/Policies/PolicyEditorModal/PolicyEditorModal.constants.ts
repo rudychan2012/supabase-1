@@ -19,7 +19,7 @@ export const getGeneralPolicyTemplates = (schema: string, table: string): Policy
     id: 'policy-1',
     templateName: 'Enable read access to everyone',
     description:
-      'This policy gives read access to your table for all users via the SELECT operation.',
+      '此策略通过 SELECT 操作为所有用户提供对表的读取访问权限。',
     statement: `
 CREATE POLICY "policy_name"
 ON ${schema}.${table}
@@ -35,7 +35,7 @@ FOR SELECT USING (
   {
     id: 'policy-2',
     templateName: 'Enable insert access for authenticated users only',
-    description: 'This policy gives insert access to your table for all authenticated users only.',
+    description: '此策略仅向所有经过身份验证的用户授予对表的插入访问权限。',
     statement: `
 CREATE POLICY "policy_name"
 ON ${schema}.${table}
@@ -52,7 +52,7 @@ WITH CHECK (true);`.trim(),
     id: 'policy-3',
     templateName: 'Enable update access for users based on their email *',
     description:
-      'This policy assumes that your table has a column "email", and allows users to update rows which the "email" column matches their email.',
+      '此策略假定您的表具有“邮箱”列，并允许用户更新“邮箱”列与其邮箱匹配的行。',
     statement: `
 CREATE POLICY "policy_name"
 ON ${schema}.${table}
@@ -71,7 +71,7 @@ FOR UPDATE USING (
     id: 'policy-4',
     templateName: 'Enable delete access for users based on their user ID *',
     description:
-      'This policy assumes that your table has a column "user_id", and allows users to delete rows which the "user_id" column matches their ID',
+      '此策略假定您的表具有“user_id”列，并允许用户删除“user_id”列与其 ID 匹配的行',
     statement: `
 CREATE POLICY "policy_name"
 ON ${schema}.${table}

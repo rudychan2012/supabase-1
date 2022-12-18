@@ -56,7 +56,7 @@ const UtilityActions: FC<Props> = ({ updateSqlSnippet }) => {
               ].join(' ')}
             >
               <span className="text-xs text-scale-1200">
-                Queries are not saved as you do not have sufficient permissions
+                由于您没有足够的权限，因此不会保存查询语句
               </span>
             </div>
           </Tooltip.Content>
@@ -74,7 +74,7 @@ const UtilityActions: FC<Props> = ({ updateSqlSnippet }) => {
         shadow={false}
         className="mx-2"
       >
-        RUN
+        运行
       </Button>
     </>
   )

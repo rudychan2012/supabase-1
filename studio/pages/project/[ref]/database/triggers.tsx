@@ -45,7 +45,7 @@ const TriggersPage: NextPageWithLayout = () => {
   }
 
   if (!canReadTriggers) {
-    return <NoPermission isFullPage resourceText="view database triggers" />
+    return <NoPermission isFullPage resourceText="查看数据库触发器" />
   }
 
   return (
@@ -71,6 +71,6 @@ const TriggersPage: NextPageWithLayout = () => {
   )
 }
 
-TriggersPage.getLayout = (page) => <DatabaseLayout title="Database">{page}</DatabaseLayout>
+TriggersPage.getLayout = (page) => <DatabaseLayout title="数据库">{page}</DatabaseLayout>
 
 export default observer(TriggersPage)

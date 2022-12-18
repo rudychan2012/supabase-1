@@ -63,7 +63,7 @@ const Users = () => {
             onKeyDown={onFilterKeyPress}
             name="email"
             id="email"
-            placeholder="Search by email"
+            placeholder="通过邮件搜索"
             icon={<IconSearch size="tiny" />}
             actions={[
               PageState.filterInputValue && (
@@ -83,14 +83,14 @@ const Users = () => {
             name="verified"
             id="verified"
           >
-            <Listbox.Option label="All Users" value="">
-              All Users
+            <Listbox.Option label="全部用户" value="">
+              全部用户
             </Listbox.Option>
-            <Listbox.Option label="Verified Users" value="verified">
-              Verified Users
+            <Listbox.Option label="认证用户" value="verified">
+              认证用户
             </Listbox.Option>
-            <Listbox.Option label="Un-Verified Users" value="unverified">
-              Un-Verified Users
+            <Listbox.Option label="未认证用户" value="unverified">
+              未认证用户
             </Listbox.Option>
           </Listbox>
         </div>
@@ -103,7 +103,7 @@ const Users = () => {
             loading={PageState.usersLoading}
             onClick={refreshUsers}
           >
-            Reload
+            重新加载
           </Button>
           {inviteEnabled && <InviteUserModal />}
         </div>

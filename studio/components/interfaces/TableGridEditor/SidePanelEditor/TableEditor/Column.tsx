@@ -71,7 +71,7 @@ const Column: FC<Props> = ({
             size="small"
             title={column.name}
             disabled={hasImportContent}
-            placeholder="Column name"
+            placeholder="列名"
             className={`table-editor-columns-input bg-white dark:bg-transparent lg:gap-0 ${
               hasImportContent ? 'opacity-50' : ''
             } rounded-md`}
@@ -108,7 +108,7 @@ const Column: FC<Props> = ({
           <InputWithSuggestions
             placeholder={
               typeof column.defaultValue === 'string' && column.defaultValue.length === 0
-                ? 'Empty string'
+                ? '空字符串'
                 : 'NULL'
             }
             size="small"
@@ -118,8 +118,8 @@ const Column: FC<Props> = ({
               column.format.includes('int') && column.isIdentity ? 'opacity-50' : ''
             }`}
             suggestions={suggestions}
-            suggestionsHeader="Suggested expressions"
-            suggestionsTooltip="Suggested expressions"
+            suggestionsHeader="建议的表达式"
+            suggestionsTooltip="建议的表达式"
             onChange={(event: any) => onUpdateColumn({ defaultValue: event.target.value })}
             onSelectSuggestion={(suggestion: Suggestion) =>
               onUpdateColumn({ defaultValue: suggestion.value })
@@ -143,7 +143,7 @@ const Column: FC<Props> = ({
               className="pointer-events-auto"
               header={
                 <div className="flex items-center justify-center">
-                  <h5 className="text-sm text-scale-1200">Extra options</h5>
+                  <h5 className="text-sm text-scale-1200">额外选项</h5>
                 </div>
               }
               overlay={[
@@ -151,8 +151,8 @@ const Column: FC<Props> = ({
                   {!column.isPrimaryKey && (
                     <>
                       <Checkbox
-                        label="Is Nullable"
-                        description="Specify if the column can assume a NULL value if no value is provided"
+                        label="可以为空"
+                        description="如果未提供值，指定该列是否可以采用 NULL 值"
                         checked={column.isNullable}
                         className="p-4"
                         onChange={() => onUpdateColumn({ isNullable: !column.isNullable })}
@@ -164,8 +164,8 @@ const Column: FC<Props> = ({
                   {isNewRecord && (
                     <>
                       <Checkbox
-                        label="Is Unique"
-                        description="Enforce if values in the column should be unique across rows"
+                        label="是唯一的"
+                        description="限制列中的值是行级唯一的"
                         checked={column.isUnique}
                         className="p-4"
                         onChange={() => onUpdateColumn({ isUnique: !column.isUnique })}
@@ -176,8 +176,8 @@ const Column: FC<Props> = ({
                   {column.format.includes('int') && (
                     <>
                       <Checkbox
-                        label="Is Identity"
-                        description="Automatically assign a sequential unique number to the column"
+                        label="是唯一的"
+                        description="自动为列分配一个连续的唯一编号"
                         checked={column.isIdentity}
                         className="p-4"
                         onChange={() => {
@@ -192,8 +192,8 @@ const Column: FC<Props> = ({
 
                   {!column.isPrimaryKey && (
                     <Checkbox
-                      label="Define as Array"
-                      description="Define your column as a variable-length multidimensional array"
+                      label="定义为数组"
+                      description="将您的列定义为可变长度的多维数组"
                       checked={column.isArray}
                       className="p-4"
                       onChange={() => {

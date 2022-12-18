@@ -12,9 +12,9 @@ const PolicyName: FC<Props> = ({ name = '', limit = 100, onUpdatePolicyName }) =
     <div className="flex space-x-12">
       <div className="flex w-1/3 flex-col space-y-2">
         <label className="text-base text-scale-1100" htmlFor="policy-name">
-          Policy name
+          策略名称
         </label>
-        <p className="text-sm text-scale-900">A descriptive name for your policy</p>
+        <p className="text-sm text-scale-900">给你的策略一个描述性的名称</p>
       </div>
       <div className="relative w-2/3">
         <Input

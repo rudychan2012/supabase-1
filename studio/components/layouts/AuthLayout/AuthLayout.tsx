@@ -48,8 +48,8 @@ const AuthLayout: FC<Props> = ({ title, children }) => {
   return (
     <BaseLayout
       isLoading={!loaded}
-      title={title || 'Authentication'}
-      product="Authentication"
+      title={title || '认证'}
+      product="认证"
       productMenu={<ProductMenu page={page} menu={generateAuthMenu(projectRef)} />}
     >
       <main style={{ maxHeight: '100vh' }} className="flex-1 overflow-y-auto">

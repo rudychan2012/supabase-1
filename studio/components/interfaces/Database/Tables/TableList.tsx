@@ -89,7 +89,7 @@ const TableList: FC<Props> = ({
                 value="protected-schemas"
                 label="Protected schemas"
               >
-                <p className="text-sm">Protected schemas</p>
+                <p className="text-sm">受保护的 schemas</p>
               </Listbox.Option>
               {protectedSchemas.map((schema) => (
                 <Listbox.Option
@@ -106,7 +106,7 @@ const TableList: FC<Props> = ({
           <div>
             <Input
               size="small"
-              placeholder="Filter tables"
+              placeholder="过滤表"
               value={filterString}
               onChange={(e: any) => setFilterString(e.target.value)}
               icon={<IconSearch size="tiny" />}
@@ -116,7 +116,7 @@ const TableList: FC<Props> = ({
         {!isLocked && (
           <div>
             <Button icon={<IconPlus />} onClick={() => onAddTable()}>
-              New table
+              新建表
             </Button>
           </div>
         )}
@@ -127,15 +127,15 @@ const TableList: FC<Props> = ({
         <div className="my-4 w-full">
           <Table
             head={[
-              <Table.th key="name">Name</Table.th>,
+              <Table.th key="name">名称</Table.th>,
               <Table.th key="description" className="hidden lg:table-cell">
-                Description
+                说明
               </Table.th>,
               <Table.th key="rows" className="hidden xl:table-cell">
-                Rows (Estimated)
+                行数（估计）
               </Table.th>,
               <Table.th key="size" className="hidden xl:table-cell">
-                Size (Estimated)
+                Size（估计）
               </Table.th>,
               <Table.th key="buttons"></Table.th>,
             ]}
@@ -148,7 +148,7 @@ const TableList: FC<Props> = ({
                   {x.comment !== null ? (
                     <p title={x.comment}>{x.comment}</p>
                   ) : (
-                    <p className="text-scale-800">No description</p>
+                    <p className="text-scale-800">没有说明</p>
                   )}
                 </Table.td>
                 <Table.td className="hidden xl:table-cell">
@@ -166,7 +166,7 @@ const TableList: FC<Props> = ({
                       style={{ paddingTop: 3, paddingBottom: 3 }}
                       onClick={() => onOpenTable(x)}
                     >
-                      {x.columns.length} columns
+                      {x.columns.length} 列
                     </Button>
                     <Button
                       type="text"

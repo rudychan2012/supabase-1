@@ -38,9 +38,9 @@ const TextConfirmModal: FC<Props> = ({
   const validate = (values: any) => {
     const errors: any = {}
     if (values.confirmValue.length === 0) {
-      errors.confirmValue = 'Enter the required value.'
+      errors.confirmValue = '输入所需的值。'
     } else if (values.confirmValue !== confirmString) {
-      errors.confirmValue = 'Value entered does not match.'
+      errors.confirmValue = '输入的值不匹配。'
     }
     return errors
   }
@@ -78,7 +78,7 @@ const TextConfirmModal: FC<Props> = ({
                   id="confirmValue"
                   label={
                     <span>
-                      Type <span className="text-scale-1200">{confirmString}</span> to confirm.
+                      输入 <span className="text-scale-1200">{confirmString}</span> 以确认。
                     </span>
                   }
                   placeholder={confirmPlaceholder}

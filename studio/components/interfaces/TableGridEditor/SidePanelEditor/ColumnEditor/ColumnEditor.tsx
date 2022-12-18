@@ -146,8 +146,8 @@ const ColumnEditor: FC<Props> = ({
       onCancel={closePanel}
       customFooter={
         <ActionBar
-          backButtonLabel="Cancel"
-          applyButtonLabel="Save"
+          backButtonLabel="取消"
+          applyButtonLabel="保存"
           closePanel={closePanel}
           applyFunction={(resolve: () => void) => onSaveChanges(resolve)}
         />
@@ -162,7 +162,7 @@ const ColumnEditor: FC<Props> = ({
       <SidePanel.Content>
         <div className="space-y-10 py-6">
           <Input
-            label="Name"
+            label="名称"
             layout="horizontal"
             type="text"
             error={errors.name}
@@ -170,8 +170,8 @@ const ColumnEditor: FC<Props> = ({
             onChange={(event: any) => onUpdateField({ name: event.target.value })}
           />
           <Input
-            label="Description"
-            placeholder="Optional"
+            label="描述"
+            placeholder="可选的"
             layout="horizontal"
             type="text"
             value={columnFields?.comment ?? ''}
@@ -180,8 +180,8 @@ const ColumnEditor: FC<Props> = ({
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-12 md:col-span-8 md:col-start-5">
               <Checkbox
-                label="Is Primary Key"
-                description="A primary key indicates that a column or group of columns can be used as a unique identifier for rows in the table."
+                label="是主键"
+                description="主键是可以用作表中一行数据唯一标识符的一列或一组列。"
                 checked={columnFields?.isPrimaryKey ?? false}
                 onChange={() => onUpdateField({ isPrimaryKey: !columnFields?.isPrimaryKey })}
               />
@@ -220,7 +220,7 @@ const ColumnEditor: FC<Props> = ({
                     className="text-scale-1000 hover:text-scale-1200"
                     icon={<IconExternalLink size={14} strokeWidth={2} />}
                   >
-                    Learn more about data types
+                    了解有关数据类型的更多信息
                   </Button>
                 </a>
               </Link>
@@ -234,7 +234,7 @@ const ColumnEditor: FC<Props> = ({
                 <div className="col-span-12 md:col-span-8 md:col-start-5">
                   <Checkbox
                     label="Is Identity"
-                    description="Automatically assign a sequential unique number to the column"
+                    description="自动为列分配一个连续的唯一编号"
                     checked={columnFields.isIdentity}
                     onChange={() => {
                       const isIdentity = !columnFields.isIdentity
@@ -247,8 +247,8 @@ const ColumnEditor: FC<Props> = ({
               {!columnFields.isPrimaryKey && (
                 <div className="col-span-12 md:col-span-8 md:col-start-5">
                   <Checkbox
-                    label="Define as Array"
-                    description="Allow column to be defined as variable-length multidimensional arrays"
+                    label="定义为数组"
+                    description="允许将列定义为可变长度的多维数组"
                     checked={columnFields.isArray}
                     onChange={() => {
                       const isArray = !columnFields.isArray
@@ -270,16 +270,16 @@ const ColumnEditor: FC<Props> = ({
               <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-12 md:col-span-8 md:col-start-5">
                   <Checkbox
-                    label="Allow Nullable"
-                    description="Allow the column to assume a NULL value if no value is provided"
+                    label="允许可为空"
+                    description="如果未提供值，则允许该列采用 NULL 值"
                     checked={columnFields.isNullable}
                     onChange={() => onUpdateField({ isNullable: !columnFields.isNullable })}
                   />
                 </div>
                 <div className="col-span-12 md:col-span-8 md:col-start-5">
                   <Checkbox
-                    label="Is Unique"
-                    description="Enforce values in the column to be unique across rows"
+                    label="是唯一的"
+                    description="强制列中的值跨行唯一"
                     checked={columnFields.isUnique}
                     onChange={() => onUpdateField({ isUnique: !columnFields.isUnique })}
                   />

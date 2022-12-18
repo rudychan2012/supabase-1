@@ -20,10 +20,9 @@ const NewProjectPanel: FC<Props> = ({}) => {
         <div className="flex flex-col space-y-20">
           <div className="flex h-full flex-col justify-between">
             <div className="space-y-2">
-              <h3 className="text-xl text-scale-1200">Welcome to your new project</h3>
+              <h3 className="text-xl text-scale-1200">欢迎来到您的新应用</h3>
               <p className="text-base text-scale-1100">
-                Your project has been deployed on its own instance, with its own API all set up and
-                ready to use.
+                您的应用已完成初始化，对应的API都已设置好并可以使用。
               </p>
             </div>
           </div>
@@ -32,12 +31,10 @@ const NewProjectPanel: FC<Props> = ({}) => {
             <div className="col-span-12 flex flex-col justify-center space-y-8 lg:col-span-7">
               <div className="space-y-2">
                 <h3 className="text-xl text-scale-1200">
-                  Get started by building out your database
+                  从构建数据库开始
                 </h3>
                 <p className="text-base text-scale-1100">
-                  Start building your app by creating tables and inserting data. Our table editor
-                  makes Postgres as easy to use as a spreadsheet, but there's also our SQL editor if
-                  you need something more.
+                  通过创建表格和插入数据开始构建您的应用程序。我们的表编辑器使 Postgres 像电子表格一样易于使用，但如果您需要更多东西，还可以使用我们的 SQL 编辑器。
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
@@ -55,7 +52,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                         />
                       }
                     >
-                      Table editor
+                      表编辑器
                     </Button>
                   </a>
                 </Link>
@@ -73,14 +70,14 @@ const NewProjectPanel: FC<Props> = ({}) => {
                         />
                       }
                     >
-                      SQL editor
+                      SQL 编辑器
                     </Button>
                   </a>
                 </Link>
                 <Link href="https://supabase.com/docs/guides/database">
                   <a target="_blank" rel="noreferrer">
                     <Button type="default" icon={<IconExternalLink size={14} />}>
-                      About Database
+                      关于数据库
                     </Button>
                   </a>
                 </Link>
@@ -93,10 +90,9 @@ const NewProjectPanel: FC<Props> = ({}) => {
 
           <div className="flex h-full flex-col justify-between space-y-6">
             <div className="max-w-2xl space-y-2">
-              <h3 className="text-xl text-scale-1200">Explore our other products</h3>
+              <h3 className="text-xl text-scale-1200">探索我们的其他产品</h3>
               <p className="text-base text-scale-1100">
-                Supabase provides all the backend features you need to build a product. You can use
-                it completely, or just the features you need.
+                Supabase 提供构建产品所需的所有后端功能。您可以完全使用它，也可以只使用您需要的功能。
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-1 md:gap-4 md:gap-y-0 xl:grid-cols-3">
@@ -106,17 +102,17 @@ const NewProjectPanel: FC<Props> = ({}) => {
                     <div className="rounded bg-scale-600 p-1.5 text-scale-1000 shadow-sm">
                       <IconKey strokeWidth={2} size={16} />
                     </div>
-                    <h5>Authentication</h5>
+                    <h5>认证</h5>
                   </div>
                   <div className="flex flex-grow md:min-h-[50px] xl:min-h-[75px]">
                     <p className="text-sm text-scale-1000">
-                      A complete user management system that works without any additional tools.
+                      一个完整的用户管理系统，无需任何额外工具即可运行。
                     </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Link href={`/project/${ref}/auth/users`}>
                       <a>
-                        <Button type="default">Explore Auth</Button>
+                        <Button type="default">探索认证</Button>
                       </a>
                     </Link>
                     <Link href="https://supabase.com/docs/guides/auth">
@@ -126,7 +122,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                           icon={<IconExternalLink size={14} />}
                           type="default"
                         >
-                          About Auth
+                          关于认证
                         </Button>
                       </a>
                     </Link>
@@ -140,17 +136,17 @@ const NewProjectPanel: FC<Props> = ({}) => {
                     <div className="rounded bg-scale-600 p-1.5 text-scale-1000 shadow-sm">
                       <IconArchive strokeWidth={2} size={16} />
                     </div>
-                    <h5>Storage</h5>
+                    <h5>贮存</h5>
                   </div>
                   <div className="flex md:min-h-[50px] xl:min-h-[75px]">
                     <p className="text-sm text-scale-1000">
-                      Store, organize, and serve any file types of any size from multiple buckets.
+                      为多存储桶，任意大小和任意类型的文件提供存储和管理服务。
                     </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Link href={`/project/${ref}/storage/buckets`}>
                       <a>
-                        <Button type="default">Explore Storage</Button>
+                        <Button type="default">探索存储</Button>
                       </a>
                     </Link>
                     <Link href="https://supabase.com/docs/guides/storage">
@@ -160,7 +156,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                           icon={<IconExternalLink size={14} />}
                           type="default"
                         >
-                          About Storage
+                          关于存储
                         </Button>
                       </a>
                     </Link>
@@ -213,7 +209,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                   </div>
                   <div className="flex md:min-h-[50px] xl:min-h-[75px]">
                     <p className="text-sm text-scale-1000">
-                      Listen to your to PostgreSQL database in realtime via websockets.
+                      通过 websockets 监听您使用了realtime的 PostgreSQL 数据库。
                     </p>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -224,7 +220,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                           icon={<IconExternalLink size={14} />}
                           type="default"
                         >
-                          About Realtime
+                          关于 Realtime
                         </Button>
                       </a>
                     </Link>
@@ -239,29 +235,28 @@ const NewProjectPanel: FC<Props> = ({}) => {
       <div className="col-span-12 lg:col-span-4">
         <div className="space-y-6">
           <div className="space-y-2">
-            <h3 className="text-xl text-scale-1200">Connecting to your new project</h3>
+            <h3 className="text-xl text-scale-1200">连接到您的新应用</h3>
             <p className="text-base text-scale-1100 lg:max-w-sm">
-              Interact with your database through the{' '}
+              使用您的 API 密钥，通过{' '}
               <Link href="https://supabase.com/docs/reference">
-                <a className="text-brand-900">Supabase client libraries</a>
+                <a className="text-brand-900">Supabase 客户端库</a>
               </Link>{' '}
-              with your API keys.
+              与您的数据库交互。
             </p>
             <p className="text-base text-scale-1100 lg:max-w-sm">
-              More information about your project's keys can be found in your project's API
-              settings.
+              可以在项目的 API 设置中找到有关应用密钥的更多信息。
             </p>
           </div>
           <div className="flex items-center space-x-2">
             <Link href={`/project/${ref}/settings/api`}>
               <a>
-                <Button type="default">View API settings</Button>
+                <Button type="default">查看API设置</Button>
               </a>
             </Link>
             <Link href="https://supabase.com/docs/guides/api">
               <a target="_blank" rel="noreferrer">
                 <Button className="translate-y-[1px]" type="default" icon={<IconExternalLink />}>
-                  About APIs
+                  关于API
                 </Button>
               </a>
             </Link>

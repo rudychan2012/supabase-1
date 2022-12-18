@@ -73,7 +73,7 @@ const PublicationsTables: FC<Props> = ({ selectedPublication, onSelectBack }) =>
             <div>
               <Input
                 size="small"
-                placeholder={'Filter'}
+                placeholder={'过滤'}
                 value={filterString}
                 onChange={(e) => setFilterString(e.target.value)}
                 icon={<IconSearch size="tiny" />}
@@ -96,10 +96,10 @@ const PublicationsTables: FC<Props> = ({ selectedPublication, onSelectBack }) =>
         <div>
           <Table
             head={[
-              <Table.th key="header-name">Name</Table.th>,
+              <Table.th key="header-name">名称</Table.th>,
               <Table.th key="header-schema">Schema</Table.th>,
               <Table.th key="header-desc" className="hidden text-left lg:table-cell">
-                Description
+                描述
               </Table.th>,
               <Table.th key="header-all">
                 {/* Temporarily disable All tables toggle for publications. See https://github.com/supabase/supabase/pull/7233.

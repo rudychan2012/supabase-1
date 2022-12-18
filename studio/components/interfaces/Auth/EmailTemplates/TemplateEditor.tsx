@@ -127,7 +127,7 @@ const TemplateEditor: FC<Props> = ({ template }) => {
                       </FormSectionLabel>
                       <InformationBox
                         defaultVisibility
-                        title="Message variables"
+                        title="消息变量"
                         hideCollapse={false}
                         description={
                           messageProperty.description && (

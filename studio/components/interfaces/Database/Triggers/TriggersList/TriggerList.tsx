@@ -64,13 +64,13 @@ const TriggerList: FC<Props> = ({ filterString, schema, editTrigger, deleteTrigg
                   overlay={
                     <>
                       <Dropdown.Item icon={<IconEdit3 size="tiny" />} onClick={() => onEdit(x)}>
-                        Edit trigger
+                        编辑触发器
                       </Dropdown.Item>
                       <Dropdown.Item
                         icon={<IconTrash stroke="red" size="tiny" />}
                         onClick={() => onDelete(x)}
                       >
-                        Delete trigger
+                        删除触发器
                       </Dropdown.Item>
                     </>
                   }
@@ -91,7 +91,7 @@ const TriggerList: FC<Props> = ({ filterString, schema, editTrigger, deleteTrigg
                       ].join(' ')}
                     >
                       <span className="text-xs text-scale-1200">
-                        You need additional permissions to update triggers
+                        您需要额外的权限才能更新触发器
                       </span>
                     </div>
                   </Tooltip.Content>

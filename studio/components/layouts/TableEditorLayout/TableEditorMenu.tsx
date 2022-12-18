@@ -108,7 +108,7 @@ const TableEditorMenu: FC<Props> = ({
         {!meta.schemas.isInitialized ? (
           <div className="flex h-[26px] items-center space-x-3 rounded border border-gray-500 px-3">
             <IconLoader className="animate-spin" size={12} />
-            <span className="text-xs text-scale-900">Loading schemas...</span>
+            <span className="text-xs text-scale-900">加载 schemas...</span>
           </div>
         ) : (
           <Listbox
@@ -141,7 +141,7 @@ const TableEditorMenu: FC<Props> = ({
               value="protected-schemas"
               label="Protected schemas"
             >
-              <p className="text-xs text-scale-1100">Protected schemas</p>
+              <p className="text-xs text-scale-1100">受保护 schemas</p>
             </Listbox.Option>
             {protectedSchemas.map((schema) => (
               <Listbox.Option
@@ -177,7 +177,7 @@ const TableEditorMenu: FC<Props> = ({
                   style={{ justifyContent: 'start' }}
                   onClick={onAddTable}
                 >
-                  New table
+                  新建表
                 </Button>
               </Tooltip.Trigger>
               {!canCreateTables && (
@@ -190,7 +190,7 @@ const TableEditorMenu: FC<Props> = ({
                     ].join(' ')}
                   >
                     <span className="text-xs text-scale-1200">
-                      You need additional permissions to create tables
+                      您需要额外的权限才能创建表
                     </span>
                   </div>
                 </Tooltip.Content>
@@ -203,7 +203,7 @@ const TableEditorMenu: FC<Props> = ({
           <Input
             className="table-editor-search border-none"
             icon={<IconSearch className="text-scale-900" size={12} strokeWidth={1.5} />}
-            placeholder="Search tables"
+            placeholder="搜索表"
             onChange={(e) => setSearchText(e.target.value)}
             value={searchText}
             size="tiny"
@@ -226,7 +226,7 @@ const TableEditorMenu: FC<Props> = ({
             title={
               <>
                 <div className="flex w-full items-center justify-between">
-                  <span>All tables</span>
+                  <span>所有表</span>
                   <button className="cursor-pointer" onClick={refreshTables}>
                     <IconRefreshCw className={isRefreshing ? 'animate-spin' : ''} size={14} />
                   </button>
@@ -298,7 +298,7 @@ const TableEditorMenu: FC<Props> = ({
             title={
               <>
                 <div className="flex w-full items-center justify-between">
-                  <span>All views</span>
+                  <span>查看全部</span>
                 </div>
               </>
             }
@@ -322,17 +322,17 @@ const TableEditorMenu: FC<Props> = ({
 
       {searchText.length > 0 && schemaTables.length === 0 && filteredSchemaViews.length === 0 && (
         <div className="mx-3 space-y-1 rounded-md border border-scale-400 bg-scale-300 py-3 px-4">
-          <p className="text-xs">No results found</p>
+          <p className="text-xs">未找到结果</p>
           <p className="text-xs text-scale-1100">
-            There are no tables or views that match your search
+            没有与您的搜索匹配的表或视图
           </p>
         </div>
       )}
 
       {searchText.length === 0 && schemaTables.length === 0 && filteredSchemaViews.length === 0 && (
         <div className="mx-3 space-y-1 rounded-md border border-scale-400 bg-scale-300 py-3 px-4">
-          <p className="text-xs">No tables available</p>
-          <p className="text-xs text-scale-1100">This schema has no tables available yet</p>
+          <p className="text-xs">没有可用的表</p>
+          <p className="text-xs text-scale-1100">该schema还没有可用的表</p>
         </div>
       )}
     </div>

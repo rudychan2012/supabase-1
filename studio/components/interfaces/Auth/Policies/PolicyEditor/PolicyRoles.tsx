@@ -24,16 +24,16 @@ const PolicyRoles: FC<Props> = ({ roles, selectedRoles, onUpdateSelectedRoles })
     <div className="flex space-x-12">
       <div className="flex w-1/3 flex-col space-y-2">
         <label className="text-scale-1100 text-base" htmlFor="policy-name">
-          Target roles
+          目标角色
         </label>
-        <p className="text-scale-900 text-sm">Apply policy to the selected roles</p>
+        <p className="text-scale-900 text-sm">对所选的角色应用策略</p>
       </div>
       <div className="relative w-2/3">
         <MultiSelect
           options={formattedRoles}
           value={selectedRoles}
-          placeholder="Defaults to all (public) roles if none selected"
-          searchPlaceholder="Search for a role"
+          placeholder="如果没有选择默认应用到所有角色(public)"
+          searchPlaceholder="搜索角色"
           onChange={onUpdateSelectedRoles}
         />
       </div>

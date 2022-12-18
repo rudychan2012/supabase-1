@@ -372,7 +372,7 @@ const CreateTrigger: FC<CreateTriggerProps> = ({ trigger, visible, setVisible })
             </CreateTriggerContext.Provider>
           </div>
         ) : (
-          <NoTableState message="You will need to create a table first before you can make a trigger" />
+          <NoTableState message="您需要先创建一个表，然后才能创建触发器" />
         )}
       </SidePanel>
     </>
@@ -386,9 +386,9 @@ const InputName: FC = observer(({}) => {
   return (
     <Input
       id="name"
-      label="Name of trigger"
+      label="触发器名称"
       layout="horizontal"
-      placeholder="Name of trigger"
+      placeholder="触发器名称"
       value={_localState!.formState.name.value}
       onChange={(e) =>
         _localState!.onFormChange({
@@ -398,7 +398,7 @@ const InputName: FC = observer(({}) => {
       }
       size="small"
       error={_localState!.formState.name.error}
-      descriptionText="The name is also stored as the actual postgres name of the trigger. Do not use spaces/whitespace."
+      descriptionText="The name is also stored as the actual postgres name of the trigger. 该名称也存储为触发器的实际的postgres名称。不要使用空格空格。"
     />
   )
 })
@@ -408,7 +408,7 @@ const SelectEnabledMode: FC = observer(({}) => {
   return (
     <Listbox
       id="enabled-mode"
-      label="Enabled mode"
+      label="启用模式"
       layout="horizontal"
       value={_localState!.formState.enabledMode.value}
       onChange={(value) =>
@@ -418,7 +418,7 @@ const SelectEnabledMode: FC = observer(({}) => {
         })
       }
       size="small"
-      descriptionText="Determines if a trigger should or should not fire. Can also be used to disable a trigger, but not delete it."
+      descriptionText="确定触发器是否应该触发。也可用于禁用触发器，但不能将其删除。"
     >
       <Listbox.Option
         addOnBefore={({ active, selected }: any) => {
@@ -430,7 +430,7 @@ const SelectEnabledMode: FC = observer(({}) => {
         label="Origin"
       >
         Origin
-        <span className="block text-scale-900">This is a default behaviour</span>
+        <span className="block text-scale-900">这是默认行为</span>
       </Listbox.Option>
       <Listbox.Option
         addOnBefore={({ active, selected }: any) => {
@@ -443,7 +443,7 @@ const SelectEnabledMode: FC = observer(({}) => {
       >
         Replica
         <span className="block text-scale-900">
-          Will only fire if the session is in “replica” mode
+          仅当会话处于“副本”模式时才会触发
         </span>
       </Listbox.Option>
       <Listbox.Option
@@ -457,7 +457,7 @@ const SelectEnabledMode: FC = observer(({}) => {
       >
         Always
         <span className="block text-scale-900">
-          Will fire regardless of the current replication role
+          无论当前副本角色如何，都会触发
         </span>
       </Listbox.Option>
       <Listbox.Option
@@ -470,7 +470,7 @@ const SelectEnabledMode: FC = observer(({}) => {
         label="Disabled"
       >
         Disabled
-        <span className="block text-scale-900">Will not fire</span>
+        <span className="block text-scale-900">不会触发</span>
       </Listbox.Option>
     </Listbox>
   )

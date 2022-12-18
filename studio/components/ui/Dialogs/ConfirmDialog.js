@@ -63,7 +63,7 @@ const ConfirmModal = ({
                     onClick={onSelectCancel}
                     disabled={loading}
                   >
-                    Cancel
+                    取消
                   </Button>
                   <Button
                     htmlType="submit"
@@ -76,7 +76,7 @@ const ConfirmModal = ({
                       ? buttonLoadingLabel
                       : buttonLabel
                       ? buttonLabel
-                      : 'Confirm'}
+                      : '确认'}
                   </Button>
                 </div>
               </Modal.Content>

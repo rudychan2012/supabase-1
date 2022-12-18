@@ -144,21 +144,21 @@ const ColumnManagement: FC<Props> = ({
     <>
       <div className="table-editor-columns w-full space-y-4">
         <div className="flex w-full items-center justify-between">
-          <h5>Columns</h5>
+          <h5>列</h5>
           {isNewRecord && (
             <>
               {hasImportContent ? (
                 <div className="flex items-center space-x-3">
                   <Button type="default" icon={<IconEdit />} onClick={onSelectImportData}>
-                    Edit content
+                    编辑内容
                   </Button>
                   <Button danger type="outline" icon={<IconTrash />} onClick={onClearImportContent}>
-                    Remove content
+                    删除内容
                   </Button>
                 </div>
               ) : (
                 <Button type="default" onClick={onSelectImportData}>
-                  Import data via spreadsheet
+                  通过电子表格导入数据
                 </Button>
               )}
             </>
@@ -168,17 +168,15 @@ const ColumnManagement: FC<Props> = ({
         {hasImportContent && (
           <div className="my-2 opacity-75">
             <p>
-              Your table will be created with {importContent?.rowCount?.toLocaleString()} rows and
-              the following {columns.length} columns.
+              您的表将使用 {importContent?.rowCount?.toLocaleString()} 行和
+              以下 {columns.length} 列创建。
             </p>
           </div>
         )}
 
         {primaryKeyColumns.length === 0 && (
-          <Alert title="Warning: No primary keys selected" variant="warning" withIcon>
-            Tables require at least one column as a primary key in order to uniquely identify each
-            row. Without a primary key, you will not be able to update or delete rows from the
-            table.
+          <Alert title="警告：未选择主键" variant="warning" withIcon>
+            表至少需要一列作为主键才能唯一标识每一行。没有主键，您将无法更新或删除表中的行。
           </Alert>
         )}
 
@@ -186,9 +184,8 @@ const ColumnManagement: FC<Props> = ({
           <InformationBox
             block
             icon={<IconKey className="text-white" size="large" />}
-            title="Composite primary key selected"
-            description="The columns that you've selected will be grouped as a primary key, and will serve
-            as the unique identifier for the rows in your table"
+            title="已选择的复合主键"
+            description="您选择的列将被分组为主键，并将作为表中行的唯一标识符"
           />
         )}
 
@@ -198,13 +195,13 @@ const ColumnManagement: FC<Props> = ({
             {/* Drag handle */}
             {isNewRecord && <div className="w-[5%]" />}
             <div className="w-[25%]">
-              <h5 className="text-xs text-scale-900">Name</h5>
+              <h5 className="text-xs text-scale-900">名称</h5>
             </div>
             <div className="w-[25%]">
-              <h5 className="text-xs text-scale-900">Type</h5>
+              <h5 className="text-xs text-scale-900">类型</h5>
             </div>
             <div className={`${isNewRecord ? 'w-[25%]' : 'w-[30%]'} flex items-center space-x-2`}>
-              <h5 className="text-xs text-scale-900">Default Value</h5>
+              <h5 className="text-xs text-scale-900">默认值</h5>
 
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger>
@@ -221,14 +218,14 @@ const ColumnManagement: FC<Props> = ({
                     ].join(' ')}
                   >
                     <span className="text-xs text-scale-1200">
-                      Can be either a value or a SQL expression
+                      可以是值或 SQL 表达式
                     </span>
                   </div>
                 </Tooltip.Content>
               </Tooltip.Root>
             </div>
             <div className="w-[10%]">
-              <h5 className="text-xs text-scale-900">Primary</h5>
+              <h5 className="text-xs text-scale-900">主键</h5>
             </div>
             {/* Empty space */}
             <div className={`${hasImportContent ? 'w-[10%]' : 'w-0'}`} />
@@ -315,7 +312,7 @@ const ColumnManagement: FC<Props> = ({
         <div className="flex items-center justify-between">
           {!hasImportContent && (
             <Button type="default" onClick={() => onAddColumn()}>
-              Add column
+              添加列
             </Button>
           )}
           <Link href="https://supabase.com/docs/guides/database/tables#data-types">
@@ -325,7 +322,7 @@ const ColumnManagement: FC<Props> = ({
                 className="text-scale-1000 hover:text-scale-1200"
                 icon={<IconExternalLink size={12} strokeWidth={2} />}
               >
-                Learn more about data types
+                了解有关数据类型的更多信息
               </Button>
             </a>
           </Link>

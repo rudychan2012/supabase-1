@@ -48,7 +48,7 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
 
   const validate = (values: any) => {
     const errors: any = {}
-    if (values.schema === 'custom' && !values.name) errors.name = 'Required field'
+    if (values.schema === 'custom' && !values.name) errors.name = '必填项'
     return errors
   }
 
@@ -60,7 +60,7 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
         return ui.setNotification({
           error,
           category: 'error',
-          message: `Failed to create schema: ${error.message}`,
+          message: `创建schema: ${error.message}失败`,
         })
       }
     }
@@ -81,12 +81,12 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to toggle ${extension.name.toUpperCase()}: ${error.message}`,
+        message: `起停 ${extension.name.toUpperCase()}失败: ${error.message}`,
       })
     } else {
       ui.setNotification({
         category: 'success',
-        message: `${extension.name.toUpperCase()} is on.`,
+        message: `${extension.name.toUpperCase()} 已启用`,
       })
     }
 
@@ -103,7 +103,7 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
       size="small"
       header={
         <div className="flex items-baseline gap-2">
-          <h5 className="text-sm text-scale-1200">Confirm to enable</h5>
+          <h5 className="text-sm text-scale-1200">确认启用</h5>
           <code className="text-xs">{extension.name}</code>
         </div>
       }
@@ -133,23 +133,23 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
                     id="schema"
                     name="schema"
                     value={defaultSchema}
-                    label="Select a schema to enable the extension for"
-                    descriptionText={`Extension must be installed in ${defaultSchema}.`}
+                    label="选择一个schema以启用扩展"
+                    descriptionText={`扩展必须被安装在${defaultSchema}.`}
                   />
                 ) : (
                   <Listbox
                     size="small"
                     name="schema"
-                    label="Select a schema to enable the extension for"
+                    label="选择一个schema以启用扩展"
                   >
                     <Listbox.Option
                       key="custom"
                       id="custom"
-                      label={`Create a new schema "${extension.name}"`}
+                      label={`创建一个新schema "${extension.name}"`}
                       value="custom"
                       addOnBefore={() => <IconPlus size={16} strokeWidth={1.5} />}
                     >
-                      Create a new schema "{extension.name}"
+                      创建新schema "{extension.name}"
                     </Listbox.Option>
                     <Modal.Separator />
                     {/* @ts-ignore */}
@@ -172,7 +172,7 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
 
               {values.schema === 'custom' && (
                 <Modal.Content>
-                  <Input id="name" name="name" label="Schema name" />
+                  <Input id="name" name="name" label="Schema 名称" />
                 </Modal.Content>
               )}
 
@@ -180,10 +180,10 @@ const EnableExtensionModal: FC<Props> = ({ visible, extension, onCancel }) => {
               <Modal.Content>
                 <div className="flex items-center justify-end space-x-2">
                   <Button type="default" disabled={isSubmitting} onClick={() => onCancel()}>
-                    Cancel
+                    取消
                   </Button>
                   <Button htmlType="submit" disabled={isSubmitting} loading={isSubmitting}>
-                    Enable extension
+                    启用扩展
                   </Button>
                 </div>
               </Modal.Content>
