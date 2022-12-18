@@ -11,10 +11,10 @@ const PolicyDefinition = ({ definition = '', onUpdatePolicyDefinition = () => {}
     <div className="flex space-x-12">
       <div className="flex w-1/3 flex-col space-y-2">
         <label className="text-base text-scale-1100" htmlFor="policy-name">
-          Policy definition
+          策略定义
         </label>
         <p className="text-sm text-scale-900">
-          Provide a SQL conditional expression that returns a boolean.
+          提供返回布尔值的SQL条件表达式。
         </p>
       </div>
       <div className="h-56 w-2/3">
@@ -30,16 +30,16 @@ const PolicyAllowedOperations = ({ allowedOperations = [], onToggleOperation = (
     <div className="flex justify-between space-x-12">
       <div className="flex w-1/3 flex-col space-y-2">
         <label className="text-base text-scale-1100" htmlFor="allowed-operation">
-          Allowed operation
+          允许的操作
         </label>
         <p className="text-sm text-scale-900">
-          Based on the operations you have selected, you can use the highlighted functions in the{' '}
+          根据您选择的操作，您可以使用 {' '} 中突出显示的函数
           <a
             href="https://supabase.com/docs/reference/javascript/storage-from-list"
             target="_blank"
             className="underline"
           >
-            client library
+            客户端库
           </a>
           .
         </p>
@@ -84,10 +84,10 @@ const PolicyAllowedOperations = ({ allowedOperations = [], onToggleOperation = (
 const PolicyEditorFooter = ({ onViewTemplates = () => {}, onReviewPolicy = () => {} }) => (
   <div className="flex w-full items-center justify-end space-x-4 border-t px-6 py-3 dark:border-dark">
     <Button type="default" onClick={onViewTemplates}>
-      View templates
+      查看模板
     </Button>
     <Button type="primary" onClick={onReviewPolicy}>
-      Review
+      回看
     </Button>
   </div>
 )

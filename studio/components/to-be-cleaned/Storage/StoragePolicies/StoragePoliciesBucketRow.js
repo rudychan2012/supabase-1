@@ -31,7 +31,7 @@ const PolicyRow = ({
                 className="mx-2"
                 onClick={() => onSelectPolicyEdit(policy, bucketName, table)}
               >
-                Edit
+                编辑
               </Dropdown.Item>
               <Dropdown.Separator />
               <Dropdown.Item
@@ -39,7 +39,7 @@ const PolicyRow = ({
                 type="outline"
                 onClick={() => onSelectPolicyDelete(policy)}
               >
-                Delete
+                删除
               </Dropdown.Item>
             </>
           }
@@ -86,14 +86,14 @@ const StoragePoliciesBucketRow = ({
             {bucket.public && <Badge color="yellow">Public</Badge>}
           </div>
           <Button type="outline" onClick={() => onSelectPolicyAdd(bucket.name, table)}>
-            New policy
+            新建策略
           </Button>
         </div>,
       ]}
     >
       {policies.length === 0 ? (
         <div className="p-4 px-6">
-          <p className="text-sm text-scale-900">No policies created yet</p>
+          <p className="text-sm text-scale-900">尚未创建任何策略</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 divide-y dark:divide-dark">

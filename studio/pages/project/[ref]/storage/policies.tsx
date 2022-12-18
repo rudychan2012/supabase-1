@@ -38,6 +38,6 @@ const PageLayout: NextPageWithLayout = () => {
   )
 }
 
-PageLayout.getLayout = (page) => <StorageLayout title="Policies">{page}</StorageLayout>
+PageLayout.getLayout = (page) => <StorageLayout title="策略">{page}</StorageLayout>
 
 export default observer(PageLayout)

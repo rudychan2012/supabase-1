@@ -27,16 +27,16 @@ const ToggleBucketPublicModal: FC<Props> = ({
   }
 
   const header = bucket.public
-    ? `Confirm making ${bucket.name} private`
-    : `Confirm making ${bucket.name} public`
+    ? `确认私有化${bucket.name}`
+    : `确认公开化${bucket.name}`
 
   const alertTitle = bucket.public
-    ? `Warning: Making bucket private`
-    : `Warning: Making bucket public`
+    ? `警告: 私有化Bucket`
+    : `警告: 公开化Bucket`
 
   const alertDescription = bucket.public
-    ? `This will make all objects in ${bucket.name} private. They can only be accessed via signed URLs or downloaded with the right authorisation headers`
-    : `This will make all objects in ${bucket.name} public`
+    ? `这会导致${bucket.name}中的所有文件变成私有化，它们只能通过签名URL访问或使用正确的授权下载`
+    : `这会导致${bucket.name}中的所有文件变成公开可访问`
 
   return (
     <ConfirmationModal
@@ -52,8 +52,8 @@ const ToggleBucketPublicModal: FC<Props> = ({
           </Modal.Content>
         </div>
       }
-      buttonLabel="Update bucket"
-      buttonLoadingLabel="Updating bucket"
+      buttonLabel="更新Bucket"
+      buttonLoadingLabel="更新Bucket中..."
       onSelectCancel={onSelectCancel}
       onSelectConfirm={onToggleBucketPublic}
     />

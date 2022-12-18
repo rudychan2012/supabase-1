@@ -42,7 +42,7 @@ const PreviewFile = ({ mimeType, previewUrl }) => {
           }
         />
         <p className="mt-2 w-2/5 text-center text-sm">
-          File size is too large to preview in the explorer
+          文件太大无法预览
         </p>
       </div>
     )
@@ -61,7 +61,7 @@ const PreviewFile = ({ mimeType, previewUrl }) => {
         <audio key={previewUrl} controls style={{ width: 'inherit' }}>
           <source src={previewUrl} type="audio/mpeg" />
           <p className="text-sm text-scale-1100">
-            Your browser does not support the audio element.
+            您的浏览器不支持该音频格式
           </p>
         </audio>
       </div>
@@ -72,7 +72,7 @@ const PreviewFile = ({ mimeType, previewUrl }) => {
       <div className="flex h-full w-full items-center justify-center">
         <video key={previewUrl} controls style={{ maxHeight: '100%' }}>
           <source src={previewUrl} type="video/mp4" />
-          <p className="text-sm text-scale-1100">Your browser does not support the video tag.</p>
+          <p className="text-sm text-scale-1100">您的浏览器不支持该视频格式</p>
         </video>
       </div>
     )
@@ -142,7 +142,7 @@ const PreviewPane = ({
               <div className="flex items-center space-x-2">
                 <IconAlertCircle size={14} strokeWidth={2} className="text-scale-1100" />
                 <p className="text-sm text-scale-1100">
-                  File is corrupted, please delete and reupload this file again
+                  文件已损坏，请删除后，重新上传
                 </p>
               </div>
             )}
@@ -157,11 +157,11 @@ const PreviewPane = ({
           {/* Preview Metadata */}
           <div className="space-y-2">
             <div>
-              <label className="mb-1 text-xs text-scale-900">Added on</label>
+              <label className="mb-1 text-xs text-scale-900">上传时间</label>
               <p className="text-sm text-scale-1100">{createdAt}</p>
             </div>
             <div>
-              <label className="mb-1 text-xs text-scale-900">Last modified</label>
+              <label className="mb-1 text-xs text-scale-900">最近修改</label>
               <p className="text-sm text-scale-1100">{updatedAt}</p>
             </div>
           </div>
@@ -175,7 +175,7 @@ const PreviewPane = ({
                   icon={<IconDownload size={16} strokeWidth={2} />}
                   disabled={file.isCorrupted}
                 >
-                  Download
+                  下载
                 </Button>
               </a>
             </Link>
@@ -185,7 +185,7 @@ const PreviewPane = ({
               onClick={() => onCopyFileURL(file)}
               disabled={file.isCorrupted}
             >
-              Copy URL
+              复制URL
             </Button>
           </div>
           <Button
@@ -195,7 +195,7 @@ const PreviewPane = ({
             icon={<IconTrash2 size={16} strokeWidth={2} />}
             onClick={() => onSelectFileDelete(file)}
           >
-            Delete file
+            删除文件
           </Button>
         </div>
       </div>

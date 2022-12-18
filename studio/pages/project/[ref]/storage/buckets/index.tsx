@@ -37,17 +37,17 @@ const PageLayout: NextPageWithLayout = ({}) => {
   return (
     <div className="storage-container flex flex-grow">
       <ProductEmptyState
-        title="Storage"
-        ctaButtonLabel="Create a new bucket"
-        infoButtonLabel="About storage"
+        title="存储"
+        ctaButtonLabel="创建新Bucket"
+        infoButtonLabel="关于存储"
         infoButtonUrl="https://supabase.com/docs/guides/storage"
         onClickCta={openCreateBucketModal}
       >
         <p className="text-scale-1100 text-sm">
-          Create buckets to store and serve any type of digital content.
+          创建Bucket来存取任何类型的数字内容
         </p>
         <p className="text-scale-1100 text-sm">
-          Make your buckets private or public depending on your security preference.
+          根据您的安全偏好将您的Bucket设为私有或公开
         </p>
       </ProductEmptyState>
     </div>

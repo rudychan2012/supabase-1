@@ -38,28 +38,29 @@ export function checkPermissions(
   data?: object,
   organizationId?: number
 ) {
-  if (!IS_PLATFORM) return true
-
-  const enablePermissions = useFlag('enablePermissions')
-  if (!enablePermissions) return true
-
-  const { ui } = useStore()
-  const orgid = organizationId ?? ui?.selectedOrganization?.id
-
-  return (ui?.permissions ?? [])
-    .filter(
-      (permission: {
-        actions: string[]
-        condition: jsonLogic.RulesLogic
-        organization_id: number
-        resources: string[]
-      }) =>
-        permission.actions.some((act) => (action ? action.match(toRegexpString(act)) : null)) &&
-        permission.resources.some((res) => resource.match(toRegexpString(res))) &&
-        permission.organization_id === orgid
-    )
-    .some(
-      ({ condition }: { condition: jsonLogic.RulesLogic }) =>
-        condition === null || jsonLogic.apply(condition, { resource_name: resource, ...data })
-    )
+  // if (!IS_PLATFORM) return true
+  //
+  // const enablePermissions = useFlag('enablePermissions')
+  // if (!enablePermissions) return true
+  //
+  // const { ui } = useStore()
+  // const orgid = organizationId ?? ui?.selectedOrganization?.id
+  //
+  // return (ui?.permissions ?? [])
+  //   .filter(
+  //     (permission: {
+  //       actions: string[]
+  //       condition: jsonLogic.RulesLogic
+  //       organization_id: number
+  //       resources: string[]
+  //     }) =>
+  //       permission.actions.some((act) => (action ? action.match(toRegexpString(act)) : null)) &&
+  //       permission.resources.some((res) => resource.match(toRegexpString(res))) &&
+  //       permission.organization_id === orgid
+  //   )
+  //   .some(
+  //     ({ condition }: { condition: jsonLogic.RulesLogic }) =>
+  //       condition === null || jsonLogic.apply(condition, { resource_name: resource, ...data })
+  //   )
+  return true
 }

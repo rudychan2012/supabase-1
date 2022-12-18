@@ -133,7 +133,7 @@ const StorageExplorer = observer(({ bucket }) => {
       closeFilePreview()
     } else {
       const pathString = paths.join('/')
-      setLoading({ isLoading: true, message: `Navigating to ${pathString}...` })
+      setLoading({ isLoading: true, message: `导航至${pathString}...` })
       await fetchFoldersByPath(paths)
       setLoading({ isLoading: false, message: '' })
     }

@@ -15,9 +15,9 @@
 export const STORAGE_POLICY_TEMPLATES = [
   {
     id: 'policy-1',
-    templateName: 'Allow access to JPG images in a public folder to anonymous users',
+    templateName: '允许匿名用户访问公共文件夹下的JPG格式图片',
     description:
-      'This policy uses native postgres functions, functions from auth and storage schema',
+      '此策略使用原生的postgres函数，函数来源于auth schema和storage schema',
     name: 'Give anon users access to JPG images in folder',
     statement: `
 CREATE POLICY "policy_name"
@@ -37,9 +37,9 @@ ON storage.objects FOR {operation} {USING | WITH CHECK} (
   },
   {
     id: 'policy-2',
-    templateName: 'Give users access to only their own a top level folder named as uid',
+    templateName: '仅授予用户对自己的名为uid的顶级文件夹的访问权限',
     description:
-      'For example a user with id d7bed83c-44a0-4a4f-925f-efc384ea1e50 will be able to access anything under the folder d7bed83c-44a0-4a4f-925f-efc384ea1e50/',
+      '例如：ID为d7bed83c-44a0-4a4f-925f-efc384ea1e50的用户将能够访问文件夹d7bed83c-44a0-4a4f-925f-efc384ea1e50下的任何内容',
     name: 'Give users access to own folder',
     statement: `
 CREATE POLICY "policy_name"
@@ -54,9 +54,9 @@ ON storage.objects FOR {operation} {USING | WITH CHECK} (
   },
   {
     id: 'policy-3',
-    templateName: 'Give users access to a folder only to authenticated users',
+    templateName: '仅向通过身份验证的用户授予用户对文件夹的访问权限',
     description:
-      'This policy gives users access to a folder (e.g private) only if they are authenticated',
+      '此策略仅当用户通过身份验证时才允许用户访问文件夹（例如私有）',
     name: 'Give users authenticated access to folder',
     statement: `
 CREATE POLICY "policy_name"
@@ -72,9 +72,9 @@ ON storage.objects FOR {operation} {USING | WITH CHECK} (
   },
   {
     id: 'policy-4',
-    templateName: 'Give access to a nested folder called admin/assets only to a specific user',
+    templateName: '仅向特定用户授予对名为admin/assets的嵌套文件夹的访问权限',
     description:
-      'This policy gives read access to all authenticated users for your project to the folder "public"',
+      '此策略向应用的所有通过身份验证的用户授予对文件夹“public”的读取访问权限',
     name: 'Give access to a folder',
     statement: `
 CREATE POLICY "policy_name"
@@ -90,8 +90,8 @@ ON storage.objects FOR {operation} {USING | WITH CHECK} (
   },
   {
     id: 'policy-5',
-    templateName: 'Give access to a file to a user',
-    description: 'This policy gives access to a specific file to a specific user',
+    templateName: '授权单个文件给用户',
+    description: '此策略向特定用户授予对特定文件的访问权限',
     name: 'Give access to a file to user',
     statement: `
 CREATE POLICY "policy_name"

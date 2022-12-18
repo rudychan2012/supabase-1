@@ -37,7 +37,7 @@ const HeaderPathEdit = ({ loading, breadcrumbs, togglePathEdit }) => {
           <p className="ml-3 text-sm">{breadcrumbs[breadcrumbs.length - 1] || ''}</p>
           <div className="ml-3 flex items-center space-x-2 opacity-0 transition group-hover:opacity-100">
             <Button type="text" icon={<IconEdit2 />}>
-              Navigate
+              导航
             </Button>
           </div>
         </div>
@@ -234,7 +234,7 @@ const FileExplorerHeader = ({
                   htmlType="button"
                   onClick={cancelSetPathString}
                 >
-                  Cancel
+                  取消
                 </Button>,
                 <Button
                   key="setPath"
@@ -242,7 +242,7 @@ const FileExplorerHeader = ({
                   htmlType="submit"
                   onClick={navigateByPathString}
                 >
-                  Go to folder
+                  定位到文件夹
                 </Button>,
               ]}
             />
@@ -273,13 +273,13 @@ const FileExplorerHeader = ({
             loading={isRefreshing}
             onClick={refreshData}
           >
-            Reload
+            刷新
           </Button>
           <Dropdown
             overlay={[
               <Dropdown.RadioGroup key="viewOptions" value={view} onChange={onChangeView}>
-                <Dropdown.Radio value={STORAGE_VIEWS.COLUMNS}>Columns</Dropdown.Radio>
-                <Dropdown.Radio value={STORAGE_VIEWS.LIST}>List</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_VIEWS.COLUMNS}>竖型多列</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_VIEWS.LIST}>横向列表</Dropdown.Radio>
               </Dropdown.RadioGroup>,
             ]}
           >
@@ -296,17 +296,17 @@ const FileExplorerHeader = ({
               disabled={breadcrumbs.length === 0}
               onChange={onChangeView}
             >
-              View as
+              查看方式
             </Button>
           </Dropdown>
           <Dropdown
             overlay={[
               <Dropdown.RadioGroup key="sortOptions" value={sortBy} onChange={onChangeSortBy}>
-                <Dropdown.Radio value={STORAGE_SORT_BY.NAME}>Name</Dropdown.Radio>
-                <Dropdown.Radio value={STORAGE_SORT_BY.CREATED_AT}>Time created</Dropdown.Radio>
-                <Dropdown.Radio value={STORAGE_SORT_BY.UPDATED_AT}>Time modified</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_SORT_BY.NAME}>名称</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_SORT_BY.CREATED_AT}>创建时间</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_SORT_BY.UPDATED_AT}>修改时间</Dropdown.Radio>
                 <Dropdown.Radio value={STORAGE_SORT_BY.LAST_ACCESSED_AT}>
-                  Time last accessed
+                  最近访问
                 </Dropdown.Radio>
               </Dropdown.RadioGroup>,
             ]}
@@ -317,7 +317,7 @@ const FileExplorerHeader = ({
               type="text"
               disabled={breadcrumbs.length === 0}
             >
-              Sort by
+              排序维度
             </Button>
           </Dropdown>
           <Dropdown
@@ -327,8 +327,8 @@ const FileExplorerHeader = ({
                 value={sortByOrder}
                 onChange={onChangeSortByOrder}
               >
-                <Dropdown.Radio value={STORAGE_SORT_BY_ORDER.ASC}>Ascending</Dropdown.Radio>
-                <Dropdown.Radio value={STORAGE_SORT_BY_ORDER.DESC}>Descending</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_SORT_BY_ORDER.ASC}>升序</Dropdown.Radio>
+                <Dropdown.Radio value={STORAGE_SORT_BY_ORDER.DESC}>降序</Dropdown.Radio>
               </Dropdown.RadioGroup>,
             ]}
           >
@@ -344,7 +344,7 @@ const FileExplorerHeader = ({
               type="text"
               disabled={breadcrumbs.length === 0}
             >
-              Sort Order
+              排序方式
             </Button>
           </Dropdown>
         </div>
@@ -359,7 +359,7 @@ const FileExplorerHeader = ({
             disabled={breadcrumbs.length === 0}
             onClick={onSelectUpload}
           >
-            Upload files
+            上传文件
           </Button>
           <Button
             icon={<IconFolderPlus size={16} strokeWidth={2} />}
@@ -367,7 +367,7 @@ const FileExplorerHeader = ({
             disabled={breadcrumbs.length === 0}
             onClick={() => onSelectCreateFolder()}
           >
-            Create folder
+            新建文件夹
           </Button>
         </div>
 

@@ -39,14 +39,14 @@ const SmtpForm = () => {
       is: () => {
         return enableSmtp
       },
-      then: (schema) => schema.email('Must be a valid email').required('Sender email is required'),
+      then: (schema) => schema.email('必须是邮箱格式').required('邮件地址必填'),
       otherwise: (schema) => schema,
     }),
     SMTP_SENDER_NAME: string().when([], {
       is: () => {
         return enableSmtp
       },
-      then: (schema) => schema.required('Sender name is required'),
+      then: (schema) => schema.required('发件人姓名为必填项'),
       otherwise: (schema) => schema,
     }),
     SMTP_HOST: string().when([], {
@@ -55,8 +55,8 @@ const SmtpForm = () => {
       },
       then: (schema) =>
         schema
-          .matches(domainRegex, 'Must be a valid URL or IP address')
-          .required('Host URL is required.'),
+          .matches(domainRegex, '必须是有效的URL或IP地址')
+          .required('主机URL必填'),
       otherwise: (schema) => schema,
     }),
     SMTP_PORT: number().when([], {
@@ -65,9 +65,9 @@ const SmtpForm = () => {
       },
       then: (schema) =>
         schema
-          .required('Port number is required.')
-          .min(1, 'Must be a valid port number more than 0')
-          .max(65535, 'Must be a valid port number no more than 65535'),
+          .required('端口号必填')
+          .min(1, '必须是大于零的有效端口号')
+          .max(65535, '端口号必须小于65535'),
       otherwise: (schema) => schema,
     }),
     SMTP_MAX_FREQUENCY: number().when([], {
@@ -76,23 +76,23 @@ const SmtpForm = () => {
       },
       then: (schema) =>
         schema
-          .required('Rate limit is required.')
-          .min(1, 'Must be more than 0')
-          .max(32767, 'Must not be more than 32,767 an hour'),
+          .required('速率限制必填')
+          .min(1, '必须大于零')
+          .max(32767, '必须小于32767个小时'),
       otherwise: (schema) => schema,
     }),
     SMTP_USER: string().when([], {
       is: () => {
         return enableSmtp
       },
-      then: (schema) => schema.required('SMTP Username is required'),
+      then: (schema) => schema.required('SMTP用户名必填'),
       otherwise: (schema) => schema,
     }),
     SMTP_PASS: string().when([], {
       is: () => {
         return enableSmtp
       },
-      then: (schema) => schema.required('SMTP password is required'),
+      then: (schema) => schema.required('SMTP密码必填'),
       otherwise: (schema) => schema,
     }),
   })
@@ -111,9 +111,9 @@ const SmtpForm = () => {
       setHidden(true)
       const updatedFormValues = generateFormValues(payload)
       resetForm({ values: updatedFormValues, initialValues: updatedFormValues })
-      ui.setNotification({ category: 'success', message: 'Successfully updated settings' })
+      ui.setNotification({ category: 'success', message: '更新设置成功' })
     } else {
-      ui.setNotification({ category: 'error', message: 'Failed to update settings', error })
+      ui.setNotification({ category: 'error', message: '更新设置失败', error })
     }
 
     setSubmitting(false)
@@ -140,8 +140,8 @@ const SmtpForm = () => {
         return (
           <>
             <FormHeader
-              title="SMTP Settings"
-              description="You can use your own SMTP server instead of the built-in email service."
+              title="SMTP设置"
+              description="您可以使用自己的SMTP服务器代替内置的邮件服务"
             />
             <FormPanel
               footer={
@@ -154,7 +154,7 @@ const SmtpForm = () => {
                     disabled={!canUpdateConfig}
                     helper={
                       !canUpdateConfig
-                        ? 'You need additional permissions to update authentication settings'
+                        ? '您需要额外的权限才能更新身份验证设置'
                         : undefined
                     }
                   />
@@ -166,45 +166,45 @@ const SmtpForm = () => {
                   <Toggle
                     name="ENABLE_SMTP"
                     size="small"
-                    label="Enable Custom SMTP"
+                    label="启用自定义SMTP"
                     layout="flex"
                     checked={enableSmtp}
                     disabled={!canUpdateConfig}
                     // @ts-ignore
                     onChange={(value: boolean) => setEnableSmtp(value)}
-                    descriptionText="Emails will be sent using your custom SMTP provider"
+                    descriptionText="将使用您的自定义SMTP服务发送电子邮件"
                   />
                 </FormSectionContent>
               </FormSection>
 
               {enableSmtp && !isValidSmtpConfig && (
                 <div className="mx-8 mb-8 -mt-4">
-                  <Alert withIcon variant="warning" title="All fields below must be filled">
-                    The following fields must be filled before custom SMTP can be properly enabled
+                  <Alert withIcon variant="warning" title="以下所有字段都必须填写">
+                    必须填写以下字段才能正确启用自定义SMTP
                   </Alert>
                 </div>
               )}
 
               <FormSection
                 visible={enableSmtp}
-                header={<FormSectionLabel>Sender details</FormSectionLabel>}
+                header={<FormSectionLabel>发送人信息</FormSectionLabel>}
                 disabled={!enableSmtp}
               >
                 <FormSectionContent loading={!isLoaded}>
                   <Input
                     name="SMTP_ADMIN_EMAIL"
                     id="SMTP_ADMIN_EMAIL"
-                    label="Sender email"
-                    descriptionText="This is the email address the emails are sent from"
+                    label="发送人邮箱"
+                    descriptionText="这是发送人的电子邮件地址"
                     placeholder="noreply@yourdomain.com"
                     disabled={!canUpdateConfig}
                   />
                   <Input
                     name="SMTP_SENDER_NAME"
                     id="SMTP_SENDER_NAME"
-                    label="Sender name"
-                    descriptionText="Name displayed in the recipient's inbox"
-                    placeholder="The name shown on the email"
+                    label="发送人名称"
+                    descriptionText="收件人收件箱中显示的姓名"
+                    placeholder="收件箱中显示的名字"
                     disabled={!canUpdateConfig}
                   />
                 </FormSectionContent>
@@ -215,9 +215,9 @@ const SmtpForm = () => {
                 disabled={!enableSmtp}
                 header={
                   <FormSectionLabel>
-                    <span>SMTP Provider Settings</span>
+                    <span>SMTP服务配置</span>
                     <p className="my-4 text-scale-900">
-                      Your SMTP Credentials will always be encrypted in our database.
+                      您的SMTP凭据将始终在我们的数据库中加密。
                     </p>
                   </FormSectionLabel>
                 }
@@ -227,24 +227,22 @@ const SmtpForm = () => {
                     name="SMTP_HOST"
                     placeholder="your.smtp.host.com"
                     id="SMTP_HOST"
-                    label="Host"
-                    descriptionText="Hostname or IP address of your SMTP server."
+                    label="服务地址"
+                    descriptionText="SMTP服务器的主机名或IP地址"
                     disabled={!canUpdateConfig}
                   />
                   <InputNumber
                     name="SMTP_PORT"
                     id="SMTP_PORT"
                     placeholder="587"
-                    label="Port number"
+                    label="端口号"
                     descriptionText={
                       <>
                         <span className="block">
-                          Port used by your SMTP server. Common ports include 25, 465, and 587.{' '}
+                          SMTP服务器使用的端口，常用端口包括25、465和587.{' '}
                         </span>
                         <span className="mt-2 block">
-                          Avoid using port 25 as modern SMTP email clients shouldn't use this port,
-                          it is traditionally blocked by residential ISPs and Cloud Hosting
-                          Providers, to curb the amount of spam.
+                          避免使用端口25，因为现代SMTP电子邮件客户端不应使用此端口，它通常被ISP和云托管提供商阻止，以减少垃圾邮件的数量
                         </span>
                       </>
                     }
@@ -253,33 +251,33 @@ const SmtpForm = () => {
                   <InputNumber
                     id="SMTP_MAX_FREQUENCY"
                     name="SMTP_MAX_FREQUENCY"
-                    label="Minimum interval between emails being sent"
-                    descriptionText="How long between each email can a new email be sent via your SMTP server."
-                    actions={<span className="mr-3 text-scale-900">seconds</span>}
+                    label="发送电子邮件之间的最小间隔"
+                    descriptionText="SMTP服务发送任意两封电子邮件的最小间隔时间"
+                    actions={<span className="mr-3 text-scale-900">秒</span>}
                     disabled={!canUpdateConfig}
                   />
                   <InputNumber
                     name="RATE_LIMIT_EMAIL_SENT"
                     id="RATE_LIMIT_EMAIL_SENT"
                     min={0}
-                    label="Rate limit for sending emails"
-                    descriptionText="How many emails can be sent per hour."
-                    actions={<span className="mr-3 text-scale-900">emails per hour</span>}
+                    label="发送电子邮件的速率限制"
+                    descriptionText="每小时可以发送多少封电子邮件"
+                    actions={<span className="mr-3 text-scale-900">封邮件/每小时</span>}
                     disabled={!canUpdateConfig}
                   />
                   <Input
                     name="SMTP_USER"
                     id="SMTP_USER"
-                    label="Username"
-                    placeholder="SMTP Username"
+                    label="用户名"
+                    placeholder="SMTP用户名"
                     disabled={!canUpdateConfig}
                   />
                   <Input
                     name="SMTP_PASS"
                     id="SMTP_PASS"
                     type={hidden ? 'password' : 'text'}
-                    label="Password"
-                    placeholder="SMTP Password"
+                    label="密码"
+                    placeholder="SMTP密码"
                     actions={
                       <Button
                         icon={hidden ? <IconEye /> : <IconEyeOff />}

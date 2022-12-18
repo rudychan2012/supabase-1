@@ -57,24 +57,24 @@ const StorageMenu: FC<Props> = () => {
           style={{ justifyContent: 'start' }}
           onClick={openCreateBucketModal}
         >
-          New bucket
+          新建Bucket
         </Button>
       </div>
       <div className="space-y-6">
         <div className="">
           <div>
-            <Menu.Group title="All buckets" />
+            <Menu.Group title="所有buckets" />
             {!loaded ? (
               <div className="flex items-center space-x-2 py-2 px-2">
                 <IconLoader className="animate-spin" size={14} strokeWidth={2} />
-                <span className="text-sm">Loading buckets</span>
+                <span className="text-sm">加载buckets...</span>
               </div>
             ) : (
               <>
                 {buckets.length === 0 && (
                   <div className="px-2">
                     <Alert title="No buckets available">
-                      Buckets that you create will appear here
+                      您创建的Bucket将显示在此处
                     </Alert>
                   </div>
                 )}
@@ -97,10 +97,10 @@ const StorageMenu: FC<Props> = () => {
         </div>
         <div className="h-px w-full bg-scale-500"></div>
         <div className="">
-          <Menu.Group title="Configuration" />
+          <Menu.Group title="配置" />
           <Link href={`/project/${projectRef}/storage/policies`}>
             <Menu.Item rounded active={page === 'policies'}>
-              <p className="truncate">Policies</p>
+              <p className="truncate">策略</p>
             </Menu.Item>
           </Link>
         </div>
@@ -124,7 +124,7 @@ const BucketRow = ({
       name={
         <div className="flex items-center space-x-2">
           <p>{bucket.name}</p>
-          {bucket.public && <Badge color="yellow">Public</Badge>}
+          {bucket.public && <Badge color="yellow">公开</Badge>}
         </div>
       }
       url={`/project/${projectRef}/storage/buckets/${bucket.id}`}
@@ -141,7 +141,7 @@ const BucketRow = ({
                 key="toggle-private"
                 onClick={() => onSelectToggleBucketPublic(bucket)}
               >
-                {bucket.public ? 'Make private' : 'Make public'}
+                {bucket.public ? '私有化' : '公开化'}
               </Dropdown.Item>,
               <Dropdown.Separator key="bucket-separator" />,
               <Dropdown.Item
@@ -149,7 +149,7 @@ const BucketRow = ({
                 key="delete-bucket"
                 onClick={() => onSelectDeleteBucket(bucket)}
               >
-                Delete bucket
+                删除bucket
               </Dropdown.Item>,
             ]}
           >

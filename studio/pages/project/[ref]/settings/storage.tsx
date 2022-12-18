@@ -36,6 +36,6 @@ const PageLayout: NextPageWithLayout = () => {
   )
 }
 
-PageLayout.getLayout = (page) => <SettingsLayout title="Settings">{page}</SettingsLayout>
+PageLayout.getLayout = (page) => <SettingsLayout title="存储设置">{page}</SettingsLayout>
 
 export default observer(PageLayout)

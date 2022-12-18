@@ -98,7 +98,7 @@ const JWTSettings: FC<Props> = ({}) => {
       ui.setNotification({
         category: 'info',
         message:
-          'Successfully submitted JWT secret update request. Please wait while your project is updated.',
+          '已成功提交JWT更新请求。正在更新您的应用，请稍候。',
       })
     } catch (error: any) {
       ui.setNotification({ category: 'error', message: error.message })
@@ -109,139 +109,139 @@ const JWTSettings: FC<Props> = ({}) => {
 
   return (
     <>
-      <Panel title={<h5 className="mb-0">JWT Settings</h5>}>
+      <Panel title={<h5 className="mb-0">JWT设置</h5>}>
         <Panel.Content className="space-y-6 border-t border-panel-border-interior-light dark:border-panel-border-interior-dark">
           {isError ? (
             <div className="flex items-center justify-center space-x-2 py-8">
               <IconAlertCircle size={16} strokeWidth={1.5} />
-              <p className="text-sm text-scale-1100">Failed to retrieve JWT settings</p>
+              <p className="text-sm text-scale-1100">无法获取JWT</p>
             </div>
           ) : (
             <>
               <Input
-                label="JWT Secret"
+                label="JWT密钥"
                 readOnly
                 copy={canReadJWTSecret && isNotUpdatingJwtSecret}
                 reveal={canReadJWTSecret && isNotUpdatingJwtSecret}
                 disabled
                 value={
                   !canReadJWTSecret
-                    ? 'You need additional permissions to view the JWT secret'
+                    ? '您需要额外的权限才能查看JWT密钥'
                     : isJwtSecretUpdateFailed
-                    ? 'JWT secret update failed'
+                    ? 'JWT密钥更新失败'
                     : isUpdatingJwtSecret
-                    ? 'Updating JWT secret...'
+                    ? '更新JWT密钥...'
                     : config?.jwt_secret || ''
                 }
                 className="input-mono"
                 descriptionText={
-                  'Used to decode your JWTs. You can also use this to mint your own JWTs.'
+                  '用于解码您的JWT，您还可以使用它来生成您自己的JWT。'
                 }
                 layout="horizontal"
               />
-              <div className="space-y-3">
-                <div className="rounded-md border bg-bg-alt-light p-3 px-6 shadow-sm dark:border-dark dark:bg-bg-alt-dark">
-                  {isUpdatingJwtSecret ? (
-                    <div className="flex items-center space-x-2">
-                      <IconLoader className="animate-spin" size={14} />
-                      <p className="text-sm">
-                        Updating JWT secret: {jwtSecretUpdateProgressMessage}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="w-full space-y-2">
-                      <div className="flex w-full items-center justify-between">
-                        <div className="flex flex-col space-y-1">
-                          <p className="text-sm">Generate a new JWT secret</p>
-                          <p className="text-sm opacity-50">
-                            A random secret will be created, or you can create your own.
-                          </p>
-                        </div>
-                        <div className="flex flex-col items-end">
-                          {isUpdatingJwtSecret ? (
-                            <Button loading type="secondary">
-                              Updating JWT secret...
-                            </Button>
-                          ) : !canGenerateNewJWTSecret ? (
-                            <Tooltip.Root delayDuration={0}>
-                              <Tooltip.Trigger>
-                                <Button
-                                  disabled
-                                  as="span"
-                                  type="default"
-                                  iconRight={<IconChevronDown />}
-                                >
-                                  Generate a new secret
-                                </Button>
-                              </Tooltip.Trigger>
-                              <Tooltip.Content side="bottom">
-                                <Tooltip.Arrow className="radix-tooltip-arrow" />
-                                <div
-                                  className={[
-                                    'rounded bg-scale-100 py-1 px-2 leading-none shadow',
-                                    'border border-scale-200',
-                                  ].join(' ')}
-                                >
-                                  <span className="text-xs text-scale-1200">
-                                    You need additional permissions to generate a new JWT secret
-                                  </span>
-                                </div>
-                              </Tooltip.Content>
-                            </Tooltip.Root>
-                          ) : (
-                            <Dropdown
-                              align="end"
-                              side="bottom"
-                              overlay={
-                                <>
-                                  <Dropdown.Item
-                                    onClick={() => setIsGeneratingKey(true)}
-                                    icon={<IconRefreshCw size={16} />}
-                                  >
-                                    Generate a random secret
-                                  </Dropdown.Item>
-                                  <Dropdown.Separator />
-                                  <Dropdown.Item
-                                    onClick={() => setIsCreatingKey(true)}
-                                    icon={<IconPenTool size={16} />}
-                                  >
-                                    Create my own secret
-                                  </Dropdown.Item>
-                                </>
-                              }
-                            >
-                              <Button as="span" type="default" iconRight={<IconChevronDown />}>
-                                Generate a new secret
-                              </Button>
-                            </Dropdown>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                {isJwtSecretUpdateFailed ? (
-                  <Alert withIcon variant="warning" title="Failed to update JWT secret">
-                    Please try again. If the failures persist, please contact Supabase support with
-                    the following details: <br />
-                    Change tracking ID: {changeTrackingId} <br />
-                    Error message: {jwtSecretUpdateErrorMessage}
-                  </Alert>
-                ) : canGenerateNewJWTSecret ? (
-                  <Alert
-                    withIcon
-                    variant="warning"
-                    title="This will invalidate all existing API keys!"
-                  >
-                    Generating a new JWT secret will invalidate <u>all</u> of your API keys,
-                    including your <code>service_role</code> and <code>anon</code> keys. Your
-                    project will also be restarted during this process, which will terminate any
-                    existing connections.
-                  </Alert>
-                ) : (
-                  <></>
-                )}
-              </div>
+              {/*<div className="space-y-3">*/}
+              {/*  <div className="rounded-md border bg-bg-alt-light p-3 px-6 shadow-sm dark:border-dark dark:bg-bg-alt-dark">*/}
+              {/*    {isUpdatingJwtSecret ? (*/}
+              {/*      <div className="flex items-center space-x-2">*/}
+              {/*        <IconLoader className="animate-spin" size={14} />*/}
+              {/*        <p className="text-sm">*/}
+              {/*          Updating JWT secret: {jwtSecretUpdateProgressMessage}*/}
+              {/*        </p>*/}
+              {/*      </div>*/}
+              {/*    ) : (*/}
+              {/*      <div className="w-full space-y-2">*/}
+              {/*        <div className="flex w-full items-center justify-between">*/}
+              {/*          <div className="flex flex-col space-y-1">*/}
+              {/*            <p className="text-sm">Generate a new JWT secret</p>*/}
+              {/*            <p className="text-sm opacity-50">*/}
+              {/*              A random secret will be created, or you can create your own.*/}
+              {/*            </p>*/}
+              {/*          </div>*/}
+              {/*          <div className="flex flex-col items-end">*/}
+              {/*            {isUpdatingJwtSecret ? (*/}
+              {/*              <Button loading type="secondary">*/}
+              {/*                Updating JWT secret...*/}
+              {/*              </Button>*/}
+              {/*            ) : !canGenerateNewJWTSecret ? (*/}
+              {/*              <Tooltip.Root delayDuration={0}>*/}
+              {/*                <Tooltip.Trigger>*/}
+              {/*                  <Button*/}
+              {/*                    disabled*/}
+              {/*                    as="span"*/}
+              {/*                    type="default"*/}
+              {/*                    iconRight={<IconChevronDown />}*/}
+              {/*                  >*/}
+              {/*                    Generate a new secret*/}
+              {/*                  </Button>*/}
+              {/*                </Tooltip.Trigger>*/}
+              {/*                <Tooltip.Content side="bottom">*/}
+              {/*                  <Tooltip.Arrow className="radix-tooltip-arrow" />*/}
+              {/*                  <div*/}
+              {/*                    className={[*/}
+              {/*                      'rounded bg-scale-100 py-1 px-2 leading-none shadow',*/}
+              {/*                      'border border-scale-200',*/}
+              {/*                    ].join(' ')}*/}
+              {/*                  >*/}
+              {/*                    <span className="text-xs text-scale-1200">*/}
+              {/*                      You need additional permissions to generate a new JWT secret*/}
+              {/*                    </span>*/}
+              {/*                  </div>*/}
+              {/*                </Tooltip.Content>*/}
+              {/*              </Tooltip.Root>*/}
+              {/*            ) : (*/}
+              {/*              <Dropdown*/}
+              {/*                align="end"*/}
+              {/*                side="bottom"*/}
+              {/*                overlay={*/}
+              {/*                  <>*/}
+              {/*                    <Dropdown.Item*/}
+              {/*                      onClick={() => setIsGeneratingKey(true)}*/}
+              {/*                      icon={<IconRefreshCw size={16} />}*/}
+              {/*                    >*/}
+              {/*                      Generate a random secret*/}
+              {/*                    </Dropdown.Item>*/}
+              {/*                    <Dropdown.Separator />*/}
+              {/*                    <Dropdown.Item*/}
+              {/*                      onClick={() => setIsCreatingKey(true)}*/}
+              {/*                      icon={<IconPenTool size={16} />}*/}
+              {/*                    >*/}
+              {/*                      Create my own secret*/}
+              {/*                    </Dropdown.Item>*/}
+              {/*                  </>*/}
+              {/*                }*/}
+              {/*              >*/}
+              {/*                <Button as="span" type="default" iconRight={<IconChevronDown />}>*/}
+              {/*                  Generate a new secret*/}
+              {/*                </Button>*/}
+              {/*              </Dropdown>*/}
+              {/*            )}*/}
+              {/*          </div>*/}
+              {/*        </div>*/}
+              {/*      </div>*/}
+              {/*    )}*/}
+              {/*  </div>*/}
+              {/*  {isJwtSecretUpdateFailed ? (*/}
+              {/*    <Alert withIcon variant="warning" title="Failed to update JWT secret">*/}
+              {/*      Please try again. If the failures persist, please contact Supabase support with*/}
+              {/*      the following details: <br />*/}
+              {/*      Change tracking ID: {changeTrackingId} <br />*/}
+              {/*      Error message: {jwtSecretUpdateErrorMessage}*/}
+              {/*    </Alert>*/}
+              {/*  ) : canGenerateNewJWTSecret ? (*/}
+              {/*    <Alert*/}
+              {/*      withIcon*/}
+              {/*      variant="warning"*/}
+              {/*      title="This will invalidate all existing API keys!"*/}
+              {/*    >*/}
+              {/*      Generating a new JWT secret will invalidate <u>all</u> of your API keys,*/}
+              {/*      including your <code>service_role</code> and <code>anon</code> keys. Your*/}
+              {/*      project will also be restarted during this process, which will terminate any*/}
+              {/*      existing connections.*/}
+              {/*    </Alert>*/}
+              {/*  ) : (*/}
+              {/*    <></>*/}
+              {/*  )}*/}
+              {/*</div>*/}
             </>
           )}
         </Panel.Content>

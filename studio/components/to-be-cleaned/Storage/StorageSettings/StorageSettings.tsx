@@ -15,7 +15,7 @@ const StorageSettings: FC<any> = ({ projectRef }) => {
   if (error || data?.error) {
     return (
       <div className="mx-auto p-6 text-center sm:w-full md:w-3/4">
-        <p className="text-sm">Error loading storage settings</p>
+        <p className="text-sm">加载存储设置时出错</p>
       </div>
     )
   }
@@ -23,7 +23,7 @@ const StorageSettings: FC<any> = ({ projectRef }) => {
   if (!data) {
     return (
       <div className="mx-auto p-6 text-center sm:w-full md:w-3/4">
-        <p className="text-sm">Loading...</p>
+        <p className="text-sm">加载中...</p>
       </div>
     )
   }
@@ -53,7 +53,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
     if (values.fileSizeLimit > formattedMaxLimit) {
       errors[
         'fileSizeLimit'
-      ] = `Maximum limit is up to ${formattedMaxLimit.toLocaleString()} ${selectedUnit}.`
+      ] = `单个文件大小上限为 ${formattedMaxLimit.toLocaleString()} ${selectedUnit}.`
     }
     return errors
   }
@@ -64,7 +64,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
     if (errors.fileSizeLimit) {
       ui.setNotification({
         category: 'error',
-        message: `Upload file size limit must be up to 5GB (${formattedMaxSizeBytes})`,
+        message: `上传的文件大小必须小于5GB (${formattedMaxSizeBytes})`,
       })
     } else {
       const payload = { fileSizeLimit: convertToBytes(values.fileSizeLimit, selectedUnit) }
@@ -72,7 +72,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
       if (res?.error) {
         ui.setNotification({
           category: 'error',
-          message: `Failed to update storage settings: ${res.error.message}`,
+          message: `更新存储设置失败: ${res.error.message}`,
         })
       } else {
         const updatedValue = convertFromBytes(res.fileSizeLimit)
@@ -80,7 +80,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
           fileSizeLimit: updatedValue.value,
           unformattedFileSizeLimit: res.fileSizeLimit,
         }
-        ui.setNotification({ category: 'success', message: 'Successfully updated settings' })
+        ui.setNotification({ category: 'success', message: '更新存储设置成功' })
       }
     }
   }
@@ -105,9 +105,9 @@ const StorageConfig = ({ config, projectRef }: any) => {
           return (
             <>
               <div className="mb-6">
-                <h3 className="mb-2 text-xl text-scale-1200">Storage settings</h3>
+                <h3 className="mb-2 text-xl text-scale-1200">存储设置</h3>
                 <div className="text-sm text-scale-900">
-                  Configure your project's storage settings
+                  配置应用的存储设置
                 </div>
               </div>
               <div className="space-y-20">
@@ -121,7 +121,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
                   <div className="flex flex-col gap-0 divide-y divide-scale-400">
                     <div className="block grid grid-cols-12 gap-6 px-8 py-8 lg:gap-12">
                       <div className="relative col-span-12 flex flex-col gap-6 lg:col-span-4">
-                        <p className="text-sm">Upload file size limit</p>
+                        <p className="text-sm">上传文件大小限制</p>
                       </div>
                       <div className="relative col-span-12 flex flex-col gap-x-6 gap-y-2 lg:col-span-8">
                         <div className="col-span-12 grid grid-cols-12 gap-2">
@@ -160,11 +160,11 @@ const StorageConfig = ({ config, projectRef }: any) => {
                         </div>
                         <p className="text-sm text-scale-1100">
                           {selectedUnit !== StorageSizeUnits.BYTES &&
-                            `Equivalent to ${convertToBytes(
+                            `相当于 ${convertToBytes(
                               values.fileSizeLimit,
                               selectedUnit
                             ).toLocaleString()} bytes. `}
-                          Maximum size in bytes of a file that can be uploaded is 5 GB (
+                          可以上传的文件大小上限（以字节为单位）为 5 GB (
                           {formattedMaxSizeBytes}).
                         </p>
                       </div>
@@ -190,7 +190,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
                           onClick={() => handleReset()}
                           disabled={!hasChanges && hasChanges !== undefined}
                         >
-                          Cancel
+                          取消
                         </Button>
                         <Button
                           type="primary"
@@ -198,7 +198,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
                           loading={isSubmitting}
                           disabled={!hasChanges && hasChanges !== undefined}
                         >
-                          Save
+                          保存
                         </Button>
                       </div>
                     </div>

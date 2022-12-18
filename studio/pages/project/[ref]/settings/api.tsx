@@ -44,6 +44,6 @@ const ApiSettings: NextPageWithLayout = () => {
   )
 }
 
-ApiSettings.getLayout = (page) => <SettingsLayout title="API Settings">{page}</SettingsLayout>
+ApiSettings.getLayout = (page) => <SettingsLayout title="API设置">{page}</SettingsLayout>
 
 export default observer(ApiSettings)

@@ -34,13 +34,13 @@ const CreateBucketModal: FC<Props> = ({
       onSelectCancel()
     } else {
       if (bucketName.includes(' ')) {
-        return setError('Bucket names should not have any spaces')
+        return setError('Bucket名称不应该包含空格')
       }
       if (bucketName.match(/[:;'"/?!#$%^&*()+_{}\[\]|\s]/g)) {
-        return setError('Only dots(.) or hyphens(-) are allowed')
+        return setError('仅允许(.)和(-)')
       }
       if (bucketName !== bucketName.toLowerCase()) {
-        return setError('Only lowercase letters are allowed')
+        return setError('仅允许小写字母')
       }
       setError('')
       setSaving(true)
@@ -51,16 +51,16 @@ const CreateBucketModal: FC<Props> = ({
   return (
     <Modal
       visible={visible}
-      header="Create storage bucket"
+      header="创建存储Bucket"
       size="medium"
       onCancel={onSelectCancel}
       customFooter={
         <div className="flex items-center gap-2">
           <Button type="default" onClick={onSelectCancel}>
-            Cancel
+            取消
           </Button>
           <Button type="primary" disabled={saving} loading={saving} onClick={onCreateBucket}>
-            {saving ? 'Creating bucket' : 'Create bucket'}
+            {saving ? '创建Bucket中...' : '创建Bucket'}
           </Button>
         </div>
       }
@@ -70,11 +70,11 @@ const CreateBucketModal: FC<Props> = ({
           <div className="relative flex items-center">
             <Input
               autoFocus
-              label="Name of bucket"
-              labelOptional="Buckets cannot be renamed once created."
+              label="bucket名称"
+              labelOptional="Bucket一旦创建就不可以修改名称"
               descriptionText={
                 <p className="text-scale-1000">
-                  Only lowercase letters, numbers, dots, and hyphens
+                  仅允许中文，小写英文字母，数字和(.)以及(-)
                 </p>
               }
               layout="vertical"
@@ -92,20 +92,19 @@ const CreateBucketModal: FC<Props> = ({
           <div className="space-y-4">
             <Toggle
               name="isPublic"
-              label="Public bucket"
-              descriptionText="Anyone can read any object without any authorization"
+              label="公开Bucket"
+              descriptionText="任何人都可以在无需鉴权的前提下，访问该Bucket中的对象"
               layout="flex"
               size="medium"
               onChange={() => setIsPublic(!isPublic)}
             />
             {isPublic && (
-              <Alert title="Public buckets are not protected" variant="warning" withIcon>
+              <Alert title="公开的buckets未启用保护" variant="warning" withIcon>
                 <p className="mb-2">
-                  Users can read objects in public buckets without any authorization.
+                  用户在未鉴权的情况下，对公开Bucket中的对象只读
                 </p>
                 <p>
-                  Row level security (RLS) policies are still required for other operations such as
-                  object uploads and deletes.
+                  其他操作（如对象上传和删除）仍需要行级别安全 （RLS） 策略
                 </p>
               </Alert>
             )}

@@ -8,17 +8,17 @@ export const generateDocsMenu = (
 ): ProductMenuGroup[] => {
   return [
     {
-      title: 'Getting Started',
+      title: '开始入门',
       items: [
-        { name: 'Introduction', key: 'introduction', url: `/project/${ref}/api`, items: [] },
+        { name: '介绍', key: 'introduction', url: `/project/${ref}/api`, items: [] },
         {
-          name: 'Authentication',
+          name: '认证',
           key: 'auth',
           url: `/project/${ref}/api?page=auth`,
           items: [],
         },
         {
-          name: 'User Management',
+          name: '用户管理',
           key: 'users',
           url: `/project/${ref}/api?page=users`,
           items: [],
@@ -26,10 +26,10 @@ export const generateDocsMenu = (
       ],
     },
     {
-      title: 'Tables and Views',
+      title: '表和视图',
       items: [
         {
-          name: 'Introduction',
+          name: '介绍',
           key: 'tables-intro',
           url: `/project/${ref}/api?page=tables-intro`,
           items: [],
@@ -45,10 +45,10 @@ export const generateDocsMenu = (
       ],
     },
     {
-      title: 'Stored Procedures',
+      title: '存储过程',
       items: [
         {
-          name: 'Introduction',
+          name: '介绍',
           key: 'rpc-intro',
           url: `/project/${ref}/api?page=rpc-intro`,
           items: [],
@@ -59,10 +59,10 @@ export const generateDocsMenu = (
       ],
     },
     {
-      title: 'More Resources',
+      title: '更多资源',
       items: [
         {
-          name: 'Guides',
+          name: '指南',
           key: 'guides',
           url: `https://supabase.com/docs`,
           icon: <IconBook size={14} strokeWidth={2} />,
@@ -70,7 +70,7 @@ export const generateDocsMenu = (
           isExternal: true,
         },
         {
-          name: 'API Reference',
+          name: 'API参考',
           key: 'api-reference',
           url: `https://supabase.com/docs/guides/api`,
           icon: <IconBookOpen size={14} strokeWidth={2} />,

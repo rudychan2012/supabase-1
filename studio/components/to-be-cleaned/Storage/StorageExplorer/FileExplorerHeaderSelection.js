@@ -17,8 +17,7 @@ const FileExplorerHeaderSelection = ({
       />
       <div className="ml-4 flex items-center space-x-3">
         <p className="mb-0 text-sm text-scale-1200">
-          <span style={{ fontVariantNumeric: 'tabular-nums' }}>{selectedItems.length}</span> items
-          selected
+          <span style={{ fontVariantNumeric: 'tabular-nums' }}>{selectedItems.length}</span>个对象被选中
         </p>
         {/* [Joshen] Disabled multi download for now */}
         <Button
@@ -27,7 +26,7 @@ const FileExplorerHeaderSelection = ({
           shadow={false}
           onClick={onSelectItemsDownload}
         >
-          Download
+          下载
         </Button>
         <div className="border-r border-green-800 py-3 opacity-50" />
         <Button
@@ -36,7 +35,7 @@ const FileExplorerHeaderSelection = ({
           shadow={false}
           onClick={onSelectItemsDelete}
         >
-          Delete
+          删除
         </Button>
         <Button
           icon={<IconMove size={16} strokeWidth={2} />}
@@ -44,7 +43,7 @@ const FileExplorerHeaderSelection = ({
           shadow={false}
           onClick={onSelectItemsMove}
         >
-          Move
+          移动
         </Button>
       </div>
     </div>

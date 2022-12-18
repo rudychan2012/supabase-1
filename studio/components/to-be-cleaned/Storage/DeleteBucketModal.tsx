@@ -30,15 +30,15 @@ const DeleteBucketModal: FC<Props> = ({
   return (
     <TextConfirmModal
       visible={visible}
-      title={`Confirm deletion of ${bucket.name}`}
-      confirmPlaceholder="Type in name of bucket"
+      title={`确认删除 ${bucket.name}`}
+      confirmPlaceholder="输入Bucket的名称"
       onConfirm={onConfirmDelete}
       onCancel={onSelectCancel}
       confirmString={bucket.name}
       loading={deleting}
-      text={`This will delete your bucket called ${bucket.name}.`}
-      alert="You cannot recover this bucket once it is deleted!"
-      confirmLabel={`Delete bucket ${bucket.name}`}
+      text={`将会删除${bucket.name}`}
+      alert="无法回复被删除的Bucket"
+      confirmLabel={`删除${bucket.name}`}
     />
   )
 }

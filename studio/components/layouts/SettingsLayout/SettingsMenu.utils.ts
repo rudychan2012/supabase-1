@@ -18,7 +18,7 @@ export const generateSettingsMenu = (ref: string, project?: ProjectBase): Produc
 
   return [
     {
-      title: 'Project Settings',
+      title: '应用设置',
       items: [
         // {
         //   name: 'General',
@@ -51,7 +51,7 @@ export const generateSettingsMenu = (ref: string, project?: ProjectBase): Produc
         ...(IS_PLATFORM
           ? [
               {
-                name: 'Storage',
+                name: '存储',
                 key: 'storage',
                 url: `/project/${ref}/settings/storage`,
                 items: [],

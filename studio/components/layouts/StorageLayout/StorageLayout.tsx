@@ -59,7 +59,7 @@ const StorageLayout: FC<Props> = ({ title, children }) => {
       ui.setNotification({
         category: 'error',
         message:
-          'Failed to fetch project configuration. Try refreshing your browser, or reach out to us at support@supabase.io',
+          '无法获取应用配置，尝试刷新您的浏览器，或通过support@supabase.io联系我们',
       })
     }
     storageExplorerStore.setLoaded(true)
@@ -98,14 +98,14 @@ const StorageLayout: FC<Props> = ({ title, children }) => {
     return (
       <BaseLayout>
         <main style={{ maxHeight: '100vh' }} className="flex-1 overflow-y-auto">
-          <NoPermission isFullPage resourceText="access your project's storage" />
+          <NoPermission isFullPage resourceText="访问您应用的存储" />
         </main>
       </BaseLayout>
     )
   }
 
   return (
-    <ProjectLayout title={title || 'Storage'} product="Storage" productMenu={<StorageMenu />}>
+    <ProjectLayout title={title || '存储'} product="存储" productMenu={<StorageMenu />}>
       {children}
       <CreateBucketModal
         visible={showCreateBucketModal}

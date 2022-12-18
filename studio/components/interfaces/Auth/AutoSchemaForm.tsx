@@ -97,8 +97,8 @@ const AutoSchemaForm = observer(() => {
         return (
           <>
             <FormHeader
-              title="Auth settings"
-              description="Configure authentication sessions for your users"
+              title="Auth设置"
+              description="为您的用户配置身份验证"
             />
             <FormPanel
               disabled={!canUpdateConfig}
@@ -111,48 +111,48 @@ const AutoSchemaForm = observer(() => {
                     handleReset={handleReset}
                     helper={
                       !canUpdateConfig
-                        ? 'You need additional permissions to update authentication settings'
+                        ? '您需要额外的权限才能修改身份验证设置'
                         : undefined
                     }
                   />
                 </div>
               }
             >
-              <FormSection header={<FormSectionLabel>User Signups</FormSectionLabel>}>
+              <FormSection header={<FormSectionLabel>用户注册</FormSectionLabel>}>
                 <FormSectionContent loading={!isLoaded}>
                   <Toggle
                     id="DISABLE_SIGNUP"
                     size="small"
-                    label="Allow new users to sign up"
+                    label="允许新用户注册"
                     layout="flex"
-                    descriptionText="If this is disabled, new users will not be able to sign up to your application."
+                    descriptionText="如果禁用此功能，新用户将无法注册您的应用程序"
                     disabled={!canUpdateConfig}
                   />
                 </FormSectionContent>
               </FormSection>
               <div className="border-t border-scale-400"></div>
-              <FormSection header={<FormSectionLabel>User Sessions</FormSectionLabel>}>
+              <FormSection header={<FormSectionLabel>用户回话</FormSectionLabel>}>
                 <FormSectionContent loading={!isLoaded}>
                   {/* Permitted redirects for anything on that domain */}
                   {/* Check with @kangming about this */}
                   <InputNumber
                     id="JWT_EXP"
                     size="small"
-                    label="JWT expiry limit"
-                    descriptionText="How long tokens are valid for. Defaults to 3600 (1 hour), maximum 604,800 seconds (one week)."
-                    actions={<span className="mr-3 text-scale-900">seconds</span>}
+                    label="JWT过期时长"
+                    descriptionText="JWT令牌的有效期多长，默认为 3600（1 小时），最大 604,800 秒（一周）"
+                    actions={<span className="mr-3 text-scale-900">秒</span>}
                     disabled={!canUpdateConfig}
                   />
                 </FormSectionContent>
               </FormSection>
-              <FormSection header={<FormSectionLabel>Security and Protection</FormSectionLabel>}>
+              <FormSection header={<FormSectionLabel>安全与保护</FormSectionLabel>}>
                 <FormSectionContent loading={!isLoaded}>
                   <Toggle
                     id="SECURITY_CAPTCHA_ENABLED"
                     size="small"
-                    label="Enable hCaptcha protection"
+                    label="启用验证码保护"
                     layout="flex"
-                    descriptionText="Protect authentication endpoints from abuse."
+                    descriptionText="保护身份验证接口被恶意调用"
                     disabled={!canUpdateConfig}
                   />
                   {values.SECURITY_CAPTCHA_ENABLED && (
@@ -160,7 +160,7 @@ const AutoSchemaForm = observer(() => {
                       id="SECURITY_CAPTCHA_SECRET"
                       type={hidden ? 'password' : 'text'}
                       size="small"
-                      label="hCaptcha secret"
+                      label="hCaptcha密钥"
                       disabled={!canUpdateConfig}
                       actions={
                         <Button
@@ -174,9 +174,9 @@ const AutoSchemaForm = observer(() => {
                   <Toggle
                     id="REFRESH_TOKEN_ROTATION_ENABLED"
                     size="small"
-                    label="Enable automatic reuse detection"
+                    label="启用自动重用检测"
                     layout="flex"
-                    descriptionText="Prevent replay attacks from compromised refresh tokens."
+                    descriptionText="防止来自构造令牌的重放攻击"
                     disabled={!canUpdateConfig}
                   />
                   {values.REFRESH_TOKEN_ROTATION_ENABLED && (
@@ -184,9 +184,9 @@ const AutoSchemaForm = observer(() => {
                       id="SECURITY_REFRESH_TOKEN_REUSE_INTERVAL"
                       size="small"
                       min={0}
-                      label="Reuse interval"
-                      descriptionText="Time interval where the same refresh token can be used to request for an access token."
-                      actions={<span className="mr-3 text-scale-900">seconds</span>}
+                      label="重用间隔"
+                      descriptionText="同一刷新令牌可用于请求访问令牌的时间间隔."
+                      actions={<span className="mr-3 text-scale-900">秒</span>}
                       disabled={!canUpdateConfig}
                     />
                   )}
@@ -194,13 +194,13 @@ const AutoSchemaForm = observer(() => {
               </FormSection>
               {showMfaSso && (
                 <FormSection
-                  header={<FormSectionLabel>Multi Factor Authentication (MFA)</FormSectionLabel>}
+                  header={<FormSectionLabel>多因素认证(MFA)</FormSectionLabel>}
                 >
                   <FormSectionContent loading={!isLoaded}>
                     <InputNumber
                       id="MAX_ENROLLED_FACTORS"
                       size="small"
-                      label="Maximum number of enrolled factors"
+                      label="注册校验因素的最大数量"
                       disabled={!canUpdateConfig}
                     />
                   </FormSectionContent>

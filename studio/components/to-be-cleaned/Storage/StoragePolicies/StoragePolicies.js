@@ -78,7 +78,7 @@ const StoragePolicies = () => {
   const onCancelPolicyDelete = () => setSelectedPolicyToDelete({})
 
   const onSavePolicySuccess = async () => {
-    ui.setNotification({ category: 'success', message: 'Successfully saved policy!' })
+    ui.setNotification({ category: 'success', message: '保存策略成功!' })
     await fetchPolicies()
     onCancelPolicyEdit()
   }
@@ -94,7 +94,7 @@ const StoragePolicies = () => {
         if (res.error) {
           ui.setNotification({
             category: 'error',
-            message: `Error adding policy: ${res.error.message}`,
+            message: `添加策略错误: ${res.error.message}`,
           })
           return true
         }
@@ -108,7 +108,7 @@ const StoragePolicies = () => {
     if (res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Error adding policy: ${res.error.message}`,
+        message: `添加策略错误: ${res.error.message}`,
       })
       return true
     }
@@ -120,7 +120,7 @@ const StoragePolicies = () => {
     if (res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Error updating policy: ${res.error.message}`,
+        message: `更新策略错误: ${res.error.message}`,
       })
       return true
     }
@@ -132,10 +132,10 @@ const StoragePolicies = () => {
     if (res.error) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to delete policy: ${res.error.message}`,
+        message: `删除策略失败: ${res.error.message}`,
       })
     } else {
-      ui.setNotification({ category: 'success', message: 'Successfully deleted policy!' })
+      ui.setNotification({ category: 'success', message: '删除策略成功!' })
     }
     setSelectedPolicyToDelete({})
     await fetchPolicies()
@@ -143,10 +143,9 @@ const StoragePolicies = () => {
 
   return (
     <div className="flex min-h-full w-full flex-col">
-      <h3 className="text-xl">Storage policies</h3>
+      <h3 className="text-xl">存储策略</h3>
       <p className="mt-2 text-sm text-scale-1100">
-        Safeguard your files with policies that define the operations allowed for your users at the
-        bucket level.
+        定义用户允许的操作的策略来保护您存放在Bucket中的文件。
       </p>
 
       {!loaded ? (
@@ -180,14 +179,13 @@ const StoragePolicies = () => {
 
           <div className="!mb-4 w-full border-b border-gray-600" />
           <p className="text-sm text-scale-1000">
-            You may also write policies for the tables under the storage schema directly for greater
-            control
+            您也可以直接为storage schema下的表编写策略，以实现更好的控制
           </p>
 
           {/* Section for policies under storage.objects that are not tied to any buckets */}
           <StoragePoliciesBucketRow
             table="objects"
-            label="Other policies under storage.objects"
+            label="storage.objects下的其他策略"
             policies={ungroupedPolicies}
             onSelectPolicyAdd={onSelectPolicyAdd}
             onSelectPolicyEdit={onSelectPolicyEdit}
@@ -197,7 +195,7 @@ const StoragePolicies = () => {
           {/* Section for policies under storage.buckets */}
           <StoragePoliciesBucketRow
             table="buckets"
-            label="Policies under storage.buckets"
+            label="storage.buckets下的策略"
             policies={storageBucketPolicies}
             onSelectPolicyAdd={onSelectPolicyAdd}
             onSelectPolicyEdit={onSelectPolicyEdit}
@@ -233,10 +231,10 @@ const StoragePolicies = () => {
       <ConfirmModal
         danger
         visible={!isEmpty(selectedPolicyToDelete)}
-        title="Confirm to delete policy"
-        description={`This is permanent! Are you sure you want to delete the policy "${selectedPolicyToDelete.name}"`}
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        title="确认删除策略"
+        description={`该操作不可逆！您确定要删除该策略吗"${selectedPolicyToDelete.name}"`}
+        buttonLabel="删除"
+        buttonLoadingLabel="删除中..."
         onSelectCancel={onCancelPolicyDelete}
         onSelectConfirm={onDeletePolicy}
       />

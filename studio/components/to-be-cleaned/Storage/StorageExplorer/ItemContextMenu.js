@@ -14,27 +14,27 @@ const ItemContextMenu = ({
       <Item
         onClick={({ props }) => (!props.item.isCorrupted ? onCopyFileURL(props.item) : () => {})}
       >
-        <span className="text-xs">Copy URL</span>
+        <span className="text-xs">复制URL</span>
       </Item>
       <Item
         onClick={({ props }) =>
           !props.item.isCorrupted ? onSelectItemRename(props.item) : () => {}
         }
       >
-        <span className="text-xs">Rename</span>
+        <span className="text-xs">重命名</span>
       </Item>
       <Item
         onClick={({ props }) => (!props.item.isCorrupted ? onSelectItemMove(props.item) : () => {})}
       >
-        <span className="text-xs">Move</span>
+        <span className="text-xs">移动</span>
       </Item>
       <Item
         onClick={({ props }) => (!props.item.isCorrupted ? onDownloadFile(props.item) : () => {})}
       >
-        <span className="text-xs">Download</span>
+        <span className="text-xs">下载</span>
       </Item>
       <Item onClick={({ props }) => onSelectItemDelete(props.item)}>
-        <span className="text-xs">Delete</span>
+        <span className="text-xs">删除</span>
       </Item>
     </Menu>
   )

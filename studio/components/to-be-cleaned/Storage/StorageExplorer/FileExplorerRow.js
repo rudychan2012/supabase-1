@@ -153,30 +153,30 @@ const FileExplorerRow = ({
           ...(!item.isCorrupted
             ? [
                 {
-                  name: 'Copy URL',
+                  name: '复制URL',
                   icon: <IconCopy size="tiny" />,
                   onClick: () => onCopyFileURL(itemWithColumnIndex),
                 },
                 {
-                  name: 'Rename',
+                  name: '重命名',
                   icon: <IconEdit size="tiny" />,
                   onClick: () => onSelectItemRename(itemWithColumnIndex),
                 },
                 {
-                  name: 'Move',
+                  name: '移动',
                   icon: <IconMove size="tiny" />,
                   onClick: () => onSelectItemMove(itemWithColumnIndex),
                 },
                 {
-                  name: 'Download',
+                  name: '下载',
                   icon: <IconDownload size="tiny" />,
                   onClick: () => onDownloadFile(itemWithColumnIndex),
                 },
-                { name: 'Separator' },
+                { name: '分隔' },
               ]
             : []),
           {
-            name: 'Delete',
+            name: '删除',
             icon: <IconTrash size="tiny" />,
             onClick: () => onSelectItemDelete(itemWithColumnIndex),
           },
@@ -286,7 +286,7 @@ const FileExplorerRow = ({
                   ].join(' ')}
                 >
                   <span className="text-xs text-scale-1200">
-                    File is corrupted, please delete and reupload again.
+                    文件已损坏，请删除并重新上传
                   </span>
                 </div>
               </Tooltip.Content>

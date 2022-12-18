@@ -129,13 +129,13 @@ const StoragePoliciesEditPolicyModal = ({
       // Will need to figure out how to strip away comments or something
       return ui.setNotification({
         category: 'info',
-        message: 'Did you forget to provide a definition for your policy?',
+        message: '您是否忘记为策略提供定义?',
       })
     }
     if (allowedOperations.length === 0) {
       return ui.setNotification({
         category: 'info',
-        message: 'You will need to allow at least one operation in your policy',
+        message: '您需要在策略中至少允许一个操作',
       })
     }
 
@@ -169,10 +169,10 @@ const StoragePoliciesEditPolicyModal = ({
   }) => {
     const getTitle = () => {
       if (view === POLICY_MODAL_VIEWS.EDITOR || view === POLICY_MODAL_VIEWS.SELECTION) {
-        return `Adding new policy to ${bucketName}`
+        return `给${bucketName}添加策略`
       }
       if (view === POLICY_MODAL_VIEWS.REVIEW) {
-        return `Reviewing policies to be created for ${bucketName}`
+        return `查看将要为${bucketName}添加的策略`
       }
     }
     if (view === POLICY_MODAL_VIEWS.TEMPLATES) {
@@ -185,7 +185,7 @@ const StoragePoliciesEditPolicyModal = ({
             >
               <IconChevronLeft strokeWidth={2} size={14} />
             </span>
-            <h4 className="textlg m-0">Select a template to use for your new policy</h4>
+            <h4 className="textlg m-0">选择要用于新策略的模板</h4>
           </div>
         </div>
       )
@@ -217,7 +217,7 @@ const StoragePoliciesEditPolicyModal = ({
       <div className="w-full">
         {view === POLICY_MODAL_VIEWS.SELECTION ? (
           <PolicySelection
-            description="PostgreSQL policies control access to your files and folders"
+            description="PostgreSQL 策略控制对文件和文件夹的访问"
             onViewTemplates={onViewTemplates}
             onViewEditor={() => onViewEditor('new')}
           />

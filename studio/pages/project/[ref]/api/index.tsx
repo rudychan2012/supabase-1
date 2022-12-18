@@ -101,7 +101,7 @@ const DocView: FC<any> = observer(({}) => {
     return (
       <div className="mx-auto p-6 text-center sm:w-full md:w-3/4">
         <p className="text-scale-1000">
-          <p>Error connecting to API</p>
+          <p>连接API错误</p>
           <p>{`${error || jsonSchemaError}`}</p>
         </p>
       </div>
@@ -109,7 +109,7 @@ const DocView: FC<any> = observer(({}) => {
   if (!data || !jsonSchema || !PageState.jsonSchema)
     return (
       <div className="mx-auto p-6 text-center sm:w-full md:w-3/4">
-        <h3 className="text-xl">Building docs ...</h3>
+        <h3 className="text-xl">生成API文档中 ...</h3>
       </div>
     )
 

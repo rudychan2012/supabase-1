@@ -49,13 +49,13 @@ const PostgrestConfig: FC<Props> = ({}) => {
       if (response.error) {
         throw response.error
       } else {
-        ui.setNotification({ category: 'success', message: 'Successfully saved settings' })
+        ui.setNotification({ category: 'success', message: '保存设置成功' })
       }
     } catch (error: any) {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to update config: ${error.message}`,
+        message: `更新设置失败: ${error.message}`,
       })
     }
   }
@@ -100,7 +100,7 @@ const PostgrestConfig: FC<Props> = ({}) => {
           <>
             <FormPanel
               disabled={true}
-              header={<p>API settings</p>}
+              header={<p>API设置</p>}
               footer={
                 <div className="flex py-4 px-8">
                   <FormActions
@@ -111,7 +111,7 @@ const PostgrestConfig: FC<Props> = ({}) => {
                     disabled={!canUpdatePostgrestConfig}
                     helper={
                       !canUpdatePostgrestConfig
-                        ? "You need additional permissions to update your project's API settings"
+                        ? "您需要额外的权限才能更新应用的API设置"
                         : undefined
                     }
                   />
@@ -121,11 +121,11 @@ const PostgrestConfig: FC<Props> = ({}) => {
               {isError ? (
                 <div className="flex items-center justify-center space-x-2 py-8">
                   <IconAlertCircle size={16} strokeWidth={1.5} />
-                  <p className="text-sm text-scale-1100">Failed to retrieve API settings</p>
+                  <p className="text-sm text-scale-1100">获取API设置失败</p>
                 </div>
               ) : (
                 <>
-                  <FormSection header={<FormSectionLabel>Exposed schemas</FormSectionLabel>}>
+                  <FormSection header={<FormSectionLabel>公开的schemas</FormSectionLabel>}>
                     <FormSectionContent loading={false}>
                       {schema.length >= 1 && (
                         <MultiSelect
@@ -133,10 +133,9 @@ const PostgrestConfig: FC<Props> = ({}) => {
                           options={schema}
                           descriptionText={
                             <>
-                              The schemas to expose in your API. Tables, views and stored procedures
-                              in these schemas will get API endpoints.
-                              <code className="text-xs">public</code> and{' '}
-                              <code className="text-xs">storage</code> are protected by default.
+                              公开的schema。才可以通过API访问该schema中的表、视图和存储过程。
+                              <code className="text-xs">public</code> 和{' '}
+                              <code className="text-xs">storage</code>默认公开.
                             </>
                           }
                           emptyMessage={
@@ -144,10 +143,10 @@ const PostgrestConfig: FC<Props> = ({}) => {
                               <IconAlertCircle strokeWidth={2} />
                               <div className="mt-2 flex flex-col text-center">
                                 <p className="align-center text-sm">
-                                  No schema available to choose
+                                  没有可供选择的schema
                                 </p>
                                 <p className="text-xs opacity-50">
-                                  New schemas you create will appear here
+                                  您新建的schema会出现在这里
                                 </p>
                               </div>
                             </>
@@ -165,23 +164,23 @@ const PostgrestConfig: FC<Props> = ({}) => {
                       )}
                     </FormSectionContent>
                   </FormSection>
-                  <FormSection header={<FormSectionLabel>Extra search path</FormSectionLabel>}>
+                  <FormSection header={<FormSectionLabel>额外的搜索路径</FormSectionLabel>}>
                     <FormSectionContent loading={false}>
                       <Input
                         id="db_extra_search_path"
                         size="small"
                         disabled={!canUpdatePostgrestConfig}
-                        descriptionText="Extra schemas to add to the search path of every request. Multiple schemas must be comma-separated."
+                        descriptionText="添加到每个请求可以搜索的的额外schema，多个schema必须以逗号分隔。"
                       />
                     </FormSectionContent>
                   </FormSection>
-                  <FormSection header={<FormSectionLabel>Max rows</FormSectionLabel>}>
+                  <FormSection header={<FormSectionLabel>最大行数</FormSectionLabel>}>
                     <FormSectionContent loading={false}>
                       <InputNumber
                         id="max_rows"
                         size="small"
                         disabled={!canUpdatePostgrestConfig}
-                        descriptionText="The maximum number of rows returned from a view, table, or stored procedure. Limits payload size for accidental or malicious requests."
+                        descriptionText="从视图、表或存储过程返回的最大行数，限制意外或恶意请求的负载大小。"
                       />
                     </FormSectionContent>
                   </FormSection>

@@ -1,6 +1,7 @@
 import { auth } from 'lib/gotrue'
 import { isUndefined } from 'lodash'
 import { SupaResponse } from 'types/base'
+import { parseCookies } from 'nookies'
 
 export function handleError<T>(e: any, requestId: string): SupaResponse<T> {
   const message = e?.message ? `An error has occurred: ${e.message}` : 'An error has occurred'
@@ -95,10 +96,13 @@ export async function getAccessToken() {
 }
 
 export async function constructHeaders(requestId: string, optionHeaders?: { [prop: string]: any }) {
+  const cookies = parseCookies()
   let headers: { [prop: string]: any } = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'X-Request-Id': requestId,
+    // 通过X-Memfire-Token
+    'X-Memfire-Token': cookies._token,
     ...optionHeaders,
   }
 
@@ -107,7 +111,7 @@ export async function constructHeaders(requestId: string, optionHeaders?: { [pro
     // TODO
     // const accessToken = await getAccessToken()
     // if (accessToken) headers.Authorization = `Bearer ${accessToken}`
-    headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICAgInJvbGUiOiAiYW5vbiIsCiAgICAiaXNzIjogInN1cGFiYXNlIiwKICAgICJpYXQiOiAxNjY5NTY0ODAwLAogICAgImV4cCI6IDE4MjczMzEyMDAKfQ.q8_-9rBUl5ouv4RmL5MkV_kqBtKfRN2dRSzYQVQMzIg`
+    headers.Authorization = `Bearer ${process.env.SUPABASE_ANON_KEY}`
   }
 
   return headers

@@ -37,11 +37,11 @@ const DisplayApiSettings = () => {
     <Panel
       title={
         <div className="space-y-3">
-          <h5 className="text-base">Project API keys</h5>
+          <h5 className="text-base">应用API密钥</h5>
           <p className="text-sm text-scale-1000">
-            Your API is secured behind an API gateway which requires an API Key for every request.
+            您的服务受到API网关的保护，每个请求都需要一个API密钥。
             <br />
-            You can use the keys below to use Supabase client libraries.
+            您可以通过配置下面的密钥来使用Supabase各种客户端库。
           </p>
         </div>
       }
@@ -50,7 +50,7 @@ const DisplayApiSettings = () => {
         <div className="flex items-center justify-center space-x-2 py-8">
           <IconAlertCircle size={16} strokeWidth={1.5} />
           <p className="text-sm text-scale-1100">
-            {isProjectSettingsError ? 'Failed to retrieve API keys' : 'Failed to update JWT secret'}
+            {isProjectSettingsError ? '无法获取API密钥' : '无法更新JWT'}
           </p>
         </div>
       ) : isApiKeysEmpty || isProjectSettingsLoading || isJwtSecretUpdateStatusLoading ? (
@@ -58,8 +58,8 @@ const DisplayApiSettings = () => {
           <IconLoader className="animate-spin" size={16} strokeWidth={1.5} />
           <p className="text-sm text-scale-1100">
             {isProjectSettingsLoading || isApiKeysEmpty
-              ? 'Retrieving API keys'
-              : 'JWT secret is being updated'}
+              ? '正在获取API密钥'
+              : 'JWT已更新'}
           </p>
         </div>
       ) : (
@@ -96,18 +96,18 @@ const DisplayApiSettings = () => {
               reveal={x.tags !== 'anon' && canReadAPIKeys && isNotUpdatingJwtSecret}
               value={
                 !canReadAPIKeys
-                  ? 'You need additional permissions to view API keys'
+                  ? '您需要额外的权限才能查看API密钥'
                   : jwtSecretUpdateStatus === JwtSecretUpdateStatus.Failed
-                  ? 'JWT secret update failed, new API key may have issues'
+                  ? 'JWT更新失败，新的API密钥可能有问题'
                   : jwtSecretUpdateStatus === JwtSecretUpdateStatus.Updating
-                  ? 'Updating JWT secret...'
+                  ? '更新JWT...'
                   : x.api_key
               }
               onChange={() => {}}
               descriptionText={
                 x.tags === 'service_role'
-                  ? 'This key has the ability to bypass Row Level Security. Never share it publicly.'
-                  : 'This key is safe to use in a browser if you have enabled Row Level Security for your tables and configured policies.'
+                  ? '此密钥具有绕过行级安全性的能力，切勿公开分享。'
+                  : '如果您为数据库表启用了行级安全并配置了策略，则可以在浏览器中安全地使用此密钥。'
               }
             />
           </Panel.Content>

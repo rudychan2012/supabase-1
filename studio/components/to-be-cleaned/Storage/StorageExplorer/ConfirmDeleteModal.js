@@ -16,15 +16,15 @@ const ConfirmDeleteModal = ({
   const multipleFiles = selectedItemsToDelete.length > 1
 
   const title = multipleFiles
-    ? `Confirm deletion of ${selectedItemsToDelete.length} items`
+    ? `确认删除${selectedItemsToDelete.length}个对象`
     : selectedItemsToDelete.length === 1
-    ? `Confirm deletion of ${selectedItemsToDelete[0].name}`
+    ? `确认删除${selectedItemsToDelete[0].name}`
     : ``
 
   const description = multipleFiles
-    ? `Are you sure you want to delete the selected ${selectedItemsToDelete.length} items?`
+    ? `您确认删除选中的${selectedItemsToDelete.length}个对象?`
     : selectedItemsToDelete.length === 1
-    ? `Are you sure you want to delete the selected ${selectedItemsToDelete[0].type.toLowerCase()}?`
+    ? `您确认删除${selectedItemsToDelete[0].type.toLowerCase()}?`
     : ``
 
   const onConfirmDelete = () => {
@@ -41,17 +41,17 @@ const ConfirmDeleteModal = ({
       customFooter={
         <div className="flex items-center gap-2">
           <Button type="default" onClick={onSelectCancel}>
-            Cancel
+            取消
           </Button>
           <Button type="primary" danger loading={deleting} onClick={onConfirmDelete}>
-            {deleting ? 'Deleting' : 'Delete'}
+            {deleting ? '删除中' : '删除'}
           </Button>
         </div>
       }
     >
       <Modal.Content>
         <div className="my-4">
-          <Alert withIcon variant="danger" title={`This action cannot be undone.`}>
+          <Alert withIcon variant="danger" title={`该操作不可逆`}>
             {description}
           </Alert>
         </div>

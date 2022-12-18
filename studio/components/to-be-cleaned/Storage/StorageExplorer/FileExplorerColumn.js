@@ -40,7 +40,7 @@ const DragOverOverlay = ({ isOpen, onDragLeave, onDrop, folderIsEmpty }) => {
           >
             <IconUpload className="text-white pointer-events-none" size={20} strokeWidth={2} />
             <p className="text-center text-sm  text-white mt-2 pointer-events-none">
-              Drop your files to upload to this folder
+              将您的文件拖放到本区域即可上传
             </p>
           </div>
         )}
@@ -161,10 +161,10 @@ const FileExplorerColumn = ({
           {columnFiles.length > 0 ? (
             <>
               <SelectAllCheckbox />
-              <p className="text-sm text-scale-1100">Select all {columnFiles.length} files</p>
+              <p className="text-sm text-scale-1100">选中所有{columnFiles.length}个文件</p>
             </>
           ) : (
-            <p className="text-sm text-scale-1100">No files available for selection</p>
+            <p className="text-sm text-scale-1100">没有可选的文件</p>
           )}
         </div>
       )}
@@ -180,12 +180,12 @@ const FileExplorerColumn = ({
         >
           <div className="flex w-[40%] min-w-[250px] items-center">
             <SelectAllCheckbox />
-            <p className="text-sm">Name</p>
+            <p className="text-sm">名称</p>
           </div>
-          <p className="w-[11%] min-w-[100px] text-sm">Size</p>
-          <p className="w-[14%] min-w-[100px] text-sm">Type</p>
-          <p className="w-[15%] min-w-[160px] text-sm">Created at</p>
-          <p className="w-[15%] min-w-[160px] text-sm">Last modified at</p>
+          <p className="w-[11%] min-w-[100px] text-sm">大小</p>
+          <p className="w-[14%] min-w-[100px] text-sm">类型</p>
+          <p className="w-[15%] min-w-[160px] text-sm">创建时间</p>
+          <p className="w-[15%] min-w-[160px] text-sm">最后修改时间</p>
         </div>
       )}
 
@@ -235,9 +235,9 @@ const FileExplorerColumn = ({
       {column.items.length === 0 && column.status !== STORAGE_ROW_STATUS.LOADING && (
         <div className="h-full w-full flex flex-col items-center justify-center">
           <img src="/img/storage-placeholder.svg" className="opacity-75 pointer-events-none" />
-          <p className="my-3 opacity-75">Drop your files here</p>
+          <p className="my-3 opacity-75">将您的文件拖放至此处</p>
           <p className="w-40 text-center text-sm text-scale-1100">
-            Or upload them via the "Upload file" button above
+            或者通过上方的"上传文件"按钮
           </p>
         </div>
       )}

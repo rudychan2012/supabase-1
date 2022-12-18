@@ -8,35 +8,35 @@ import { User } from 'types'
 
 const FlagProvider: FC = ({ children }) => {
   const [store, setStore] = useState({})
-  const { ui } = useStore()
+  // const { ui } = useStore()
   const { Provider } = FlagContext
-  const { profile } = ui
+  // const { profile } = ui
 
-  useEffect(() => {
-    if (IS_PLATFORM) getFlags(profile)
-  }, [profile])
+  // useEffect(() => {
+  //   if (IS_PLATFORM) getFlags(profile)
+  // }, [profile])
 
-  const getFlags = async (user?: User) => {
-    const setFlagValues = async () => {
-      const flagValues =
-        user !== undefined
-          ? await client.getAllValuesAsync({ identifier: user.primary_email })
-          : await client.getAllValuesAsync()
-      const flagStore: any = {}
-
-      flagValues.forEach((item: any) => {
-        flagStore[item.settingKey] = item.settingValue
-      })
-      setStore(flagStore)
-    }
-
-    const client = createConfigCatClient(process.env.NEXT_PUBLIC_CONFIGCAT_SDK_KEY ?? '', {
-      configChanged: setFlagValues,
-      pollIntervalSeconds: 600,
-    })
-
-    await setFlagValues()
-  }
+  // const getFlags = async (user?: User) => {
+  //   const setFlagValues = async () => {
+  //     const flagValues =
+  //       user !== undefined
+  //         ? await client.getAllValuesAsync({ identifier: user.primary_email })
+  {/*        : await client.getAllValuesAsync()*/}
+  {/*    const flagStore: any = {}*/}
+  //
+  {/*    flagValues.forEach((item: any) => {*/}
+  //       flagStore[item.settingKey] = item.settingValue
+  //     })
+  //     setStore(flagStore)
+  //   }
+  //
+  {/*  const client = createConfigCatClient(process.env.NEXT_PUBLIC_CONFIGCAT_SDK_KEY ?? '', {*/}
+  //     configChanged: setFlagValues,
+  //     pollIntervalSeconds: 600,
+  //   })
+  //
+  //   await setFlagValues()
+  // }
 
   return <Provider value={store}>{children}</Provider>
 }

@@ -28,8 +28,8 @@ const SettingsLayout: FC<Props> = ({ title, children }) => {
 
   return (
     <BaseLayout
-      title={title || 'Settings'}
-      product="Settings"
+      title={title || '设置'}
+      product="设置"
       productMenu={<ProductMenu page={page} menu={menuRoutes} />}
     >
       <main style={{ maxHeight: '100vh' }} className="flex-1 overflow-y-auto">
