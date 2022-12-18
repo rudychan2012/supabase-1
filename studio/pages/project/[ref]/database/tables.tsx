@@ -45,6 +45,7 @@ const DatabaseTables: NextPageWithLayout = () => {
   const onDeleteTable = (table: PostgresTable) => {
     setIsDeleting(true)
     setSelectedTableToDelete(table)
+    console.log(table)
   }
 
   const onAddColumn = () => {
@@ -79,13 +80,13 @@ const DatabaseTables: NextPageWithLayout = () => {
       } else {
         ui.setNotification({
           category: 'success',
-          message: `Successfully removed ${selectedTableToDelete.name}.`,
+          message: `成功删除 ${selectedTableToDelete.name}.`,
         })
       }
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to delete ${selectedTableToDelete?.name}: ${error.message}`,
+        message: `删除 ${selectedTableToDelete?.name} 失败: ${error.message}`,
       })
     } finally {
       setIsDeleting(false)
@@ -104,13 +105,13 @@ const DatabaseTables: NextPageWithLayout = () => {
         onColumnUpdated()
         ui.setNotification({
           category: 'success',
-          message: `Successfully removed ${selectedColumnToDelete.name}.`,
+          message: `成功删除 ${selectedColumnToDelete.name}.`,
         })
       }
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to delete ${selectedColumnToDelete?.name}: ${error.message}`,
+        message: `删除 ${selectedColumnToDelete?.name} 失败: ${error.message}`,
       })
     } finally {
       setIsDeleting(false)
@@ -136,7 +137,7 @@ const DatabaseTables: NextPageWithLayout = () => {
             onAddColumn={onAddColumn}
             onEditColumn={onEditColumn}
             onDeleteColumn={onDeleteColumn}
-            onSelectBack={() => setSelectedTable(undefined)}
+            onSelectBack={() => {setSelectedTable(undefined), setSelectedColumnToDelete(undefined)}}
           />
         )}
       </div>
@@ -144,33 +145,33 @@ const DatabaseTables: NextPageWithLayout = () => {
         danger
         visible={isDeleting && !isUndefined(selectedTableToDelete)}
         header={
-          <span className="break-words">{`Confirm deletion of table "${selectedTableToDelete?.name}"`}</span>
+          <span className="break-words">{`确认删除表 "${selectedTableToDelete?.name}"`}</span>
         }
         children={
           <Modal.Content>
             <p className="py-4 text-sm text-scale-1100">
-              Are you sure you want to delete the selected table? This action cannot be undone.
+              您确定要删除所选表格吗？此操作无法撤消。
             </p>
           </Modal.Content>
         }
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        buttonLabel="删除"
+        buttonLoadingLabel="正在删除"
         onSelectCancel={() => setIsDeleting(false)}
         onSelectConfirm={onConfirmDeleteTable}
       />
       <ConfirmationModal
         danger
         visible={isDeleting && !isUndefined(selectedColumnToDelete)}
-        header={`Confirm deletion of column "${selectedColumnToDelete?.name}"`}
+        header={`确认删除列 "${selectedColumnToDelete?.name}"`}
         children={
           <Modal.Content>
             <p className="py-4 text-sm text-scale-1100">
-              Are you sure you want to delete the selected column? This action cannot be undone.
+              您确定要删除所选列吗？此操作无法撤消。
             </p>
           </Modal.Content>
         }
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        buttonLabel="删除"
+        buttonLoadingLabel="正在删除"
         onSelectCancel={() => setIsDeleting(false)}
         onSelectConfirm={onConfirmDeleteColumn}
       />
@@ -187,6 +188,6 @@ const DatabaseTables: NextPageWithLayout = () => {
   )
 }
 
-DatabaseTables.getLayout = (page) => <DatabaseLayout title="Database">{page}</DatabaseLayout>
+DatabaseTables.getLayout = (page) => <DatabaseLayout title="数据库">{page}</DatabaseLayout>
 
 export default observer(DatabaseTables)

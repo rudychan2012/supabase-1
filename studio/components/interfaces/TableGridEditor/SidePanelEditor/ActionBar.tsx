@@ -16,8 +16,8 @@ const ActionBar: FC<ActionBarProps> = ({
   disableApply = false,
   hideApply = false,
   children = undefined,
-  applyButtonLabel = 'Apply',
-  backButtonLabel = 'Back',
+  applyButtonLabel = '应用',
+  backButtonLabel = '返回',
   applyFunction = undefined,
   closePanel = () => {},
 }) => {

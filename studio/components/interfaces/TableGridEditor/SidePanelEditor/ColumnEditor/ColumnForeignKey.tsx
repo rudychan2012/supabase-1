@@ -24,7 +24,7 @@ const ColumnForeignKey: FC<Props> = ({
   if (hasNoForeignKey) {
     return (
       <Button type="default" onClick={onSelectEditRelation}>
-        Add foreign key relation
+        添加外键关联
       </Button>
     )
   }
@@ -90,7 +90,7 @@ const ColumnForeignKeyInformation: FC<{
       title={
         <div className="flex items-center justify-between text-scale-900">
           <div className="space-y-2">
-            <span>This column has the following foreign key relation:</span>
+            <span>此列具有以下外键关联：</span>
             <div className="flex items-center space-x-2">
               <span className="text-code">{columnName}</span>
               <IconArrowRight size={14} strokeWidth={2} />
@@ -102,10 +102,10 @@ const ColumnForeignKeyInformation: FC<{
           </div>
           <div className="flex items-center space-x-2">
             <Button type="outline" onClick={onSelectEditRelation}>
-              Edit relation
+              编辑关联
             </Button>
             <Button type="outline" onClick={onSelectRemoveRelation}>
-              Remove
+              删除
             </Button>
           </div>
         </div>
@@ -128,12 +128,12 @@ const ColumnForeignKeyAdded: FC<{
         <div className="flex items-center justify-between text-scale-1100">
           <div className="space-y-2">
             <span>
-              The following foreign key relation will be{' '}
-              <span className="text-brand-900">added</span>:
+              以下外键关联将{' '}
+              <span className="text-brand-900">被添加</span>:
             </span>
             <div className="flex items-center space-x-2 text-scale-1200">
               <span className={`${columnName.length > 0 ? 'text-code' : ''} max-w-xs truncate`}>
-                {columnName || 'This column'}
+                {columnName || '本列'}
               </span>
               <IconArrowRight size={14} strokeWidth={2} />
               <span className="max-w-xs truncate text-code">
@@ -144,10 +144,10 @@ const ColumnForeignKeyAdded: FC<{
           </div>
           <div className="flex items-center space-x-2">
             <Button type="outline" onClick={onSelectEditRelation}>
-              Edit relation
+              编辑关联
             </Button>
             <Button type="outline" onClick={onSelectRemoveRelation}>
-              Remove
+              删除
             </Button>
           </div>
         </div>
@@ -169,8 +169,8 @@ const ColumnForeignKeyRemoved: FC<{
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <p>
-              The following foreign key relation will be{' '}
-              <span className="text-amber-900">removed</span> from this column:
+              以下外键关联将被{' '}
+              <span className="text-amber-900">从这一列删除：</span>
             </p>
             <div className="flex items-center space-x-2">
               <code className="text-sm">{columnName}</code>
@@ -183,7 +183,7 @@ const ColumnForeignKeyRemoved: FC<{
           </div>
           <div className="flex items-center space-x-2">
             <Button type="outline" onClick={onSelectEditRelation}>
-              Edit relation
+              编辑关联
             </Button>
           </div>
         </div>
@@ -213,8 +213,7 @@ const ColumnForeignKeyUpdated: FC<{
         <div className="flex items-center justify-between">
           <div className="space-y-2">
             <p>
-              The foreign key relation will be <span className="text-brand-900">updated</span> as
-              such:
+              外键关联将被 <span className="text-brand-900">更新</span> 为：
             </p>
             <div className="flex items-start space-x-2">
               <code className="text-sm">{columnName}</code>
@@ -235,10 +234,10 @@ const ColumnForeignKeyUpdated: FC<{
           </div>
           <div className="flex items-center space-x-2">
             <Button type="outline" onClick={onSelectEditRelation}>
-              Edit relation
+              编辑关联
             </Button>
             <Button type="outline" onClick={onSelectRemoveRelation}>
-              Remove
+              删除
             </Button>
           </div>
         </div>

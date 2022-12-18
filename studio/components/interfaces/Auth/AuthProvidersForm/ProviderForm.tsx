@@ -48,12 +48,12 @@ const ProviderForm: FC<Props> = ({ provider }) => {
     if (!error) {
       resetForm({ values: { ...values }, initialValues: { ...values } })
       setOpen(false)
-      ui.setNotification({ category: 'success', message: 'Successfully updated settings' })
+      ui.setNotification({ category: 'success', message: '已成功更新设置' })
     } else {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to update settings:  ${error?.message}`,
+        message: `无法更新设置：${error?.message}`,
       })
     }
 
@@ -90,11 +90,11 @@ const ProviderForm: FC<Props> = ({ provider }) => {
                 <span className="rounded-full bg-brand-900 p-0.5 text-xs text-brand-200">
                   <IconCheck strokeWidth={2} size={12} />
                 </span>
-                <span className="px-1">Enabled</span>
+                <span className="px-1">启用</span>
               </div>
             ) : (
               <div className="rounded-md border border-scale-500 bg-scale-100 py-1 px-3 text-xs text-scale-900 dark:border-scale-700 dark:bg-scale-300">
-                Disabled
+                禁用
               </div>
             )}
           </div>

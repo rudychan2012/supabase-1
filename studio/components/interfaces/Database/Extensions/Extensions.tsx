@@ -44,7 +44,7 @@ const Extensions: FC<Props> = ({}) => {
         <div className="flex items-center justify-between">
           <Input
             size="small"
-            placeholder={'Filter'}
+            placeholder={'过滤'}
             value={filterString}
             onChange={(e) => setFilterString(e.target.value)}
             icon={<IconSearch size="tiny" />}
@@ -53,7 +53,7 @@ const Extensions: FC<Props> = ({}) => {
             <div className="w-[500px]">
               <InformationBox
                 icon={<IconAlertCircle className="text-scale-1100" strokeWidth={2} />}
-                title="You need additional permissions to update database extensions"
+                title="您需要额外的权限才能更新数据库扩展"
               />
             </div>
           )}
@@ -65,7 +65,7 @@ const Extensions: FC<Props> = ({}) => {
       <div className="my-8 w-full space-y-12">
         {enabledExtensions.length > 0 && (
           <div className="space-y-4">
-            <h4 className="text-lg">Enabled extensions</h4>
+            <h4 className="text-lg">启用的扩展</h4>
             <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {enabledExtensions.map((extension) => (
                 <ExtensionCard key={extension.name} extension={extension} />
@@ -76,7 +76,7 @@ const Extensions: FC<Props> = ({}) => {
 
         {disabledExtensions.length > 0 && (
           <div className="space-y-4">
-            <h4 className="text-lg">Available extensions</h4>
+            <h4 className="text-lg">可用的扩展</h4>
             <div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
               {disabledExtensions.map((extension) => (
                 <ExtensionCard key={extension.name} extension={extension} />

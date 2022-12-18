@@ -23,9 +23,9 @@ const InviteUserModal = () => {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
     if (values.email.length === 0) {
-      errors.email = 'Please enter a valid email'
+      errors.email = '请输入有效邮箱地址'
     } else if (!emailValidateRegex.test(values.email)) {
-      errors.email = `${values.email} is an invalid email`
+      errors.email = `${values.email}是一个无效的邮箱地址`
     }
 
     return errors
@@ -40,13 +40,13 @@ const InviteUserModal = () => {
     if (response.error) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to invite user: ${response.error.message}`,
+        message: `邀请用户失败：${response.error.message}`,
       })
     } else {
       PageState.fetchData(1)
       ui.setNotification({
         category: 'success',
-        message: `Sent invite email to ${values.email}`,
+        message: `已发送邀请邮件至${values.email}`,
       })
       setVisible(false)
     }
@@ -59,7 +59,7 @@ const InviteUserModal = () => {
       <Tooltip.Root delayDuration={0}>
         <Tooltip.Trigger>
           <Button as="span" onClick={handleToggle} icon={<IconPlus />} disabled={!canInviteUsers}>
-            Invite
+            邀请
           </Button>
         </Tooltip.Trigger>
         {!canInviteUsers && (
@@ -72,7 +72,7 @@ const InviteUserModal = () => {
               ].join(' ')}
             >
               <span className="text-xs text-scale-1200">
-                You need additional permissions to invite users
+                您需要额外的权限才能邀请用户
               </span>
             </div>
           </Tooltip.Content>
@@ -84,7 +84,7 @@ const InviteUserModal = () => {
         size="small"
         key="invite-user-modal"
         visible={visible}
-        header="Invite a new user"
+        header="邀请新用户"
         onCancel={handleToggle}
       >
         <Form
@@ -100,11 +100,11 @@ const InviteUserModal = () => {
                   autoFocus
                   id="email"
                   className="w-full"
-                  label="User email"
+                  label="用户邮箱"
                   icon={<IconMail />}
                   type="email"
                   name="email"
-                  placeholder="User email"
+                  placeholder="用户邮箱"
                 />
               </Modal.Content>
               <Modal.Content>
@@ -115,7 +115,7 @@ const InviteUserModal = () => {
                   loading={isSubmitting}
                   disabled={!canInviteUsers || isSubmitting}
                 >
-                  Invite user
+                  邀请用户
                 </Button>
               </Modal.Content>
             </div>

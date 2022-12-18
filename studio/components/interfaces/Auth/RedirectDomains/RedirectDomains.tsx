@@ -24,7 +24,7 @@ const RedirectDomains = () => {
   const canUpdateConfig = checkPermissions(PermissionAction.UPDATE, 'custom_config_gotrue')
 
   const newDomainSchema = object({
-    domain: string().matches(domainRegex, 'URL is not valid').required(),
+    domain: string().matches(domainRegex, 'URL无效').required(),
   })
 
   const onAddNewDomain = async (values: any, { setSubmitting }: any) => {
@@ -36,7 +36,7 @@ const RedirectDomains = () => {
 
     if (payloadString.length > 2 * 1024) {
       ui.setNotification({
-        message: 'Too many redirect domains, please remove some or try to use wildcards',
+        message: '重定向域太多，请删除一些或尝试使用通配符',
         category: 'error',
       })
 
@@ -47,12 +47,12 @@ const RedirectDomains = () => {
     const { error } = await authConfig.update({ URI_ALLOW_LIST: payloadString })
     if (!error) {
       setOpen(false)
-      ui.setNotification({ category: 'success', message: 'Successfully added domain' })
+      ui.setNotification({ category: 'success', message: '已成功添加域' })
     } else {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to update domain: ${error?.message}`,
+        message: `无法更新域：${error?.message}`,
       })
     }
 
@@ -71,12 +71,12 @@ const RedirectDomains = () => {
 
     if (!error) {
       setSelectedDomainToDelete(undefined)
-      ui.setNotification({ category: 'success', message: 'Successfully removed domain' })
+      ui.setNotification({ category: 'success', message: '已成功删除域' })
     } else {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to remove domain: ${error?.message}`,
+        message: `无法删除域：${error?.message}`,
       })
     }
 
@@ -87,13 +87,13 @@ const RedirectDomains = () => {
     <div>
       <div className="flex items-center justify-between">
         <FormHeader
-          title="Redirect URLs"
-          description={`URLs that auth providers are permitted to redirect to post authentication. Wildcards are allowed, for example, https://*.domain.com`}
+          title="重定向URL"
+          description={`允许身份验证提供商重定向到身份验证后的URL。允许使用通配符，例如， https://*.domain.com`}
         />
         <Tooltip.Root delayDuration={0}>
           <Tooltip.Trigger>
             <Button disabled={!canUpdateConfig} onClick={() => setOpen(true)}>
-              Add URL
+              新增URL
             </Button>
           </Tooltip.Trigger>
           {!canUpdateConfig && (
@@ -106,7 +106,7 @@ const RedirectDomains = () => {
                 ].join(' ')}
               >
                 <span className="text-xs text-scale-1200">
-                  You need additional permissions to update redirect URLs
+                  您需要其他权限才能更新重定向URL
                 </span>
               </div>
             </Tooltip.Content>
@@ -119,7 +119,7 @@ const RedirectDomains = () => {
         size="small"
         visible={open}
         onCancel={() => setOpen(!open)}
-        header={<h3 className="text-sm">Add a new domain</h3>}
+        header={<h3 className="text-sm">添加新域</h3>}
       >
         <Form
           validateOnBlur
@@ -133,8 +133,7 @@ const RedirectDomains = () => {
               <div className="mb-4 space-y-4 pt-4">
                 <div className="px-5">
                   <p className="text-sm text-scale-1100">
-                    This will add a domain to a list of allowed domains that can interact with your
-                    Authenticaton services for this project.
+                    这会将一个域添加到允许的域列表中，该域可以与此项目的身份验证服务进行交互。
                   </p>
                 </div>
                 <div className="border-overlay-border border-t" />
@@ -142,7 +141,7 @@ const RedirectDomains = () => {
                   <Input
                     id="domain"
                     name="domain"
-                    label="Domain"
+                    label="域"
                     placeholder="https://mydomain.com"
                   />
                 </div>
@@ -156,7 +155,7 @@ const RedirectDomains = () => {
                     disabled={isSubmitting}
                     loading={isSubmitting}
                   >
-                    Add domain
+                    添加域
                   </Button>
                 </div>
               </div>
@@ -174,11 +173,11 @@ const RedirectDomains = () => {
         <div className="mb-4 space-y-4 pt-4">
           <div className="px-5">
             <p className="mb-2 text-sm text-scale-1100">
-              Are you sure you want to remove{' '}
+              是否确定要删除{' '}
               <span className="text-scale-1200">{selectedDomainToDelete}</span>?
             </p>
             <p className="text-sm text-scale-1100">
-              This domain will no longer work with your authentication configuration.
+              此域将不再适用于您的身份验证配置。
             </p>
           </div>
           <div className="border-overlay-border border-t"></div>
@@ -189,7 +188,7 @@ const RedirectDomains = () => {
               size="medium"
               onClick={() => setSelectedDomainToDelete(undefined)}
             >
-              Cancel
+              取消
             </Button>
             <Button
               block
@@ -198,7 +197,7 @@ const RedirectDomains = () => {
               loading={isDeleting}
               onClick={() => onConfirmDeleteDomain(selectedDomainToDelete)}
             >
-              {isDeleting ? 'Removing...' : 'Remove domain'}
+              {isDeleting ? '正在删除...' : '删除域'}
             </Button>
           </div>
         </div>

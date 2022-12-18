@@ -136,7 +136,7 @@ const MonacoEditor = ({ error, updateSqlSnippet, setUpdatingRequired }) => {
 
     editor.addAction({
       id: 'supabase',
-      label: 'Run Query',
+      label: '运行 Query',
       keybindings: [monaco.KeyMod.CtrlCmd + monaco.KeyCode.Enter],
       contextMenuGroupId: 'operation',
       contextMenuOrder: 0,
@@ -240,7 +240,7 @@ const ResultsDropdown = observer(() => {
   function onCopyAsMarkdown() {
     if (navigator) {
       copyToClipboard(sqlEditorStore.activeTab.markdownData, () => {
-        ui.setNotification({ category: 'success', message: 'Copied results to clipboard' })
+        ui.setNotification({ category: 'success', message: '结果已复制到剪贴板' })
         Telemetry.sendEvent('sql_editor', 'sql_copy_as_markdown', '')
       })
     }
@@ -252,13 +252,13 @@ const ResultsDropdown = observer(() => {
       align="start"
       overlay={
         <>
-          <Dropdown.Item onClick={onDownloadCSV}>Download CSV</Dropdown.Item>
-          <Dropdown.Item onClick={onCopyAsMarkdown}>Copy as markdown</Dropdown.Item>
+          <Dropdown.Item onClick={onDownloadCSV}>下载CSV</Dropdown.Item>
+          <Dropdown.Item onClick={onCopyAsMarkdown}>复制为markdown</Dropdown.Item>
         </>
       }
     >
       <Button as="span" type="text" iconRight={<IconChevronDown />}>
-        Results
+        结果
       </Button>
       <CSVLink
         ref={csvRef}
@@ -277,7 +277,7 @@ const UtilityTabResults = observer(() => {
   if (sqlEditorStore.activeTab.isExecuting) {
     return (
       <div className="bg-table-header-light dark:bg-table-header-dark">
-        <p className="m-0 border-0 px-6 py-4 font-mono text-sm">Running...</p>
+        <p className="m-0 border-0 px-6 py-4 font-mono text-sm">运行中...</p>
       </div>
     )
   } else if (sqlEditorStore.activeTab.errorResult) {
@@ -290,9 +290,8 @@ const UtilityTabResults = observer(() => {
     return (
       <div className="bg-table-header-light dark:bg-table-header-dark">
         <p className="m-0 border-0 px-6 py-4 text-sm text-scale-1000">
-          Click <code>RUN</code> or hit{' '}
-          <code>{window.navigator.platform.match(/^Mac/) ? '⌘' : 'Ctrl'} + Enter</code> to execute
-          your query.
+          点击 <code>运行</code> 或按{' '}
+          <code>{window.navigator.platform.match(/^Mac/) ? '⌘' : 'Ctrl'} + Enter</code> 来执行你的query。
         </p>
       </div>
     )

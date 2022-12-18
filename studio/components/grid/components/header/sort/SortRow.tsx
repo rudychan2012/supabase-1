@@ -152,12 +152,13 @@ const SortRow: FC<SortRowProps> = ({ index, columnName, sort }) => {
       />
       <div className="grow">
         <span className="flex grow items-center gap-1 truncate text-sm text-scale-1200">
-          <span className="text-xs text-scale-900">{index > 0 ? 'then by' : 'sort by'}</span>
+          <span className="text-xs text-scale-900">{index > 0 ? '然后通过' : '通过'}</span>
           {column.name}
+          <span className="text-xs text-scale-900">排序</span>
         </span>
       </div>
       <div className="flex items-center gap-1">
-        <label className="text-xs text-scale-900">ascending:</label>
+        <label className="text-xs text-scale-900">上升:</label>
         <Toggle
           size="tiny"
           layout="flex"

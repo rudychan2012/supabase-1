@@ -58,7 +58,7 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
                 <IconPauseCircle className="text-scale-1100" size={50} strokeWidth={1.5} />
               </div>
 
-              <p className="text-center">This project is paused.</p>
+              <p className="text-center">该项目已暂停。</p>
 
               <div className="flex items-center justify-center gap-4">
                 <Tooltip.Root delayDuration={0}>
@@ -69,7 +69,7 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
                       disabled={!canResumeProject}
                       onClick={onSelectRestore}
                     >
-                      Restore project
+                      恢复项目
                     </Button>
                   </Tooltip.Trigger>
                   {!canResumeProject && (
@@ -82,7 +82,7 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
                         ].join(' ')}
                       >
                         <span className="text-xs text-scale-1200">
-                          You need additional permissions to resume this project
+                          您需要额外的权限才能恢复此项目
                         </span>
                       </div>
                     </Tooltip.Content>
@@ -92,7 +92,7 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
               </div>
 
               <p className="mt-4 text-sm text-scale-1000">
-                Restore this project and get back to building the next big thing!
+                恢复此项目并重新开始构建下一件大事！
               </p>
             </div>
           </div>
@@ -100,10 +100,10 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
       </div>
       <ConfirmModal
         visible={showConfirmRestore}
-        title="Restore this project"
-        description="Confirm to restore this project? Your project's data will be restored to when it was initially paused."
-        buttonLabel="Restore project"
-        buttonLoadingLabel="Restoring project"
+        title="恢复这个项目"
+        description="确认恢复该项目？您的项目数据将恢复到最初暂停时的状态。"
+        buttonLabel="恢复项目"
+        buttonLoadingLabel="恢复项目"
         onSelectCancel={() => setShowConfirmRestore(false)}
         onSelectConfirm={onConfirmRestore}
       />
@@ -111,27 +111,25 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
         hideFooter
         visible={showFreeProjectLimitWarning}
         size="medium"
-        header="Your organization has members who have exceeded their free project limits"
+        header="您的组织有超出免费项目限制的成员"
         onCancel={() => setShowFreeProjectLimitWarning(false)}
       >
         <div className="space-y-4 py-4">
           <Modal.Content>
             <div className="space-y-2">
               <p className="text-sm text-scale-1100">
-                The following members have reached their maximum limits for the number of active
-                free tier projects within organizations where they are an administrator or owner:
+                以下成员已达到其作为管理员或所有者的组织内活动免费层项目数量的最大限制：
               </p>
               <ul className="list-disc pl-5 text-sm text-scale-1100">
                 {(membersExceededLimit || []).map((member, idx: number) => (
                   <li key={`member-${idx}`}>
                     {member.username || member.primary_email} (Limit: {member.free_project_limit}{' '}
-                    free projects)
+                    免费项目)
                   </li>
                 ))}
               </ul>
               <p className="text-sm text-scale-1100">
-                These members will need to either delete, pause, or upgrade one or more of these
-                projects before you're able to unpause this project.
+                这些成员需要先删除、暂停或升级其中一个或多个项目，然后您才能取消暂停该项目。
               </p>
             </div>
           </Modal.Content>
@@ -144,7 +142,7 @@ const ProjectPausedState: FC<Props> = ({ project }) => {
                 onClick={() => setShowFreeProjectLimitWarning(false)}
                 block
               >
-                Understood
+                明白了
               </Button>
             </div>
           </Modal.Content>

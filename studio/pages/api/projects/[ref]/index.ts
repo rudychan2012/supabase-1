@@ -35,7 +35,6 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
       db_name: 'postgres',
       db_ssl: false,
     }),
-    kpsVersion: 'kps-v1.0.0',
     restUrl: PROJECT_REST_URL,
   }
 

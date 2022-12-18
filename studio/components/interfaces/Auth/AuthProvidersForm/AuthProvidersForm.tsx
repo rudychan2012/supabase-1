@@ -14,7 +14,7 @@ const AuthProvidersForm = () => {
     <div>
       <FormHeader
         title="Auth Providers"
-        description="Authenticate your users through a suite of providers and login methods"
+        description="通过一套providers和登录方法对用户进行身份验证"
       />
 
       <div className="-space-y-px">

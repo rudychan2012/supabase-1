@@ -35,18 +35,18 @@ const SiteUrl = observer(() => {
 
   const schema = object({
     DISABLE_SIGNUP: boolean().required(),
-    SITE_URL: string().required('Must have a Site URL'),
+    SITE_URL: string().required('必须具有网站URL'),
     JWT_EXP: number()
-      .max(604800, 'Must be less than 604800')
-      .required('Must have a JWT expiry value'),
+      .max(604800, '必须小于 604800')
+      .required('必须具有 JWT 到期值'),
     REFRESH_TOKEN_ROTATION_ENABLED: boolean().required(),
     SECURITY_REFRESH_TOKEN_REUSE_INTERVAL: number()
-      .min(0, 'Must be a value more than 0')
-      .required('Must have a Reuse Interval value'),
+      .min(0, '必须大于 0 的值')
+      .required('必须具有Reuse Interval值'),
     SECURITY_CAPTCHA_ENABLED: boolean().required(),
     SECURITY_CAPTCHA_SECRET: string().when('SECURITY_CAPTCHA_ENABLED', {
       is: true,
-      then: string().required('Must have a hCaptcha secret'),
+      then: string().required('必须有一个 hCaptcha 秘密'),
     }),
   })
 
@@ -61,13 +61,13 @@ const SiteUrl = observer(() => {
     if (!error) {
       ui.setNotification({
         category: 'success',
-        message: `Successfully updated settings`,
+        message: `已成功更新设置`,
       })
       resetForm({ values: values, initialValues: values })
     } else {
       ui.setNotification({
         category: 'error',
-        message: `Failed to update settings`,
+        message: `无法更新设置`,
       })
     }
 
@@ -87,8 +87,8 @@ const SiteUrl = observer(() => {
         return (
           <>
             <FormHeader
-              title="Site URL"
-              description="Configure the url of your site. This is used for password reset emails and other links."
+              title="网站URL"
+              description="配置站点的网址。这用于密码重置电子邮件和其他链接。"
             />
             <FormPanel
               disabled={true}
@@ -102,7 +102,7 @@ const SiteUrl = observer(() => {
                     disabled={!canUpdateConfig}
                     helper={
                       !canUpdateConfig
-                        ? 'You need additional permissions to update authentication settings'
+                        ? '您需要其他权限才能更新身份验证设置'
                         : undefined
                     }
                   />
@@ -114,8 +114,8 @@ const SiteUrl = observer(() => {
                   <Input
                     id="SITE_URL"
                     size="small"
-                    label="Site URL"
-                    descriptionText="The base URL of your website. Used as an allow-list for redirects and for constructing URLs used in emails."
+                    label="网站URL"
+                    descriptionText="您网站的基本网址。用作重定向和构建电子邮件中使用的 URL 的允许列表。"
                     disabled={!canUpdateConfig}
                   />
                 </FormSectionContent>

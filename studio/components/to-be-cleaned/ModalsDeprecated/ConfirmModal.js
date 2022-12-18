@@ -8,7 +8,7 @@ function ConfirmModal({
   onConfirm,
   onAsyncConfirm,
   variant = 'danger',
-  confirmText = 'Confirm',
+  confirmText = '确认',
 }) {
   const [loading, setLoading] = useState(false)
 
@@ -44,7 +44,7 @@ function ConfirmModal({
       customFooter={
         <div className="flex items-center gap-2">
           <Button type="default" onClick={() => onCancelClick()}>
-            Cancel
+            取消
           </Button>
           <Button type="primary" onClick={() => onConfirmClick()} loading={loading}>
             {confirmText}

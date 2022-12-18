@@ -56,7 +56,7 @@ const SavingIndicator: FC<Props> = ({ updateSqlSnippet }) => {
           icon={<IconRefreshCcw className="text-gray-1100" size="tiny" strokeWidth={2} />}
           onClick={retry}
         >
-          Retry
+          重试
         </Button>
       )}
       {(content.savingState === 'CREATING' || content.savingState === 'UPDATING') && (
@@ -72,7 +72,7 @@ const SavingIndicator: FC<Props> = ({ updateSqlSnippet }) => {
                 'border border-scale-200',
               ].join(' ')}
             >
-              <span className="text-xs text-scale-1200">Saving changes...</span>
+              <span className="text-xs text-scale-1200">正在保存更改...</span>
             </div>
           </Tooltip.Content>
         </Tooltip.Root>
@@ -93,7 +93,7 @@ const SavingIndicator: FC<Props> = ({ updateSqlSnippet }) => {
                 'border border-scale-200 ',
               ].join(' ')}
             >
-              <span className="text-xs text-scale-1200">All changes saved</span>
+              <span className="text-xs text-scale-1200">所有更改已保存</span>
             </div>
           </Tooltip.Content>
         </Tooltip.Root>

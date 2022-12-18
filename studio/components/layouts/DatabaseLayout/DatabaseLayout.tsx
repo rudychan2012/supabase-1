@@ -57,7 +57,7 @@ const DatabaseLayout: FC<Props> = ({ title, children }) => {
   return (
     <BaseLayout
       isLoading={!loaded}
-      product="Database"
+      product="数据库"
       productMenu={<ProductMenu page={page} menu={generateDatabaseMenu(project)} />}
     >
       <main style={{ maxHeight: '100vh' }} className="flex-1 overflow-y-auto">

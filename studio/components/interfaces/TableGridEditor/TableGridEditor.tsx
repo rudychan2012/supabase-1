@@ -113,7 +113,7 @@ const TableGridEditor: FC<Props> = ({
     if (column) {
       onEditColumn(column)
     } else {
-      console.error(`Unable to find column ${name} in ${table?.name}`)
+      console.error(`无法在表中 ${table?.name}找到列 ${name} `)
     }
   }
 

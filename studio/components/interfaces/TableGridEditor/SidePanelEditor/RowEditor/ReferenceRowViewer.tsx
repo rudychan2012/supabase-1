@@ -36,29 +36,30 @@ const ReferenceRowViewer: FC<Props> = ({ visible, referenceRow, closePanel }) =>
       size="large"
       header={
         <div>
-          Viewing reference row from{' '}
+          从{' '}
           <code className="text-sm">
             {foreignKey?.target_table_schema ?? ''}.{foreignKey?.target_table_name ?? ''}
           </code>
+          查看关联行
         </div>
       }
       hideFooter={false}
       onCancel={closePanel}
-      customFooter={<ActionBar hideApply backButtonLabel="Close" closePanel={closePanel} />}
+      customFooter={<ActionBar hideApply backButtonLabel="关闭" closePanel={closePanel} />}
     >
       <SidePanel.Content>
         <div className="py-6">
           {loading ? (
             <div className="flex h-full flex-col items-center justify-center space-y-2">
               <IconLoader className="animate-spin" />
-              <p className="text-sm text-scale-1100">Loading reference row</p>
+              <p className="text-sm text-scale-1100">加载参考行</p>
             </div>
           ) : !row ? (
             <div className="flex h-full flex-col items-center justify-center space-y-2">
               <IconXCircle />
               <p className="text-sm text-scale-1100">
-                Unable to find the corresponding row in {foreignKey?.target_table_schema}.
-                {foreignKey?.target_table_name}
+                无法在 {foreignKey?.target_table_schema}.
+                {foreignKey?.target_table_name}中找到相应的行
               </p>
             </div>
           ) : (

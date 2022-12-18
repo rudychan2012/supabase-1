@@ -18,12 +18,12 @@ const UsersList = ({}) => {
       <Table
         head={
           <>
-            <Table.th>Email</Table.th>
-            <Table.th>Phone</Table.th>
-            <Table.th className="table-cell">Provider</Table.th>
-            <Table.th className="table-cell">Created</Table.th>
-            <Table.th className="table-cell">Last Sign In</Table.th>
-            <Table.th className="table-cell">User UID</Table.th>
+            <Table.th>邮箱</Table.th>
+            <Table.th>电话</Table.th>
+            <Table.th className="table-cell">提供商</Table.th>
+            <Table.th className="table-cell">创建时间</Table.th>
+            <Table.th className="table-cell">最近登录时间</Table.th>
+            <Table.th className="table-cell">用户UID</Table.th>
             <Table.th></Table.th>
           </>
         }
@@ -40,8 +40,8 @@ const UsersList = ({}) => {
                     <IconAlertCircle size={16} strokeWidth={2} />
                     <p className="text-scale-1000">
                       {PageState.filterKeywords
-                        ? `No users matched the search query "${PageState.filterKeywords}"`
-                        : 'No users in your project yet'}
+                        ? `没有用户匹配过滤条件 "${PageState.filterKeywords}"`
+                        : '您的项目中还没有用户'}
                     </p>
                   </div>
                 </Table.td>

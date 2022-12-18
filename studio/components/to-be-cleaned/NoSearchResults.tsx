@@ -10,7 +10,7 @@ export const NoSearchResults = () => {
         }
       />
       <p className="w-64 text-center text-sm opacity-50">
-        Hmm, we couldn't find any results that matches your query. Try another?
+        呃，我们找不到与您的查询匹配的任何结果。尝试另一个？
       </p>
     </div>
   )

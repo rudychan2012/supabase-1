@@ -21,8 +21,8 @@ const PolicySelection: FC<Props> = ({
         </div>
         <div className="grid grid-cols-1 gap-2 lg:grid-cols-1">
           <CardButton
-            title="Get started quickly"
-            description="Create a policy from a template"
+            title="快速上手"
+            description="从模板创建策略"
             icon={
               <div className="flex">
                 <div
@@ -39,8 +39,8 @@ const PolicySelection: FC<Props> = ({
             onClick={onViewTemplates}
           />
           <CardButton
-            title="For full customization"
-            description="Create a policy from scratch"
+            title="完全定制"
+            description="从头开始创建策略"
             icon={
               <div className="flex">
                 <div
@@ -58,7 +58,7 @@ const PolicySelection: FC<Props> = ({
           />
         </div>
         <p className="text-sm text-scale-1100">
-          Not sure what policies are? Check out our resources{' '}
+          不知道什么事策略？查看我们的资源{' '}
           <a
             target="_blank"
             className="text-brand-900 transition-colors hover:text-brand-1200"

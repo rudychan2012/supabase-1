@@ -11,20 +11,20 @@ const HeaderTitle: FC<Props> = ({ schema, table, isDuplicating }) => {
   if (!table) {
     return (
       <>
-        Create a new table under <code>{schema}</code>
+        在 <code>{schema}</code> 中创建新表
       </>
     )
   }
   if (isDuplicating) {
     return (
       <>
-        Duplicate table <code>{table.name}</code>
+        复制表 <code>{table.name}</code>
       </>
     )
   }
   return (
     <>
-      Update table <code>{table.name}</code>
+      更新表 <code>{table.name}</code>
     </>
   )
 }

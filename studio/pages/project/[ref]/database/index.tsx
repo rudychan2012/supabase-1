@@ -6,6 +6,6 @@ const Database: NextPageWithLayout = () => {
   return <>{/* <h1>Use this as a page template for database</h1> */}</>
 }
 
-Database.getLayout = (page) => <DatabaseLayout title="Database">{page}</DatabaseLayout>
+Database.getLayout = (page) => <DatabaseLayout title="数据库">{page}</DatabaseLayout>
 
 export default observer(Database)

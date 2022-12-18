@@ -48,8 +48,8 @@ const SidePanel = ({
   customFooter = undefined,
   onConfirm,
   onCancel,
-  confirmText = 'Confirm',
-  cancelText = 'Cancel',
+  confirmText = '确认',
+  cancelText = '取消',
   triggerElement,
   defaultOpen,
   ...props

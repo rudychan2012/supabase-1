@@ -29,7 +29,7 @@ const FunctionsList: FC<any> = ({
     return (
       <div className="flex h-full w-full items-center justify-center space-x-2">
         <IconLoader className="animate-spin" size={14} />
-        <p>Loading functions...</p>
+        <p>加载函数...</p>
       </div>
     )
   }
@@ -38,7 +38,7 @@ const FunctionsList: FC<any> = ({
     return (
       <p className="px-6 py-4">
         <p>Error connecting to API</p>
-        <p>{`${meta.functions.error?.message ?? 'Unknown error'}`}</p>
+        <p>{`${meta.functions.error?.message ?? '未知错误'}`}</p>
       </p>
     )
   }
@@ -48,17 +48,16 @@ const FunctionsList: FC<any> = ({
       {functions.length == 0 ? (
         <div className="flex h-full w-full items-center justify-center">
           <ProductEmptyState
-            title="Functions"
-            ctaButtonLabel="Create a new function"
+            title="函数"
+            ctaButtonLabel="创建一个新函数"
             onClickCta={() => createFunction()}
           >
             <AlphaPreview />
             <p className="text-sm text-scale-1100">
-              PostgreSQL functions, also known as stored procedures, is a set of SQL and procedural
-              commands such as declarations, assignments, loops, flow-of-control, etc.
+              PostgreSQL 函数，也称为存储过程，是一组 SQL 和过程命令，例如声明、赋值、循环、控制流等。
             </p>
             <p className="text-sm text-scale-1100">
-              It's stored on the database server and can be invoked using the SQL interface.
+              它存储在数据库服务器上，可以使用 SQL 接口调用。
             </p>
           </ProductEmptyState>
         </div>
@@ -66,7 +65,7 @@ const FunctionsList: FC<any> = ({
         <div className="w-full space-y-4 py-4">
           <div className="flex items-center justify-between px-6">
             <Input
-              placeholder="Filter by name"
+              placeholder="按名称过滤"
               size="small"
               icon={<IconSearch size="tiny" />}
               value={filterString}
@@ -75,7 +74,7 @@ const FunctionsList: FC<any> = ({
             <Tooltip.Root delayDuration={0}>
               <Tooltip.Trigger>
                 <Button disabled={!canCreateFunctions} onClick={() => createFunction()}>
-                  Create a new function
+                  创建一个新函数
                 </Button>
               </Tooltip.Trigger>
               {!canCreateFunctions && (
@@ -88,7 +87,7 @@ const FunctionsList: FC<any> = ({
                     ].join(' ')}
                   >
                     <span className="text-xs text-scale-1200">
-                      You need additional permissions to create functions
+                      您需要额外的权限才能创建函数
                     </span>
                   </div>
                 </Tooltip.Content>
@@ -97,9 +96,9 @@ const FunctionsList: FC<any> = ({
           </div>
           {filteredFunctions.length <= 0 && (
             <div className="mx-auto flex max-w-lg items-center justify-center space-x-3 rounded border p-6 shadow-md dark:border-dark">
-              <p>No results match your filter query</p>
+              <p>没有结果符合您的筛选查询</p>
               <Button type="outline" onClick={() => setFilterString('')}>
-                Reset filter
+                重置过滤器
               </Button>
             </div>
           )}

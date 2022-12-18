@@ -18,9 +18,9 @@ const RolesList: FC<Props> = ({ onSelectRole = () => {} }) => {
     <>
       <Table
         head={[
-          <Table.th key="name">Name</Table.th>,
-          <Table.th key="system-id">System ID</Table.th>,
-          <Table.th key="connections">Connections</Table.th>,
+          <Table.th key="name">名称</Table.th>,
+          <Table.th key="system-id">系统ID</Table.th>,
+          <Table.th key="connections">连接数</Table.th>,
           <Table.th key="blank"></Table.th>,
         ]}
         body={roles.map((x, i) => (
@@ -34,7 +34,7 @@ const RolesList: FC<Props> = ({ onSelectRole = () => {} }) => {
             <Table.td className="w-full">
               <div className="flex items-center space-x-3">
                 <p>
-                  {x.active_connections}/{x.connection_limit} connections
+                  {x.active_connections}/{x.connection_limit} 连接
                 </p>
                 <SparkBar
                   max={x.connection_limit}

@@ -37,7 +37,7 @@ const PolicyTableRow: FC<Props> = observer(
       >
         {policies.length === 0 && (
           <div className="p-4 px-6">
-            <p className="text-scale-900 text-sm">No policies created yet</p>
+            <p className="text-scale-900 text-sm">还没有创建策略</p>
           </div>
         )}
 

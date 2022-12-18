@@ -89,7 +89,7 @@ const InputWithSuggestions: FC<Props> = ({
               side="bottom"
               overlay={
                 <>
-                  <Dropdown.Label>{suggestionsHeader || 'Suggestions'}</Dropdown.Label>
+                  <Dropdown.Label>{suggestionsHeader || '建议'}</Dropdown.Label>
                   <Dropdown.Separator />
                   {filteredSuggestions.map((suggestion: Suggestion) => (
                     <Dropdown.Item
@@ -121,7 +121,7 @@ const InputWithSuggestions: FC<Props> = ({
                     ].join(' ')}
                   >
                     <span className="text-scale-1200 text-xs">
-                      {suggestionsTooltip || 'Suggestions'}
+                      {suggestionsTooltip || '建议'}
                     </span>
                   </div>
                 </Tooltip.Content>

@@ -25,16 +25,16 @@ const SchemaTable: FC<Props> = ({ filterString, schema, editTrigger, deleteTrigg
         head={
           <>
             <Table.th key="name" className="space-x-4">
-              Name
+              名称
             </Table.th>
             <Table.th key="table" className="hidden lg:table-cell">
-              Table
+              表
             </Table.th>
             <Table.th key="function" className="hidden xl:table-cell">
-              Function
+              函数
             </Table.th>
             <Table.th key="rows" className="hidden xl:table-cell xl:w-1/3">
-              Events
+              事件
             </Table.th>
             <Table.th key="buttons" className="w-1/12"></Table.th>
           </>

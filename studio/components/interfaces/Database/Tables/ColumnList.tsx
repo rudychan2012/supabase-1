@@ -49,7 +49,7 @@ const ColumnList: FC<Props> = ({
             <div>
               <Input
                 size="small"
-                placeholder="Filter columns"
+                placeholder="过滤列"
                 value={filterString}
                 onChange={(e: any) => setFilterString(e.target.value)}
                 icon={<IconSearch size="tiny" />}
@@ -59,7 +59,7 @@ const ColumnList: FC<Props> = ({
           {!isLocked && (
             <div>
               <Button icon={<IconPlus />} onClick={() => onAddColumn()}>
-                New column
+                新建列
               </Button>
             </div>
           )}
@@ -71,15 +71,15 @@ const ColumnList: FC<Props> = ({
         <div>
           <Table
             head={[
-              <Table.th key="name">Name</Table.th>,
+              <Table.th key="name">名称</Table.th>,
               <Table.th key="description" className="hidden lg:table-cell">
-                Description
+                说明
               </Table.th>,
               <Table.th key="type" className="hidden xl:table-cell">
-                Data Type
+                数据类型
               </Table.th>,
               <Table.th key="format" className="hidden xl:table-cell">
-                Format
+                格式
               </Table.th>,
               <Table.th key="buttons"></Table.th>,
             ]}
@@ -92,7 +92,7 @@ const ColumnList: FC<Props> = ({
                   {x.comment !== null ? (
                     <p title={x.comment}>{x.comment}</p>
                   ) : (
-                    <p className="text-scale-800">No description</p>
+                    <p className="text-scale-800">没有说明</p>
                   )}
                 </Table.td>
                 <Table.td>

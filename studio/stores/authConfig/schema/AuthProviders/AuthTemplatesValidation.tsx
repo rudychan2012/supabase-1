@@ -7,28 +7,28 @@ export const CONFIRMATION: FormSchema = {
   $schema: JSON_SCHEMA_VERSION,
   id: 'CONFIRMATION',
   type: 'object',
-  title: 'Confirm signup',
+  title: '确认注册',
   properties: {
     MAILER_SUBJECTS_CONFIRMATION: {
-      title: 'Subject heading',
+      title: '主题标题',
       type: 'string',
     },
     MAILER_TEMPLATES_CONFIRMATION_CONTENT: {
-      title: 'Message body',
-      descriptionOptional: 'HTML body of your email',
+      title: '邮件正文',
+      descriptionOptional: '电子邮件的 HTML 正文',
       type: 'code',
       description: ` 
-- \`{{ .ConfirmationURL }}\` : URL to confirm the message
+- \`{{ .ConfirmationURL }}\` : 用于确认消息的URL
 `,
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_CONFIRMATION: string().required('"Subject heading is required.'),
+    MAILER_SUBJECTS_CONFIRMATION: string().required('"主题标题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台中的应用配置中。
+            [了解更多信息](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
   },
 }
 
@@ -36,28 +36,28 @@ export const INVITE: FormSchema = {
   $schema: JSON_SCHEMA_VERSION,
   id: 'INVITE',
   type: 'object',
-  title: 'Invite user',
+  title: '邀请用户',
   properties: {
     MAILER_SUBJECTS_INVITE: {
-      title: 'Subject heading',
+      title: '主题标题',
       type: 'string',
     },
     MAILER_TEMPLATES_INVITE_CONTENT: {
-      title: 'Message body',
-      descriptionOptional: 'HTML body of your email',
+      title: '邮件正',
+      descriptionOptional: '电子邮件的 HTML 正文',
       type: 'code',
       description: ` 
-- \`{{ .ConfirmationURL }}\` : URL to confirm the message
+- \`{{ .ConfirmationURL }}\` : 用于确认消息的URL
 `,
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_INVITE: string().required('"Subject heading is required.'),
+    MAILER_SUBJECTS_INVITE: string().required('"S标题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台中的应用配置中。
+            [了解更多信息](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
   },
 }
 
@@ -65,28 +65,28 @@ export const MAGIC_LINK: FormSchema = {
   $schema: JSON_SCHEMA_VERSION,
   id: 'MAGIC_LINK',
   type: 'object',
-  title: 'Magic Link',
+  title: '魔法链接',
   properties: {
     MAILER_SUBJECTS_MAGIC_LINK: {
-      title: 'Subject heading',
+      title: '主题标题',
       type: 'string',
     },
     MAILER_TEMPLATES_MAGIC_LINK_CONTENT: {
-      title: 'Message body',
-      descriptionOptional: 'HTML body of your email',
+      title: '邮件正文',
+      descriptionOptional: '电子邮件的 HTML 正文',
       type: 'code',
       description: ` 
-- \`{{ .ConfirmationURL }}\` : URL to confirm the message
+- \`{{ .ConfirmationURL }}\` : 用于确认消息的网址
 `,
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_MAGIC_LINK: string().required('"Subject heading is required.'),
+    MAILER_SUBJECTS_MAGIC_LINK: string().required('"主题标题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台中的应用配置中。
+            [了解更多信息](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
   },
 }
 
@@ -94,28 +94,28 @@ export const EMAIL_CHANGE: FormSchema = {
   $schema: JSON_SCHEMA_VERSION,
   id: 'EMAIL_CHANGE',
   type: 'object',
-  title: 'Change Email Address',
+  title: '更改邮箱地址',
   properties: {
     MAILER_SUBJECTS_EMAIL_CHANGE: {
-      title: 'Subject heading',
+      title: '主题标题',
       type: 'string',
     },
     MAILER_TEMPLATES_EMAIL_CHANGE_CONTENT: {
-      title: 'Message body',
-      descriptionOptional: 'HTML body of your email',
+      title: '邮件正文',
+      descriptionOptional: '电子邮件的 HTML 正文',
       type: 'code',
       description: ` 
-- \`{{ .ConfirmationURL }}\` : URL to confirm the email change
+- \`{{ .ConfirmationURL }}\` : 用于确认电子邮件更改的URL
 `,
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_EMAIL_CHANGE: string().required('"Subject heading is required.'),
+    MAILER_SUBJECTS_EMAIL_CHANGE: string().required('"主题标题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台中的应用配置中。
+            [了解更多信息](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
   },
 }
 
@@ -123,28 +123,28 @@ export const RECOVERY: FormSchema = {
   $schema: JSON_SCHEMA_VERSION,
   id: 'RECOVERY',
   type: 'object',
-  title: 'Reset Password',
+  title: '重置密码',
   properties: {
     MAILER_SUBJECTS_RECOVERY: {
-      title: 'Subject heading',
+      title: '主题标题',
       type: 'string',
     },
     MAILER_TEMPLATES_RECOVERY_CONTENT: {
-      title: 'Message body',
-      descriptionOptional: 'HTML body of your email',
+      title: '邮件正文',
+      descriptionOptional: '电子邮件的 HTML 正文',
       type: 'code',
       description: ` 
-- \`{{ .ConfirmationURL }}\` : URL to confirm the password reset
+- \`{{ .ConfirmationURL }}\` : 用于确认密码重置的 URL
 `,
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_RECOVERY: string().required('"Subject heading is required.'),
+    MAILER_SUBJECTS_RECOVERY: string().required('"主题标题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台中的应用配置中。
+            [了解更多信息](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
   },
 }
 

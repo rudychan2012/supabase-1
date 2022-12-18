@@ -53,12 +53,12 @@ const Editor: NextPage = () => {
       setIsDeleting(false)
       ui.setNotification({
         category: 'success',
-        message: `Successfully deleted ${selectedTableToDelete!.name}`,
+        message: `成功删除${selectedTableToDelete!.name}`,
       })
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to delete ${selectedTableToDelete!.name}`,
+        message: `删除${selectedTableToDelete!.name}失败`,
       })
     }
   }
@@ -78,11 +78,11 @@ const Editor: NextPage = () => {
         danger
         visible={isDeleting && !isUndefined(selectedTableToDelete)}
         header={
-          <span className="break-words">{`Confirm deletion of table "${selectedTableToDelete?.name}"`}</span>
+          <span className="break-words">{`确认删除表 "${selectedTableToDelete?.name}"`}</span>
         }
-        description={`Are you sure you want to delete the selected table? This action cannot be undone`}
-        buttonLabel="Delete"
-        buttonLoadingLabel="Deleting"
+        description={`您确定要删除所选表格吗？此操作无法撤消`}
+        buttonLabel="删除"
+        buttonLoadingLabel="正在删除"
         onSelectCancel={() => setIsDeleting(false)}
         onSelectConfirm={onConfirmDeleteTable}
       />

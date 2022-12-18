@@ -55,14 +55,14 @@ export const validateFields = (fields: RowField[]) => {
       try {
         JSON.parse(field.value)
       } catch {
-        errors[field.name] = 'Value is an invalid array'
+        errors[field.name] = '值为无效数组'
       }
     }
     if (field.format.includes('json') && (field.value?.length ?? 0) > 0) {
       try {
         minifyJSON(field.value ?? '')
       } catch {
-        errors[field.name] = 'Value is an invalid JSON'
+        errors[field.name] = '值是无效的 JSON'
       }
     }
     if (field.isIdentity || field.defaultValue) return

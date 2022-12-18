@@ -21,7 +21,7 @@ const URLConfiguration: NextPageWithLayout = () => {
   const canReadAuthSettings = checkPermissions(PermissionAction.READ, 'custom_config_gotrue')
 
   if (!canReadAuthSettings) {
-    return <NoPermission isFullPage resourceText="access your project's email settings" />
+    return <NoPermission isFullPage resourceText="访问应用的邮件配置" />
   } else if (authConfig) {
     return (
       <FormsContainer>

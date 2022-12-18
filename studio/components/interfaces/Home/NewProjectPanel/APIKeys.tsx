@@ -56,11 +56,11 @@ const APIKeys = () => {
     <Panel
       title={
         <div className="space-y-3">
-          <h5 className="text-base">Project API</h5>
+          <h5 className="text-base">应用 API</h5>
           <p className="text-sm text-scale-1000">
-            Your API is secured behind an API gateway which requires an API Key for every request.
+            您的 API 受到 API 网关的保护，每个请求都需要一个 API 密钥。
             <br />
-            You can use the parameters below to use Supabase client libraries.
+            您可以使用以下参数来使用 Supabase 客户端库。
           </p>
         </div>
       }
@@ -69,7 +69,7 @@ const APIKeys = () => {
         <div className="py-8 flex items-center justify-center space-x-2">
           <IconAlertCircle size={16} strokeWidth={1.5} />
           <p className="text-sm text-scale-1100">
-            {isProjectSettingsError ? 'Failed to retrieve API keys' : 'Failed to update JWT secret'}
+            {isProjectSettingsError ? '无法获取 API 密钥': '无法更新 JWT 密码'}
           </p>
         </div>
       ) : isApiKeysEmpty || isProjectSettingsLoading || isJwtSecretUpdateStatusLoading ? (
@@ -77,21 +77,21 @@ const APIKeys = () => {
           <IconLoader className="animate-spin" size={16} strokeWidth={1.5} />
           <p className="text-sm text-scale-1100">
             {isProjectSettingsLoading || isApiKeysEmpty
-              ? 'Retrieving API keys'
-              : 'JWT secret is being updated'}
+              ? '获取 API 密钥'
+              : 'JWT secret 正在更新'}
           </p>
         </div>
       ) : (
         <>
           <Panel.Content>
             <Input
-              label="Project URL"
+              label="应用 URL"
               readOnly
               copy
               disabled
               className="input-mono"
               value={apiUrl}
-              descriptionText="A RESTful endpoint for querying and managing your database."
+              descriptionText="用于查询和管理数据库的 RESTful 根路径。"
               layout="horizontal"
             />
           </Panel.Content>
@@ -133,13 +133,11 @@ const APIKeys = () => {
               onChange={() => {}}
               descriptionText={
                 <p>
-                  This key is safe to use in a browser if you have enabled Row Level Security (RLS)
-                  for your tables and configured policies. You may also use the service key which
-                  can be found{' '}
+                  如果您为表启用了行级安全保护 (RLS) 并配置了策略，则可以在浏览器中安全地使用此密钥。您也可以在{' '}
                   <Link href={`/project/${ref}/settings/api`}>
-                    <a className="text-brand-800 hover:text-brand-900 transition">here</a>
+                    <a className="text-brand-800 hover:text-brand-900 transition">这里</a>
                   </Link>{' '}
-                  to bypass RLS.
+                  找到并使用服务密钥（service key）来绕过行级安全保护 (RLS)。
                 </p>
               }
             />

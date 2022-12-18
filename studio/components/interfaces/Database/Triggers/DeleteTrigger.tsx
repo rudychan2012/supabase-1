@@ -42,13 +42,13 @@ const DeleteTrigger: FC<DeleteTriggerProps> = ({ store, trigger, visible, setVis
       visible={visible}
       onCancel={() => setVisible(!visible)}
       onConfirm={handleDelete}
-      title="Delete this trigger"
+      title="删除这个触发器"
       loading={loading}
-      confirmLabel={`Delete trigger ${name}`}
-      confirmPlaceholder="Type in name of trigger"
+      confirmLabel={`删除触发器 ${name}`}
+      confirmPlaceholder="输入触发器名称"
       confirmString={name}
-      text={`This will delete your trigger called ${name} of schema ${schema}.`}
-      alert="You cannot recover this trigger once it is deleted!"
+      text={`这将删除您${schema} schema中名为 ${name} 的触发器。`}
+      alert="一旦删除，您将无法恢复此触发器!"
     />
   )
 }

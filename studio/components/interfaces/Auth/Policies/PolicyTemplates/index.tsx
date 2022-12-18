@@ -31,14 +31,14 @@ const PolicyTemplates: FC<Props> = ({
       </div>
       <div className="flex w-full items-center justify-end gap-3 border-t px-6 py-4 dark:border-dark">
         <span className="text-sm text-scale-900">
-          This will override any existing code you've written
+          这将覆盖您编写的任何现有代码
         </span>
         <Button
           type="primary"
           disabled={isEmpty(selectedTemplate)}
           onClick={() => onUseTemplate(selectedTemplate)}
         >
-          Use this template
+          使用此模板
         </Button>
       </div>
     </div>

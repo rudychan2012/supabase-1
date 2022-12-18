@@ -9,8 +9,8 @@ const EmailTemplates = observer(() => {
   return (
     <div>
       <FormHeader
-        title="Email Templates"
-        description="Customize the emails that will be sent out to your users."
+        title="邮件模板"
+        description="自定义将发送给用户的电子邮件。"
       />
       <FormPanel>
         <Tabs

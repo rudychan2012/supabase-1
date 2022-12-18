@@ -50,19 +50,19 @@ const ColumnDefaultValue: FC<Props> = ({
 
   return (
     <InputWithSuggestions
-      label="Default Value"
+      label="默认值"
       layout="horizontal"
-      description="Can either be a literal or an expression (e.g uuid_generate_v4())"
+      description="可以是文字或表达式（例如 uuid_generate_v4()）"
       placeholder={
         typeof columnFields.defaultValue === 'string' && columnFields.defaultValue.length === 0
-          ? 'Empty string'
+          ? '空字符串'
           : 'NULL'
       }
       value={columnFields?.defaultValue ?? ''}
       format={columnFields?.format}
       suggestions={suggestions}
-      suggestionsHeader="Suggested expressions"
-      suggestionsTooltip="Suggested expressions"
+      suggestionsHeader="建议的表达式"
+      suggestionsTooltip="建议的表达式"
       onChange={(event: any) => onUpdateField({ defaultValue: event.target.value })}
       onSelectSuggestion={(suggestion: Suggestion) =>
         onUpdateField({ defaultValue: suggestion.value })

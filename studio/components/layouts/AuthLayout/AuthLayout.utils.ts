@@ -4,15 +4,15 @@ import { ProductMenuGroup } from 'components/ui/ProductMenu/ProductMenu.types'
 export const generateAuthMenu = (ref: string): ProductMenuGroup[] => {
   return [
     {
-      title: 'Manage',
-      items: [{ name: 'Users', key: 'users', url: `/project/${ref}/auth/users`, items: [] }],
+      title: '管理',
+      items: [{ name: '用户', key: 'users', url: `/project/${ref}/auth/users`, items: [] }],
     },
 
     {
-      title: 'Configuration',
+      title: '配置',
       items: [
         {
-          name: 'Policies',
+          name: '策略',
           key: 'policies',
           url: `/project/${ref}/auth/policies`,
           items: [],
@@ -20,20 +20,20 @@ export const generateAuthMenu = (ref: string): ProductMenuGroup[] => {
         ...(IS_PLATFORM
           ? [
               {
-                name: 'Providers',
+                name: '提供商',
                 key: 'providers',
                 url: `/project/${ref}/auth/providers`,
                 items: [],
               },
               {
-                name: 'Email Templates',
+                name: '邮件模板',
                 key: 'templates',
                 url: `/project/${ref}/auth/templates`,
                 items: [],
               },
 
               {
-                name: 'URL Configuration',
+                name: 'URL配置',
                 key: 'url-configuration',
                 url: `/project/${ref}/auth/url-configuration`,
                 items: [],

@@ -37,7 +37,7 @@ const PolicyDefinition: FC<Props> = ({
           <div className="flex w-1/3 flex-col space-y-2">
             <div className="flex items-center space-x-2">
               <label className="text-base text-scale-1100" htmlFor="policy-name">
-                USING expression
+                USING 表达式
               </label>
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger>
@@ -52,13 +52,10 @@ const PolicyDefinition: FC<Props> = ({
                     ].join(' ')}
                   >
                     <p className="text-xs text-scale-1200">
-                      This expression will be added to queries that refer to the table if row-level
-                      security is enabled.
+                      如果启用了行级安全性，则此表达式将被添加到有关该表的查询中。
                     </p>
                     <p className="text-xs text-scale-1200">
-                      Rows for which the expression returns true will be visible. Any rows for which
-                      the expression returns false or null will not be visible to the user (in a
-                      SELECT), and will not be available for modification (in an UPDATE or DELETE).
+                      表达式返回 true 的行将是可见的。表达式返回 false 或 null 的任何行将对用户不可见（在 SELECT 中），并且不可用于修改（在 UPDATE 或 DELETE 中）。
                     </p>
                     <p className="text-xs text-scale-1200">
                       Such rows are silently suppressed - no error is reported.
@@ -68,7 +65,7 @@ const PolicyDefinition: FC<Props> = ({
               </Tooltip.Root>
             </div>
             <p className="text-sm text-scale-900">
-              Provide a SQL conditional expression that returns a boolean.
+              提供返回布尔值的 SQL 条件表达式。
             </p>
           </div>
           <div className={`w-2/3 ${showCheck(operation) ? 'h-32' : 'h-56'}`}>
@@ -81,7 +78,7 @@ const PolicyDefinition: FC<Props> = ({
           <div className="flex w-1/3 flex-col space-y-2">
             <div className="flex items-center space-x-2">
               <label className="text-base text-scale-1100" htmlFor="policy-name">
-                WITH CHECK expression
+                WITH CHECK 表达式
               </label>
               <Tooltip.Root delayDuration={0}>
                 <Tooltip.Trigger>
@@ -96,24 +93,20 @@ const PolicyDefinition: FC<Props> = ({
                     ].join(' ')}
                   >
                     <p className="text-xs text-scale-1200">
-                      This expression will be used in INSERT and UPDATE queries against the table if
-                      row-level security is enabled.
+                      如果启用了行级安全性，则此表达式将用于针对表的 INSERT 和 UPDATE 查询。
                     </p>
                     <p className="text-xs text-scale-1200">
-                      Only rows for which the expression evaluates to true will be allowed. An error
-                      will be thrown if the expression evaluates to false or null for any of the
-                      records inserted or any of the records that result from the update.
+                      仅允许表达式计算结果为 true 的行。如果对于插入的任何记录或更新产生的任何记录，表达式的计算结果为 false 或 null，将抛出错误。
                     </p>
                     <p className="text-xs text-scale-1200">
-                      Note that this expression is evaluated against the proposed new contents of
-                      the row, not the original contents.
+                      请注意，此表达式是针对可能的新的行数据而不是表原有的内容。
                     </p>
                   </div>
                 </Tooltip.Content>
               </Tooltip.Root>
             </div>
             <p className="text-sm text-scale-900">
-              Provide a SQL conditional expression that returns a boolean.
+              提供返回布尔值的 SQL 条件表达式。
             </p>
           </div>
           <div className={`w-2/3 ${showUsing(operation) ? 'h-32' : 'h-56'}`}>

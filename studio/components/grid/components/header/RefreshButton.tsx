@@ -32,7 +32,7 @@ const RefreshButton: FC<Props> = ({ sorts, filters }) => {
       onClick={onClick}
       loading={loading}
     >
-      Refresh
+      刷新
     </Button>
   )
 }

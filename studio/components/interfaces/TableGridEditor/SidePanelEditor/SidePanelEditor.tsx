@@ -193,7 +193,7 @@ const SidePanelEditor: FC<Props> = ({
       } else if (isNewRecord) {
         toastId = ui.setNotification({
           category: 'loading',
-          message: `Creating new table: ${payload.name}...`,
+          message: `正在创建新表: ${payload.name}...`,
         })
 
         const table = await meta.createTable(
@@ -207,13 +207,13 @@ const SidePanelEditor: FC<Props> = ({
         ui.setNotification({
           id: toastId,
           category: 'success',
-          message: `Table ${table.name} is good to go!`,
+          message: `表 ${table.name} 可以使用了!`,
         })
         onTableCreated(table)
       } else if (selectedTableToEdit) {
         toastId = ui.setNotification({
           category: 'loading',
-          message: `Updating table: ${selectedTableToEdit?.name}...`,
+          message: `正在更新表: ${selectedTableToEdit?.name}...`,
         })
         const { table, hasError }: any = await meta.updateTable(
           toastId,
@@ -226,13 +226,13 @@ const SidePanelEditor: FC<Props> = ({
           ui.setNotification({
             id: toastId,
             category: 'info',
-            message: `Table ${table.name} has been updated, but there were some errors`,
+            message: `表 ${table.name} 已更新，但有一些错误`,
           })
         } else {
           ui.setNotification({
             id: toastId,
             category: 'success',
-            message: `Successfully updated ${table.name}!`,
+            message: `成功更新 ${table.name}!`,
           })
         }
       }
@@ -292,8 +292,8 @@ const SidePanelEditor: FC<Props> = ({
       />
       <ConfirmationModal
         visible={isClosingPanel}
-        header="Confirm to close"
-        buttonLabel="Confirm"
+        header="确认关闭"
+        buttonLabel="确认"
         onSelectCancel={() => setIsClosingPanel(false)}
         onSelectConfirm={() => {
           setIsClosingPanel(false)
@@ -303,8 +303,7 @@ const SidePanelEditor: FC<Props> = ({
         children={
           <Modal.Content>
             <p className="py-4 text-sm text-scale-1100">
-              There are unsaved changes. Are you sure you want to close the panel? Your changes will
-              be lost.
+              有未保存的更改。您确定要关闭面板吗？您的更改将会丢失。
             </p>
           </Modal.Content>
         }

@@ -63,7 +63,7 @@ export const createSQLStatementForCreatePolicy = (
 ): PolicyForReview => {
   const { name, definition, check, command, schema, table } = policyFormFields
   const roles = policyFormFields.roles.length === 0 ? ['public'] : policyFormFields.roles
-  const description = `Add policy for the ${command} operation under the policy "${name}"`
+  const description = `为 ${command} 操作添加名为"${name}"的策略`
   const statement = [
     `CREATE POLICY "${name}" ON "${schema}"."${table}"`,
     `AS PERMISSIVE FOR ${command}`,

@@ -128,16 +128,16 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
           {user.email !== null ? (
             <>
               <Dropdown.Item onClick={handleResetPassword} icon={<IconMail size="tiny" />}>
-                Send password recovery
+                发送密码恢复邮件
               </Dropdown.Item>
               <Dropdown.Item onClick={handleSendMagicLink} icon={<IconMail size="tiny" />}>
-                Send magic link
+                发送魔法链接
               </Dropdown.Item>
             </>
           ) : null}
           {user.phone !== null ? (
             <Dropdown.Item onClick={handleSendOtp} icon={<IconMail size="tiny" />}>
-              Send OTP
+              发送一次性密码（OTP）
             </Dropdown.Item>
           ) : null}
           <Dropdown.Separator />
@@ -148,7 +148,7 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
                 icon={<IconTrash size="tiny" />}
                 disabled={!canRemoveUser}
               >
-                Delete user
+                删除用户
               </Dropdown.Item>
             </Tooltip.Trigger>
             {!canRemoveUser && (
@@ -161,7 +161,7 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
                   ].join(' ')}
                 >
                   <span className="text-xs text-scale-1200">
-                    You need additional permissions to delete users
+                    您需要额外的权限才能删除用户
                   </span>
                 </div>
               </Tooltip.Content>

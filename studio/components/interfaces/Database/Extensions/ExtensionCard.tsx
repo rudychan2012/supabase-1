@@ -29,8 +29,8 @@ const ExtensionCard: FC<Props> = ({ extension }) => {
 
   async function disableExtension() {
     confirmAlert({
-      title: 'Confirm to disable extension',
-      message: `Are you sure you want to turn OFF "${extension.name}" extension?`,
+      title: '确认停用扩展',
+      message: `你确定要停用"${extension.name}"吗?`,
       onAsyncConfirm: async () => {
         try {
           setLoading(true)
@@ -40,13 +40,13 @@ const ExtensionCard: FC<Props> = ({ extension }) => {
           } else {
             ui.setNotification({
               category: 'success',
-              message: `${extension.name.toUpperCase()} is off.`,
+              message: `${extension.name.toUpperCase()} 已停用。`,
             })
           }
         } catch (error: any) {
           ui.setNotification({
             category: 'error',
-            message: `Toggle ${extension.name.toUpperCase()} failed: ${error.message}`,
+            message: `起停 ${extension.name.toUpperCase()} 失败·: ${error.message}`,
           })
         } finally {
           // Need to reload them because the delete function

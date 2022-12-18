@@ -21,7 +21,7 @@ const TemplatePreview: FC<Props> = ({ selectedTemplate }) => {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-scale-1100 text-sm">Policy SQL template:</label>
+              <label className="text-scale-1100 text-sm">策略SQL模板：</label>
               <div className="h-64">
                 <SqlEditor readOnly queryId={id} defaultValue={statement} />
               </div>

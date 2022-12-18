@@ -10,8 +10,8 @@ const FilterPopover: FC = () => {
   const [{ filter: filters }]: any = useUrlState({ arrayKeys: ['filter'] })
   const btnText =
     (filters || []).length > 0
-      ? `Filtered by ${filters.length} rule${filters.length > 1 ? 's' : ''}`
-      : 'Filter'
+      ? `通过${filters.length}条规则过滤`
+      : '过滤'
 
   return (
     <Popover size="large" align="start" className="sb-grid-filter-popover" overlay={<Filter />}>
@@ -60,15 +60,15 @@ const Filter: FC = () => {
         ))}
         {formattedFilters.length == 0 && (
           <div className="space-y-1 px-3">
-            <h5 className="text-sm text-scale-1100">No filters applied to this view</h5>
-            <p className="text-xs text-scale-900">Add a column below to filter the view</p>
+            <h5 className="text-sm text-scale-1100">没有过滤器应用于此表</h5>
+            <p className="text-xs text-scale-900">在下方添加一列以过滤表</p>
           </div>
         )}
       </div>
       <Popover.Separator />
       <div className="px-3">
         <Button icon={<IconPlus />} type="text" onClick={onAddFilter}>
-          Add filter
+          添加过滤器
         </Button>
       </div>
     </div>

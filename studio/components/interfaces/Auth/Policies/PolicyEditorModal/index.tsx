@@ -114,26 +114,26 @@ const PolicyEditorModal: FC<Props> = ({
     const { name, definition, check, command } = policyFormFields
 
     if (name.length === 0) {
-      return ui.setNotification({ category: 'error', message: 'Do give your policy a name' })
+      return ui.setNotification({ category: 'error', message: '请给您的策略起个名字' })
     }
     if (!command) {
       return ui.setNotification({
         category: 'error',
-        message: 'You will need to allow at one operation in your policy',
+        message: '您需要在策略中允许一个操作',
         duration: 4000,
       })
     }
     if (['SELECT', 'DELETE'].includes(command) && !definition) {
       return ui.setNotification({
         category: 'error',
-        message: 'Did you forget to provide a USING expression for your policy?',
+        message: '您是否忘记为策略提供 USING 表达式？',
         duration: 4000,
       })
     }
     if (command === 'INSERT' && !check) {
       return ui.setNotification({
         category: 'error',
-        message: 'Did you forget to provide a WITH CHECK expression for your policy?',
+        message: '您是否忘记为您的策略提供 WITH CHECK 表达式？',
         duration: 4000,
       })
     }
@@ -141,7 +141,7 @@ const PolicyEditorModal: FC<Props> = ({
       return ui.setNotification({
         category: 'error',
         message:
-          'You will need to provide either a USING, or WITH CHECK expression, or both for your policy',
+          '您将需要为您的策略提供 USING 或 WITH CHECK 表达式，或同时提供两者',
         duration: 4000,
       })
     }
@@ -193,7 +193,7 @@ const PolicyEditorModal: FC<Props> = ({
       <div className="">
         {view === POLICY_MODAL_VIEWS.SELECTION ? (
           <PolicySelection
-            description="Write rules with PostgreSQL's policies to fit your unique business needs."
+            description="使用 PostgreSQL 的策略编写规则以满足您独特的业务需求。"
             onViewTemplates={onViewTemplates}
             onViewEditor={onViewEditor}
           />
@@ -209,7 +209,7 @@ const PolicyEditorModal: FC<Props> = ({
         ) : view === POLICY_MODAL_VIEWS.TEMPLATES ? (
           <PolicyTemplates
             templates={getGeneralPolicyTemplates(schema, table)}
-            templatesNote="* References a specific column in the table"
+            templatesNote="* 代指表中的特定列"
             onUseTemplate={onUseTemplate}
           />
         ) : view === POLICY_MODAL_VIEWS.REVIEW ? (

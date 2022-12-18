@@ -11,30 +11,30 @@ export const generateDatabaseMenu = (project?: Project): ProductMenuGroup[] => {
     {
       title: 'Database',
       items: [
-        { name: 'Tables', key: 'tables', url: `/project/${ref}/database/tables`, items: [] },
+        { name: '表', key: 'tables', url: `/project/${ref}/database/tables`, items: [] },
         {
-          name: 'Triggers',
+          name: '触发器',
           key: 'triggers',
           url: `/project/${ref}/database/triggers`,
           items: [],
           isPreview: false,
         },
         {
-          name: 'Functions',
+          name: '函数',
           key: 'functions',
           url: `/project/${ref}/database/functions`,
           items: [],
           isPreview: false,
         },
         {
-          name: 'Extensions',
+          name: '扩展',
           key: 'extensions',
           url: `/project/${ref}/database/extensions`,
           items: [],
         },
-        { name: 'Roles', key: 'roles', url: `/project/${ref}/database/roles`, items: [] },
+        { name: '角色', key: 'roles', url: `/project/${ref}/database/roles`, items: [] },
         {
-          name: 'Replication',
+          name: '副本',
           key: 'replication',
           url: `/project/${ref}/database/replication`,
           items: [],
