@@ -85,7 +85,7 @@ const Sort: FC = () => {
               iconRight={<IconChevronDown />}
               className="sb-grid-dropdown__item-trigger"
             >
-              {`Pick ${formattedSorts.length > 1 ? 'another' : 'a'} column to sort by`}
+              {`选择${formattedSorts.length > 0 ? '另一' : '一'}列来排序`}
             </Button>
           </DropdownControl>
         ) : (

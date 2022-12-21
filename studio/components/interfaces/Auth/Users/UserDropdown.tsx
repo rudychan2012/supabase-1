@@ -28,18 +28,18 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
       if (response.error) {
         ui.setNotification({
           category: 'error',
-          message: `Failed to send password recovery: ${response.error.message}`,
+          message: `无法发送密码恢复邮件：${response.error.message}`,
         })
       } else {
         ui.setNotification({
           category: 'success',
-          message: `Sent password recovery to ${user.email}`,
+          message: `已将密码恢复邮件发送到${user.email}`,
         })
       }
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Send password recovery failed: ${error?.message}`,
+        message: `发送密码恢复邮件失败：${error?.message}`,
       })
     } finally {
       setLoading(false)
@@ -53,18 +53,18 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
       if (response.error) {
         ui.setNotification({
           category: 'error',
-          message: `Failed to send magic link: ${response.error.message}`,
+          message: `无法发送魔术链接：${response.error.message}`,
         })
       } else {
         ui.setNotification({
           category: 'success',
-          message: `Sent magic link to ${user.email}`,
+          message: `已发送魔术链接给${user.email}`,
         })
       }
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to send magic link: ${error?.message}`,
+        message: `无法发送魔术链接: ${error?.message}`,
       })
     } finally {
       setLoading(false)
@@ -78,18 +78,18 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
       if (response.error) {
         ui.setNotification({
           category: 'error',
-          message: `Failed to OTP: ${response.error.message}`,
+          message: `发送OTP失败: ${response.error.message}`,
         })
       } else {
         ui.setNotification({
           category: 'success',
-          message: `Sent OTP to ${user.phone}`,
+          message: `向${user.phone}发送OTP `,
         })
       }
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to send OTP: ${error?.message}`,
+        message: `发送OTP失败: ${error?.message}`,
       })
     } finally {
       setLoading(false)
@@ -100,18 +100,18 @@ const UserDropdown: FC<Props> = ({ user, canRemoveUser }) => {
     await timeout(200)
 
     confirmAlert({
-      title: 'Confirm to delete',
-      message: `This is permanent! Are you sure you want to delete user ${user.email} ?`,
+      title: '确认删除',
+      message: `这是永久性的！是否确定要删除用户${user.email} ?`,
       onAsyncConfirm: async () => {
         setLoading(true)
         const response = await delete_(`${API_URL}/auth/${PageState.projectRef}/users`, user)
         if (response.error) {
           ui.setNotification({
             category: 'error',
-            message: `Failed to delete user: ${response.error.message}`,
+            message: `删除用户失败：${response.error.message}`,
           })
         } else {
-          ui.setNotification({ category: 'success', message: `Successfully deleted ${user.email}` })
+          ui.setNotification({ category: 'success', message: `已成功删除${user.email}` })
           PageState.users = PageState.users.filter((x: any) => x.id != user.id)
           PageState.totalUsers -= 1
         }

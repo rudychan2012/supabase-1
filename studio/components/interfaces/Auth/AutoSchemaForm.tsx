@@ -71,13 +71,13 @@ const AutoSchemaForm = observer(() => {
     if (!error) {
       ui.setNotification({
         category: 'success',
-        message: `Successfully updated settings`,
+        message: `已成功更新设置`,
       })
       resetForm({ values: values, initialValues: values })
     } else {
       ui.setNotification({
         category: 'error',
-        message: `Failed to update settings`,
+        message: `更新设置失败`,
       })
     }
 
@@ -97,7 +97,7 @@ const AutoSchemaForm = observer(() => {
         return (
           <>
             <FormHeader
-              title="Auth设置"
+              title="认证设置"
               description="为您的用户配置身份验证"
             />
             <FormPanel
@@ -185,7 +185,7 @@ const AutoSchemaForm = observer(() => {
                       size="small"
                       min={0}
                       label="重用间隔"
-                      descriptionText="同一刷新令牌可用于请求访问令牌的时间间隔."
+                      descriptionText="同一刷新令牌可用于请求访问令牌的时间间隔"
                       actions={<span className="mr-3 text-scale-900">秒</span>}
                       disabled={!canUpdateConfig}
                     />

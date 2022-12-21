@@ -140,8 +140,8 @@ const ProviderForm: FC<Props> = ({ provider }) => {
                         copy
                         readOnly
                         disabled
-                        label="Redirect URL"
-                        value={`https://${ui.selectedProjectRef}.supabase.co/auth/v1/callback`}
+                        label="重定向URL"
+                        value={`${process.env.SUPABASE_URL}/auth/v1/callback`}
                       />
                     </>
                   )}
@@ -155,7 +155,7 @@ const ProviderForm: FC<Props> = ({ provider }) => {
                       }}
                       disabled={isSubmitting}
                     >
-                      Cancel
+                      取消
                     </Button>
                     <Tooltip.Root delayDuration={0}>
                       <Tooltip.Trigger type="button">
@@ -164,7 +164,7 @@ const ProviderForm: FC<Props> = ({ provider }) => {
                           loading={isSubmitting}
                           disabled={!canUpdateConfig || noChanges}
                         >
-                          Save
+                          保存
                         </Button>
                       </Tooltip.Trigger>
                       {!canUpdateConfig && (

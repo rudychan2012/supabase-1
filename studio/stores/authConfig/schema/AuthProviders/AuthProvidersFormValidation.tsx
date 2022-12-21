@@ -9,63 +9,61 @@ const PROVIDER_EMAIL = {
   title: 'Email',
   properties: {
     EXTERNAL_EMAIL_ENABLED: {
-      title: 'Enable Email provider',
-      description: 'This will enable Email based signup and login for your application',
+      title: '启用电子邮件提供商',
+      description: '这将为您的应用程序启用基于电子邮件的注册和登录',
       type: 'boolean',
     },
     MAILER_AUTOCONFIRM: {
-      title: 'Confirm email',
-      description: `Users will need to confirm their email address before signing in for the first time.`,
+      title: '确认邮件',
+      description: `用户在首次登录之前需要确认其电子邮件地址。`,
       type: 'boolean',
     },
     MAILER_SECURE_EMAIL_CHANGE_ENABLED: {
-      title: 'Secure email change',
-      description: `Users will be required to confirm any email change on both the old email address and new email address.
-      If disabled, only the new email is required to confirm.`,
+      title: '安全修改邮箱',
+      description: `用户将需要在旧邮箱和新邮箱上确认邮箱变更。如果禁用，则只需新邮箱中进行确认。`,
       type: 'boolean',
     },
     MAILER_OTP_EXP: {
-      title: 'Mailer OTP Expiration',
+      title: 'OTP过期时间',
       type: 'number',
-      description: 'Duration before an email otp / link expires.',
+      description: '邮件 OTP 链接过期之前的持续时间。',
       units: 'seconds',
     },
     PASSWORD_MIN_LENGTH: {
-      title: 'Min password length',
-      description: 'Users will not be able to use a password shorter than this.',
+      title: '最小密码长度',
+      description: '用户将无法使用比这短的密码。',
       type: 'number',
     },
   },
   validationSchema: object().shape({
     PASSWORD_MIN_LENGTH: number()
-      .required('A password is required.')
-      .min(6, 'Password length must be at least 6 characters long'),
+      .required('密码是必填项。')
+      .min(6, '密码长度必须至少为 6 个字符'),
     MAILER_OTP_EXP: number()
-      .min(0, 'Must be more than 0')
-      .max(86400, 'Must be no more than 86400')
-      .required('This is required'),
+      .min(0, '必须大于 0')
+      .max(86400, '不得超过 86400')
+      .required('这是必填项'),
   }),
   misc: {
     iconKey: 'email-icon2',
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台的应用配置中。[了解更多](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
   },
 }
 
 const PROVIDER_PHONE = {
   $schema: JSON_SCHEMA_VERSION,
   type: 'object',
-  title: 'Phone',
+  title: '电话',
   properties: {
     EXTERNAL_PHONE_ENABLED: {
-      title: 'Enable Phone provider',
-      description: 'This will enable phone based login for your application',
+      title: '启用电话提供商',
+      description: '这将为您的应用程序启用基于电话的登录',
       type: 'boolean',
     },
     SMS_PROVIDER: {
       type: 'select',
-      title: 'SMS provider',
-      description: 'External provider that will handle sending SMS messages',
+      title: '短信（SMS）提供商',
+      description: '将处理发送短信的外部提供商',
       enum: [
         { label: 'Twilio', value: 'twilio', icon: 'twilio-icon.svg' },
         { label: 'Messagebird', value: 'messagebird', icon: 'messagebird-icon.svg' },
@@ -166,27 +164,27 @@ const PROVIDER_PHONE = {
 
     // SMS Confirm settings
     SMS_AUTOCONFIRM: {
-      title: 'Enable phone confirmations',
+      title: '启用电话确认',
       type: 'boolean',
-      description: 'Users will need to confirm their phone number before signing in.',
+      description: '用户需要在登录前确认其电话号码。',
     },
 
     SMS_OTP_EXP: {
-      title: 'SMS OTP Expiry',
+      title: 'SMS OTP 有效期',
       type: 'number',
-      description: 'Duration before an SMS OTP expires',
-      units: 'seconds',
+      description: '短信一次性密码有效期',
+      units: '秒',
     },
     SMS_OTP_LENGTH: {
-      title: 'SMS OTP Length',
+      title: 'SMS OTP 长度',
       type: 'number',
-      description: 'Number of digits in OTP',
-      units: 'digits',
+      description: '一次性密码的位数',
+      units: '位',
     },
     SMS_TEMPLATE: {
-      title: 'SMS Message',
+      title: 'SMS 消息',
       type: 'string',
-      description: 'To format the OPT code use `{{ .Code }}`',
+      description: '使用`{{ .Code }}`格式化OTP密码',
     },
   },
   validationSchema: object().shape({
@@ -198,21 +196,21 @@ const PROVIDER_PHONE = {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'twilio'
       },
-      then: (schema) => schema.required('Twilio Account SID is required'),
+      then: (schema) => schema.required('Twilio Account SID 是必填项'),
       otherwise: (schema) => schema,
     }),
     SMS_TWILIO_AUTH_TOKEN: string().when(['EXTERNAL_PHONE_ENABLED', 'SMS_PROVIDER'], {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'twilio'
       },
-      then: (schema) => schema.required('Twilio Auth Token is required'),
+      then: (schema) => schema.required('Twilio Auth Token 是必填项'),
       otherwise: (schema) => schema,
     }),
     SMS_TWILIO_MESSAGE_SERVICE_SID: string().when(['EXTERNAL_PHONE_ENABLED', 'SMS_PROVIDER'], {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'twilio'
       },
-      then: (schema) => schema.required('Twilio Message Service SID is required'),
+      then: (schema) => schema.required('Twilio Message Service SID 是必填项'),
       otherwise: (schema) => schema,
     }),
 
@@ -221,14 +219,14 @@ const PROVIDER_PHONE = {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'messagebird'
       },
-      then: (schema) => schema.required('Messagebird Access Key is required'),
+      then: (schema) => schema.required('Messagebird Access Key 是必填项'),
       otherwise: (schema) => schema,
     }),
     SMS_MESSAGEBIRD_ORIGINATOR: string().when(['EXTERNAL_PHONE_ENABLED', 'SMS_PROVIDER'], {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'messagebird'
       },
-      then: (schema) => schema.required('Messagebird Originator is required'),
+      then: (schema) => schema.required('Messagebird Originator 是必填项'),
       otherwise: (schema) => schema,
     }),
 
@@ -237,14 +235,14 @@ const PROVIDER_PHONE = {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'textlocal'
       },
-      then: (schema) => schema.required('Textlocal API Key is required'),
+      then: (schema) => schema.required('Textlocal API Key 是必填项'),
       otherwise: (schema) => schema,
     }),
     SMS_TEXTLOCAL_SENDER: string().when(['EXTERNAL_PHONE_ENABLED', 'SMS_PROVIDER'], {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'textlocal'
       },
-      then: (schema) => schema.required('Textlocal Sender is required'),
+      then: (schema) => schema.required('Textlocal Sender 是必填项'),
       otherwise: (schema) => schema,
     }),
 
@@ -253,28 +251,28 @@ const PROVIDER_PHONE = {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'vonage'
       },
-      then: (schema) => schema.required('Vonage API is required'),
+      then: (schema) => schema.required('Vonage API 是必填项'),
       otherwise: (schema) => schema,
     }),
     SMS_VONAGE_API_SECRET: string().when(['EXTERNAL_PHONE_ENABLED', 'SMS_PROVIDER'], {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'vonage'
       },
-      then: (schema) => schema.required('Vonage API Secret is required'),
+      then: (schema) => schema.required('Vonage API Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
     SMS_VONAGE_FROM: string().when(['EXTERNAL_PHONE_ENABLED', 'SMS_PROVIDER'], {
       is: (EXTERNAL_PHONE_ENABLED: boolean, SMS_PROVIDER: string) => {
         return EXTERNAL_PHONE_ENABLED && SMS_PROVIDER === 'vonage'
       },
-      then: (schema) => schema.required('Vonage From is required'),
+      then: (schema) => schema.required('Vonage From 是必填项'),
       otherwise: (schema) => schema,
     }),
 
     // Phone SMS
-    SMS_OTP_EXP: number().min(0, 'Must be more than 0').required('This is required'),
-    SMS_OTP_LENGTH: number().min(6, 'Must be 6 or more in length').required('This is required'),
-    SMS_TEMPLATE: string().required('SMS template is required.'),
+    SMS_OTP_EXP: number().min(0, 'Must be more than 0').required('This 是必填项'),
+    SMS_OTP_LENGTH: number().min(6, 'Must be 6 or more in length').required('This 是必填项'),
+    SMS_TEMPLATE: string().required('SMS template 是必填项.'),
   }),
   misc: {
     iconKey: 'phone-icon4',
@@ -289,18 +287,18 @@ const EXTERNAL_PROVIDER_APPLE = {
   title: 'Apple',
   properties: {
     EXTERNAL_APPLE_ENABLED: {
-      title: 'Enable Apple provider',
-      description: 'This will enable Apple login for your application',
+      title: '启用Apple提供商',
+      description: '这将为您的应用程序启用 Apple 登录',
       type: 'boolean',
     },
     EXTERNAL_APPLE_CLIENT_ID: {
       /**
        * to do: change docs
        */
-      title: 'Services ID',
+      title: '服务ID',
       description: `
-Client identifier when authenticating or validating users.
-[learn more](https://developer.apple.com/documentation/sign_in_with_apple/configuring_your_environment_for_sign_in_with_apple)`,
+对用户进行身份验证时的客户端标识符。
+[了解更多](https://developer.apple.com/documentation/sign_in_with_apple/configuring_your_environment_for_sign_in_with_apple)`,
       type: 'string',
     },
     EXTERNAL_APPLE_SECRET: {
@@ -309,8 +307,8 @@ Client identifier when authenticating or validating users.
        */
       title: 'Secret key',
       description: `
-The secret key is a JWT token that must be generated.
-[Learn more](https://supabase.com/docs/guides/auth/auth-apple#generate-a-client_secret)`,
+密钥是必须生成的 JWT 令牌。
+[了解更多](https://supabase.com/docs/guides/auth/auth-apple#generate-a-client_secret)`,
       type: 'string',
       isSecret: true,
     },
@@ -319,23 +317,23 @@ The secret key is a JWT token that must be generated.
     EXTERNAL_APPLE_ENABLED: boolean().required(),
     EXTERNAL_APPLE_CLIENT_ID: string().when('EXTERNAL_APPLE_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Services ID is required'),
+      then: (schema) => schema.required('服务ID为必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_APPLE_SECRET: string().when('EXTERNAL_APPLE_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Secret key is required'),
+      then: (schema) => schema.required('Secret key是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
   misc: {
     iconKey: 'apple-icon',
     requiresRedirect: true,
-    helper: `To complete setup, add this authorisation callback URL to your app's configuration in the Apple Developer Console.
-            [Learn more](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
+    helper: `要完成设置，请将此授权回调 URL 添加到 Apple 开发者控制台中的应用配置中。
+            [了解更多](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
     alert: {
-      title: `Apple secrets will self expire every 6 months`,
-      description: `You will need to regenerate before the 6 months elapses otherwise your users using Apple Login will no longer be able to log back in.`,
+      title: `Apple 密钥将每6个月自行过期一次`,
+      description: `您需要在6个月之内重新生成，否则使用 Apple Login 的用户将无法再重新登录。`,
     },
   },
 }
@@ -346,25 +344,25 @@ const EXTERNAL_PROVIDER_AZURE = {
   title: 'Azure',
   properties: {
     EXTERNAL_AZURE_ENABLED: {
-      title: 'Azure enabled',
+      title: '启用Azure',
       type: 'boolean',
     },
     EXTERNAL_AZURE_CLIENT_ID: {
       // [TODO] Change docs
-      title: 'Application (client) ID',
+      title: '应用程序（客户端）ID',
       type: 'string',
     },
     EXTERNAL_AZURE_SECRET: {
       // [TODO] Change docs
       title: 'Secret Value',
-      description: `Enter the data from Value, not the Secret ID. [Learn more](https://supabase.com/docs/guides/auth/auth-azure#obtain-a-secret-id)`,
+      description: `输入Value而不是Secret ID.[了解更多](https://supabase.com/docs/guides/auth/auth-azure#obtain-a-secret-id)`,
       type: 'string',
       isSecret: true,
     },
     EXTERNAL_AZURE_URL: {
       // [TODO] Change docs
       title: 'Azure Tenant URL',
-      descriptionOptional: 'Optional',
+      descriptionOptional: '可选的',
       type: 'string',
     },
   },
@@ -372,15 +370,15 @@ const EXTERNAL_PROVIDER_AZURE = {
     EXTERNAL_AZURE_ENABLED: boolean().required(),
     EXTERNAL_AZURE_CLIENT_ID: string().when('EXTERNAL_AZURE_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Application (client) ID is required'),
+      then: (schema) => schema.required('应用程序（客户端）ID 是必填的'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_AZURE_SECRET: string().when('EXTERNAL_AZURE_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Secret ID is required'),
+      then: (schema) => schema.required('Secret ID 是必填的'),
       otherwise: (schema) => schema,
     }),
-    EXTERNAL_AZURE_URL: string().matches(domainRegex, 'Must be a valid URL').optional(),
+    EXTERNAL_AZURE_URL: string().matches(domainRegex, '必须是有效的URL').optional(),
   }),
   misc: {
     iconKey: 'microsoft-icon',
@@ -394,7 +392,7 @@ const EXTERNAL_PROVIDER_BITBUCKET = {
   title: 'Bitbucket',
   properties: {
     EXTERNAL_BITBUCKET_ENABLED: {
-      title: 'Bitbucket enabled',
+      title: '启用Bitbucket',
       type: 'boolean',
     },
     EXTERNAL_BITBUCKET_CLIENT_ID: {
@@ -411,12 +409,12 @@ const EXTERNAL_PROVIDER_BITBUCKET = {
     EXTERNAL_BITBUCKET_ENABLED: boolean().required(),
     EXTERNAL_BITBUCKET_CLIENT_ID: string().when('EXTERNAL_BITBUCKET_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Key is required'),
+      then: (schema) => schema.required('Key是必填的'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_BITBUCKET_SECRET: string().when('EXTERNAL_BITBUCKET_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Secret is required'),
+      then: (schema) => schema.required('Secret是必填的'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -432,7 +430,7 @@ const EXTERNAL_PROVIDER_DISCORD = {
   title: 'Discord',
   properties: {
     EXTERNAL_DISCORD_ENABLED: {
-      title: 'Discord enabled',
+      title: '启用Discord',
       type: 'boolean',
     },
     EXTERNAL_DISCORD_CLIENT_ID: {
@@ -449,12 +447,12 @@ const EXTERNAL_PROVIDER_DISCORD = {
     EXTERNAL_DISCORD_ENABLED: boolean().required(),
     EXTERNAL_DISCORD_CLIENT_ID: string().when('EXTERNAL_DISCORD_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID为必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_DISCORD_SECRET: string().when('EXTERNAL_DISCORD_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('客户端Secret是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -470,7 +468,7 @@ const EXTERNAL_PROVIDER_FACEBOOK = {
   title: 'Facebook',
   properties: {
     EXTERNAL_FACEBOOK_ENABLED: {
-      title: 'Facebook enabled',
+      title: '启用Facebook',
       type: 'boolean',
     },
     EXTERNAL_FACEBOOK_CLIENT_ID: {
@@ -487,12 +485,12 @@ const EXTERNAL_PROVIDER_FACEBOOK = {
     EXTERNAL_FACEBOOK_ENABLED: boolean().required(),
     EXTERNAL_FACEBOOK_CLIENT_ID: string().when('EXTERNAL_FACEBOOK_ENABLED', {
       is: true,
-      then: (schema) => schema.required('"Facebook client ID" is required'),
+      then: (schema) => schema.required('"Facebook client ID"是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_FACEBOOK_SECRET: string().when('EXTERNAL_FACEBOOK_ENABLED', {
       is: true,
-      then: (schema) => schema.required('"Facebook secret" is required'),
+      then: (schema) => schema.required('"Facebook secret"是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -508,7 +506,7 @@ const EXTERNAL_PROVIDER_GITHUB = {
   title: 'GitHub',
   properties: {
     EXTERNAL_GITHUB_ENABLED: {
-      title: 'GitHub enabled',
+      title: '启用GitHub',
       type: 'boolean',
     },
     EXTERNAL_GITHUB_CLIENT_ID: {
@@ -525,12 +523,12 @@ const EXTERNAL_PROVIDER_GITHUB = {
     EXTERNAL_GITHUB_ENABLED: boolean().required(),
     EXTERNAL_GITHUB_CLIENT_ID: string().when('EXTERNAL_GITHUB_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_GITHUB_SECRET: string().when('EXTERNAL_GITHUB_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('Client Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -546,7 +544,7 @@ const EXTERNAL_PROVIDER_GITLAB = {
   title: 'GitLab',
   properties: {
     EXTERNAL_GITLAB_ENABLED: {
-      title: 'GitLab enabled',
+      title: '启用GitLab',
       type: 'boolean',
     },
     // [TODO] Update docs
@@ -561,8 +559,8 @@ const EXTERNAL_PROVIDER_GITLAB = {
       isSecret: true,
     },
     EXTERNAL_GITLAB_URL: {
-      title: 'Self Hosted GitLab URL',
-      descriptionOptional: 'Optional',
+      title: '自托管的 GitLab URL',
+      descriptionOptional: '可选的',
       type: 'string',
     },
   },
@@ -570,15 +568,15 @@ const EXTERNAL_PROVIDER_GITLAB = {
     EXTERNAL_GITLAB_ENABLED: boolean().required(),
     EXTERNAL_GITLAB_CLIENT_ID: string().when('EXTERNAL_GITLAB_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_GITLAB_SECRET: string().when('EXTERNAL_GITLAB_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('Client Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
-    EXTERNAL_GITLAB_URL: string().matches(domainRegex, 'Must be a valid URL').optional(),
+    EXTERNAL_GITLAB_URL: string().matches(domainRegex, '必须是有效的URL').optional(),
   }),
   misc: {
     iconKey: 'gitlab-icon',
@@ -592,7 +590,7 @@ const EXTERNAL_PROVIDER_GOOGLE = {
   title: 'Google',
   properties: {
     EXTERNAL_GOOGLE_ENABLED: {
-      title: 'Google enabled',
+      title: '启用Google',
       type: 'boolean',
     },
     // [TODO] Update docs
@@ -611,12 +609,12 @@ const EXTERNAL_PROVIDER_GOOGLE = {
     EXTERNAL_GOOGLE_ENABLED: boolean().required(),
     EXTERNAL_GOOGLE_CLIENT_ID: string().when('EXTERNAL_GOOGLE_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_GOOGLE_SECRET: string().when('EXTERNAL_GOOGLE_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('Client Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -633,7 +631,7 @@ const EXTERNAL_PROVIDER_KEYCLOAK = {
   title: 'KeyCloak',
   properties: {
     EXTERNAL_KEYCLOAK_ENABLED: {
-      title: 'Keycloak enabled',
+      title: '启用Keycloak',
       type: 'boolean',
     },
     EXTERNAL_KEYCLOAK_CLIENT_ID: {
@@ -655,19 +653,19 @@ const EXTERNAL_PROVIDER_KEYCLOAK = {
     EXTERNAL_KEYCLOAK_ENABLED: boolean().required(),
     EXTERNAL_KEYCLOAK_CLIENT_ID: string().when('EXTERNAL_KEYCLOAK_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_KEYCLOAK_SECRET: string().when('EXTERNAL_KEYCLOAK_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client secret is required'),
+      then: (schema) => schema.required('Client secret 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_KEYCLOAK_URL: string().when('EXTERNAL_KEYCLOAK_ENABLED', {
       is: true,
       then: (schema) =>
-        schema.matches(domainRegex, 'Must be a valid URL').required('Realm URL is required'),
-      otherwise: (schema) => schema.matches(domainRegex, 'Must be a valid URL'),
+        schema.matches(domainRegex, '必须是有效的URL').required('Realm URL 是必填项'),
+      otherwise: (schema) => schema.matches(domainRegex, '必须是有效的URL'),
     }),
   }),
   misc: {
@@ -682,7 +680,7 @@ const EXTERNAL_PROVIDER_LINKEDIN = {
   title: 'LinkedIn',
   properties: {
     EXTERNAL_LINKEDIN_ENABLED: {
-      title: 'Linkedin enabled',
+      title: '启用Linkedin',
       type: 'boolean',
     },
     // [TODO] Update docs
@@ -701,12 +699,12 @@ const EXTERNAL_PROVIDER_LINKEDIN = {
     EXTERNAL_LINKEDIN_ENABLED: boolean().required(),
     EXTERNAL_LINKEDIN_CLIENT_ID: string().when('EXTERNAL_LINKEDIN_ENABLED', {
       is: true,
-      then: (schema) => schema.required('API Key is required'),
+      then: (schema) => schema.required('API Key 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_LINKEDIN_SECRET: string().when('EXTERNAL_LINKEDIN_ENABLED', {
       is: true,
-      then: (schema) => schema.required('API Secret Key is required'),
+      then: (schema) => schema.required('API Secret Key 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -722,7 +720,7 @@ const EXTERNAL_PROVIDER_NOTION = {
   title: 'Notion',
   properties: {
     EXTERNAL_NOTION_ENABLED: {
-      title: 'Notion enabled',
+      title: '启用Notion',
       type: 'boolean',
     },
     EXTERNAL_NOTION_CLIENT_ID: {
@@ -739,12 +737,12 @@ const EXTERNAL_PROVIDER_NOTION = {
     EXTERNAL_NOTION_ENABLED: boolean().required(),
     EXTERNAL_NOTION_CLIENT_ID: string().when('EXTERNAL_NOTION_ENABLED', {
       is: true,
-      then: (schema) => schema.required('OAuth client ID is required'),
+      then: (schema) => schema.required('OAuth client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_NOTION_SECRET: string().when('EXTERNAL_NOTION_ENABLED', {
       is: true,
-      then: (schema) => schema.required('OAuth client secret is required'),
+      then: (schema) => schema.required('OAuth client secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -760,7 +758,7 @@ const EXTERNAL_PROVIDER_TWITCH = {
   title: 'Twitch',
   properties: {
     EXTERNAL_TWITCH_ENABLED: {
-      title: 'Twitch enabled',
+      title: '启用Twitch',
       type: 'boolean',
     },
     EXTERNAL_TWITCH_CLIENT_ID: {
@@ -777,12 +775,12 @@ const EXTERNAL_PROVIDER_TWITCH = {
     EXTERNAL_TWITCH_ENABLED: boolean().required(),
     EXTERNAL_TWITCH_CLIENT_ID: string().when('EXTERNAL_TWITCH_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_TWITCH_SECRET: string().when('EXTERNAL_TWITCH_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client secret is required'),
+      then: (schema) => schema.required('Client secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -798,7 +796,7 @@ const EXTERNAL_PROVIDER_TWITTER = {
   title: 'Twitter',
   properties: {
     EXTERNAL_TWITTER_ENABLED: {
-      title: 'Twitter enabled',
+      title: '启用Twitter',
       type: 'boolean',
     },
     EXTERNAL_TWITTER_CLIENT_ID: {
@@ -815,12 +813,12 @@ const EXTERNAL_PROVIDER_TWITTER = {
     EXTERNAL_TWITTER_ENABLED: boolean().required(),
     EXTERNAL_TWITTER_CLIENT_ID: string().when('EXTERNAL_TWITTER_ENABLED', {
       is: true,
-      then: (schema) => schema.required('API Key is required'),
+      then: (schema) => schema.required('API Key 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_TWITTER_SECRET: string().when('EXTERNAL_TWITTER_ENABLED', {
       is: true,
-      then: (schema) => schema.required('API Secret Key is required'),
+      then: (schema) => schema.required('API Secret Key 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -836,7 +834,7 @@ const EXTERNAL_PROVIDER_SLACK = {
   title: 'Slack',
   properties: {
     EXTERNAL_SLACK_ENABLED: {
-      title: 'Slack enabled',
+      title: '启用Slack',
       type: 'boolean',
     },
     EXTERNAL_SLACK_CLIENT_ID: {
@@ -853,12 +851,12 @@ const EXTERNAL_PROVIDER_SLACK = {
     EXTERNAL_SLACK_ENABLED: boolean().required(),
     EXTERNAL_SLACK_CLIENT_ID: string().when('EXTERNAL_SLACK_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_SLACK_SECRET: string().when('EXTERNAL_SLACK_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('Client Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -874,7 +872,7 @@ const EXTERNAL_PROVIDER_SPOTIFY = {
   title: 'Spotify',
   properties: {
     EXTERNAL_SPOTIFY_ENABLED: {
-      title: 'Spotify enabled',
+      title: '启用Spotify',
       type: 'boolean',
     },
     EXTERNAL_SPOTIFY_CLIENT_ID: {
@@ -891,12 +889,12 @@ const EXTERNAL_PROVIDER_SPOTIFY = {
     EXTERNAL_SPOTIFY_ENABLED: boolean().required(),
     EXTERNAL_SPOTIFY_CLIENT_ID: string().when('EXTERNAL_SPOTIFY_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_SPOTIFY_SECRET: string().when('EXTERNAL_SPOTIFY_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('Client Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -912,7 +910,7 @@ const EXTERNAL_PROVIDER_WORKOS = {
   title: 'WorkOS',
   properties: {
     EXTERNAL_WORKOS_ENABLED: {
-      title: 'WorkOS enabled',
+      title: '启用WorkOS',
       type: 'boolean',
     },
     EXTERNAL_WORKOS_URL: {
@@ -932,20 +930,20 @@ const EXTERNAL_PROVIDER_WORKOS = {
   validationSchema: object().shape({
     EXTERNAL_WORKOS_ENABLED: boolean().required(),
     EXTERNAL_WORKOS_URL: string()
-      .matches(domainRegex, 'Must be a valid URL')
+      .matches(domainRegex, '必须是有效的URL')
       .when('EXTERNAL_WORKOS_ENABLED', {
         is: true,
-        then: (schema) => schema.required('WorkOS URL is required'),
+        then: (schema) => schema.required('WorkOS URL 是必填项'),
         otherwise: (schema) => schema,
       }),
     EXTERNAL_WORKOS_CLIENT_ID: string().when('EXTERNAL_WORKOS_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_WORKOS_SECRET: string().when('EXTERNAL_WORKOS_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client Secret is required'),
+      then: (schema) => schema.required('Client Secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -961,7 +959,7 @@ const EXTERNAL_PROVIDER_ZOOM = {
   title: 'Zoom',
   properties: {
     EXTERNAL_ZOOM_ENABLED: {
-      title: 'Zoom enabled',
+      title: '启用Zoom',
       type: 'boolean',
     },
     EXTERNAL_ZOOM_CLIENT_ID: {
@@ -978,12 +976,12 @@ const EXTERNAL_PROVIDER_ZOOM = {
     EXTERNAL_ZOOM_ENABLED: boolean().required(),
     EXTERNAL_ZOOM_CLIENT_ID: string().when('EXTERNAL_ZOOM_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client ID is required'),
+      then: (schema) => schema.required('Client ID 是必填项'),
       otherwise: (schema) => schema,
     }),
     EXTERNAL_ZOOM_SECRET: string().when('EXTERNAL_ZOOM_ENABLED', {
       is: true,
-      then: (schema) => schema.required('Client secret is required'),
+      then: (schema) => schema.required('Client secret 是必填项'),
       otherwise: (schema) => schema,
     }),
   }),
@@ -1345,7 +1343,7 @@ export const OLD = {
     MAILER_SECURE_EMAIL_CHANGE_ENABLED: {
       title: 'Double confirm email changes',
       type: 'boolean',
-      help: 'If enabled, a user will be required to confirm any email change on both the old, and new email addresses. If disabled, only the new email is required to confirm',
+      help: 'If enabled, a user will be required to confirm any email change on both the old, and new email addresses. If disabled, only the new email 是必填项 to confirm',
     },
     MAILER_AUTOCONFIRM: {
       title: 'Enable email confirmations',

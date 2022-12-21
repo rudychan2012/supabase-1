@@ -143,11 +143,11 @@ const FileExplorerRow = ({
 
   const rowOptions =
     item.type === STORAGE_ROW_TYPES.BUCKET
-      ? [{ name: 'Delete', onClick: () => onSelectItemDelete(itemWithColumnIndex) }]
+      ? [{ name: '删除', onClick: () => onSelectItemDelete(itemWithColumnIndex) }]
       : item.type === STORAGE_ROW_TYPES.FOLDER
       ? [
-          { name: 'Rename', onClick: () => onSelectItemRename(itemWithColumnIndex) },
-          { name: 'Delete', onClick: () => onSelectItemDelete(itemWithColumnIndex) },
+          { name: '重命名', onClick: () => onSelectItemRename(itemWithColumnIndex) },
+          { name: '删除', onClick: () => onSelectItemDelete(itemWithColumnIndex) },
         ]
       : [
           ...(!item.isCorrupted

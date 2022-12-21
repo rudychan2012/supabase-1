@@ -92,7 +92,7 @@ const AccessTokenList = observer(() => {
         children={
           <Modal.Content>
             <p className="py-4 text-sm text-scale-1100">
-              {`This action cannot be undone. Are you sure you want to delete "${token?.name}" token?`}
+              {`此操作无法撤消。是否确实要删除"${token?.name}" token?`}
             </p>
           </Modal.Content>
         }

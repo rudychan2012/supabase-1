@@ -50,7 +50,7 @@ const ChooseFunctionForm: FC<ChooseFunctionFormProps> = ({
   return (
     <SidePanel
       size="large"
-      header="Pick a function"
+      header="选择一个函数"
       visible={visible}
       onCancel={() => setVisible(!visible)}
       className="hooks-sidepanel"
@@ -80,8 +80,8 @@ const NoticeBox: FC = ({}) => {
     <div className="px-6">
       <InformationBox
         icon={<IconHelpCircle size="large" strokeWidth={1.5} />}
-        title="Only functions that return a trigger will be displayed below"
-        description={`You can make functions by using the Database Functions`}
+        title="下面只会显示返回触发器的函数"
+        description={`您可以使用数据库函数创建函数`}
         button={
           <Button
             type="secondary"
@@ -89,7 +89,7 @@ const NoticeBox: FC = ({}) => {
               router.push(`/project/${ref}/database/functions`)
             }}
           >
-            Go to Functions
+            转到函数
           </Button>
         }
       />
@@ -104,14 +104,14 @@ const NoFunctionsState: FC = ({}) => {
 
   return (
     <ProductEmptyState
-      title="No Trigger Functions found in database"
-      ctaButtonLabel="Create a trigger function"
+      title="在数据库中找不到触发器函数"
+      ctaButtonLabel="创建触发器函数"
       onClickCta={() => {
         router.push(`/project/${ref}/database/functions`)
       }}
     >
       <p className="text-sm text-scale-1100">
-        You will need to create a trigger based function before you can add it to your trigger.
+        您需要先创建基于触发器的函数，然后才能将其添加到触发器。
       </p>
     </ProductEmptyState>
   )
@@ -177,7 +177,7 @@ const Function: FC<FunctionProps> = ({ id, completeStatement, name, onClick }) =
             <IconChevronDown className={visible ? 'rotate-0 transform' : 'rotate-180 transform'} />
           }
         >
-          {visible ? 'Hide definition' : 'View definition'}
+          {visible ? '隐藏定义' : '视图定义'}
         </Button>
       </div>
       <Transition

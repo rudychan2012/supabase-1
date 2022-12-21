@@ -11,7 +11,7 @@ const PolicyEditorFooter: FC<Props> = ({ showTemplates, onViewTemplates, onRevie
   <div className="flex w-full items-center justify-end gap-2 border-t px-6 py-4 dark:border-dark">
     {showTemplates && (
       <Button type="default" onClick={onViewTemplates}>
-        查看templates
+        查看模版
       </Button>
     )}
     <Button type="primary" onClick={onReviewPolicy}>

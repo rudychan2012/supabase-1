@@ -46,13 +46,13 @@ const DeleteFunction: FC<DeleteFunctionProps> = ({ func, visible, setVisible }) 
         visible={visible}
         onCancel={() => setVisible(!visible)}
         onConfirm={handleDelete}
-        title="Delete this function"
+        title="删除此函数"
         loading={loading}
-        confirmLabel={`Delete function ${name}`}
-        confirmPlaceholder="Type in name of function"
+        confirmLabel={`删除函数${name}`}
+        confirmPlaceholder="输入函数名称"
         confirmString={name}
-        text={`This will delete your function called ${name} of schema ${schema}.`}
-        alert="You cannot recover this function once it is deleted!"
+        text={`这将删除schema${schema}下的函数${name}。`}
+        alert="此函数一旦删除，您将无法恢复！"
       />
     </>
   )

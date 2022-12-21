@@ -206,7 +206,7 @@ const LogTable = ({
 
     return (
       <div className="flex w-1/2 justify-center px-5">
-        <Alert variant="danger" title="Sorry! An error occurred when fetching data." withIcon>
+        <Alert variant="danger" title="不好意思！获取数据时出错。" withIcon>
           <Renderer {...childProps} />
         </Alert>
       </div>

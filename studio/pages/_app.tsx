@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   // prompt the user if they try and leave with unsaved content store changes
   useEffect(() => {
-    const warningText = 'You have unsaved changes - are you sure you wish to leave this page?'
+    const warningText = '您有未保存的更改 - 您确定要离开此页面吗？'
 
     const handleWindowClose = (e: BeforeUnloadEvent) => {
       const savingState = getSavingState()

@@ -39,8 +39,8 @@ const Pagination: FC<PaginationProps> = () => {
     if (state.page > 1) {
       if (state.selectedRows.size >= 1) {
         confirmAlert({
-          title: 'Confirm moving to previous page',
-          message: 'The currently selected lines will be deselected, do you want to proceed?',
+          title: '确认移动到上一页',
+          message: '当前选择的行将被取消选择，是否要继续？',
           onConfirm: () => {
             goToPreviousPage()
             dispatch({
@@ -59,8 +59,8 @@ const Pagination: FC<PaginationProps> = () => {
     if (state.page < maxPages) {
       if (state.selectedRows.size >= 1) {
         confirmAlert({
-          title: 'Confirm moving to next page',
-          message: 'The currently selected lines will be deselected, do you want to proceed?',
+          title: '确认移动到下一页',
+          message: '当前选择的行将被取消选择，是否要继续？',
           onConfirm: () => {
             goToNextPage()
             dispatch({
@@ -103,40 +103,39 @@ const Pagination: FC<PaginationProps> = () => {
   return (
     <div className="sb-grid-pagination">
       {state.totalRows < 0 ? (
-        <p className="text-sm text-scale-1100">Loading records...</p>
+        <p className="text-sm text-scale-1100">正在加载数据...</p>
       ) : (
         <>
+          <p className="text-sm text-scale-1100">{`${totalPages} 页中的第`}</p>
           <Button
-            icon={<IconArrowLeft />}
-            type="outline"
-            disabled={state.page <= 1 || state.isLoading}
-            onClick={onPreviousPage}
-            style={{ padding: '3px 10px' }}
+              icon={<IconArrowLeft />}
+              type="outline"
+              disabled={state.page <= 1 || state.isLoading}
+              onClick={onPreviousPage}
+              style={{ padding: '3px 10px' }}
           />
-          <p className="text-sm text-scale-1100">Page</p>
           <div className="sb-grid-pagination-input-container">
             <InputNumber
-              // [Fran] we'll have to upgrade the UI component types to accept the null value when users delete the input content
-              // @ts-ignore
-              value={page}
-              onChange={onPageChange}
-              size="tiny"
-              style={{
-                width: '3rem',
-              }}
-              max={maxPages}
-              min={1}
+                // [Fran] we'll have to upgrade the UI component types to accept the null value when users delete the input content
+                // @ts-ignore
+                value={page}
+                onChange={onPageChange}
+                size="tiny"
+                style={{
+                  width: '3rem',
+                }}
+                max={maxPages}
+                min={1}
             />
           </div>
-          <p className="text-sm text-scale-1100">{`of ${totalPages}`}</p>
           <Button
-            icon={<IconArrowRight />}
-            type="outline"
-            disabled={state.page >= maxPages || state.isLoading}
-            onClick={onNextPage}
-            style={{ padding: '3px 10px' }}
+              icon={<IconArrowRight />}
+              type="outline"
+              disabled={state.page >= maxPages || state.isLoading}
+              onClick={onNextPage}
+              style={{ padding: '3px 10px' }}
           />
-
+          <p className="text-sm text-scale-1100">页</p>
           <DropdownControl
             options={rowsPerPageOptions}
             onSelect={onRowsPerPageChange}
@@ -147,11 +146,9 @@ const Pagination: FC<PaginationProps> = () => {
               as="span"
               type="outline"
               style={{ padding: '3px 10px' }}
-            >{`${state.rowsPerPage} rows`}</Button>
+            >{`${state.rowsPerPage} 行`}</Button>
           </DropdownControl>
-          <p className="text-sm text-scale-1100">{`${state.totalRows.toLocaleString()} ${
-            state.totalRows === 0 || state.totalRows > 1 ? `records` : 'record'
-          }`}</p>
+          <p className="text-sm text-scale-1100">{`${state.totalRows.toLocaleString()} 条记录`}</p>
           {state.isLoading && <IconLoader size={14} className="animate-spin" />}
         </>
       )}

@@ -75,7 +75,7 @@ export const Grid = memo(
               <div className="animate-spin text-scale-900">
                 <IconLoader />
               </div>
-              <div className="text-sm text-scale-1100">Loading...</div>
+              <div className="text-sm text-scale-1100">加载中...</div>
             </div>
           </div>
         )

@@ -65,7 +65,7 @@ const SpreadsheetImport: FC<Props> = ({
     if (!file || !includes(UPLOAD_FILE_TYPES, file?.type) || !acceptedFileExtension(file)) {
       ui.setNotification({
         category: 'info',
-        message: 'Sorry! We only accept CSV or TSV file types, please upload another file.',
+        message: '不好意思！我们只接受CSV或TSV文件类型，请上传另一个文件。',
       })
     } else {
       setUploadedFile(file)
@@ -77,7 +77,7 @@ const SpreadsheetImport: FC<Props> = ({
         ui.setNotification({
           error: errors,
           category: 'error',
-          message: `Some issues have been detected on ${errors.length} rows. More details below the content preview.`,
+          message: `在${errors.length} 行数据上检测到一些问题。请在内容预览下方查看的更多详细信息。`,
           duration: 4000,
         })
       }
@@ -103,7 +103,7 @@ const SpreadsheetImport: FC<Props> = ({
         ui.setNotification({
           error: errors,
           category: 'error',
-          message: `Some issues have been detected on ${errors.length} rows. More details below the content preview.`,
+          message: `在${errors.length} 行数据上检测到一些问题。请在内容预览下方查看的更多详细信息。`,
           duration: 4000,
         })
       }
@@ -133,12 +133,12 @@ const SpreadsheetImport: FC<Props> = ({
       size="large"
       visible={visible}
       align="right"
-      header="Add content to new table"
+      header="向新表添加内容"
       onCancel={() => closePanel()}
       customFooter={
         <ActionBar
-          backButtonLabel="Cancel"
-          applyButtonLabel="Save"
+          backButtonLabel="取消"
+          applyButtonLabel="保存"
           closePanel={closePanel}
           applyFunction={() => {
             saveContent({
@@ -152,7 +152,7 @@ const SpreadsheetImport: FC<Props> = ({
       <SidePanel.Content>
         <div className="flex flex-col">
           <Tabs block type="pills">
-            <Tabs.Panel id="fileUpload" label="Upload CSV">
+            <Tabs.Panel id="fileUpload" label="上传CSV">
               <SpreadSheetFileUpload
                 parseProgress={parseProgress}
                 uploadedFile={uploadedFile}
@@ -160,7 +160,7 @@ const SpreadsheetImport: FC<Props> = ({
                 removeUploadedFile={resetSpreadsheetImport}
               />
             </Tabs.Panel>
-            <Tabs.Panel id="pasteText" label="Paste text">
+            <Tabs.Panel id="pasteText" label="粘贴文本">
               <SpreadSheetTextInput input={input} onInputChange={onInputChange} />
             </Tabs.Panel>
           </Tabs>
@@ -170,13 +170,12 @@ const SpreadsheetImport: FC<Props> = ({
           <div className="space-y-5 py-5">
             <div className="space-y-2">
               <div className="flex flex-col space-y-1">
-                <p>Content Preview</p>
+                <p>内容预览</p>
                 <p className="text-scale-1000">
-                  Your table will have {spreadsheetData.rowCount.toLocaleString()} rows and the
-                  following {spreadsheetData.headers.length} columns.
+                  您的表将包含 {spreadsheetData.rowCount.toLocaleString()} 行和以下 {spreadsheetData.headers.length} 列。
                 </p>
                 <p className="text-scale-1000">
-                  Here is a preview of your table (up to the first 20 columns and first 20 rows).
+                  下面是表格的预览（最多前 20 列和前 20 行）。
                 </p>
               </div>
               <SpreadsheetPreview headers={spreadsheetData.headers} rows={spreadsheetData.rows} />
@@ -184,10 +183,9 @@ const SpreadsheetImport: FC<Props> = ({
             {errors.length > 0 && (
               <div className="space-y-2">
                 <div className="flex flex-col space-y-1">
-                  <p>Issues found in spreadsheet</p>
+                  <p>电子表格中发现的问题</p>
                   <p className="text-scale-1000">
-                    Your table can still be created nonetheless despite issues in the following
-                    rows.
+                    尽管以下行存在问题，您仍然可以创建表。
                   </p>
                 </div>
                 <div className="space-y-2">

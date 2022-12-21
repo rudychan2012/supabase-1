@@ -136,7 +136,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
                     <div className="rounded bg-scale-600 p-1.5 text-scale-1000 shadow-sm">
                       <IconArchive strokeWidth={2} size={16} />
                     </div>
-                    <h5>贮存</h5>
+                    <h5>存储</h5>
                   </div>
                   <div className="flex md:min-h-[50px] xl:min-h-[75px]">
                     <p className="text-sm text-scale-1000">

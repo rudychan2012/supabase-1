@@ -60,8 +60,8 @@ const DomainList: FC<Props> = ({ canUpdate, onSelectDomainToDelete }) => {
           ].join(' ')}
         >
           <EmptyListState
-            title="No Redirect URLs"
-            description="Auth providers may need a URL to redirect back to"
+            title="没有重定向URL"
+            description="身份验证提供商可能需要配置URL重定向回来"
           />
         </div>
       )}

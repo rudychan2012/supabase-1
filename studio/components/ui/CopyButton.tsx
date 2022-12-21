@@ -40,7 +40,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({
       }
       {...props}
     >
-      {children ?? (showCopied ? 'Copied' : 'Copy')}
+      {children ?? (showCopied ? '已复制' : '复制')}
     </Button>
   )
 }

@@ -41,7 +41,7 @@ export const generateSettingsMenu = (ref: string, project?: ProjectBase): Produc
         ...(IS_PLATFORM
           ? [
               {
-                name: 'Auth',
+                name: '认证',
                 key: 'auth',
                 url: isProjectBuilding ? buildingUrl : `/project/${ref}/settings/auth`,
                 items: [],

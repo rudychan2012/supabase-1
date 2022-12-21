@@ -60,7 +60,7 @@ const MoveItemsModal = ({
           <div className="relative flex items-center">
             <Input
               autoFocus
-              label={`Path to new directory in ${bucketName}`}
+              label={`在${bucketName}中新目录的路径 `}
               type="text"
               className="w-full"
               placeholder="e.g folder1/subfolder2"
