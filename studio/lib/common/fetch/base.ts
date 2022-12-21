@@ -1,7 +1,6 @@
 import { auth } from 'lib/gotrue'
 import { isUndefined } from 'lodash'
 import { SupaResponse } from 'types/base'
-import { parseCookies } from 'nookies'
 
 export function handleError<T>(e: any, requestId: string): SupaResponse<T> {
   const message = e?.message ? `An error has occurred: ${e.message}` : 'An error has occurred'
@@ -96,13 +95,10 @@ export async function getAccessToken() {
 }
 
 export async function constructHeaders(requestId: string, optionHeaders?: { [prop: string]: any }) {
-  const cookies = parseCookies()
   let headers: { [prop: string]: any } = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'X-Request-Id': requestId,
-    // 通过X-Memfire-Token
-    'X-Memfire-Token': cookies._token,
     ...optionHeaders,
   }
 

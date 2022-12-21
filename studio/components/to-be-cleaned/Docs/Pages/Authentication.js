@@ -11,40 +11,34 @@ export default function Authentication({ autoApiService, selectedLang, showApiKe
 
   return (
     <>
-      <h2 className="doc-heading">Authentication</h2>
+      <h2 className="doc-heading">认证</h2>
       <div className="doc-section">
         <article className="text ">
-          <p>Supabase works through a mixture of JWT and Key auth.</p>
+          <p>Supabase通过JWT结合Key Auth实现认证</p>
           <p>
-            If no <code>Authorization</code> header is included, the API will assume that you are
-            making a request with an anonymous user.
+            如果您的请求不包含 <code>Authorization</code> 头, 系统则认为这是一个匿名请求。
           </p>
           <p>
-            If an <code>Authorization</code> header is included, the API will "switch" to the role
-            of the user making the request. See the User Management section for more details.
+            如果请求包含<code>Authorization</code>头, 系统则会接收请求的时候，根据请求头信息判断用户的角色。有关更多详细信息，请参阅用户管理部分。
           </p>
-          <p>We recommend setting your keys as Environment Variables.</p>
+          <p>建议将密钥设置为环境变量。</p>
         </article>
       </div>
 
-      <h2 className="doc-heading">Client API Keys</h2>
+      <h2 className="doc-heading">客户端API密钥</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            Client keys allow "anonymous access" to your database, until the user has logged in.
-            After logging in the keys will switch to the user's own login token.
+            客户端密钥允许对数据库进行“匿名访问”，直到用户登录为止。登录后，密钥将切换到用户自己的登录令牌。
           </p>
           <p>
-            In this documentation, we will refer to the key using the name <code>SUPABASE_KEY</code>
-            .
+            在本文档中，我们将使用<code>SUPABASE_KEY</code>变量来引用密钥。
           </p>
           <p>
-            We have provided you a Client Key to get started. You will soon be able to add as many
-            keys as you like. You can find the <code>anon</code> key in the{' '}
+            我们为您提供了客户端密钥，后续你也可以根据需要添加任意数量的密钥。 你可以在{' '}
             <Link href={`/project/${autoApiService.project.ref}/settings/api`}>
-              <a>API Settings</a>
-            </Link>{' '}
-            page.
+              <a>API设置</a>
+            </Link>{' '}页面查看<code>anon</code> 这个密钥的值。
           </p>
         </article>
         <article className="code">
@@ -61,24 +55,20 @@ export default function Authentication({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Service Keys</h2>
+      <h2 className="doc-heading">服务密钥</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            Service keys have FULL access to your data, bypassing any security policies. Be VERY
-            careful where you expose these keys. They should only be used on a server and never on a
-            client or browser.
+            服务密钥可以访问您的所有数据，绕过任何安全策略，应该尽量避免该密钥泄漏。它们只能在服务器上使用，而不能在客户端或浏览器上使用。
           </p>
           <p>
-            In this documentation, we will refer to the key using the name <code>SERVICE_KEY</code>.
+            在本文档中，我们使用<code>SERVICE_KEY</code>变量名来引用该密钥。
           </p>
           <p>
-            We have provided you with a Service Key to get started. Soon you will be able to add as
-            many keys as you like. You can find the <code>service_role</code> in the{' '}
+            我们为您提供了服务密钥，后续你也可以根据需要添加任意数量的密钥。 你可以在{' '}
             <Link href={`/project/${autoApiService.project.ref}/settings/api`}>
-              <a>API Settings</a>
-            </Link>{' '}
-            page.
+              <a>API设置</a>
+            </Link>{' '}页面查看<code>service_role</code> 这个密钥的值。
           </p>
         </article>
         <article className="code">

@@ -4,22 +4,17 @@ import CodeSnippet from '../CodeSnippet'
 export default function Introduction({ autoApiService, selectedLang }) {
   return (
     <>
-      <h2 className="doc-heading">Introduction</h2>
+      <h2 className="doc-heading">介绍</h2>
       <div className="doc-section">
         <article className="text ">
           <p>
-            This API provides an easy way to integrate with your Postgres database. The API
-            documentation below is specifically generated for your database.
+            此API提供了一种与Postgres数据库集成的简单方法。以下API文档是以您的数据库表生成的。
           </p>
           <p>
-            This is an <b>auto-generating</b> API, so as you make changes to your database, this
-            documentation will change too.
+            这是基于您的数据库<b>自动生成</b>的API，因此当您对数据库进行更改时，本文档也会更改。
           </p>
           <p>
-            <b>Please note:</b> if you make changes to a field (column) name or type, the API
-            interface for those fields will change correspondingly. Therefore, please make sure to
-            update your API implementation accordingly whenever you make changes to your Supabase
-            schema from the graphical interface.
+            <b>请注意:</b> 如果您对字段（列）名称或类型进行更改，则这些字段的API接口将相应更改。因此，请确保在从图形界面更改数据库的时候时，及时地更新API实现与调用。
           </p>
         </article>
       </div>
@@ -27,7 +22,7 @@ export default function Introduction({ autoApiService, selectedLang }) {
       <h2 className="doc-heading">API URL</h2>
       <div className="doc-section ">
         <article className="text ">
-          <p>The API URL for your project.</p>
+          <p>应用的 API URL</p>
         </article>
         <article className="code">
           <CodeSnippet
@@ -37,13 +32,12 @@ export default function Introduction({ autoApiService, selectedLang }) {
         </article>
       </div>
 
-      <h2 className="doc-heading">Client Libraries</h2>
+      <h2 className="doc-heading">客户端库</h2>
       <div className="doc-section">
         <article className="text ">
-          <p>Your API consists of both a RESTful interface and a Realtime interface.</p>
+          <p>您的API由RESTful接口和实时接口组成</p>
           <p>
-            For interacting with the Realtime streams, we provide client libraries that handle the
-            websockets.
+            为了与实时数据流交互，我们提供了处理websocket的客户端库。
           </p>
         </article>
         <article className="code">

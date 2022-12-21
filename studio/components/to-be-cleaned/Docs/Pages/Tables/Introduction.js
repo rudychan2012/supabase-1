@@ -7,46 +7,40 @@ export default function Introduction({ autoApiService, selectedLang }) {
   let ref = router.query.ref
   return (
     <>
-      <h2 className="doc-heading">Introduction</h2>
+      <h2 className="doc-heading">介绍</h2>
       <div className="doc-section">
         <article className="text ">
           <p>
-            All views and tables in the <code>public</code> schema and accessible by the active
-            database role for a request are available for querying.
+            <code>public schema</code>下的所有视图和表都可用于查询。
           </p>
         </article>
       </div>
-      <h2 className="doc-heading">Non-exposed tables</h2>
+      <h2 className="doc-heading">非公开表</h2>
       <div className="doc-section">
         <article className="text ">
           <p>
-            If you don't want to expose tables in your API, simply add them to a different schema
-            (not the <code>public</code> schema).
+            如果您不想在API可访问某些表，只需将它们添加到其他schema下接口
+            (即：不是<code>public schema</code>)。
           </p>
         </article>
         <article className="code"></article>
       </div>
       <h2 className="doc-heading">
-        GraphQL <span className="lowercase">vs</span> Supabase
+        GraphQL <span className="lowercase">对比</span> Supabase
       </h2>
       <div className="doc-section">
         <article className="text ">
           <p>
-            If you have a GraphQL background, you might be wondering if you can fetch your data in a
-            single round-trip. The answer is yes!
+            如果您有使用GraphQL的经验，您可能想知道是否可以在一次请求中获取数据。答案是肯定的！
           </p>
           <p>
-            The syntax is very similar. This example shows how you might achieve the same thing with
-            Apollo GraphQL and Supabase.
+            语法非常相似。这个例子展示了如何使用Apollo GraphQL和Supabase完成同样的事情。
             <br />
             <br />
           </p>
-          <h4>Still want GraphQL?</h4>
+          <h4>仍然想使用GraphQL?</h4>
           <p>
-            If you still want to use GraphQL, you can. Supabase provides you with a full Postgres
-            database, so as long as your middleware can connect to the database then you can still
-            use the tools you love. You can find the database connection details{' '}
-            <Link href={`/project/${ref}/settings/database`}>in the settings.</Link>
+            如果你仍然想使用 GraphQL，完全可以。Supabase为您提供了一个完整的Postgres数据库，因此只要您的中间件可以连接到该数据库，那么您仍然可以使用您喜欢的工具。
           </p>
         </article>
         <article className="code">

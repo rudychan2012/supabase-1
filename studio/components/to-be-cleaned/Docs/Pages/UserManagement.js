@@ -13,29 +13,25 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
 
   return (
     <>
-      <h2 className="doc-heading">User Management</h2>
+      <h2 className="doc-heading">用户管理</h2>
       <div className="doc-section">
         <article className="text ">
-          <p>Supabase makes it easy to manage your users.</p>
+          <p>Supabase提供了极其便利的用户管理功能。</p>
           <p>
-            Supabase assigns each user a unique ID. You can reference this ID anywhere in your
-            database. For example, you might create a <code>profiles</code> table references the
-            user using a <code>user_id</code> field.
+            Supabase为每个用户分配唯一的ID。您可以在数据库中的任何位置引用此ID。例如，当你创建<code>profiles</code>用户表时，您可以使用<code>user_id</code>字段引用用户。
           </p>
           <p>
-            Supabase already has built in the routes to sign up, login, and log out for managing
-            users in your apps and websites.
+            Supabase同时内置了注册、登录和注销的页面路由，用于管理您的应用程序和网站中的用户。
           </p>
         </article>
       </div>
 
-      <h2 className="doc-heading">Sign up</h2>
+      <h2 className="doc-heading">注册</h2>
       <div className="doc-section ">
         <article className="text ">
-          <p>Allow your users to sign up and create a new account.</p>
+          <p>允许用户注册并创建新帐户。</p>
           <p>
-            After they have signed up, all interactions using the Supabase JS client will be
-            performed as "that user".
+            在用户注册后，所有使用Supabase JS客户端的交互都将以"该用户"的身份执行。
           </p>
         </article>
         <article className="code">
@@ -46,13 +42,12 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Log in with Email/Password</h2>
+      <h2 className="doc-heading">邮箱/密码方式登录</h2>
       <div className="doc-section ">
         <article className="text ">
-          <p>If an account is created, users can login to your app.</p>
+          <p>如果创建了用户，则该用户可以登录到您的应用程序。</p>
           <p>
-            After they have logged in, all interactions using the Supabase JS client will be
-            performed as "that user".
+            登录后，所有使用Supabase JS客户端的交互都将以"该用户"的身份执行。
           </p>
         </article>
         <article className="code">
@@ -63,13 +58,12 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Log in with Magic Link via Email</h2>
+      <h2 className="doc-heading">邮件中的魔法链接登录</h2>
       <div className="doc-section ">
         <article className="text ">
-          <p>Send a user a passwordless link which they can use to redeem an access_token.</p>
+          <p>向用户发送可用于获取access_token的无密码链接。</p>
           <p>
-            After they have clicked the link, all interactions using the Supabase JS client will be
-            performed as "that user".
+            在他们点击链接后，所有使用Supabase JS客户端的交互都将以"该用户"的身份执行。
           </p>
         </article>
         <article className="code">
@@ -80,20 +74,17 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Sign Up with Phone/Password</h2>
+      <h2 className="doc-heading">手机/密码注册</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            A phone number can be used instead of an email as a primary account confirmation
-            mechanism.
+            可以使用电话号码代替电子邮件作为主要帐户确认机制。
           </p>
           <p>
-            The user will receive a mobile OTP via sms with which they can verify that they control
-            the phone number.
+            用户将通过短信接收验证码，通过验证码验证用户身份。
           </p>
           <p>
-            You must enter your own twilio credentials on the auth settings page to enable sms
-            confirmations.
+            您必须在身份验证设置页面上输入自己的 twilio 凭据才能启用短信确认。
           </p>
         </article>
         <article className="code">
@@ -104,16 +95,14 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Login via SMS OTP</h2>
+      <h2 className="doc-heading">短信验证码登录</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            SMS OTPs work like magic links, except you have to provide an interface for the user to
-            verify the 6 digit number they receive.
+            使用短信验证码，则您需要为用户提供一个界面来验证他们收到的 6 位数字。
           </p>
           <p>
-            You must enter your own twilio credentials on the auth settings page to enable SMS-based
-            Logins.
+            您必须在身份验证设置页面上输入自己的 twilio 凭据才能启用基于 SMS 的登录。
           </p>
         </article>
         <article className="code">
@@ -128,16 +117,14 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Verify an SMS OTP</h2>
+      <h2 className="doc-heading">短信验证</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            Once the user has received the OTP, have them enter it in a form and send it for
-            verification
+            用户收到验证码后，让他们在表单中输入该验证码并发送以进行验证。
           </p>
           <p>
-            You must enter your own twilio credentials on the auth settings page to enable SMS-based
-            OTP verification.
+            您必须在身份验证设置页面上输入自己的 twilio 凭据才能启用基于 SMS 的 OTP 验证。
           </p>
         </article>
         <article className="code">
@@ -152,31 +139,29 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Log in with Third Party OAuth</h2>
+      <h2 className="doc-heading">使用第三方OAuth登录</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            Users can log in with Third Party OAuth like Google, Facebook, GitHub, and more. You
-            must first enable each of these in the Auth Providers settings{' '}
+            用户可以使用第三方OAuth登录，如Google，Facebook，GitHub等。您必须先在身份验证提供程序中，设置并启用它们{' '}
             <span className="text-green-500">
               <Link key={'AUTH'} href={`/project/${router.query.ref}/auth/providers`}>
-                here
+                这里
               </Link>
             </span>{' '}
-            .
+            。
           </p>
           <p>
-            View all the available{' '}
+            查看所有可用的{' '}
             <a href="https://supabase.com/docs/guides/auth#providers" target="_blank">
-              Third Party OAuth providers
+              第三方OAuth认证服务
             </a>
           </p>
           <p>
-            After they have logged in, all interactions using the Supabase JS client will be
-            performed as "that user".
+            登录后，所有使用Supabase JS客户端的交互都将以"该用户"的身份执行。
           </p>
           <p>
-            Generate your Client ID and secret from:{` `}
+            生成OAuth认证客户端 ID 和密钥的方式请参考:{` `}
             <a href="https://console.developers.google.com/apis/credentials" target="_blank">
               Google
             </a>
@@ -210,10 +195,10 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">User</h2>
+      <h2 className="doc-heading">用户</h2>
       <div className="doc-section ">
         <article className="text ">
-          <p>Get the JSON object for the logged in user.</p>
+          <p>获取登录用户的 JSON 对象。</p>
         </article>
         <article className="code">
           <CodeSnippet
@@ -223,12 +208,11 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Forgotten Password Email</h2>
+      <h2 className="doc-heading">发送忘记密码邮件</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            Sends the user a log in link via email. Once logged in you should direct the user to a
-            new password form. And use "Update User" below to save the new password.
+            通过邮件向用户发送登录链接。登录后，您应该将用户重定向到新的密码设置页面，并使用下面的"更新用户"保存新密码。
           </p>
         </article>
         <article className="code">
@@ -239,12 +223,11 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Update User</h2>
+      <h2 className="doc-heading">更新用户</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            Update the user with a new email or password. Each key (email, password, and data) is
-            optional
+            使用新的电子邮件或密码更新用户，每个密钥（电子邮件、密码和数据）都是可选的。
           </p>
         </article>
         <article className="code">
@@ -255,12 +238,11 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Log out</h2>
+      <h2 className="doc-heading">登出</h2>
       <div className="doc-section ">
         <article className="text ">
           <p>
-            After calling log out, all interactions using the Supabase JS client will be
-            "anonymous".
+            调用登出后，所有使用 Supabase JS 客户端的交互都将是"匿名的"。
           </p>
         </article>
         <article className="code">
@@ -271,17 +253,15 @@ export default function UserManagement({ autoApiService, selectedLang, showApiKe
         </article>
       </div>
 
-      <h2 className="doc-heading">Send a User an Invite over Email</h2>
+      <h2 className="doc-heading">通过邮件向用户发送邀请</h2>
       <div className="doc-section ">
         <article className="text ">
-          <p>Send a user a passwordless link which they can use to sign up and log in.</p>
+          <p>向用户发送可用于注册和登录的无密码链接。</p>
           <p>
-            After they have clicked the link, all interactions using the Supabase JS client will be
-            performed as "that user".
+            在他们点击链接后，所有使用Supabase JS客户端的交互都将以"该用户"的身份执行。
           </p>
           <p>
-            This endpoint requires you use the <code>service_role_key</code> when initializing the
-            client, and should only be invoked from the server, never from the client.
+            该接口调用需要使用<code>service_role_key</code> 初始化supabase客户端，且建议从服务端发起调用，而非客户端。
           </p>
         </article>
         <article className="code">
