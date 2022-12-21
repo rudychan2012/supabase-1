@@ -99,7 +99,7 @@ const SimpleCodeBlock: FC<any> = ({ children, className: languageClassName, meta
                 onClick={() => handleCopyCode(children)}
                 // style={{ padding: '2px 5px' }}
               >
-                {showCopied ? 'Copied' : 'Copy'}
+                {showCopied ? '已复制' : '复制'}
               </Button>
             </div>
           </div>

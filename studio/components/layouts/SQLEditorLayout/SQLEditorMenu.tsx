@@ -121,7 +121,7 @@ const DropdownMenu = observer(({ tabInfo }: { tabInfo: QueryTab }) => {
         onSelectCancel={() => setDeleteModalOpen(false)}
       >
         <Modal.Content>
-          <p className="py-4 text-sm text-scale-1100">{`Are you sure you want to remove '${name}' ?`}</p>
+          <p className="py-4 text-sm text-scale-1100">{`确定要删除'${name}' ?`}</p>
         </Modal.Content>
       </ConfirmationModal>
     </div>

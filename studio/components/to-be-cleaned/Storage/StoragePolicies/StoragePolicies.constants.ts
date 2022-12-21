@@ -72,7 +72,7 @@ ON storage.objects FOR {operation} {USING | WITH CHECK} (
   },
   {
     id: 'policy-4',
-    templateName: '仅向特定用户授予对名为admin/assets的嵌套文件夹的访问权限',
+    templateName: '仅向特定用户授予对admin/assets文件夹的访问权限',
     description:
       '此策略向应用的所有通过身份验证的用户授予对文件夹“public”的读取访问权限',
     name: 'Give access to a folder',

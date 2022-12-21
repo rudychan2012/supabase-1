@@ -10,13 +10,11 @@ const SpreadSheetTextInput: FC<Props> = ({ input, onInputChange }) => (
   <div className="space-y-10">
     <div>
       <p className="mb-2 text-sm text-scale-1100">
-        Copy a table from a spreadsheet program such as Google Sheets or Excel and paste it in the
-        field below. The first row should be the headers of the table, and your headers should not
-        include any special characters other than hyphens (<code>-</code>) or underscores (
-        <code>_</code>).
+        从电子表格程序（如 Google 表格或 Excel）复制表格并将其粘贴到下面的字段中。第一行应该是表格的标题，标题不应包含连字符 (<code>-</code>) 或下划线 (
+        <code>_</code>)以外的任何特殊字符。
       </p>
       <p className="text-xs text-scale-900">
-        Tip: Datetime columns should be formatted as YYYY-MM-DD HH:mm:ss
+        提示：日期时间列的格式应为 YYYY-MM-DD HH：mm：ss
       </p>
     </div>
     <Input.TextArea

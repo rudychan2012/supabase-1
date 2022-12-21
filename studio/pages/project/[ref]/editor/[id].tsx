@@ -129,7 +129,7 @@ const TableEditorPage: NextPage = () => {
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to delete ${selectedColumnToDelete!.name}: ${error.message}`,
+        message: `删除${selectedColumnToDelete!.name}失败: ${error.message}`,
       })
     } finally {
       setIsDeleting(false)

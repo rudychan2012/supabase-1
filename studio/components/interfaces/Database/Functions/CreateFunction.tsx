@@ -451,8 +451,7 @@ const CreateFunction: FC<CreateFunctionProps> = ({ func, visible, setVisible }) 
           children={
             <Modal.Content>
               <p className="py-4 text-sm text-scale-1100">
-                There are unsaved changes. Are you sure you want to close the panel? Your changes
-                will be lost.
+                有未保存的更改。是否确实要关闭面板？您的更改将丢失。
               </p>
             </Modal.Content>
           }

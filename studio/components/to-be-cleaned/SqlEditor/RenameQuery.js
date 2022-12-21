@@ -40,13 +40,13 @@ const RenameQuery = observer(({ tabId, onComplete, visible, onCancel }) => {
       ui.setNotification({
         error,
         category: 'error',
-        message: `Failed to rename query: ${error.message}`,
+        message: `无法重命名query：${error.message}`,
       })
     }
   }
 
   return (
-    <Modal visible={visible} onCancel={onCancel} hideFooter header="Rename" size="small">
+    <Modal visible={visible} onCancel={onCancel} hideFooter header="重命名" size="small">
       <Form
         onReset={onCancel}
         validateOnBlur
@@ -56,7 +56,7 @@ const RenameQuery = observer(({ tabId, onComplete, visible, onCancel }) => {
         }}
         validate={(values) => {
           const errors = {}
-          if (!values.name) errors.name = 'Please enter a query name'
+          if (!values.name) errors.name = '请输入query名称'
           return errors
         }}
         onSubmit={async (values, { setSubmitting }) => {

@@ -17,7 +17,7 @@ import { PolicyTemplate } from '../PolicyTemplates/PolicyTemplates.constants'
 export const getGeneralPolicyTemplates = (schema: string, table: string): PolicyTemplate[] => [
   {
     id: 'policy-1',
-    templateName: 'Enable read access to everyone',
+    templateName: '为所有人启用读取访问权限',
     description:
       '此策略通过 SELECT 操作为所有用户提供对表的读取访问权限。',
     statement: `
@@ -34,7 +34,7 @@ FOR SELECT USING (
   },
   {
     id: 'policy-2',
-    templateName: 'Enable insert access for authenticated users only',
+    templateName: '仅为经过身份验证的用户启用插入权限',
     description: '此策略仅向所有经过身份验证的用户授予对表的插入访问权限。',
     statement: `
 CREATE POLICY "policy_name"
@@ -50,7 +50,7 @@ WITH CHECK (true);`.trim(),
   },
   {
     id: 'policy-3',
-    templateName: 'Enable update access for users based on their email *',
+    templateName: '根据用户的邮箱为其启用更新权限 *',
     description:
       '此策略假定您的表具有“邮箱”列，并允许用户更新“邮箱”列与其邮箱匹配的行。',
     statement: `
@@ -69,7 +69,7 @@ FOR UPDATE USING (
   },
   {
     id: 'policy-4',
-    templateName: 'Enable delete access for users based on their user ID *',
+    templateName: '根据用户ID为用户启用删除权限 *',
     description:
       '此策略假定您的表具有“user_id”列，并允许用户删除“user_id”列与其 ID 匹配的行',
     statement: `

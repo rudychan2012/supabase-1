@@ -114,11 +114,9 @@ const RowHeader: FC<RowHeaderProps> = ({ sorts, filters }) => {
   const onRowsDelete = () => {
     const numRows = allRowsSelected ? totalRows : selectedRows.size
     confirmAlert({
-      title: 'Confirm to delete',
-      message: `Are you sure you want to delete the selected ${numRows} row${
-        numRows > 1 ? 's' : ''
-      }? This action cannot be undone.`,
-      confirmText: `Delete ${numRows} rows`,
+      title: '确认删除',
+      message: `是否确实要删除选定的 ${numRows}行？此操作无法撤消。`,
+      confirmText: `删除${numRows}行`,
       onAsyncConfirm: async () => {
         if (allRowsSelected) {
           const { error } =
@@ -158,7 +156,7 @@ const RowHeader: FC<RowHeaderProps> = ({ sorts, filters }) => {
     if (allRowsSelected && totalRows > MAX_EXPORT_ROW_COUNT) {
       ui.setNotification({
         category: 'error',
-        message: `Sorry! We're unable to support exporting of CSV for row counts larger than ${MAX_EXPORT_ROW_COUNT.toLocaleString()} at the moment.`,
+        message: `不好意思！我们目前不支持导出大于 ${MAX_EXPORT_ROW_COUNT.toLocaleString()} 的行的 CSV。`,
       })
       return setIsExporting(false)
     }
@@ -191,14 +189,13 @@ const RowHeader: FC<RowHeaderProps> = ({ sorts, filters }) => {
         />
         <span className="text-xs text-scale-1200">
           {allRowsSelected
-            ? `${totalRows} rows selected`
-            : selectedRows.size > 1
-            ? `${selectedRows.size} rows selected`
-            : `${selectedRows.size} row selected`}
+              ? `已选择${totalRows}行`
+              : `已选择${selectedRows.size}行`
+          }
         </span>
         {!allRowsSelected && totalRows > allRows.length && (
           <Button type="link" onClick={() => onSelectAllRows()}>
-            Select all {totalRows} rows
+            选择全部{totalRows}行
           </Button>
         )}
       </div>
@@ -212,7 +209,7 @@ const RowHeader: FC<RowHeaderProps> = ({ sorts, filters }) => {
           disabled={isExporting}
           onClick={onRowsExportCSV}
         >
-          Export to CSV
+          导出为CSV
         </Button>
         {editable && (
           <Button
@@ -222,10 +219,9 @@ const RowHeader: FC<RowHeaderProps> = ({ sorts, filters }) => {
             onClick={onRowsDelete}
           >
             {allRowsSelected
-              ? `Delete ${totalRows} rows`
-              : selectedRows.size > 1
-              ? `Delete ${selectedRows.size} rows`
-              : `Delete ${selectedRows.size} row`}
+                ? `删除${totalRows}行`
+                : `删除${selectedRows.size}行`
+            }
           </Button>
         )}
       </div>

@@ -49,8 +49,8 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
 
   const handleMemberDelete = async () => {
     confirmAlert({
-      title: 'Confirm to remove',
-      message: `This is permanent! Are you sure you want to remove ${member.primary_email}`,
+      title: '确认删除',
+      message: `这是永久性的！是否确实要删除${member.primary_email}`,
       onAsyncConfirm: async () => {
         setLoading(true)
 
@@ -63,7 +63,7 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
         if (response.error) {
           ui.setNotification({
             category: 'error',
-            message: `Failed to delete user: ${response.error.message}`,
+            message: `删除用户失败：${response.error.message}`,
           })
           setLoading(false)
         } else {
@@ -74,7 +74,7 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
           mutateOrgMembers(updatedMembers)
           ui.setNotification({
             category: 'success',
-            message: `Successfully removed ${member.primary_email}`,
+            message: `已成功删除${member.primary_email}`,
           })
         }
       },
@@ -92,7 +92,7 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
     if (response.error) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to transfer ownership: ${response.error.message}`,
+        message: `转让所有权失败：${response.error.message}`,
       })
       setLoading(false)
     } else {
@@ -104,7 +104,7 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
 
       mutateOrgMembers(updatedMembers)
       setOwnerTransferIsVisible(false)
-      ui.setNotification({ category: 'success', message: 'Successfully transferred organization' })
+      ui.setNotification({ category: 'success', message: '成功转移组织' })
     }
 
     app.organizations.load()
@@ -123,12 +123,12 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
     if (response.error) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to resend invitation: ${response.error.message}`,
+        message: `无法重新发送邀请：${response.error.message}`,
       })
     } else {
       const updatedMembers = [...members]
       mutateOrgMembers(updatedMembers)
-      ui.setNotification({ category: 'success', message: 'Resent the invitation.' })
+      ui.setNotification({ category: 'success', message: '重新发送了邀请。' })
     }
     setLoading(false)
   }
@@ -147,12 +147,12 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
     if (response.error) {
       ui.setNotification({
         category: 'error',
-        message: `Failed to revoke invitation: ${response.error.message}`,
+        message: `无法撤销邀请：${response.error.message}`,
       })
     } else {
       const updatedMembers = [...members]
       mutateOrgMembers(updatedMembers)
-      ui.setNotification({ category: 'success', message: 'Successfully revoked the invitation.' })
+      ui.setNotification({ category: 'success', message: '已成功撤销邀请。' })
     }
     setLoading(false)
   }
@@ -173,7 +173,7 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
               ].join(' ')}
             >
               <span className="text-xs text-scale-1200">
-                You need additional permissions to manage this team member
+                您需要其他权限才能管理此团队成员
               </span>
             </div>
           </Tooltip.Content>
@@ -193,8 +193,8 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
               <>
                 <Dropdown.Item onClick={() => setOwnerTransferIsVisible(!ownerTransferIsVisible)}>
                   <div className="flex flex-col">
-                    <p>Make owner</p>
-                    <p className="block opacity-50">Transfer ownership of "{orgName}"</p>
+                    <p>成为所有者</p>
+                    <p className="block opacity-50">转让"{orgName}"的所有权</p>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Separator />
@@ -205,8 +205,8 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
                 {canRevokeInvite && (
                   <Dropdown.Item onClick={() => handleRevokeInvitation(member)}>
                     <div className="flex flex-col">
-                      <p>Cancel invitation</p>
-                      <p className="block opacity-50">Revoke this invitation.</p>
+                      <p>取消邀请</p>
+                      <p className="block opacity-50">撤销此邀请。</p>
                     </div>
                   </Dropdown.Item>
                 )}
@@ -215,8 +215,8 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
                     <Dropdown.Separator />
                     <Dropdown.Item onClick={() => handleResendInvite(member)}>
                       <div className="flex flex-col">
-                        <p>Resend invitation</p>
-                        <p className="block opacity-50">Invites expire after 24hrs.</p>
+                        <p>重新发送邀请</p>
+                        <p className="block opacity-50">邀请将在 24 小时后过期。</p>
                       </div>
                     </Dropdown.Item>
                   </>
@@ -224,7 +224,7 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
               </>
             ) : (
               <Dropdown.Item icon={<IconTrash size={16} />} onClick={handleMemberDelete}>
-                <p>Remove member</p>
+                <p>删除成员</p>
               </Dropdown.Item>
             )}
           </>
@@ -240,20 +240,19 @@ const MemberActions: FC<Props> = ({ members, member, roles }) => {
       </Dropdown>
 
       <TextConfirmModal
-        title="Transfer organization"
+        title="转移组织"
         visible={ownerTransferIsVisible}
         confirmString={slug}
         loading={loading}
-        confirmLabel="I understand, transfer ownership"
-        confirmPlaceholder="Type in name of orgnization"
+        confirmLabel="我明白，转让所有权"
+        confirmPlaceholder="输入组织名称"
         onCancel={() => setOwnerTransferIsVisible(!ownerTransferIsVisible)}
         onConfirm={handleTransferOwnership}
-        alert="Payment methods such as credit cards will also be transferred. You may want to delete credit card information first before transferring."
+        alert="信用卡等付款方式也将转移。您可能需要先删除信用卡信息，然后再转移。"
         text={
           <span>
-            By transferring this organization, it will be solely owned by{' '}
-            <span className="font-medium dark:text-white">{getUserDisplayName(member)}</span>, they
-            will also be able to remove you from the organization as a member
+            通过转让此组织，它将完全归属{' '}
+            <span className="font-medium dark:text-white">{getUserDisplayName(member)}</span>，他们还可以将您从组织中删除成员身份
           </span>
         }
       />

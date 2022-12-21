@@ -59,7 +59,7 @@ function Input({
   validation,
   ...props
 }: Props) {
-  const [copyLabel, setCopyLabel] = useState('Copy')
+  const [copyLabel, setCopyLabel] = useState('复制')
   const [hidden, setHidden] = useState(true)
 
   const __styles = styleHandler('input')
@@ -100,7 +100,7 @@ function Input({
     navigator.clipboard.writeText(value).then(
       function () {
         /* clipboard successfully set */
-        setCopyLabel('Copied')
+        setCopyLabel('已复制')
         setTimeout(function () {
           setCopyLabel('Copy')
         }, 3000)

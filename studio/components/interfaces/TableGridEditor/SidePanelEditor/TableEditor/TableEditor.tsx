@@ -253,8 +253,8 @@ const TableEditor: FC<Props> = ({
               <>
                 <Checkbox
                   id="duplicate-rows"
-                  label="Duplicate table entries"
-                  description="This will copy all the data in the table into the new table"
+                  label="复制的表条目"
+                  description="这会将表中的所有数据复制到新表中"
                   checked={isDuplicateRows}
                   onChange={() => setIsDuplicateRows(!isDuplicateRows)}
                   size="medium"

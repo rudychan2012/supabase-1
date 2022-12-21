@@ -25,8 +25,8 @@ test('can display log data', async () => {
   await screen.findByText(/something_value/)
 
   // render copy button
-  userEvent.click(await screen.findByText(/Copy/))
-  await screen.findByText(/Copied/)
+  userEvent.click(await screen.findByText(/复制/))
+  await screen.findByText(/已复制/)
 })
 
 test('dedupes log lines with exact id', async () => {

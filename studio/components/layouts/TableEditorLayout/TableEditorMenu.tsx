@@ -258,14 +258,14 @@ const TableEditorMenu: FC<Props> = ({
                             icon={<IconEdit size="tiny" />}
                             onClick={() => onEditTable(table)}
                           >
-                            Edit Table
+                            编辑表
                           </Dropdown.Item>,
                           <Dropdown.Item
                             key="duplicate-table"
                             icon={<IconCopy size="tiny" />}
                             onClick={() => onDuplicateTable(table)}
                           >
-                            Duplicate Table
+                            复制表
                           </Dropdown.Item>,
                           <Dropdown.Separator key="separator" />,
                           <Dropdown.Item
@@ -273,7 +273,7 @@ const TableEditorMenu: FC<Props> = ({
                             icon={<IconTrash size="tiny" />}
                             onClick={() => onDeleteTable(table)}
                           >
-                            Delete Table
+                            删除表
                           </Dropdown.Item>,
                         ]}
                       >

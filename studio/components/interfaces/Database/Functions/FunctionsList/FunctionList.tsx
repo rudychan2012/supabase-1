@@ -71,13 +71,13 @@ const FunctionList: FC<Props> = ({
                         </Dropdown.Item>
                       )}
                       <Dropdown.Item icon={<IconEdit3 size="tiny" />} onClick={() => onEdit(x)}>
-                        编辑function
+                        编辑函数
                       </Dropdown.Item>
                       <Dropdown.Item
                         icon={<IconTrash stroke="red" size="tiny" />}
                         onClick={() => onDelete(x)}
                       >
-                        删除 function
+                        删除函数
                       </Dropdown.Item>
                     </>
                   }

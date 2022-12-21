@@ -54,7 +54,7 @@ const FunctionsList: FC<any> = ({
           >
             <AlphaPreview />
             <p className="text-sm text-scale-1100">
-              PostgreSQL 函数，也称为存储过程，是一组 SQL 和过程命令，例如声明、赋值、循环、控制流等。
+              PostgreSQL函数，也称为存储过程，是一组 SQL 和过程命令，例如声明、赋值、循环、控制流等。
             </p>
             <p className="text-sm text-scale-1100">
               它存储在数据库服务器上，可以使用 SQL 接口调用。

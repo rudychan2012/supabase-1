@@ -34,10 +34,10 @@ const PublicationsList: FC<Props> = ({ onSelectPublication = () => {} }) => {
       : meta.publications.list((publication: any) => publication.name.includes(filterString))
 
   const toggleListenEvent = async (publication: any, event: any, currentStatus: any) => {
-    const startStop = currentStatus ? 'stop' : 'start'
+    const startStop = currentStatus ? '停止' : '开始'
     confirmAlert({
       title: '确认',
-      message: `Are you sure you want to ${startStop} sending ${event} events for ${publication.name}?`,
+      message: `你确定要${startStop}为${publication.name}发送${event}事件?`,
       onAsyncConfirm: async () => {
         try {
           let payload: any = { id: publication.id }

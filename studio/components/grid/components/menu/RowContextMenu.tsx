@@ -15,8 +15,8 @@ const RowContextMenu: React.FC<RowContextMenuProps> = ({}) => {
 
   function onDeleteRow(p: ItemParams) {
     confirmAlert({
-      title: 'Confirm to delete',
-      message: 'Are you sure you want to delete this row? This action cannot be undone.',
+      title: '确认删除',
+      message: '是否确实要删除此行？此操作无法撤消。',
       onConfirm: async () => {
         const { props } = p
         const { rowIdx } = props
@@ -73,15 +73,15 @@ const RowContextMenu: React.FC<RowContextMenuProps> = ({}) => {
       <Menu id={ROW_CONTEXT_MENU_ID} animation={false}>
         <Item onClick={onCopyCellContent}>
           <IconClipboard size="tiny" />
-          <span className="sb-grid-context-menu__label">Copy cell content</span>
+          <span className="sb-grid-context-menu__label">复制单元格内容</span>
         </Item>
         <Item onClick={onEditRowClick} hidden={isItemHidden} data="edit">
           <IconEdit size="tiny" />
-          <span className="sb-grid-context-menu__label">Edit row</span>
+          <span className="sb-grid-context-menu__label">编辑行</span>
         </Item>
         <Item onClick={onDeleteRow} hidden={isItemHidden} data="delete">
           <IconTrash size="tiny" stroke="red" />
-          <span className="sb-grid-context-menu__label">Delete row</span>
+          <span className="sb-grid-context-menu__label">删除行</span>
         </Item>
       </Menu>
     </>
