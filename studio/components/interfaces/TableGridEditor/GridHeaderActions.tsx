@@ -31,7 +31,7 @@ const GridHeaderActions: FC<Props> = ({ table }) => {
             {/* RLS {table.rls_enabled ? 'is' : 'not'} enabled */}
             {!table.rls_enabled
               ? 'RLS 未启用'
-              : `${policies.length == 0 ? '没有' : policies.length + '个'} 启用 RLS 策略`}
+              : `${policies.length == 0 ? '没有' : policies.length + '个'} RLS 策略`}
           </Button>
         </a>
       </Link>

@@ -13,7 +13,7 @@ const AuthProvidersForm = () => {
   return (
     <div>
       <FormHeader
-        title="认证提供商"
+        title="认证服务商"
         description="通过一套providers和登录方法对用户进行身份验证"
       />
 

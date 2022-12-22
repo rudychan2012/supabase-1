@@ -61,7 +61,7 @@ const DomainList: FC<Props> = ({ canUpdate, onSelectDomainToDelete }) => {
         >
           <EmptyListState
             title="没有重定向URL"
-            description="身份验证提供商可能需要配置URL重定向回来"
+            description="身份认证服务商可能需要配置URL重定向回来"
           />
         </div>
       )}

@@ -9,7 +9,7 @@ const PROVIDER_EMAIL = {
   title: 'Email',
   properties: {
     EXTERNAL_EMAIL_ENABLED: {
-      title: '启用电子邮件提供商',
+      title: '启用电子邮件服务商',
       description: '这将为您的应用程序启用基于电子邮件的注册和登录',
       type: 'boolean',
     },
@@ -56,14 +56,14 @@ const PROVIDER_PHONE = {
   title: '电话',
   properties: {
     EXTERNAL_PHONE_ENABLED: {
-      title: '启用电话提供商',
+      title: '启用电话服务商',
       description: '这将为您的应用程序启用基于电话的登录',
       type: 'boolean',
     },
     SMS_PROVIDER: {
       type: 'select',
-      title: '短信（SMS）提供商',
-      description: '将处理发送短信的外部提供商',
+      title: '短信（SMS）服务商',
+      description: '将处理发送短信的外部服务商',
       enum: [
         { label: 'Twilio', value: 'twilio', icon: 'twilio-icon.svg' },
         { label: 'Messagebird', value: 'messagebird', icon: 'messagebird-icon.svg' },
@@ -287,7 +287,7 @@ const EXTERNAL_PROVIDER_APPLE = {
   title: 'Apple',
   properties: {
     EXTERNAL_APPLE_ENABLED: {
-      title: '启用Apple提供商',
+      title: '启用Apple服务商',
       description: '这将为您的应用程序启用 Apple 登录',
       type: 'boolean',
     },

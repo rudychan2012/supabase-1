@@ -34,7 +34,7 @@ export const generateDatabaseMenu = (project?: Project): ProductMenuGroup[] => {
         },
         { name: '角色', key: 'roles', url: `/project/${ref}/database/roles`, items: [] },
         {
-          name: '副本',
+          name: 'Replication',
           key: 'replication',
           url: `/project/${ref}/database/replication`,
           items: [],

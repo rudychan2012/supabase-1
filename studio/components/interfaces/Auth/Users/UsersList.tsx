@@ -20,7 +20,7 @@ const UsersList = ({}) => {
           <>
             <Table.th>邮箱</Table.th>
             <Table.th>电话</Table.th>
-            <Table.th className="table-cell">提供商</Table.th>
+            <Table.th className="table-cell">服务商</Table.th>
             <Table.th className="table-cell">创建时间</Table.th>
             <Table.th className="table-cell">最近登录时间</Table.th>
             <Table.th className="table-cell">用户UID</Table.th>

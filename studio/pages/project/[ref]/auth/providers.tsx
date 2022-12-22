@@ -19,7 +19,7 @@ const PageLayout: NextPageWithLayout = () => {
   const canReadAuthSettings = checkPermissions(PermissionAction.READ, 'custom_config_gotrue')
 
   if (!canReadAuthSettings) {
-    return <NoPermission isFullPage resourceText="访问应用的认证提供商设置" />
+    return <NoPermission isFullPage resourceText="访问应用的认证服务商设置" />
   } else if (authConfig) {
     return (
       <FormsContainer>
