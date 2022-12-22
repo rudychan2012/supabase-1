@@ -1,4 +1,4 @@
-// import { withSentry } from '@sentry/nextjs'
+import { withSentry } from '@sentry/nextjs'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { IS_PLATFORM } from '../constants'
 import { apiAuthenticate } from './apiAuthenticate'

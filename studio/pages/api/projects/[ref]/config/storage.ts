@@ -24,7 +24,7 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   if (process.env.MEMFIRE_CLOUD_API_URL) {
     const cookies = parseCookies()
     let response = await get(
-      `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/storage/config?projectId=${process.env.PROJECT_ID}`,
+      `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/storage/config?projectId=${process.env.BASE_PROJECT_ID}`,
       {
         Authorization: cookies._token,
       }
@@ -45,7 +45,7 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
     if (process.env.MEMFIRE_CLOUD_API_URL) {
     const cookies = parseCookies()
     let response = await post(
-      `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/storage/config?projectId=${process.env.PROJECT_ID}`,
+      `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/storage/config?projectId=${process.env.BASE_PROJECT_ID}`,
         req.body,
       {
         Authorization: cookies._token,
