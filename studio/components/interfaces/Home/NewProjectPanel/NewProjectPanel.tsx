@@ -90,7 +90,7 @@ const NewProjectPanel: FC<Props> = ({}) => {
 
           <div className="flex h-full flex-col justify-between space-y-6">
             <div className="max-w-2xl space-y-2">
-              <h3 className="text-xl text-scale-1200">探索我们的其他产品</h3>
+              <h3 className="text-xl text-scale-1200">探索我们的其他功能</h3>
               <p className="text-base text-scale-1100">
                 Supabase 提供构建产品所需的所有后端功能。您可以完全使用它，也可以只使用您需要的功能。
               </p>

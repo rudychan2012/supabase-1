@@ -443,7 +443,7 @@ const SelectEnabledMode: FC = observer(({}) => {
       >
         Replica
         <span className="block text-scale-900">
-          仅当会话处于“副本”模式时才会触发
+          仅当会话处于“Replica”模式时才会触发
         </span>
       </Listbox.Option>
       <Listbox.Option
@@ -457,7 +457,7 @@ const SelectEnabledMode: FC = observer(({}) => {
       >
         Always
         <span className="block text-scale-900">
-          无论当前副本角色如何，都会触发
+          无论当前replication角色如何，都会触发
         </span>
       </Listbox.Option>
       <Listbox.Option

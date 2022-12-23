@@ -56,7 +56,7 @@ const ConnectingState: FC<Props> = ({ project }) => {
               <Badge color="brand">
                 <div className="flex items-center gap-2">
                   <IconLoader className="animate-spin" size={12} />
-                  <span>Connecting to project</span>
+                  <span>正在连接应用</span>
                 </div>
               </Badge>
             </div>
@@ -70,22 +70,22 @@ const ConnectingState: FC<Props> = ({ project }) => {
               </div>
 
               <div className="space-y-1">
-                <p className="text-center">Connecting to {project.name}</p>
+                <p className="text-center">正在连接到 {project.name}</p>
                 <p
                   className="cursor-pointer text-center text-sm text-scale-1100 opacity-60 transition hover:opacity-100"
-                  onClick={() => setShowModal(true)}
+                  // onClick={() => setShowModal(true)}
                 >
-                  This may take a few minutes
+                  这可能需要几分钟时间
                 </p>
               </div>
 
-              <div className="flex flex-col items-center">
-                {showHelperButton && (
-                  <Button type="default" onClick={() => setShowModal(true)}>
-                    Still connecting?
-                  </Button>
-                )}
-              </div>
+              {/*<div className="flex flex-col items-center">*/}
+              {/*  {showHelperButton && (*/}
+              {/*    <Button type="default" onClick={() => setShowModal(true)}>*/}
+              {/*      还在连接？*/}
+              {/*    </Button>*/}
+              {/*  )}*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>
@@ -95,7 +95,7 @@ const ConnectingState: FC<Props> = ({ project }) => {
         onCancel={() => setShowModal(false)}
         header={
           <div className="flex items-baseline gap-2">
-            <h5 className="text-sm text-scale-1200">Checking the health of your database</h5>
+            <h5 className="text-sm text-scale-1200">检查数据库的运行状况</h5>
           </div>
         }
         size="medium"
@@ -106,37 +106,35 @@ const ConnectingState: FC<Props> = ({ project }) => {
           <Modal.Content>
             <div className="space-y-4">
               <p className="text-sm text-scale-1200">
-                Your project might be facing resource constraints and hence is having trouble
-                connecting. You can verify this by checking your{' '}
+                您的项目可能面临资源限制，因此无法连接。您可以通过检查您的{' '}
                 <span className="text-brand-1000">
                   <Link href={`/project/${project.ref}/settings/database`}>
-                    <a>database's health</a>
+                    <a>数据库的运行状况</a>
                   </Link>
                 </span>{' '}
-                or your remaining daily disk IO budget via a{' '}
+                或剩余的每日磁盘 IO 预算，通过{' '}
                 <span className="text-brand-1000">
                   <Link href={`/project/${project.ref}/reports`}>
-                    <a>customizable project report</a>
+                    <a>定制的应用报告</a>
                   </Link>
                 </span>
-                .
+                。
               </p>
               <p className="text-sm text-scale-1200">
-                If your project is facing resource constraints, you can{' '}
+                如果您的项目面临资源限制，您可以{' '}
                 <span className="text-brand-1000">
                   <Link href={`/project/${project.ref}/reports`}>
-                    <a>upgrade</a>
+                    <a>升级</a>
                   </Link>
                 </span>{' '}
-                your project's subscription to a Pro for access to larger compute sizes.
+                您的项目到Pro，以访问更大的计算容量。
               </p>
               <p className="text-sm text-scale-1200">
-                However, if your project still fails to connect thereafter, you can open a support
-                ticket{' '}
+                但是，如果项目此后仍无法连接，则可以打开支持{' '}
                 <span className="text-brand-1000">
-                  <Link href={`/support/new?ref=${project.ref}`}>here</Link>
+                  <Link href={`/support/new?ref=${project.ref}`}>在这里</Link>
                 </span>
-                .
+                。
               </p>
             </div>
           </Modal.Content>

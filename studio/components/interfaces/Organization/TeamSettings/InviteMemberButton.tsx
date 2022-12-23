@@ -35,8 +35,8 @@ const InviteMemberButton: FC<Props> = ({ user, members = [], roles = [], rolesAd
   const initialValues = { email: '', role: '' }
 
   const schema = object({
-    email: string().email('Must be a valid email address').required('Email is required'),
-    role: string().required('Role is required'),
+    email: string().email('必须是有效的邮箱地址').required('邮箱为必填项'),
+    role: string().required('角色是必填项'),
   })
 
   const onInviteMember = async (values: any, { setSubmitting, resetForm }: any) => {

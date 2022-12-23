@@ -88,7 +88,7 @@ const RedirectDomains = () => {
       <div className="flex items-center justify-between">
         <FormHeader
           title="重定向URL"
-          description={`允许身份验证提供商重定向到身份验证后的URL。允许使用通配符，例如， https://*.domain.com`}
+          description={`完成认证后服务商重定向到的网址。允许使用通配符，例如， https://*.domain.com`}
         />
         <Tooltip.Root delayDuration={0}>
           <Tooltip.Trigger>

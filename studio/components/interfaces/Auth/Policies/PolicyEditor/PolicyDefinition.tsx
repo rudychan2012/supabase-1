@@ -58,7 +58,7 @@ const PolicyDefinition: FC<Props> = ({
                       表达式返回 true 的行将是可见的。表达式返回 false 或 null 的任何行将对用户不可见（在 SELECT 中），并且不可用于修改（在 UPDATE 或 DELETE 中）。
                     </p>
                     <p className="text-xs text-scale-1200">
-                      Such rows are silently suppressed - no error is reported.
+                      这种不可见是静默的，不会汇报任何错误信息。
                     </p>
                   </div>
                 </Tooltip.Content>

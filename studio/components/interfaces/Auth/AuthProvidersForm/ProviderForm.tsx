@@ -141,7 +141,7 @@ const ProviderForm: FC<Props> = ({ provider }) => {
                         readOnly
                         disabled
                         label="重定向URL"
-                        value={`${process.env.SUPABASE_URL}/auth/v1/callback`}
+                        value={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/callback`}
                       />
                     </>
                   )}

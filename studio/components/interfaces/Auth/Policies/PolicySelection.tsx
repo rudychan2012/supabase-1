@@ -66,7 +66,7 @@ const PolicySelection: FC<Props> = ({
           >
             here
           </a>
-          .
+          。
         </p>
       </div>
     </Modal.Content>

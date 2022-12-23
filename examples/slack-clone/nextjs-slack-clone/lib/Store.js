@@ -29,7 +29,7 @@ export const useStore = (props) => {
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages' },
-        (payload) => handleNewMessage(payload.new)
+        (payload) => handleNewMessage(payload.record)
       )
       .on(
         'postgres_changes',
