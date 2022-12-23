@@ -71,11 +71,11 @@ const DropdownMenu = observer(({ tabInfo }: { tabInfo: QueryTab }) => {
     return (
       <>
         <Dropdown.Item onClick={renameQuery} icon={<IconEdit2 size="tiny" />}>
-          Rename query
+          重命名 query
         </Dropdown.Item>
         <Dropdown.Separator />
         <Dropdown.Item onClick={() => setDeleteModalOpen(true)} icon={<IconTrash size="tiny" />}>
-          Remove query
+          删除 query
         </Dropdown.Item>
       </>
     )

@@ -38,7 +38,7 @@ const PolicyReview: FC<Props> = ({
             {isEmpty(policy) ? (
               <div className="my-10 flex items-center justify-center space-x-2 opacity-50">
                 <p className="text-base text-scale-1100">
-                  本政策没有变化
+                  本策略没有变化
                 </p>
               </div>
             ) : (

@@ -333,7 +333,7 @@ const EXTERNAL_PROVIDER_APPLE = {
             [了解更多](https://supabase.com/docs/guides/auth/auth-apple#configure-your-services-id)`,
     alert: {
       title: `Apple 密钥将每6个月自行过期一次`,
-      description: `您需要在6个月之内重新生成，否则使用 Apple Login 的用户将无法再重新登录。`,
+      description: `您需要在6个月之内重新生成，否则使用 Apple 登陆的用户将无法再重新登录。`,
     },
   },
 }

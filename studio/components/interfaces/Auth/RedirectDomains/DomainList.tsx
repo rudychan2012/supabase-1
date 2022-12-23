@@ -46,7 +46,7 @@ const DomainList: FC<Props> = ({ canUpdate, onSelectDomainToDelete }) => {
                   icon={<IconTrash />}
                   onClick={() => onSelectDomainToDelete(domain)}
                 >
-                  Remove
+                  删除
                 </Button>
               )}
             </ValueContainer>

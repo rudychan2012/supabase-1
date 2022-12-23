@@ -80,7 +80,7 @@ const RenameQuery = observer(({ tabId, onComplete, visible, onCancel }) => {
                   Cancel
                 </Button>
                 <Button htmlType="submit" loading={isSubmitting}>
-                  Rename query
+                  重命名 query
                 </Button>
               </div>
             </Modal.Content>

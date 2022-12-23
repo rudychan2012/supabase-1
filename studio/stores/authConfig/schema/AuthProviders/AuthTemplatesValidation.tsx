@@ -10,7 +10,7 @@ export const CONFIRMATION: FormSchema = {
   title: '确认注册',
   properties: {
     MAILER_SUBJECTS_CONFIRMATION: {
-      title: '主题标题',
+      title: '主题',
       type: 'string',
     },
     MAILER_TEMPLATES_CONFIRMATION_CONTENT: {
@@ -23,7 +23,7 @@ export const CONFIRMATION: FormSchema = {
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_CONFIRMATION: string().required('"主题标题为必填项。'),
+    MAILER_SUBJECTS_CONFIRMATION: string().required('"主题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
@@ -39,7 +39,7 @@ export const INVITE: FormSchema = {
   title: '邀请用户',
   properties: {
     MAILER_SUBJECTS_INVITE: {
-      title: '主题标题',
+      title: '主题',
       type: 'string',
     },
     MAILER_TEMPLATES_INVITE_CONTENT: {
@@ -68,7 +68,7 @@ export const MAGIC_LINK: FormSchema = {
   title: '魔法链接',
   properties: {
     MAILER_SUBJECTS_MAGIC_LINK: {
-      title: '主题标题',
+      title: '主题',
       type: 'string',
     },
     MAILER_TEMPLATES_MAGIC_LINK_CONTENT: {
@@ -81,7 +81,7 @@ export const MAGIC_LINK: FormSchema = {
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_MAGIC_LINK: string().required('"主题标题为必填项。'),
+    MAILER_SUBJECTS_MAGIC_LINK: string().required('"主题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
@@ -97,7 +97,7 @@ export const EMAIL_CHANGE: FormSchema = {
   title: '更改邮箱地址',
   properties: {
     MAILER_SUBJECTS_EMAIL_CHANGE: {
-      title: '主题标题',
+      title: '主题',
       type: 'string',
     },
     MAILER_TEMPLATES_EMAIL_CHANGE_CONTENT: {
@@ -110,7 +110,7 @@ export const EMAIL_CHANGE: FormSchema = {
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_EMAIL_CHANGE: string().required('"主题标题为必填项。'),
+    MAILER_SUBJECTS_EMAIL_CHANGE: string().required('"主题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',
@@ -126,7 +126,7 @@ export const RECOVERY: FormSchema = {
   title: '重置密码',
   properties: {
     MAILER_SUBJECTS_RECOVERY: {
-      title: '主题标题',
+      title: '主题',
       type: 'string',
     },
     MAILER_TEMPLATES_RECOVERY_CONTENT: {
@@ -139,7 +139,7 @@ export const RECOVERY: FormSchema = {
     },
   },
   validationSchema: object().shape({
-    MAILER_SUBJECTS_RECOVERY: string().required('"主题标题为必填项。'),
+    MAILER_SUBJECTS_RECOVERY: string().required('"主题为必填项。'),
   }),
   misc: {
     iconKey: 'email-icon2',

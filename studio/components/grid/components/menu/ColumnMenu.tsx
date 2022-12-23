@@ -44,20 +44,20 @@ const ColumnMenu: React.FC<ColumnMenuProps> = ({ column }) => {
       <>
         {state.editable && onEditColumn !== undefined && (
           <Dropdown.Item onClick={onEditColumn} icon={<IconEdit size="tiny" />}>
-            Edit column
+            编辑列
           </Dropdown.Item>
         )}
         <Dropdown.Item
           onClick={column.frozen ? onUnfreezeColumn : onFreezeColumn}
           icon={column.frozen ? <IconUnlock size="tiny" /> : <IconLock size="tiny" />}
         >
-          {column.frozen ? 'Unfreeze column' : 'Freeze column'}
+          {column.frozen ? '取消固定列' : '固定列'}
         </Dropdown.Item>
         {state.editable && onDeleteColumn !== undefined && (
           <>
             <Divider light />
             <Dropdown.Item onClick={onDeleteColumn} icon={<IconTrash size="tiny" stroke="red" />}>
-              Delete Column
+              删除列
             </Dropdown.Item>
           </>
         )}
