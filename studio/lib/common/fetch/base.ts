@@ -105,9 +105,8 @@ export async function constructHeaders(requestId: string, optionHeaders?: { [pro
   const hasAuthHeader = !isUndefined(optionHeaders) && 'Authorization' in optionHeaders
   if (!hasAuthHeader) {
     // TODO
-    // const accessToken = await getAccessToken()
-    // if (accessToken) headers.Authorization = `Bearer ${accessToken}`
-    headers.Authorization = `Bearer ${process.env.SUPABASE_ANON_KEY}`
+    const accessToken = await getAccessToken()
+    if (accessToken) headers.Authorization = `Bearer ${accessToken}`
   }
 
   return headers

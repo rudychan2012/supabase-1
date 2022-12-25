@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { IS_PLATFORM } from 'lib/constants'
 import apiWrapper from 'lib/api/apiWrapper'
 import { createEncryptedDbConnectionString } from 'lib/api/apiHelpers'
+import {post} from "../../../lib/common/fetch";
 
 export default (req: NextApiRequest, res: NextApiResponse) => apiWrapper(req, res, handler)
 
@@ -20,7 +21,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   // Platform specific endpoint
-
   const response = {
     id: 1,
     primary_email: 'johndoe@supabase.io',
@@ -59,5 +59,10 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     ],
   }
-  return res.status(200).json(response)
+  try {
+    const accessToken = JSON.parse(req.cookies['_token']).token
+    return res.status(200).json(response)
+  } catch (e) {
+    return res.status(401).json({ error: { message: e } })
+  }
 }
