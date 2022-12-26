@@ -66,12 +66,12 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/signup',
+        source: '/sign-up',
         destination: '/project/default',
         permanent: true,
       },
       {
-        source: '/signin',
+        source: '/sign-in',
         destination: '/project/default',
         permanent: true,
       },

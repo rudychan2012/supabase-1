@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import apiWrapper from 'lib/api/apiWrapper'
+import { get, post } from '../../../../lib/common/fetch'
 
 export default (req: NextApiRequest, res: NextApiResponse) => apiWrapper(req, res, handler)
 
@@ -96,19 +97,19 @@ const defaultConfig = {
   MAILER_SUBJECTS_MAGIC_LINK: 'Your Magic Link',
   MAILER_TEMPLATES_INVITE: null,
   MAILER_TEMPLATES_INVITE_CONTENT:
-      '<h2>You have been invited</h2>\n\n<p>You have been invited to create a user on {{ .SiteURL }}. Follow this link to accept the invite:</p>\n<p><a href="{{ .ConfirmationURL }}">Accept the invite</a></p>',
+    '<h2>You have been invited</h2>\n\n<p>You have been invited to create a user on {{ .SiteURL }}. Follow this link to accept the invite:</p>\n<p><a href="{{ .ConfirmationURL }}">Accept the invite</a></p>',
   MAILER_TEMPLATES_CONFIRMATION: null,
   MAILER_TEMPLATES_CONFIRMATION_CONTENT:
-      '<h2>Confirm your signup</h2>\n\n<p>Follow this link to confirm your user:</p>\n<p><a href="{{ .ConfirmationURL }}">Confirm your mail</a></p>',
+    '<h2>Confirm your signup</h2>\n\n<p>Follow this link to confirm your user:</p>\n<p><a href="{{ .ConfirmationURL }}">Confirm your mail</a></p>',
   MAILER_TEMPLATES_RECOVERY: null,
   MAILER_TEMPLATES_RECOVERY_CONTENT:
-      '<h2>Reset Password</h2>\n\n<p>Follow this link to reset the password for your user:</p>\n<p><a href="{{ .ConfirmationURL }}">Reset Password</a></p>',
+    '<h2>Reset Password</h2>\n\n<p>Follow this link to reset the password for your user:</p>\n<p><a href="{{ .ConfirmationURL }}">Reset Password</a></p>',
   MAILER_TEMPLATES_EMAIL_CHANGE: null,
   MAILER_TEMPLATES_EMAIL_CHANGE_CONTENT:
-      '<h2>Confirm Change of Email</h2>\n\n<p>Follow this link to confirm the update of your email from {{ .Email }} to {{ .NewEmail }}:</p>\n<p><a href="{{ .ConfirmationURL }}">Change Email</a></p>',
+    '<h2>Confirm Change of Email</h2>\n\n<p>Follow this link to confirm the update of your email from {{ .Email }} to {{ .NewEmail }}:</p>\n<p><a href="{{ .ConfirmationURL }}">Change Email</a></p>',
   MAILER_TEMPLATES_MAGIC_LINK: null,
   MAILER_TEMPLATES_MAGIC_LINK_CONTENT:
-      '<h2>Magic Link</h2>\n\n<p>Follow this link to login:</p>\n<p><a href="{{ .ConfirmationURL }}">Log In</a></p>',
+    '<h2>Magic Link</h2>\n\n<p>Follow this link to login:</p>\n<p><a href="{{ .ConfirmationURL }}">Log In</a></p>',
   PASSWORD_MIN_LENGTH: 6,
   SMTP_SENDER_NAME: null,
   SMS_AUTOCONFIRM: false,
@@ -153,17 +154,82 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   // Platform only API
-  return res.status(200).json(defaultConfig)
+  try {
+    const accessToken = JSON.parse(req.cookies['_token']).token
+    if (process.env.MEMFIRE_CLOUD_API_URL) {
+      let response = await get(
+        `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/basic/config?projectId=${process.env.BASE_PROJECT_ID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      // 异常尚未处理
+      if (response.code === 0) {
+        return res.status(200).json(response.data)
+      } else {
+        return res.status(response.status).json({ error: { message: response.msg } })
+      }
+    } else {
+      return res.status(200).json(defaultConfig)
+    }
+  } catch (e) {
+    return res.status(401).json({ error: { message: e } })
+  }
 }
 
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
-  // Platform only API
-  return res.status(200).json({})
+  try {
+    const accessToken = JSON.parse(req.cookies['_token']).token
+    if (process.env.MEMFIRE_CLOUD_API_URL) {
+      let response = await post(
+        `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/basic/config`,
+        { project_id: process.env.BASE_PROJECT_ID, ...req.body },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      if (response.code === 0) {
+        return res.status(200).json(response.data)
+      } else {
+        return res.status(response.status).json({ error: { message: response.msg } })
+      }
+    } else {
+      return res.status(200).json({})
+    }
+  } catch (e) {
+    return res.status(401).json({ error: { message: e } })
+  }
 }
 
 const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
-  return res.status(200).json({
-    ...defaultConfig,
-    ...req.body
-  })
+  try {
+    const accessToken = JSON.parse(req.cookies['_token']).token
+    if (process.env.MEMFIRE_CLOUD_API_URL) {
+      let response = await post(
+        `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/basic/config`,
+        { project_id: process.env.BASE_PROJECT_ID, ...req.body },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      if (response.code === 0) {
+        return res.status(200).json(response.data)
+      } else {
+        return res.status(response.status).json({ error: { message: response.msg } })
+      }
+    } else {
+      return res.status(200).json({
+        ...defaultConfig,
+        ...req.body,
+      })
+    }
+  } catch (e) {
+    return res.status(401).json({ error: { message: e } })
+  }
 }
