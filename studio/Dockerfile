@@ -8,10 +8,10 @@
 
 FROM node:16-slim as base
 
-RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list
-RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
-RUN sed -i "s/security.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
-RUN npm config set registry https://registry.npmmirror.com
+#RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list
+#RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
+#RUN sed -i "s/security.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
+#RUN npm config set registry https://registry.npmmirror.com
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \

@@ -105,7 +105,10 @@ export function withAuth<T>(
 }
 
 function defaultRedirectTo(ref: string | string[] | undefined) {
-  return IS_PLATFORM ? '/sign-in' : ref !== undefined ? `/project/${ref}` : '/sign-in'
+  // return IS_PLATFORM ? '/sign-up' : ref !== undefined ? `/project/${ref}` : '/sign-in'
+  return process.env.NODE_ENV === 'development'
+    ? `https://cloud.test1.langnal.com/auth/login?redirectTo=${process.env.NEXT_PUBLIC_SUPABASE_URL}`
+    : `https://cloud.memfiredb.com/auth/login?redirectTo=${process.env.NEXT_PUBLIC_SUPABASE_URL}`
 }
 
 function checkRedirectTo(
