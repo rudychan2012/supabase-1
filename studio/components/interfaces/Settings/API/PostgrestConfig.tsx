@@ -49,7 +49,7 @@ const PostgrestConfig: FC<Props> = ({}) => {
       if (response.error) {
         throw response.error
       } else {
-        mutateConfig({...config, ...updatedConfig})
+        mutateConfig()
         ui.setNotification({ category: 'success', message: '保存设置成功' })
       }
     } catch (error: any) {
