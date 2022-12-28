@@ -30,7 +30,7 @@ const PostgrestConfig: FC<Props> = ({}) => {
   const { ref } = router.query
 
   const formId = 'project-postgres-config'
-  const { config, isError, isLoading } = useProjectPostgrestConfig(ref as string | undefined)
+  const { config, isError, isLoading, mutateConfig } = useProjectPostgrestConfig(ref as string | undefined)
 
   const initialValues = {
     db_schema: '',
@@ -49,6 +49,7 @@ const PostgrestConfig: FC<Props> = ({}) => {
       if (response.error) {
         throw response.error
       } else {
+        mutateConfig()
         ui.setNotification({ category: 'success', message: '保存设置成功' })
       }
     } catch (error: any) {

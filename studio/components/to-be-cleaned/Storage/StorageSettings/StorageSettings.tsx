@@ -1,4 +1,4 @@
-import useSWR from 'swr'
+import useSWR, {useSWRConfig} from 'swr'
 import { FC, useState } from 'react'
 import { Button, Form, IconClock, Input, Listbox } from 'ui'
 
@@ -32,6 +32,7 @@ const StorageSettings: FC<any> = ({ projectRef }) => {
 }
 
 const StorageConfig = ({ config, projectRef }: any) => {
+  const { mutate } = useSWRConfig()
   const { fileSizeLimit, isFreeTier } = config
   const { value, unit } = convertFromBytes(fileSizeLimit)
 
@@ -75,6 +76,7 @@ const StorageConfig = ({ config, projectRef }: any) => {
           message: `更新存储设置失败: ${res.error.message}`,
         })
       } else {
+        mutate(`${API_URL}/projects/${projectRef}/config/storage`)
         const updatedValue = convertFromBytes(res.fileSizeLimit)
         initialValues = {
           fileSizeLimit: updatedValue.value,
