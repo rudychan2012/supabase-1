@@ -48,7 +48,7 @@ const TemplateEditor: FC<Props> = ({ template }) => {
     const { error } = await authConfig.update(payload)
 
     if (!error) {
-      ui.setNotification({ category: 'success', message: 'Successfully updated settings' })
+      ui.setNotification({ category: 'success', message: '已成功更新设置' })
       resetForm({
         values: values,
         initialValues: values,
