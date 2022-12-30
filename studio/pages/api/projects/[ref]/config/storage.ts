@@ -35,7 +35,7 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
       if (response.code === 0) {
         return res.status(200).json(response.data)
       } else {
-        return res.status(response.status).json({ error: { message: response.msg } })
+        return res.status(response.error.code).json(response)
       }
     } else {
       return res.status(200).json({
@@ -62,11 +62,10 @@ const handlePatch = async (req: NextApiRequest, res: NextApiResponse) => {
           },
         }
       )
-      console.log('-----------------', response)
       if (response.code === 0) {
         return res.status(200).json(response.data)
       } else {
-        return res.status(response.status).json({ error: { message: response.msg } })
+        return res.status(response.error.code).json(response)
       }
     } else {
       return res.status(200).json(req.body)

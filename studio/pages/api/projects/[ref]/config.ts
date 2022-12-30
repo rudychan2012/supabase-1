@@ -21,7 +21,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const accessToken = JSON.parse(req.cookies['_token']).token
-    console.log('----------------', process.env.MEMFIRE_CLOUD_API_URL)
     if (process.env.MEMFIRE_CLOUD_API_URL) {
       let response = await get(
         `${process.env.MEMFIRE_CLOUD_API_URL}/api/v2/project/basic/config?projectId=${process.env.BASE_PROJECT_ID}`,
@@ -35,7 +34,7 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
       if (response.code === 0) {
         return res.status(200).json(response.data)
       } else {
-        return res.status(response.status).json({ error: { message: response.msg } })
+        return res.status(response.error.code).json(response)
       }
     } else {
       return res.status(200).json({

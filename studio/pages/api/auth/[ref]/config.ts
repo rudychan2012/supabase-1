@@ -168,8 +168,8 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
       // 异常尚未处理
       if (response.code === 0) {
         return res.status(200).json(response.data)
-      } else {
-        return res.status(response.status).json({ error: { message: response.msg } })
+      } else  {
+        return res.status(response.error.code).json(response)
       }
     } else {
       return res.status(200).json(defaultConfig)
@@ -195,7 +195,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
       if (response.code === 0) {
         return res.status(200).json(response.data)
       } else {
-        return res.status(response.status).json({ error: { message: response.msg } })
+        return res.status(response.error.code).json(response)
       }
     } else {
       return res.status(200).json({})
