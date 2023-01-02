@@ -1,5 +1,6 @@
 import { withSentry } from '@sentry/nextjs'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { verify } from 'jsonwebtoken'
 import { IS_PLATFORM } from '../constants'
 import { apiAuthenticate } from './apiAuthenticate'
 
@@ -14,6 +15,14 @@ export default async function apiWrapper(
 ) {
   try {
     const { withAuth } = options || {}
+
+    const secret = process.env.JWT_SECRET_KEY || ''
+    const { token, refreshToken } = JSON.parse(req.cookies['_token'])
+    verify(token, secret, (err: any, decoded: any) => {
+      if (err) {
+        return res.status(401).json({})
+      }
+    })
 
     /*
      * 不论哪里，都不需要判定用户是否拥有访问api的权利，因为studio是完全独立的
@@ -39,6 +48,11 @@ export default async function apiWrapper(
 
     return await handler(req, res)
   } catch (error) {
-    return res.status(500).json({ error })
+    //@ts-ignore
+    if(error.toString().includes('SyntaxError: Unexpected token u in JSON at position 0')) {
+      return res.status(401).json({})
+    } else {
+      return res.status(500).json({ error })
+    }
   }
 }
