@@ -39,7 +39,7 @@ const NavigationBar: FC<Props> = ({}) => {
       ].join(' ')}
     >
       <ul className="flex flex-col space-y-2">
-        <Link href="/projects">
+        <Link href={ process.env.NEXT_PUBLIC_MEMFIRE_CLOUD_API_URL || 'https://cloud.memfiredb.com' }>
           <a className="block">
             <img
               src="/img/supabase-logo.svg"

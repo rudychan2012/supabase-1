@@ -39,25 +39,24 @@ const Error500: NextPage = () => {
         </nav>
       </div>
       <div className="flex w-[320px] flex-col items-center justify-center space-y-3">
-        <h4 className="text-lg">Something went wrong 🤕</h4>
+        <h4 className="text-lg">出了点问题 🤕</h4>
         <p className="text-center">
-          Sorry about that, please try again later or feel free to reach out to us if the problem
-          persists.
+          很抱歉，请稍后重试，如果问题仍然存在，请随时与我们联系。
         </p>
       </div>
       <div className="flex items-center space-x-4">
         {router.pathname !== '/projects' ? (
           <Link href="/projects">
             <a>
-              <Button>Head back</Button>
+              <Button>返回</Button>
             </a>
           </Link>
         ) : (
-          <Button onClick={onClickLogout}>Head back</Button>
+          <Button onClick={onClickLogout}>返回</Button>
         )}
         <Link href="/support/new">
           <a>
-            <Button type="secondary">Submit a support request</Button>
+            <Button type="secondary">提交反馈</Button>
           </a>
         </Link>
       </div>
