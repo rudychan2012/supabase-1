@@ -49,13 +49,13 @@ const Error404: NextPage = ({}) => {
         }`}
       >
         <div className="flex w-[380px] flex-col items-center justify-center space-y-3 text-center">
-          <h3 className="text-xl">Looking for something? 🔍</h3>
-          <p className="text-scale-1100">We couldn't find the page that you're looking for!</p>
+          <h3 className="text-xl">您在查找什么？ 🔍</h3>
+          <p className="text-scale-1100">我们找不到您要查找的页面！</p>
         </div>
         <div className="flex items-center space-x-4">
-          <Link href="/projects">
+          <Link href="/project/default">
             <a>
-              <Button size="small">Head back</Button>
+              <Button size="small">返回</Button>
             </a>
           </Link>
         </div>
