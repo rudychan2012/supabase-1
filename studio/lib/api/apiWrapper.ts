@@ -3,7 +3,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { verify } from 'jsonwebtoken'
 import { IS_PLATFORM } from '../constants'
 import { apiAuthenticate } from './apiAuthenticate'
-import {get} from "../common/fetch";
+import { post } from "../common/fetch"
 
 // Purpose of this apiWrapper is to function like a global catchall for ANY errors
 // It's a safety net as the API service should never drop, nor fail
@@ -19,11 +19,16 @@ export default async function apiWrapper(
 
     const secret = process.env.JWT_SECRET_KEY || ''
     const { token, refreshToken } = JSON.parse(req.cookies['_token'])
+    let isAuth = true
     verify(token, secret, async (err: any, decoded: any) => {
+      if (decoded && decoded.aud !== process.env.USER_ID) {
+        isAuth = false
+      }
       if (err) {
-        if (err.name === 'TokenExpireError') {
-          const response = await get(
+        if (err.name === 'TokenExpiredError') {
+          const response = await post(
         `${process.env.MEMFIRE_CLOUD_API_URL}/api/v1/auth/refresh`,
+              {},
             {
               headers: {
                 refreshToken: refreshToken,
@@ -31,14 +36,15 @@ export default async function apiWrapper(
             }
           )
           if (response.code === 0) {
-            const newToken = JSON.stringify(response.data)
+            const newToken = encodeURI(JSON.stringify(response.data))
             req.cookies['_token'] = newToken
-            res.setHeader('Set-cookie', newToken)
+            console.log('11111111111111111',response)
+            return res.setHeader('Set-cookie', `_token=${newToken};Path='/';`)
           } else {
-            return res.status(401).json({})
+            isAuth = false
           }
         } else {
-          return res.status(401).json({})
+          isAuth = false
         }
       }
     })
@@ -64,8 +70,11 @@ export default async function apiWrapper(
     // @ts-ignore
 
 
-
-    return await handler(req, res)
+    if (isAuth) {
+      return await handler(req, res)
+    } else {
+      return res.status(401).json({})
+    }
   } catch (error) {
     //@ts-ignore
     if(error.toString().includes('SyntaxError: Unexpected token u in JSON at position 0')) {
