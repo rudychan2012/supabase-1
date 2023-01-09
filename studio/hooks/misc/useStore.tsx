@@ -58,7 +58,7 @@ export const StoreProvider: FC<StoreProvider> = ({ children, rootStore }) => {
             return toast.success(message, { id, duration: toastDuration })
           case 'error':
             console.error('Error:', { error, message })
-            return toast.error(message, { id, duration: duration || Infinity })
+            return toast.error(message, { id, duration: duration || Infinity, className: 'mf-error-toast' })
           case 'loading':
             if (progress) {
               return toast.loading(

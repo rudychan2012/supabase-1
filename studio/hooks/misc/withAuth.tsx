@@ -106,7 +106,7 @@ export function withAuth<T>(
 
 function defaultRedirectTo(ref: string | string[] | undefined) {
   // return IS_PLATFORM ? '/sign-up' : ref !== undefined ? `/project/${ref}` : '/sign-in'
-  return `${process.env.MEMFIRE_CLOUD_API_URL}/auth/login?redirectTo=${process.env.SUPABASE_URL}`
+  return `${process.env.NEXT_PUBLIC_MEMFIRE_CLOUD_API_URL}/auth/login?redirectTo=${process.env.NEXT_PUBLIC_SUPABASE_URL}`
 }
 
 function checkRedirectTo(

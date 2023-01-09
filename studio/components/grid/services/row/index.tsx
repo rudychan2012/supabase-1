@@ -25,7 +25,7 @@ export interface IRowService {
    * Right now, we remove rows immediately, so it's confused when delete operation fails
    * and rows are already removed from the grid
    */
-  delete: (rows: SupaRow[]) => { error?: ServiceError }
+  delete: (rows: SupaRow[]) => Promise<{ error?: ServiceError }>
   deleteAll: (filters: Filter[]) => Promise<{ error?: ServiceError }>
 
   update: (

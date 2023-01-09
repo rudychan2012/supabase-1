@@ -14,10 +14,10 @@ const Error500: NextPage = () => {
   const { theme } = ui
 
   const onClickLogout = async () => {
-    await auth.signOut()
-    localStorage.removeItem(STORAGE_KEY)
-    await router.push('/sign-in')
-    router.reload()
+    // await auth.signOut()
+    // localStorage.removeItem(STORAGE_KEY)
+    await router.push(`${process.env.NEXT_PUBLIC_MEMFIRE_CLOUD_API_URL}/project`)
+    // router.reload()
   }
 
   return (
@@ -45,8 +45,8 @@ const Error500: NextPage = () => {
         </p>
       </div>
       <div className="flex items-center space-x-4">
-        {router.pathname !== '/projects' ? (
-          <Link href="/projects">
+        {router.pathname !== '/project/default' ? (
+          <Link href='/project/default'>
             <a>
               <Button>返回</Button>
             </a>
@@ -54,7 +54,7 @@ const Error500: NextPage = () => {
         ) : (
           <Button onClick={onClickLogout}>返回</Button>
         )}
-        <Link href="/support/new">
+        <Link href="https://community.memfiredb.com/category/2/memfiredb%E7%94%A8%E6%88%B7%E9%97%AE%E7%AD%94">
           <a>
             <Button type="secondary">提交反馈</Button>
           </a>

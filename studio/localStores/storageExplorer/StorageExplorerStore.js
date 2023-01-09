@@ -391,7 +391,8 @@ class StorageExplorerStore {
         }
       }
     } else {
-      this.selectedFilePreview = { ...file, previewUrl: null }
+      const signedUrl = await this.fetchFilePreview(file.name)
+      this.selectedFilePreview = { ...file, previewUrl: signedUrl }
     }
   }
 
