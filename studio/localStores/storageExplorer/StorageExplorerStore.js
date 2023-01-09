@@ -640,13 +640,11 @@ class StorageExplorerStore {
       .map((folder) => folder.name)
       .join('/')
 
-    const infoToastId = toast('Please do not close the browser until the upload is completed', {
+    const infoToastId = toast('在上传完成之前，请不要关闭浏览器', {
       duration: Infinity,
     })
     const toastId = toast.loading(
-      `Uploading ${formattedFilesToUpload.length} file${
-        formattedFilesToUpload.length > 1 ? 's' : ''
-      }`
+      `正在上传${formattedFilesToUpload.length}个文件`
     )
 
     // Upload files in batches
@@ -695,7 +693,7 @@ class StorageExplorerStore {
           if (error) {
             numberOfFilesUploadedFail += 1
             this.ui.setNotification({
-              message: `Failed to upload ${file.name}: ${error.message}`,
+              message: `上传文件${file.name}失败: ${error.message}`,
               category: 'error',
             })
             resolve()
@@ -748,16 +746,14 @@ class StorageExplorerStore {
         )
       } else {
         toast.success(
-          `Successfully uploaded ${numberOfFilesUploadedSuccess} out of ${numberOfFilesToUpload} file${
-            numberOfFilesToUpload > 1 ? 's' : ''
-          }!`,
+          `成功上传${numberOfFilesToUpload}个文件中的${numberOfFilesUploadedSuccess}个文件!`,
           { id: toastId }
         )
       }
     } catch (e) {
       console.error(e)
       this.ui.setNotification({
-        message: 'Failed to upload files',
+        message: '上传文件失败',
         category: 'error',
       })
     }
@@ -765,7 +761,7 @@ class StorageExplorerStore {
 
     const t2 = new Date()
     console.log(
-      `Total time taken for ${formattedFilesToUpload.length} files: ${(t2 - t1) / 1000} seconds`
+      `${formattedFilesToUpload.length}个文件总共使用: ${(t2 - t1) / 1000}秒`
     )
   }
 
@@ -775,7 +771,7 @@ class StorageExplorerStore {
     let numberOfFilesMovedFail = 0
     this.clearSelectedItems()
 
-    const infoToastId = toast('Please do not close the browser until the delete is completed', {
+    const infoToastId = toast('在删除完成之前，请不要关闭浏览器', {
       duration: Infinity,
     })
 
@@ -806,14 +802,14 @@ class StorageExplorerStore {
 
     if (numberOfFilesMovedFail === this.selectedItemsToMove.length) {
       this.ui.setNotification({
-        message: 'Failed to move files',
+        message: '无法移动文件',
         category: 'error',
       })
     } else {
       this.ui.setNotification({
-        message: `Successfully moved ${
+        message: `成功移动${
           this.selectedItemsToMove.length - numberOfFilesMovedFail
-        } to ${formattedNewPathToFile}`,
+        }个文件到${formattedNewPathToFile}`,
         category: 'success',
       })
     }
@@ -859,7 +855,7 @@ class StorageExplorerStore {
 
   deleteFiles = async (files, isDeleteFolder = false) => {
     this.closeFilePreview()
-    const infoToastId = toast('Please do not close the browser until the delete is completed', {
+    const infoToastId = toast('在删除完成之前，请不要关闭浏览器', {
       duration: Infinity,
     })
 
@@ -881,7 +877,7 @@ class StorageExplorerStore {
 
     const toastId = this.ui.setNotification({
       category: 'loading',
-      message: `Deleting ${prefixes.length} file(s)`,
+      message: `正在删除 ${prefixes.length} 个文件`,
     })
 
     // batch BATCH_SIZE prefixes per request
@@ -916,7 +912,7 @@ class StorageExplorerStore {
       this.ui.setNotification({
         id: toastId,
         category: 'success',
-        message: `Successfully deleted ${prefixes.length} file(s)`,
+        message: `已成功删除${prefixes.length}个文件`,
       })
       await this.refetchAllOpenedFolders()
       this.clearSelectedItemsToDelete()
@@ -929,7 +925,7 @@ class StorageExplorerStore {
 
   downloadSelectedFiles = async () => {
     const showIndividualToast = false
-    const toastId = toast.loading(`Retrieving ${this.selectedItems.length} files...`, {
+    const toastId = toast.loading(`正在检索 ${this.selectedItems.length} 个文件...`, {
       autoClose: false,
       hideProgressBar: true,
     })
@@ -939,7 +935,7 @@ class StorageExplorerStore {
     )
 
     const numberOfSuccessfullyDownloadedFiles = res.filter((x) => x === true).length
-    toast.success(`Downloaded ${numberOfSuccessfullyDownloadedFiles} files`, {
+    toast.success(`已下载 ${numberOfSuccessfullyDownloadedFiles} 个文件`, {
       id: toastId,
     })
   }
@@ -950,7 +946,7 @@ class StorageExplorerStore {
     const fileMimeType = get(file, ['metadata', 'mimetype'], null)
 
     if (showToast) {
-      toastId = toast.loading(`Retrieving ${fileName}...`, {
+      toastId = toast.loading(`正在检索文件 ${fileName}...`, {
         autoClose: false,
       })
     }
@@ -978,7 +974,7 @@ class StorageExplorerStore {
       link.parentNode.removeChild(link)
       window.URL.revokeObjectURL(blob)
       if (toastId) {
-        toast.success(`Downloading ${fileName}`, {
+        toast.success(`正在下载文件 ${fileName}`, {
           id: toastId,
         })
       }
@@ -986,7 +982,7 @@ class StorageExplorerStore {
     } else {
       console.error('Failed to download:', fileName)
       if (toastId) {
-        toast.error(`Failed to download ${fileName}`, {
+        toast.error(`下载${fileName}失败`, {
           id: toastId,
         })
       }
@@ -1194,7 +1190,7 @@ class StorageExplorerStore {
 
     this.ui.setNotification({
       category: 'success',
-      message: `Successfully deleted ${folder.name}`,
+      message: `已成功删除${folder.name}`,
     })
   }
 
@@ -1206,9 +1202,9 @@ class StorageExplorerStore {
 
     const toastId = this.ui.setNotification({
       category: 'loading',
-      message: `Renaming folder to ${newName}`,
+      message: `将文件夹重命名为${newName}`,
     })
-    const infoToastId = toast('Please do not close the browser until the rename is completed', {
+    const infoToastId = toast('在重命名完成之前，请不要关闭浏览器', {
       duration: Infinity,
     })
 
@@ -1222,7 +1218,7 @@ class StorageExplorerStore {
      */
     if (newName.includes('/') || newName.includes('\\')) {
       return this.ui.setNotification({
-        message: `Folder name cannot contain forward or back slashes.`,
+        message: `文件夹名称不能包含正斜杠或反斜杠。`,
         type: 'error',
       })
     }
@@ -1249,7 +1245,7 @@ class StorageExplorerStore {
             hasErrors = true
             this.ui.setNotification({
               category: 'error',
-              message: `Failed to move ${fromPath} to the new folder`,
+              message: `无法从${fromPath}移动到新文件夹`,
             })
           }
           resolve()
@@ -1269,13 +1265,13 @@ class StorageExplorerStore {
       if (!hasErrors) {
         this.ui.setNotification({
           id: toastId,
-          message: `Successfully renamed folder to ${newName}`,
+          message: `已成功将文件夹重命名为${newName}`,
           category: 'success',
         })
       } else {
         this.ui.setNotification({
           id: toastId,
-          message: `Renamed folder to ${newName} with some errors`,
+          message: `将文件夹重命名为${newName}发生错误`,
           category: 'error',
         })
       }
@@ -1290,7 +1286,7 @@ class StorageExplorerStore {
     } catch (e) {
       this.ui.setNotification({
         id: toastId,
-        message: `Failed to rename folder to ${newName}`,
+        message: `无法将文件夹重命名为${newName}`,
         category: 'error',
       })
     }
@@ -1381,7 +1377,7 @@ class StorageExplorerStore {
         return fileExt ? `${updatedFileName}.${fileExt}` : updatedFileName
       } else {
         this.ui.setNotification({
-          message: `The name ${name} already exists in the current directory. Please use a different name.`,
+          message: `当前目录中已存在${name}。请使用其他名称。`,
           category: 'error',
           duration: 4000,
         })
