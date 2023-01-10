@@ -60,7 +60,7 @@ const handleGetAll = async (req: NextApiRequest, res: NextApiResponse) => {
     ],
   }
   try {
-    const accessToken = JSON.parse(req.cookies['_token']).token
+    // const accessToken = JSON.parse(req.cookies['_token']).token
     return res.status(200).json(response)
   } catch (e) {
     return res.status(401).json({ error: { message: e } })

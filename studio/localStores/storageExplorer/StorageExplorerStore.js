@@ -313,6 +313,7 @@ class StorageExplorerStore {
     const formattedName = this.sanitizeNameForDuplicateInColumn(folderName, autofix, columnIndex)
 
     if (isNull(formattedName)) {
+      await this.refetchAllOpenedFolders()
       return
     }
     /**
@@ -320,7 +321,7 @@ class StorageExplorerStore {
      */
     if (formattedName.includes('/') || formattedName.includes('\\')) {
       return this.ui.setNotification({
-        message: 'Folder names should not have forward or back slashes.',
+        message: '文件夹名称不应有正斜杠或反斜杠。',
         category: 'error',
         duration: 8000,
       })
@@ -339,15 +340,20 @@ class StorageExplorerStore {
     const formattedPathToEmptyPlaceholderFile =
       pathToFolder.length > 0 ? `${pathToFolder}/${emptyPlaceholderFile}` : emptyPlaceholderFile
 
-    await this.supabaseClient.storage
+    const { error } = await this.supabaseClient.storage
       .from(this.selectedBucket.name)
       .upload(formattedPathToEmptyPlaceholderFile, new File([], EMPTY_FOLDER_PLACEHOLDER_FILE_NAME))
 
-    if (pathToFolder.length > 0) {
-      await this.supabaseClient.storage
-        .from(this.selectedBucket.name)
-        .remove([`${pathToFolder}/${EMPTY_FOLDER_PLACEHOLDER_FILE_NAME}`])
+    if (error) {
+      await this.refetchAllOpenedFolders()
+    } else {
+      if (pathToFolder.length > 0) {
+        await this.supabaseClient.storage
+          .from(this.selectedBucket.name)
+          .remove([`${pathToFolder}/${EMPTY_FOLDER_PLACEHOLDER_FILE_NAME}`])
+      }
     }
+
   }
 
   setFilePreview = async (file) => {
@@ -1174,7 +1180,7 @@ class StorageExplorerStore {
     const files = await this.getAllItemsAlongFolder(folder)
     await this.deleteFiles(files, isDeleteFolder)
 
-    const isFolderOpen = this.openedFolders[this.openedFolders.length - 1].name === folder.name
+    const isFolderOpen = this.openedFolders.length === 0 ? false : this.openedFolders[this.openedFolders.length - 1].name === folder.name
     if (isFolderOpen) {
       this.popColumnAtIndex(folder.columnIndex)
       this.popOpenedFoldersAtIndex(folder.columnIndex - 1)

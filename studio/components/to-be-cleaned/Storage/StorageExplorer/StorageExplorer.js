@@ -259,6 +259,7 @@ const StorageExplorer = observer(({ bucket }) => {
 
   const onSelectBreadcrumb = (columnIndex) => {
     popColumnAtIndex(columnIndex)
+    popOpenedFoldersAtIndex(columnIndex - 1)
   }
 
   const onSelectColumnEmptySpace = (columnIndex) => {
