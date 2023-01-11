@@ -30,6 +30,13 @@ const NavigationBar: FC<Props> = ({}) => {
   const productRoutes = generateProductRoutes(projectRef, projectBaseInfo)
   const otherRoutes = generateOtherRoutes(projectRef, projectBaseInfo)
 
+  let memfireCloudUrl = 'https://cloud.memfiredb.com'
+  if (typeof window !== 'undefined' && window.location.origin) {
+    const origin = window.location.origin
+    const url = origin.replace('.baseapi.', '.cloud.')
+    memfireCloudUrl = window.location.protocol + '//' + url.substr(url.indexOf('cloud'))
+  }
+
   return (
     <div
       style={{ height: ongoingIncident ? 'calc(100vh - 44px)' : '100vh' }}
@@ -39,7 +46,7 @@ const NavigationBar: FC<Props> = ({}) => {
       ].join(' ')}
     >
       <ul className="flex flex-col space-y-2">
-        <Link href={ process.env.NEXT_PUBLIC_MEMFIRE_CLOUD_API_URL || 'https://cloud.memfiredb.com' }>
+        <Link href={ memfireCloudUrl }>
           <a className="block">
             <img
               src="/img/supabase-logo.svg"
