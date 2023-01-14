@@ -194,7 +194,7 @@ class CreateTriggerStore implements ICreateTriggerStore {
         case 'name': {
           if (isEmpty(x.value) || hasWhitespace(x.value)) {
             isValidated = false
-            return { ...x, error: 'Invalid trigger name' }
+            return { ...x, error: '触发器名称无效' }
           } else {
             return x
           }
@@ -202,7 +202,7 @@ class CreateTriggerStore implements ICreateTriggerStore {
         case 'activation': {
           if (isEmpty(x.value)) {
             isValidated = false
-            return { ...x, error: 'you have an error' }
+            return { ...x, error: '您有错误' }
           } else {
             return x
           }
@@ -210,7 +210,7 @@ class CreateTriggerStore implements ICreateTriggerStore {
         case 'events': {
           if (isEmpty(x.value)) {
             isValidated = false
-            return { ...x, error: 'Select at least 1 event' }
+            return { ...x, error: '至少选择 1 个事件' }
           } else {
             return x
           }
@@ -218,7 +218,7 @@ class CreateTriggerStore implements ICreateTriggerStore {
         case 'tableId': {
           if (isEmpty(`${x.value}`)) {
             isValidated = false
-            return { ...x, error: 'You must choose a table' }
+            return { ...x, error: '您必须选择一个表' }
           } else {
             return x
           }
@@ -293,17 +293,17 @@ const CreateTrigger: FC<CreateTriggerProps> = ({ trigger, visible, setVisible })
         if (response.error) {
           ui.setNotification({
             category: 'error',
-            message: `Failed to create trigger: ${
-              response.error?.message ?? 'submit request failed'
+            message: `无法创建触发器：${
+              response.error?.message ?? '提交请求失败'
             }`,
           })
           _localState.setLoading(false)
         } else {
           ui.setNotification({
             category: 'success',
-            message: `${_localState.isEditing ? 'Updated' : 'Created new'} trigger called ${
+            message: `${_localState.isEditing ? '更新' : '创建'}名为${
               response.name
-            }`,
+            }的触发器`,
           })
           _localState.setLoading(false)
           setVisible(!visible)
@@ -312,7 +312,7 @@ const CreateTrigger: FC<CreateTriggerProps> = ({ trigger, visible, setVisible })
     } catch (error: any) {
       ui.setNotification({
         category: 'error',
-        message: `Filed to create trigger: ${error.message}`,
+        message: `创建触发器失败: ${error.message}`,
       })
       _localState.setLoading(false)
     }
