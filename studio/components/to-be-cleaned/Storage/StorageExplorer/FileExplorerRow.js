@@ -307,6 +307,9 @@ const FileExplorerRow = ({
           className={`flex items-center justify-end ${
             view === STORAGE_VIEWS.LIST ? 'flex-grow' : 'w-[10%]'
           }`}
+          onClick={(event) =>
+              event.stopPropagation()
+          }
         >
           {item.status === STORAGE_ROW_STATUS.LOADING ? (
             <IconLoader
