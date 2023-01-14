@@ -40,7 +40,10 @@ export default async function apiWrapper(
           if (response.code === 0) {
             const newToken = JSON.stringify(response.data)
             req.cookies['_token'] = newToken
-            const cookie  = serialize('_token', newToken, { path: "/" })
+            const rootUrl = process.env.MEMFIRE_CLOUD_API_URL || ''
+            const urlArr =  rootUrl.split('.')
+            const domain = urlArr.slice(urlArr.length - 2, urlArr.length).join('.')
+            const cookie  = serialize('_token', newToken, { path: "/", domain: `.${domain}` })
             res.setHeader('Set-cookie', cookie )
             return handler(req, res)
           } else {
