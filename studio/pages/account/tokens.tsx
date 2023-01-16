@@ -14,7 +14,7 @@ const UserAccessTokens: NextPageWithLayout = () => {
 
 UserAccessTokens.getLayout = (page) => (
   <AccountLayout
-    title="Supabase"
+    title="MemFire Cloud"
     breadcrumbs={[
       {
         key: 'supabase-account-tokens',

@@ -23,7 +23,7 @@ const User: NextPageWithLayout = () => {
 
 User.getLayout = (page) => (
   <AccountLayout
-    title="Supabase"
+    title="MemFire Cloud"
     breadcrumbs={[
       {
         key: `supabase-settings`,

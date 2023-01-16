@@ -89,7 +89,7 @@ const WithSidebar: FC<Props> = ({
         </div>
       )}
       <div className="flex flex-1 flex-col">
-        <LayoutHeader breadcrumbs={breadcrumbs} />
+        {/*<LayoutHeader breadcrumbs={breadcrumbs} />*/}
         <div className="flex-1 flex-grow overflow-auto">{children}</div>
       </div>
     </div>

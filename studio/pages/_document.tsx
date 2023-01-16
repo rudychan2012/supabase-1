@@ -19,7 +19,7 @@ class MyDocument extends Document {
             href="https://cdn.jsdelivr.net/npm/monaco-editor@0.28.1/min/vs/editor/editor.main.css"
           />
         </Head>
-        <body className="dark">
+        <body className="light">
           <Main />
           <NextScript />
         </body>
