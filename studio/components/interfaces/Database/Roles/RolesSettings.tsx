@@ -28,7 +28,7 @@ const RolesSettings: FC<Props> = ({ selectedRole, onSelectBack = () => {} }) => 
               href="#"
               className="
               group mx-4
-              inline-flex items-center border-b-2 border-green-500 p-1 text-sm font-medium text-typography-body-strong-light focus:outline-none dark:text-typography-body-strong-dark "
+              inline-flex items-center border-b-2 border-orange-500 p-1 text-sm font-medium text-typography-body-strong-light focus:outline-none dark:text-typography-body-strong-dark "
               aria-current="page"
             >
               <span>权限</span>
