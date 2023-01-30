@@ -630,7 +630,7 @@ const InputMultiConfigParams: FC = observer(({}) => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h5 className="text-base text-scale-1200">Config Params</h5>
+        <h5 className="text-base text-scale-1200">配置参数</h5>
       </div>
       <div className="space-y-2 pt-4">
         {_localState!.formState.configParams.value.map(
