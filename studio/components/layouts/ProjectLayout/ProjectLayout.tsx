@@ -40,7 +40,7 @@ const ProjectLayout = ({
     <>
       <Head>
         <title>
-          {title ? `${title} | Supabase` : projectName ? `${projectName} | Supabase` : 'Supabase'}
+          {title ? `${title} | MemFire Cloud` : projectName ? `${projectName} | MemFire Cloud` : 'MemFire Cloud'}
         </title>
         <meta name="description" content="Supabase Studio" />
         <link rel="icon" href="/favicon.ico" />
@@ -58,7 +58,7 @@ const ProjectLayout = ({
           className="flex w-full flex-1 flex-col overflow-x-hidden"
           style={{ height: ongoingIncident ? 'calc(100vh - 44px)' : '100vh' }}
         >
-          {!hideHeader && <LayoutHeader />}
+          {/*{!hideHeader && <LayoutHeader />}*/}
           <ContentWrapper isLoading={isLoading}>{children}</ContentWrapper>
         </main>
       </div>

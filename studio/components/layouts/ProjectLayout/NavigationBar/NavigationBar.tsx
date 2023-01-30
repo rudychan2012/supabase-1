@@ -49,7 +49,7 @@ const NavigationBar: FC<Props> = ({}) => {
         <Link href={ memfireCloudUrl }>
           <a className="block">
             <img
-              src="/img/supabase-logo.svg"
+              src="/img/memfire-logo.svg"
               alt="Supabase"
               className="mx-auto h-[40px] w-6 cursor-pointer rounded"
             />

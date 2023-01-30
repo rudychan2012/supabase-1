@@ -63,8 +63,8 @@ const RouteValidationWrapper: FC = ({ children }) => {
       const isValidProject = projects.some((project: Project) => project.ref === projectRef)
 
       if (!isValidProject) {
-        ui.setNotification({ category: 'error', message: 'This project does not exist' })
-        router.push('/projects')
+        ui.setNotification({ category: 'error', message: '此应用不存在' })
+        router.push(process.env.NEXT_PUBLIC_MEMFIRE_CLOUD_API_URL as string)
         return
       }
     }

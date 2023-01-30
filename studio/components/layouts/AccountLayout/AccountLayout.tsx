@@ -125,7 +125,7 @@ const AccountLayout: FC<Props> = ({ children, title, breadcrumbs }) => {
   return (
     <>
       <Head>
-        <title>{title ? `${title} | Supabase` : 'Supabase'}</title>
+        <title>{title ? `${title} | MemFire Cloud` : 'MemFire Cloud'}</title>
         <meta name="description" content="Supabase Studio" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
