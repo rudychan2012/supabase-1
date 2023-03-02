@@ -1,15 +1,15 @@
 const Nav = [
   {
-    label: 'Getting Started',
+    label: '开始',
     items: [
-      { name: 'Supabase Flutter Library', url: '/reference/dart', items: [] },
-      { name: 'Installing', url: '/reference/dart/installing', items: [] },
-      { name: 'Initializing', url: '/reference/dart/initializing', items: [] },
-      { name: 'Upgrading to supabase-flutter v1', url: '/reference/dart/upgrade-guide', items: [] },
+      { name: 'Flutter客户端', url: '/reference/dart', items: [] },
+      { name: '安装', url: '/reference/dart/installing', items: [] },
+      { name: '初始化', url: '/reference/dart/initializing', items: [] },
+      { name: '更新到flutter v1', url: '/reference/dart/upgrade-guide', items: [] },
     ],
   },
   {
-    label: 'Auth',
+    label: '认证',
     items: [
       { name: 'signUp()', url: '/reference/dart/auth-signup', items: [] },
       {
@@ -33,23 +33,23 @@ const Nav = [
     ],
   },
   {
-    label: 'Functions',
+    label: '函数',
     items: [{ name: 'invoke()', url: '/reference/dart/invoke', items: [] }],
   },
   {
-    label: 'Database',
+    label: '数据库',
     items: [
-      { name: 'Fetch data: select()', url: '/reference/dart/select', items: [] },
-      { name: 'Create data: insert()', url: '/reference/dart/insert', items: [] },
-      { name: 'Modify data: update()', url: '/reference/dart/update', items: [] },
-      { name: 'Upsert data: upsert()', url: '/reference/dart/upsert', items: [] },
-      { name: 'Delete data: delete()', url: '/reference/dart/delete', items: [] },
-      { name: 'Stored Procedures: rpc()', url: '/reference/dart/rpc', items: [] },
+      { name: '获取数据: select()', url: '/reference/dart/select', items: [] },
+      { name: '创建数据: insert()', url: '/reference/dart/insert', items: [] },
+      { name: '修改数据: update()', url: '/reference/dart/update', items: [] },
+      { name: '上传数据: upsert()', url: '/reference/dart/upsert', items: [] },
+      { name: '删除数据: delete()', url: '/reference/dart/delete', items: [] },
+      { name: '存储程序: rpc()', url: '/reference/dart/rpc', items: [] },
       {
-        name: 'Filters',
+        name: '过滤器',
         url: undefined,
         items: [
-          { name: 'Using Filters', url: '/reference/dart/using-filters', items: [] },
+          { name: '使用过滤器', url: '/reference/dart/using-filters', items: [] },
           { name: 'eq()', url: '/reference/dart/eq', items: [] },
           { name: 'neq()', url: '/reference/dart/neq', items: [] },
           { name: 'gt()', url: '/reference/dart/gt', items: [] },
@@ -76,10 +76,10 @@ const Nav = [
         ],
       },
       {
-        name: 'Modifiers',
+        name: '修改器',
         url: undefined,
         items: [
-          { name: 'Using Modifiers', url: '/reference/dart/using-modifiers', items: [] },
+          { name: '使用修改器', url: '/reference/dart/using-modifiers', items: [] },
           { name: 'order()', url: '/reference/dart/order', items: [] },
           { name: 'limit()', url: '/reference/dart/limit', items: [] },
           { name: 'range()', url: '/reference/dart/range', items: [] },
@@ -99,7 +99,7 @@ const Nav = [
     ],
   },
   {
-    label: 'Storage',
+    label: '存储',
     items: [
       { name: 'createBucket()', url: '/reference/dart/storage-createbucket', items: [] },
       { name: 'getBucket()', url: '/reference/dart/storage-getbucket', items: [] },

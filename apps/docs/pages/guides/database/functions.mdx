@@ -2,15 +2,14 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'functions',
-  title: 'Database Functions',
+  title: '数据库函数',
   description: 'Creating and using Postgres functions.',
 }
 
-Postgres has built-in support for [SQL functions](https://www.postgresql.org/docs/current/sql-createfunction.html).
-These functions live inside your database, and they can be [used with the API](../../reference/javascript/rpc).
+Postgres内置了对[SQL函数](https://www.postgresql.org/docs/current/sql-createfunction.html)的支持。
+这些函数存在于你的数据库中，它们可以[与API一起使用](././reference/javascript/rpc)。
 
-## Quick demo
-
+## 快速演示
 <div className="video-container">
   <iframe
     src="https://www.youtube-nocookie.com/embed/MJZCCpCYEqk"
@@ -20,20 +19,19 @@ These functions live inside your database, and they can be [used with the API](.
   ></iframe>
 </div>
 
-## Getting started
+## 开始使用
 
-Supabase provides several options for creating database functions. You can use the Dashboard or create them directly using SQL.
-We provide a SQL editor within the Dashboard, or you can [connect](../../guides/database/connecting-to-postgres) to your database
-and run the SQL queries yourself.
+Supabase 为创建数据库函数提供了几个选项。你可以使用仪表板或直接使用 SQL 创建它们。
+我们在 Dashboard 中提供了一个 SQL 编辑器，或者你可以 [连接](.../.../guides/database/connecting-to-postgres) 到数据库并自己运行SQL查询。
 
-1. Go to the "SQL editor" section.
-2. Click "New Query".
-3. Enter the SQL to create or replace your Database function.
-4. Click "Run" or cmd+enter (ctrl+enter).
+1. 进入 `SQL编辑器`栏。
+2. 点击 `新查询`。
+3. 输入创建或替换数据库功函数的SQL。
+4. 点击 `运行`或cmd+enter (ctrl+enter)。
 
-## Simple Functions
+## 简单的函数
 
-Let's create a basic Database Function which returns a string "hello world".
+让我们创建一个基本的数据库函数，返回一个字符串 `hello world`.
 
 ```sql
 create or replace function hello_world() -- 1
@@ -46,22 +44,22 @@ $$; --6
 ```
 
 <details>
-<summary>Show/Hide Details</summary>
+<summary>显示/隐藏细节</summary>
 
-At it's most basic a function has the following parts:
+最基本的是，一个函数有以下部分：
 
-1. `create or replace function hello_world()`: The function declaration, where `hello_world` is the name of the function. You can use either `create` when creating a new function or `replace` when replacing an existing function. Or you can use `create or replace` together to handle either.
-2. `returns text`: The type of data that the function returns. If it returns nothing, you can `returns void`.
-3. `language sql`: The language used inside the function body. This can also be a procedural language: `plpgsql`, `plv8`, `plpython`, etc.
-4. `as $$`: The function wrapper. Anything enclosed inside the `$$` symbols will be part of the function body.
-5. `select 'hello world';`: A simple function body. The final `select` statement inside a function body will be returned if there are no statements following it.
-6. `$$;`: The closing symbols of the function wrapper.
+1. `create or replace function hello_world()`。函数声明，其中`hello_world`是函数的名称。你可以在创建一个新的函数时使用`create`，或者在替换一个现有函数时使用`replace`。或者你可以同时使用`create或replace`来处理这两种情况。
+2. `returns text`: 函数返回的数据类型。如果它什么都不返回，你可以`returns void`。
+3. `language sql': 在函数主体中使用的语言。这也可以是一种程序性语言：`plpgsql`, `plv8`, `plpython`等。
+4. `as $$`: 函数包装器。任何包含在`$$`符号中的东西都将是函数主体的一部分。
+5. `select 'hello world';`: 一个简单的函数体。如果函数体中的最后一条`select`语句后面没有语句，将被返回。
+6. `$$;`: 函数封装器的结束符号。
 
 </details>
 
 <br />
 
-After the Function is created, we have several ways of "executing" the function - either directly inside the database using SQL, or with one of the client libraries.
+函数创建后，我们有几种 "执行 "函数的方法--可以直接在数据库中使用SQL，也可以使用其中一个客户端库。
 
 <Tabs
   scrollable
@@ -82,7 +80,7 @@ select hello_world();
 const { data, error } = await supabase.rpc('hello_world')
 ```
 
-Reference: [rpc()](../../reference/javascript/rpc)
+参考资料: [rpc()](../../reference/javascript/rpc)
 
 </TabPanel>
 <TabPanel id="dart" label="Dart">
@@ -98,11 +96,13 @@ Reference: [rpc()](../../reference/dart/rpc)
 </TabPanel>
 </Tabs>
 
-## Returning data sets
+## 返回数据集
 
-Database Functions can also return data sets from [Tables](../../guides/database/tables) or Views.
 
-For example, if we had a database with some Star Wars data inside:
+数据库函数也可以从[数据表](../../guides/database/tables)或视图中返回数据集。
+
+例如，如果我们有一个数据库，里面有一些星球大战的数据。
+
 
 <Tabs
   scrollable
@@ -161,7 +161,7 @@ values
 </TabPanel>
 </Tabs>
 
-We could create a function which returns all the planets:
+我们可以创建一个函数，返回所有的星球：
 
 ```sql
 create or replace function get_planets()
@@ -172,7 +172,7 @@ as $$
 $$;
 ```
 
-Because this function returns a table set, we can also apply filters and selectors. For example, if we only wanted the first planet:
+因为这个函数返回一个表集，我们也可以应用过滤器和选择器。例如，如果我们只想要第一个星球：
 
 <Tabs
   scrollable
@@ -208,9 +208,9 @@ final res = await supabase
 </TabPanel>
 </Tabs>
 
-## Passing parameters
+## 传递参数
 
-Let's create a Function to insert a new planet into the `planets` table and return the new ID. Note that this time we're using the `plpgsql` language.
+让我们创建一个函数，在`planets`表中插入一个新的行星并返回新的ID。注意，这次我们使用的是`plpgsql`语言。
 
 ```sql
 create or replace function add_planet(name text)
@@ -229,7 +229,7 @@ end;
 $$;
 ```
 
-Once again, you can execute this function either inside your database using a `select` query, or with the client libraries:
+再一次，你可以在数据库中使用`select`查询来执行这个函数，或者使用客户端库。
 
 <Tabs
   scrollable
@@ -262,18 +262,18 @@ final res = await supabase
 </TabPanel>
 </Tabs>
 
-## Suggestions
+## 建议
 
-### Database Functions vs Edge Functions
+### 数据库函数vs边缘函数
 
-For data-intensive operations, use Database Functions, which are executed within your database
-and can be called remotely using the [REST and GraphQL API](../api).
+对于数据密集型的操作，使用数据库函数，它在你的数据库中执行并可以使用[REST和GraphQL API](.../api)远程调用。
 
-For use-cases which require low-latency, use [Edge Functions](../../guides/functions), which are globally-distributed and can be written in Typescript.
+对于需要低延迟的使用情况，使用[边缘函数](.../.../guides/functions)，它是全局分布的，可以用Typescript编写。
 
-### Security `definer` vs `invoker`
 
-Postgres allows you to specify whether you want the function to be executed as the user _calling_ the function (`invoker`), or as the _creator_ of the function (`definer`). For example:
+### 安全性 `definer`vs `invoker`
+
+Postgres允许你指定是作为调用函数的用户（`invoker`），还是作为函数的创建者（`definer`）来执行函数。比如说:
 
 ```sql
 create function hello_world()
@@ -287,12 +287,12 @@ end;
 $$;
 ```
 
-It is best practice to use `security invoker` (which is also the default). If you ever use `security definer`, you _must_ set the `search_path`.
-This limits the potential damage if you allow access to schemas which the user executing the function should not have.
+最好的做法是使用`security invoker`（这也是默认的）。如果你使用`security definer`，你必须设置`search_path`。
+这限制了潜在的损害，如果你允许访问执行该函数的用户不应该有的模式。
 
-### Function privileges
+### 函数的权限
 
-By default, database functions can be executed by any role. You can restrict this by altering the default privileges and then choosing which roles can execute functions.
+默认情况下，数据库函数可以由任何角色执行。你可以通过改变默认权限来限制这一点，然后选择哪些角色可以执行功能。
 
 ```sql
 ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
@@ -302,16 +302,16 @@ GRANT EXECUTE ON FUNCTION hello_world TO authenticated;
 GRANT EXECUTE ON FUNCTION hello_world TO service_role;
 ```
 
-## Resources
+## 资源
 
-- Official Client libraries: [JavaScript](../../reference/javascript/rpc) and [Flutter](../../reference/dart/rpc)
-- Community client libraries: [github.com/supabase-community](https://github.com/supabase-community)
-- PostgreSQL Official Docs: [Chapter 9. Functions and Operators](https://www.postgresql.org/docs/current/functions.html)
-- PostgreSQL Reference: [CREATE FUNCTION](https://www.postgresql.org/docs/9.1/sql-createfunction.html)
+- 官方客户端库: [JavaScript](../../reference/javascript/rpc) and [Flutter](../../reference/dart/rpc)
+- 社区客户端库: [github.com/supabase-community](https://github.com/supabase-community)
+- PostgreSQL官方文档: [第9章 函数和运算符](https://www.postgresql.org/docs/current/functions.html)
+- PostgreSQL参考资料: [创建函数](https://www.postgresql.org/docs/9.1/sql-createfunction.html)
 
-## Deep Dive
+## 深度挖掘
 
-### Create Database Functions
+### 创建数据库函数
 
 <div className="video-container">
   <iframe
@@ -322,7 +322,7 @@ GRANT EXECUTE ON FUNCTION hello_world TO service_role;
   ></iframe>
 </div>
 
-### Call Database Functions using JavaScript
+### 使用JavaScript调用数据库函数
 
 <div className="video-container">
   <iframe
@@ -333,7 +333,7 @@ GRANT EXECUTE ON FUNCTION hello_world TO service_role;
   ></iframe>
 </div>
 
-### Using Database Functions to call an external API
+### 使用数据库函数来调用外部API
 
 <div className="video-container">
   <iframe

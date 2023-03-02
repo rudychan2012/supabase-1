@@ -2,12 +2,12 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-ui',
-  title: 'Auth UI',
-  description: 'A prebuilt, customizable React component for authenticating users.',
+  title: '身份验证UI',
+  description: '一个预构建的、可定制的React组件，用于验证用户。',
 }
 
-Auth UI is a pre-built React component for authenticating users.
-It supports custom themes and extensible styles to match your brand and aesthetic.
+Auth UI是用于验证用户的预构建React组件。
+它支持定制主题和可扩展样式，以符合您的品牌和审美。
 
 <video width="99%" muted playsInline controls="true">
   <source
@@ -18,17 +18,17 @@ It supports custom themes and extensible styles to match your brand and aestheti
   />
 </video>
 
-## Set up Auth UI
+## 设置身份验证UI
 
-Install the latest version of [supabase-js](/docs/reference/javascript) and the Auth UI package:
+安装最新版本的[supabase js](/docs/reference/javascript)和Auth UI包：
 
 ```bash
 npm install @supabase/supabase-js @supabase/auth-ui-react
 ```
 
-### Import the Auth component
+### 导入Auth组件
 
-Pass `supabaseClient` from `@supabase/supabase-js` as a prop to the component.
+将 `@supabase/supabase-js` 中的 `supabaseClient` 作为属性传递给组件。
 
 ```js title=/src/index.js
 import { createClient } from '@supabase/supabase-js'
@@ -39,9 +39,7 @@ const supabase = createClient('<INSERT PROJECT URL>', '<INSERT PROJECT ANON API 
 const App = () => <Auth supabaseClient={supabase} />
 ```
 
-This renders the Auth component without any styling.
-We recommend using one of the predefined themes to style the UI.
-Import the theme you want to use and pass it to the `appearence.theme` prop.
+这将在没有任何样式的情况下渲染Auth组件。 我们建议使用预定义的主题之一来设置UI的样式。 导入要使用的主题并将其传递给`appearence.theme`属性。
 
 ```js lines=4,11 title=/src/index.js
 import {
@@ -59,20 +57,20 @@ const App = () => (
 )
 ```
 
-## Customization
+## 自定义
 
-There are several ways to customize Auth UI:
+有几种自定义身份验证UI的方法：
 
-- Use one of the [predefined themes](#predefined-themes) that comes with Auth UI
-- Extend a theme by [overriding the variable tokens](#override-themes) in a theme
-- [Create your own theme](#create-theme)
-- [Use your own CSS classes](#custom-css-classes)
-- [Use inline styles](#custom-inline-styles)
-- [Use your own labels](#custom-labels)
+- 使用Auth UI附带的[预定义主题](#predefined-themes)之一
+- 通过主题中的[覆盖变量标记](#override-themes)扩展主题
+- [创建自己的主题](#create-theme)
+- [使用您自己的CSS类](#custom-css-classes)
+- [使用内联样式](#custom-inline-styles)
+- [使用自己的标签](#custom-labels)
 
-### Predefined themes
+### 预定义主题
 
-Auth UI comes with several themes to customize the appearance. Each predefined theme comes with at least two variations, a `default` variation, and a `dark` variation. You can switch between these themes using the `theme` prop. Import the theme you want to use and pass it to the `appearence.theme` prop.
+AuthUI提供了几个主题来自定义外观。每个预定义主题至少有两种变体，一种是`default`变体，另一种则是`dark`变体。您可以使用`theme`属性在这些主题之间切换。导入要使用的主题并将其传递给`appearence.theme`属性。
 
 ```js lines=2,10 title=/src/index.js
 import { createClient } from '@supabase/supabase-js'
@@ -91,13 +89,13 @@ const App = () => (
 
 <Admonition type="info">
 
-Currently there is only one predefined theme available, but we plan to add more.
+目前只有一个预定义的主题可用，但我们计划添加更多主题。
 
 </Admonition>
 
-### Switch theme variations
+### 切换主题变体
 
-Auth UI comes with two theme variations: `default` and `dark`. You can switch between these themes with the `theme` prop.
+Auth UI有两种主题变体：`default`和`dark`。您可以使用`theme`属性在这些主题之间切换。
 
 ```js lines=11 title=/src/index.js
 import { createClient } from '@supabase/supabase-js'
@@ -115,11 +113,11 @@ const App = () => (
 )
 ```
 
-If you don't pass a value to `theme` it uses the `"default"` theme. You can pass `"dark"` to the theme prop to switch to the `dark` theme. If your theme has other variations, use the name of the variation in this prop.
+如果不向`theme`传递值，它将使用`"default"`主题。您可以将`"dark"`传递给主题道具以切换到 `dark`主题。如果主题有其他变体，请使用此道具中变体的名称。
 
-### Override themes
+### 覆盖主题
 
-Auth UI themes can be overridden using variable tokens. See the [list of variable tokens](https://github.com/supabase-community/auth-ui/blob/main/packages/react/common/theming/Themes.tsx).
+可以使用变量令牌重写身份验证UI主题。参见[变量标记列表](https://github.com/supabase-community/auth-ui/blob/main/packages/react/common/theming/Themes.tsx).
 
 ```js lines=11-18 title=/src/index.js
 import { createClient } from '@supabase/supabase-js'
@@ -145,12 +143,12 @@ const App = () => (
 )
 ```
 
-If you created your own theme, you may not need to override any of the them.
+若您创建了自己的主题，则可能不需要覆盖任何主题。
 
-### Create your own theme [#create-theme]
+### 创建自己的主题 {#create-theme}
 
-You can create your own theme by following the same structure within a `appearance.theme` property.
-See the list of [tokens within a theme](https://github.com/supabase-community/auth-ui/blob/main/packages/react/common/theming/Themes.tsx).
+您可以通过在外观中遵循相同的结构来创建自己的`appearance.theme`属性。
+查看[主题内的标记](https://github.com/supabase-community/auth-ui/blob/main/packages/react/common/theming/Themes.tsx)列表.
 
 ```js title=/src/index.js
 import { createClient } from '@supabase/supabase-js'
@@ -197,11 +195,11 @@ const App = () => (
 )
 ```
 
-You can swich between different variations of your theme with the ["theme" prop](#switch-theme-variations).
+您可以使用[`theme` prop](#switch-theme-variations)在主题的不同变体之间切换。
 
-### Custom CSS classes [#custom-css-classes]
+### 自定义CSS类 {#custom-css-classes}
 
-You can use custom CSS classes for the following elements:
+您可以为以下元素使用自定义CSS类：
 `"button"`, `"container"`, `"anchor"`, `"divider"`, `"label"`, `"input"`, `"loader"`, `"message"`.
 
 ```js title=/src/index.js
@@ -224,9 +222,9 @@ const App = () => (
 )
 ```
 
-### Custom inline CSS [#custom-inline-styles]
+### 自定义内联CSS {#custom-inline-styles}
 
-You can use custom CSS inline styles for the following elements:
+您可以为以下元素使用自定义CSS内联样式：
 `"button"`, `"container"`, `"anchor"`, `"divider"`, `"label"`, `"input"`, `"loader"`, `"message"`.
 
 ```js title=/src/index.js
@@ -249,9 +247,9 @@ const App = () => (
 )
 ```
 
-### Custom labels [#custom-labels]
+### 自定义标签 {#custom-labels}
 
-You can use custom labels with `localization.variables`. See the [list of labels](https://github.com/supabase-community/auth-ui/blob/main/packages/react/common/lib/Localization/en.json) that can be overwritten.
+您可以将自定义标签与`localization.variables`一起使用。 参见[标签列表](https://github.com/supabase-community/auth-ui/blob/main/packages/react/common/lib/Localization/en.json) 
 
 ```js title=/src/index.js
 import { createClient } from '@supabase/supabase-js'

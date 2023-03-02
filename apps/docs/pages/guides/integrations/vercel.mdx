@@ -4,30 +4,30 @@ export const meta = {
   id: 'vercel',
   title: 'Vercel',
   description:
-    "The fastest way to get up and running with an application that uses Supabase is with Vercel's Next.js starter and Supabase integration.",
+    "使用Supabase的应用程序启动和运行的最快方式是使用Vercel的Next.js启动器和Supabase集成。",
 }
 
-This guide steps through using Vercel's dashboard to create a Next.js project integrated with Supabase. To further streamline the process, we will be using the Next.js starter template, which can be automatically forked to a new GitHub repo, without leaving the dashboard!
+T本指南通过使用Vercel的仪表板来创建一个与Supabase集成的Next.js项目。为了进一步简化流程，我们将使用Next.js的启动模板，它可以自动分叉到新的GitHub repo，而无需离开仪表板
 
-If you don’t have a Vercel account, create one [here](https://vercel.com/signup).
+如果你没有Vercel账户，请创建一个[这里]（https://vercel.com/signup）。
 
-## Step 1: Create a Supabase project
+## 第1步：创建一个Supabase项目
 
-This guide could use an existing Supabase project, but to create the `todo` demo from scratch, navigate to [Supabase](https://app.supabase.com/), click `Sign In` and authenticate with GitHub to login or register a new account.
+本指南可以使用现有的Supabase项目，但要从头开始创建`todo'演示，请导航到[Supabase](https://app.supabase.com/)，点击`Sign In'，用GitHub认证登录或注册一个新账户。
 
-From the Supabase dashboard, click `New project` and select an organization.
+在Supabase的仪表板上，点击`新项目`并选择一个组织。
 
-> Note: You may need to create an organization first.
+> 注意：你可能需要先创建一个组织。
 
-Give your project a `name`, `password`, select a `region` close to your potential users and click `Create new project`.
+给你的项目一个`名称`、`密码`，选择一个接近你的潜在用户的`区域`，然后点击`创建新项目`。
 
 ![Create a Supabase project](/docs/img/guides/integrations/vercel/create-supabase-project.png)
 
-Supabase will take a couple of minutes to configure the infrastructure.
+Supabase将花几分钟时间来配置基础设施。
 
-Once this is finished, navigate to `SQL Editor` from the sidebar menu and click `New query`.
+一旦完成，从侧边栏菜单导航到 `SQL编辑器`，点击 `新查询`。
 
-This will create a new SQL snippet called "New Query". Copy and paste the following and click `Run`.
+这将创建一个名为 `新查询`的新SQL片段。复制并粘贴以下内容，点击 `运行`。
 
 ```sql
 create table todos (
@@ -52,65 +52,65 @@ values
   ('Install Supabase integration');
 ```
 
-This will create a new todos table, enable row level security, add policies for selecting and inserting data, and add some example rows.
+这将创建一个新的todos表，启用行级安全，添加选择和插入数据的策略，并添加一些示例行。
 
-> Note: To simplify this example, we are allowing anyone to `select` and `insert` rows on the `todos` table. Usually, these actions would be locked down to only allow logged in users to perform them. Check out [this video](https://www.youtube.com/watch?v=Ow_Uzedfohk) to learn more about Row Level Security and policies.
+> 注意：为了简化这个例子，我们允许任何人在 `todos`表上`选择`和`插入`行。通常情况下，这些操作会被锁定，只允许登录的用户执行。请看[这个视频](https://www.youtube.com/watch?v=Ow_Uzedfohk)以了解更多关于行级安全和策略的信息。
 
-## Step 2: Create Vercel project
+## 步骤2：创建Vercel项目
 
-From your [Vercel dashboard](https://vercel.com/dashboard), click `New Project`.
+从你的[Vercel仪表板](https://vercel.com/dashboard)，点击`新项目`。
 
 ![Create new Vercel project](/docs/img/guides/integrations/vercel/create-vercel-project.png)
 
-Under the `Clone Template` menu, click `Next.js`.
+在 `克隆模板`菜单下，点击 `Next.js`。
 
 ![Clone Next.js template](/docs/img/guides/integrations/vercel/clone-next-js-template.png)
 
-In the `Create Git Repository` section, click `GitHub`, select your username under `GIT SCOPE`, enter a name for your project, choose whether you want your repo `private` or `public`, and click `Create`.
+在 `创建 Git 仓库 `部分，点击 `GitHub`，在 `GIT SCOPE`下选择你的用户名，输入项目名称，选择你的仓库是 `私有`还是 `公共`，并点击 `创建`。
 
 ![New GitHub repo settings](/docs/img/guides/integrations/vercel/repo-settings.png)
 
-This will create a new GitHub repository, clone and commit the Next.js starter project, then build and deploy your new project to Vercel.
+这将创建一个新的GitHub仓库，克隆并提交Next.js启动项目，然后构建并部署你的新项目到Vercel。
 
-Once you have been redirected to the `Congratulations` screen, click `Go to Dashboard`.
+一旦你被重定向到 `Congratulations` 屏幕，点击 `去仪表板`。
 
-Navigate to `Settings`, `Integrations`, then click `Browse Marketplace`.
+导航到 `设置`，`集成`，然后点击 `浏览市场`。
 
-Search for `Supabase` and click the Supabase integration.
+搜索`Supabase`并点击Supabase集成。
 
 ![Supabase integration](/docs/img/guides/integrations/vercel/supabase-integration.png)
 
-Click `Add Integration`. Select your account from the `Vercel Scope` dropdown, and click `CONTINUE`.
+点击 `添加集成`。从 `Vercel范围 `下拉菜单中选择您的账户，并点击 `继续`。
 
 ![Choose scope](/docs/img/guides/integrations/vercel/choose-scope.png)
 
-Choose `Specific Projects` and select your new Vercel project from the dropdown, and click `Add Integration`.
+选择 `特定项目`，从下拉菜单中选择你的新Vercel项目，然后点击 `添加集成`。
 
 ![Choose project](/docs/img/guides/integrations/vercel/choose-project.png)
 
-From the Supabase popup, select your new Vercel Project and Supabase project from the dropdowns.
+从Supabase弹出窗口，从下拉菜单中选择你的新Vercel项目和Supabase项目。
 
 ![Supabase integration](/docs/img/guides/integrations/vercel/link-vercel-to-supabase.png)
 
-## Step 3: Clone GitHub repo
+## 第3步：克隆GitHub repo
 
-The fastest way to get this project running locally is to clone the repo that Vercel created for us.
+让这个项目在本地运行的最快方法是克隆Vercel为我们创建的 repo。
 
-Navigate back to the Vercel project `Overview` page, and click `View Git Repository`.
+回到Vercel项目的 `概览`页面，点击 `查看Git存储库`。
 
 ![Vercel Project Dashboard](/docs/img/guides/integrations/vercel/vercel-project-dashboard.png)
 
-This will open the GitHub repo. From here, click the arrow next to `Code` and copy the url from the dropdown.
+这将打开GitHub repo。在这里，点击 `代码`旁边的箭头，从下拉菜单中复制网址。
 
 ![GitHub repo url](/docs/img/guides/integrations/vercel/github-project-url.png)
 
-Open a terminal window or CLI and run the following command to clone the GitHub repo.
+打开终端窗口或CLI，运行以下命令来克隆GitHub repo。
 
 ```bash
 git clone your-repo-url.git
 ```
 
-Open the project in your code editor of choice, and update the contents of `pages/index.js` to the following:
+在你选择的代码编辑器中打开该项目，并将`pages/index.js`的内容更新为以下内容。
 
 ```jsx
 import styles from '../styles/Home.module.css'
@@ -120,47 +120,47 @@ export default function Home() {
 }
 ```
 
-Run a local development server.
+运行一个本地开发服务器。
 
 ```bash
 npm run dev
 ```
 
-Navigate to `http://localhost:3000` to confirm the project is "working".
+导航到`http://localhost:3000`，确认该项目 `正在运行`。
 
-## Step 4: Pull environment variables from Vercel
+## 第4步：从Vercel提取环境变量
 
-First, we need to login to Vercel using their CLI tool.
+首先，我们需要使用他们的CLI工具登录到Vercel。
 
 ```bash
 npx vercel login
 ```
 
-This will ask if we are happy to install `vercel`. Type `y` and hit `Enter`.
+这将询问我们是否愿意安装`vercel`。输入`y`并点击`Enter`。
 
-We will then need to authenticate Vercel by selecting `Continue with GitHub`.
+然后我们需要通过选择 `继续使用GitHub`来验证Vercel。
 
-This will open a browser window where you need to authenticate with your GitHub account.
+这将打开一个浏览器窗口，你需要用你的GitHub账户进行认证。
 
-Next, we need to link our Vercel project.
+接下来，我们需要链接我们的Vercel项目。
 
 ```bash
 npx vercel link
 ```
 
-Step through the prompts to link the Vercel project.
+按照提示步骤，连接Vercel项目。
 
 ![Link project from Vercel](/docs/img/guides/integrations/vercel/vercel-link.png)
 
-Copy the environment variables from our Vercel project.
+从我们的Vercel项目中复制环境变量。
 
 ```bash
 npx vercel env pull
 ```
 
-This will create a `.env` file containing our Supabase environment variables. Rename this file to `.env.local` to automatically ignore it from git.
+这将创建一个`.env`文件，包含我们的Supabase环境变量。把这个文件重命名为`.env.local`，以便从git上自动忽略它。
 
-## Step 5: Install Supabase.js
+## 第五步：安装Supabase.js
 
 Install the `supabase-js` library.
 
@@ -168,7 +168,7 @@ Install the `supabase-js` library.
 npm i @supabase/supabase-js
 ```
 
-Create a new file called `/utils/supabase.js` and add the following.
+创建一个名为`/utils/supabase.js`的新文件并添加以下内容。
 
 ```jsx
 import { createClient } from '@supabase/supabase-js'
@@ -179,7 +179,7 @@ export default createClient(
 )
 ```
 
-Create a new file called `/components/NewTodo.js` and add the following.
+创建一个名为`/components/NewTodo.js`的新文件并添加以下内容。
 
 ```jsx
 import { useState } from 'react'
@@ -203,9 +203,9 @@ export default ({ reload }) => {
 }
 ```
 
-This component will be responsible for writing a new `todo` to Supabase.
+这个组件将负责向Supabase写一个新的`todo`。
 
-Let's import our new component in `pages/index.js` and display a list of todos.
+让我们在`pages/index.js`中导入我们的新组件，并显示一个todos的列表。
 
 ```jsx
 import { useState, useEffect } from 'react'
@@ -236,12 +236,12 @@ export default function Home() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Vercel official website](https://vercel.com).
-- [Vercel blog](https://vercel.com/blog).
-- [Vercel docs](https://vercel.com/docs).
-- [Vercel Integration docs](https://vercel.com/docs/integrations)
+- [Vercel 官方网站](https://vercel.com)。
+- [Vercel博客](https://vercel.com/blog)。
+- [Vercel docs](https://vercel.com/docs)。
+- [Vercel集成文档](https://vercel.com/docs/integrations)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

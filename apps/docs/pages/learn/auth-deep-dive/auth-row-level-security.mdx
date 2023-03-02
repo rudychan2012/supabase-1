@@ -2,15 +2,15 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-row-level-security',
-  title: 'Part Two: Row Level Security',
-  description: 'Supabase Auth Deep Dive Part Two - Row Level Security',
+  title: '第二部分:行级安全',
+  description: 'Supabase Auth Deep Dive第二部分 - 行级安全',
 }
 
-### About
+### 关于
 
-Learn how to restrict access to your database tables by enabling Row Level Security and writing Postgres Policies in the Supabase Dashboard.
+了解如何通过启用行级安全和在Supabase仪表板中编写Postgres策略来限制对数据库表的访问。
 
-### Watch
+### 观察
 
 <div className="video-container">
   <iframe
@@ -21,9 +21,9 @@ Learn how to restrict access to your database tables by enabling Row Level Secur
   ></iframe>
 </div>
 
-### Securing Your Tables
+### 确保你的数据表安全
 
-In Supabase, you can access your data directly from the client (often the web browser), you do this by passing your Supabase URL and Anon key to supabase-js like so:
+在Supabase中，你可以直接从客户端（通常是网络浏览器）访问你的数据，你可以这样做，把你的Supabase URL和Anon密钥传递给supabase-js：
 
 ```js
 const supabase = createClient(
@@ -32,15 +32,15 @@ const supabase = createClient(
 )
 ```
 
-This raises an interesting question however: "if my anon key is in the client, then can't someone read my javascript and steal my key?", the answer is yes. And this is where Postgres policies come in.
+然而，这引起了一个有趣的问题："如果我的匿名密钥在客户端，那么就不会有人阅读我的javascript并窃取我的密钥吗？"，答案是肯定的。而这正是Postgres策略的作用所在。
 
-Using Postgres's "Row-Level-Security" policies, we can set rules on what data the anon key is allowed or not allowed to access by default.
+使用Postgres的 `行级安全`策略，我们可以对匿名钥匙默认允许或不允许访问的数据设置规则。
 
-We can say for example that the anon key should only be able to read from a particular table, but not write, update, nor delete.
+例如，我们可以说匿名钥匙只能从一个特定的表中读取，但不能写入、更新或删除。
 
-And these rules can be as complex as we want. We could say that the anon key can only delete rows which were inserted on a Thursday afternoon between 4 and 6pm, and where the id column is an even number. Pretty strange, but it shows the power of policies.
+而且这些规则可以随我们的意愿而复杂。我们可以说，匿名键只能删除在星期四下午4点到6点之间插入的行，并且id列是偶数。很奇怪，但它显示了策略的力量。
 
-Let's say we create a leaderboard table. We want people on our website to be able to read the leaderboard, but not write, update, or delete from it. We start by defining our table in SQL and adding some dummy data:
+比方说，我们创建了一个排行榜表。我们希望网站上的人能够阅读排行榜，但不能写入、更新或删除它。我们首先在SQL中定义我们的表并添加一些假数据：
 
 ```sql
 create table leaderboard (
@@ -52,9 +52,9 @@ insert into leaderboard(name, score)
 values ('Paul', 100), ('Leto', 50), ('Chani', 200);
 ```
 
-Now let's set up a client to read the data, I've created a repl here to show a living example: [https://replit.com/@awalias/supabase-leaderboard-demo#index.js](https://replit.com/@awalias/supabase-leaderboard-demo#index.js). If you copy the snippet you can plug in your own Supabase URL and anon key.
+现在让我们设置一个客户端来读取数据，我在这里创建了一个副本来展示一个活生生的例子。[https://replit.com/@awalias/supabase-leaderboard-demo#index.js](https://replit.com/@awalias/supabase-leaderboard-demo#index.js)。如果你复制这个片段，你可以插入你自己的Supabase URL和anon key。
 
-You can see that it's possible to freely read from and write to the table by using:
+你可以看到，通过使用，可以自由地从表中读取和写入。
 
 ```js
 // Writing
@@ -67,17 +67,17 @@ let { data, error } = await supabase
   .order('score', { ascending: false })
 ```
 
-Now let's restrict access. We'll start by fully restricting the table. We can do this in the SQL editor by making a query:
+现在我们来限制访问。我们将从完全限制该表开始。我们可以在SQL编辑器中通过做一个查询来做到这一点。
 
 ```sql
 ALTER TABLE leaderboard ENABLE ROW LEVEL SECURITY;
 ```
 
-or via the Supabase Dashboard, by navigating to Auth > Policies, and clicking the red padlock on the leaderboard table, so that it turns white.
+或通过 Supabase 仪表板，导航到 Auth > Policies，并单击 leaderboard 表上的红色挂锁，使其变成白色。
 
-![Enable row level security in Supabase](/docs/img/auth-deep-dive-2.png)
+![启用Supabase的行级安全](/docs/img/auth-deep-dive-2.png)
 
-You'll notice that both reading and writing now fail with an error like:
+你会注意到，现在读和写都失败了，出现了类似的错误:
 
 ```jsx
 {
@@ -88,9 +88,9 @@ You'll notice that both reading and writing now fail with an error like:
 }
 ```
 
-Now we need to add a policy to enable reading of the table, for everyone who sends the anon key (JWT) in the `Authorization: Bearer` header.
+现在我们需要添加一个策略，使每个在 "授权 "中发送匿名密钥（JWT）的人能够读取该表。Bearer "头的人。
 
-In SQL this can be done with:
+在SQL中，这可以通过以下方式完成。
 
 ```sql
 CREATE POLICY anon_read_leaderboard ON leaderboard
@@ -99,31 +99,31 @@ CREATE POLICY anon_read_leaderboard ON leaderboard
     USING (true);
 ```
 
-`anon_read_leaderboard` here is just a name that you choose for your policy. `leaderboard` is the table name. `FOR SELECT` says that we only want this policy to apply for reads (or rather "selects" in SQL). `TO` means that this policy will only apply to the `anon` Postgres role. And finally the rule itself is `true'`, which means it will _allow_ any `selects` to the `anon` user.
+`anon_read_leaderboard`这里只是你为你的策略选择的一个名字。`leaderboard`是表的名称。`FOR SELECT`表示我们只希望这个策略适用于读取（或者说SQL中的 "选择"）。`TO`意味着这个策略只适用于`anon`Postgres角色。最后，规则本身是 "true"，这意味着它将允许任何 "选择 "给 "anon "用户。
 
-If you'd prefer to use the dashboard to add your policy you can do so by clicking "Add Policy" in the Policies tab and making a policy like this:
+如果你喜欢使用仪表板来添加你的策略，你可以通过点击策略标签中的 "添加策略 "来完成，并制定一个类似这样的策略。
 
-![Add a read only policy in Supabase](/docs/img/auth-deep-dive-2-2.png)
+![在Supabase中添加一个只读策略](/docs/img/auth-deep-dive-2-2.png)
 
-You should now be able to read from your leaderboard, but will still not be able to write, update, or delete from it, which is exactly what we wanted!
+现在你应该能够从你的排行榜上读取信息，但仍然不能写入、更新或删除，这正是我们想要的
 
-A quick reminder that you can always use your `service_role` API key to bypass these row level security policies. But be extra careful that you don't leak this key by including it in the client. This can be useful if you're building internal admin tools, or if you need to bulk insert or delete data via the API.
+快速提醒你，你总是可以使用你的`service_role`API密钥来绕过这些行级安全策略。但是要格外小心，不要把这个密钥包含在客户端中，以免泄露。如果你正在建立内部管理工具，或者你需要通过API批量插入或删除数据，这可能很有用。
 
-In the next guide we will look at using Policies in combination with User Accounts, so that you can restrict access to data on a User by User basis: Watch [Part Three: Policies](../../learn/auth-deep-dive/auth-policies)
+在下一篇指南中，我们将探讨如何将策略与用户账户结合起来使用，这样你就可以在用户的基础上限制对数据的访问。观看[第三部分：策略](././learn/auth-deep-dive/auth-policy)
 
-### Resources
+### 资源
 
 - JWT debugger: https://jwt.io/
 - RESTED: https://github.com/RESTEDClient/RESTED
 
-### Next steps
+### 下一步
 
-- Watch [Part One: JWTs](../../learn/auth-deep-dive/auth-deep-dive-jwts)
-<!-- - Watch [Part Two: Row Level Security](../../learn/auth-deep-dive/auth-row-level-security) -->
-- Watch [Part Three: Policies](../../learn/auth-deep-dive/auth-policies)
-- Watch [Part Four: GoTrue](../../learn/auth-deep-dive/auth-gotrue)
-- Watch [Part Five: Google Oauth](../../learn/auth-deep-dive/auth-google-oauth)
-- Sign up for Supabase: [app.supabase.com](https://app.supabase.com)
+ - 观看[第一部分：JWTs](../../learn/auth-deep-dive/auth-deep-dive-jwts) 
+
+<!-- - [第二部分:行级安全](../../learn/auth-deep-dive/auth-row-level-security)-->
+- [第三部分:政策](../../learn/auth-deep-dive/auth-policies)
+- [第四部分: GoTrue](../../learn/auth-deep-dive/auth-gotrue)
+- 注册加入[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

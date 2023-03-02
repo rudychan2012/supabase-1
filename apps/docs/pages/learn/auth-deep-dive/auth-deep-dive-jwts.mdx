@@ -2,15 +2,15 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-deep-dive-jwts',
-  title: 'Part One: JWTs',
-  description: 'Supabase Auth Deep Dive Part 1 - JWTs',
+  title: '第一部分：JWTs',
+  description: 'Supabase Auth Deep Dive 第一部分 - JWTs',
 }
 
-### About
+### 关于
 
-An introduction to JWTs and how they are used in Supabase Auth
+对JWTs的介绍以及它们在Supabase Auth中的使用方法
 
-### Watch
+### 观察
 
 <div className="video-container">
   <iframe
@@ -21,13 +21,13 @@ An introduction to JWTs and how they are used in Supabase Auth
   ></iframe>
 </div>
 
-### What are JSON Web Tokens (JWTs)?
+### 什么是JSON网络令牌（JWTs）？
 
-JWTs are JSON objects that are encoded and signed and sent around as a string. They are distributed to users of a service or website, who can later show the JWT to the website or service as proof that they have the right to access certain content.
+JWT是JSON对象，经过编码和签名，以字符串的形式发送。它们被分发给服务或网站的用户，用户随后可以向网站或服务展示JWT，作为他们有权访问某些内容的证明。
 
-What exactly do we mean when we say "encoded" and "signed"?
+当我们说 `编码`和 `签名`时，到底是什么意思？
 
-Well, the JSON object starts out looking something like this:
+JSON对象开始时看起来像这样。
 
 ```js
 {
@@ -38,7 +38,7 @@ Well, the JSON object starts out looking something like this:
 }
 ```
 
-`sub` is the "subject", which is usually the UUID of the user. `name` is self-explanatory, and `iat` is the Unix timestamp at which the token was created. Many JWTs will also have an `exp`, which is the date at which the token is set to expire and can no longer be used. These are some of the standard fields you may find in a JWT, but you can pretty much store whatever you want in there, for example:
+`sub`是 `主题`，通常是用户的UUID。`name`是不言自明的，`iat`是创建令牌的Unix时间戳。许多JWT也会有一个`exp`，这是该令牌被设定为过期而不能再使用的日期。这些是你可能在JWT中发现的一些标准字段，但你几乎可以在其中存储任何你想要的东西，例如。
 
 ```js
 {
@@ -53,16 +53,16 @@ Well, the JSON object starts out looking something like this:
 }
 ```
 
-Just note that the more data you store in your token, the longer the encoded string will be.
+只需注意，你在令牌中存储的数据越多，编码后的字符串就越长。
 
-When we want to send the JWT to the user, we first encode the data using an algorithm such as `HS256`. There are many libraries (and several different algorithms) that can be used to do this encoding/decoding, such as [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken). I made a repl [here](https://replit.com/@awalias/jsonwebtokens#index.js) so you can try it for yourself. The signing is as simple as:
+当我们想把JWT发送给用户时，我们首先用一种算法对数据进行编码，如`HS256`。有许多库（和几种不同的算法）可以用来做这种编码/解码，例如[jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)。我做了一个副本[这里](https://replit.com/@awalias/jsonwebtokens#index.js)，所以你可以自己试试。签名的方法很简单。
 
 ```js
 // from https://replit.com/@awalias/jsonwebtokens#index.js
 let token = jwt.sign({ name: 'Sam Vimes' }, 'some-secret')
 ```
 
-And the resulting string will look like this:
+而产生的字符串将看起来像这样。
 
 ```js
 eyJhbGciOiJIUzI1NiJ9
@@ -70,9 +70,9 @@ eyJhbGciOiJIUzI1NiJ9
   .zMcHjKlkGhuVsiPIkyAkB2rjXzyzJsMMgpvEGvGtjvA
 ```
 
-You will notice that the string is actually made up of three components, which we'll address one by one:
+你会注意到，这个字符串实际上是由三个部分组成的，我们将逐一解决这个问题。
 
-The first segment `eyJhbGciOiJIUzI1NiJ9` is known as the "header", and when decoded just tells us which algorithm was used to do the encoding:
+第一段`eyJhbGciOiJIUzI1NiJ9`被称为 `头`，在解码时只是告诉我们用哪种算法来做编码。
 
 ```js
 {
@@ -80,7 +80,7 @@ The first segment `eyJhbGciOiJIUzI1NiJ9` is known as the "header", and when deco
 }
 ```
 
-The second segment `eyJzdWIiOiIwMDAxIiwibmFtZSI6IlNhbSBWaW1lcyIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxNTE4MjM5MDIyfQ` contains our original payload:
+第二段`eyJzdWIiOiIwMDAxIiwibmFtZSI6IlNhbSBWaW1lcyIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxNTE4MjM5MDIyfQ`包含我们的原始有效载荷。
 
 ```js
 {
@@ -91,7 +91,7 @@ The second segment `eyJzdWIiOiIwMDAxIiwibmFtZSI6IlNhbSBWaW1lcyIsImlhdCI6MTUxNjIz
 }
 ```
 
-The last segment `zMcHjKlkGhuVsiPIkyAkB2rjXzyzJsMMgpvEGvGtjvA` is the signature itself, which is the part used by the website or service provider to verify that a token sent by some user is legitimate. It is produced in the first instance by running the cryptographic function HS256 on the following input:
+最后一段`zMcHjKlkGhuVsiPIkyAkB2rjXzyzJsMMgpvEGvGtjvA`是签名本身，是网站或服务提供者用来验证某个用户发送的令牌是否合法的部分。它首先是通过对以下输入运行加密函数HS256产生的。
 
 ```js
 HMACSHA256(
@@ -101,32 +101,32 @@ HMACSHA256(
 )
 ```
 
-You can test out minting your own tokens on [https://jwt.io](https://jwt.io).
+你可以在[https://jwt.io](https://jwt.io)上测试一下铸造你自己的代币。
 
-It is important to note that anyone who possesses the `jwt_secret` here can create new tokens, and also verify existing ones. More advanced JWT algorithms use two secrets: one for the creation of tokens, and a separate one to verify the validity of signed tokens.
+值得注意的是，任何拥有`jwt_secret`的人都可以创建新的令牌，也可以验证现有的令牌。更高级的JWT算法使用两个秘密：一个用于创建令牌，另一个用于验证签名令牌的有效性。
 
-You might wonder why JWTs are so popular all of a sudden. The answer is that with the mass adoption of microservice architecture, we were in a situation where several distinct microservices (APIs, websites, servers, etc.) want to easily validate that a user is who they say they are, or are in other words a "logged-in" user. Traditional session tokens are no use here, since they would require each microservice to either maintain a record of currently valid session tokens or to query a central database each time a user wants to access a resource in order to check the validity of the session token – very inefficient indeed. JWT-based auth in this sense is decentralized, since anyone with the `jwt_secret` can verify a token without needing access to a centralized database.
+你可能想知道为什么JWT突然间如此流行。答案是，随着微服务架构的大规模采用，我们遇到了这样一种情况：几个不同的微服务（API、网站、服务器等）想要轻松地验证一个用户是他们所说的人，或者换句话说，是一个 "登录 "用户。传统的会话令牌在这里没有用处，因为它们需要每个微服务维护一个当前有效的会话令牌的记录，或者在每次用户想要访问一个资源时查询一个中央数据库，以便检查会话令牌的有效性--效率确实很低。在这个意义上，基于JWT的认证是分散的，因为任何拥有 "jwt_secret "的人都可以验证一个令牌，而不需要访问一个中央数据库。
 
-Note: One downside of JWTs is that they are not easily voidable, like session tokens. If a JWT is leaked to a malicious actor, they will be able to redeem it anywhere until the expiry date is reached – unless of course the system owner updates the `jwt_secret` (which will of course invalidate _everyone's_ existing tokens).
+注意：JWT的一个缺点是，它不像会话令牌那样可以轻易作废。如果JWT被泄露给恶意行为者，他们将能够在任何地方赎回它，直到到期日 - 当然，除非系统所有者更新`jwt_secret`（这当然会使_所有人的现有令牌失效）。
 
-### JWTs in Supabase
+### Supabase中的JWTs
 
-In Supabase we issue JWTs for three different purposes:
+在Supabase中，我们为三个不同的目的发布JWTs：
 
-1. `anon key`: This key is used to bypass the Supabase API gateway and can be used in your client-side code.
-2. `service role key`: This key has super admin rights and can bypass your Row Level Security. Do not put it in your client-side code. Keep it private.
-3. `user specific jwts`: These are tokens we issue to users who log into your project/service/website. It's the modern equivalent of a session token, and can be used by a user to access content or permissions specific to them.
+1. `匿名密钥`:这个密钥用于绕过Supabase API网关，可以在你的客户端代码中使用。
+2. `服务角色密钥`:此密钥具有超级管理员权限，可以绕过你的行级安全。不要把它放在你的客户端代码中。保持它的私密性。
+3. `用户特定的JWTS`:这些是我们发给登录你的项目/服务/网站的用户的令牌。它相当于现代的会话令牌，可以被用户用来访问他们特定的内容或权限。
 
-The first token here, the `anon key` token, is for developers to send along with their API requests whenever they want to interact with their Supabase database.
+这里的第一个令牌，即 `匿名钥匙`令牌，是供开发人员在想与Supabase数据库进行交互时与他们的API请求一起发送。
 
-Let's say you want to read the names of all the rows in a table `colors`. We would make a request like:
+假设你想读取一个表`colors`中所有行的名字。我们会提出这样一个请求：
 
 ```bash
 curl 'https://xscduanzzfseqszwzhcy.supabase.co/rest/v1/colors?select=name' \
 -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYxNDIwNTE3NCwiZXhwIjoxOTI5NzgxMTc0fQ.-NBR1WnZyQGpRLdXJfgfpszoZ0EeE6KHatJsDPLIX8c"
 ```
 
-If we put this token into https://jwt.io, we see it decodes to:
+如果我们把这个令牌放到https://jwt.io，我们看到它被解码为：
 
 ```js
 {
@@ -137,13 +137,13 @@ If we put this token into https://jwt.io, we see it decodes to:
 }
 ```
 
-This JWT is signed by a `jwt_secret` specific to the developer's Supabase token (you can find this secret alongside this encoded "anon key" on your Dashboard under Settings > API page) and is required to get past the Supabase API gateway and access the developer's project.
+这个JWT是由开发人员的Supabase令牌所特有的`jwt_secret`签署的（你可以在设置>API页面下的仪表板上找到这个秘密和这个编码的 "anon key"），并且需要通过Supabase API网关并访问开发人员的项目。
 
-The idea with this particular key is that it's safe to put into your client, meaning it's okay if your end users see this key – but _only_ if you first enable Row Level Security, which is the topic of [Part Two](../../learn/auth-deep-dive/auth-row-level-security) in this series.
+这个特定密钥的想法是，它可以安全地放入你的客户端，也就是说，如果你的终端用户看到这个密钥是可以的 - 但_只有在你首先启用行级安全的情况下，这是本系列的[第二部分](.../.../learn/auth-deep-dive/auth-row-level-security) 的主题。
 
-The second key, `service role key`, should only ever be used on one of your own servers or environments, and should never be shared with end users. You might use this token to do things like make batch inserts of data.
+第二个密钥，`服务角色密钥`，应该只在你自己的服务器或环境中使用，而不应该与终端用户共享。你可以使用这个令牌来做一些事情，比如批量插入数据。
 
-The `user access token` is the JWT issued when you call for example:
+`用户访问令牌`是当你呼叫时发出的JWT，例如:
 
 ```js
 supabase.auth.signIn({
@@ -152,7 +152,7 @@ supabase.auth.signIn({
 })
 ```
 
-This token should be passed in addition to the `apikey` header as an `Authorization Bearer` header like:
+这个令牌应该在`apikey`头之外作为`授权承载者`头传递。
 
 ```bash
 curl 'https://xscduanzzfseqszwzhcy.supabase.co/rest/v1/colors?select=name' \
@@ -160,7 +160,7 @@ curl 'https://xscduanzzfseqszwzhcy.supabase.co/rest/v1/colors?select=name' \
 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjE1ODI0Mzg4LCJzdWIiOiIwMzM0NzQ0YS1mMmEyLTRhYmEtOGM4YS02ZTc0OGY2MmExNzIiLCJlbWFpbCI6InNvbWVvbmVAZW1haWwuY29tIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwifSwidXNlcl9tZXRhZGF0YSI6bnVsbCwicm9sZSI6ImF1dGhlbnRpY2F0ZWQifQ.I-_oSsJamtinGxniPETBf-ezAUwDW2sY9bJIThvdX9s"
 ```
 
-You'll notice that this token is quite a bit longer, since it contains information specific to the user such as:
+你会注意到，这个令牌相当长，因为它包含了用户的具体信息，如:
 
 ```js
 {
@@ -176,21 +176,20 @@ You'll notice that this token is quite a bit longer, since it contains informati
 }
 ```
 
-Now that you understand what JWTs are and where they're used in Supabase, you can explore how to use them in combination with Row Level Security to start restricting access to certain tables, rows, and columns in your Postgres database: [Part Two: Row Level Security](../../learn/auth-deep-dive/auth-row-level-security)
+现在你已经了解了什么是JWTs以及它们在Supabase中的用途，你可以探索如何将它们与行级安全相结合，开始限制对Postgres数据库中某些表、行和列的访问。[第二部分：行级安全](././learn/auth-deep-dive/auth-row-level-security)
 
-### Resources
+### 资源
 
 - JWT debugger: https://jwt.io/
 
-### Next steps
+### 下一步
 
-<!-- - Watch [Part One: JWTs](../../learn/auth-deep-dive/auth-deep-dive-jwts) -->
+<!-- - 观看[第一部分：JWTs](../../learn/auth-deep-dive/auth-deep-dive-jwts) -->
 
-- [Part Two: Row Level Security](../../learn/auth-deep-dive/auth-row-level-security)
-- [Part Three: Policies](../../learn/auth-deep-dive/auth-policies)
-- [Part Four: GoTrue](../../learn/auth-deep-dive/auth-gotrue)
-- [Part Five: Google Oauth](../../learn/auth-deep-dive/auth-google-oauth)
-- Sign up for Supabase: [app.supabase.com](https://app.supabase.com)
+- [第二部分:行级安全](../../learn/auth-deep-dive/auth-row-level-security)
+- [第三部分:政策](../../learn/auth-deep-dive/auth-policies)
+- [第四部分: GoTrue](../../learn/auth-deep-dive/auth-gotrue)
+- 注册加入[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

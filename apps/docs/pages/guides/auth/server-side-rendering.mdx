@@ -2,100 +2,75 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'server-side-rendering',
-  title: 'Server-Side Rendering',
-  description: 'Render pages with user information on the server.',
+  title: '服务器端渲染',
+  description: '在服务器上呈现包含用户信息的页面。',
 }
 
-Single-page apps with server-side rendering (SSR) is a popular way to optimize rendering
-performance and leverage advanced caching strategies.
+带有服务器端渲染（SSR）的单页应用程序是优化渲染的流行方法 性能和利用高级缓存策略。
 
-Supabase Auth supports server-side rendering when you need access to user
-information, or your server needs to authorize API requests on behalf of your
-user to render content.
+当您需要访问用户时，Supbasse Auth支持服务器端呈现 信息，或者您的服务器需要代表您的 用户来呈现内容。
 
-When a user authenticates with Supabase Auth, two pieces of information are
-issued by the server:
+当用户使用Supabase Auth进行身份验证时 由服务器发布：
 
-1. **Access token** in the form of a JWT.
-2. **Refresh token** which is a randomly generated string.
 
-Most Supabase projects have their auth server listening on
-`<project-ref>.supabase.co/auth/v1`, thus the access token and refresh token are
-set as `sb-access-token` and `sb-refresh-token` cookies on the
-`<project-ref>.supabase.co` domain.
+1.**JWT形式的访问令牌**。
+2.**刷新令牌**，它是随机生成的字符串。
+
+大多数Supabase项目的认证服务器都在监听 `<project-ref>.supabase.co/auth/v1`，
+因此访问令牌和刷新令牌是 在上设置为`sb-access-token`和`sb-refresh-token`cookie `<project-ref>.supabase.co`域。
 
 <Admonition type="note">
 
-These cookie names are for internal Supabase use only and may change without
-warning. They are included in this guide for illustration purposes only.
+这些cookie名称仅供Suabase内部使用，在没有 警告本指南中包含的内容仅供说明之用。
 
 </Admonition>
 
-Web browsers limit access to cookies across domains, consistent with the
-[Same-Origin Policy
-(SOP)](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+Web浏览器限制跨域访问cookie，与 [同源政策 (SOP)](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
-Your web application cannot access these cookies,
-nor will these cookies be sent to your application's server.
+您的web应用程序无法访问这些cookie，
+这些cookie也不会发送到应用程序的服务器。
 
-## Understanding the authentication flow
+## 了解身份验证流程
 
-When you call one of the `signIn` methods, the client library running in the
-browser sends the request to the Supabase Auth server. The Auth server determines
-whether to verify a phone number, email and password combination, a Magic Link,
-or use a social login (if you have any setup in your project).
+调用其中一个`signIn`方法时 浏览器将请求发送到Supabase Auth服务器。
+身份验证服务器确定 是否验证电话号码、电子邮件和密码组合、Magic Link， 或者使用社交登录（如果项目中有任何设置）。
+成功验证用户身份后，Supabase认证 服务器将用户重定向回单页应用程序。
 
-Upon successful verification of the identity of the user, the Supabase Auth
-server redirects the user back to your single-page app.
 
 <Admonition type="tip">
 
-You can configure [redirects URLs](https://app.supabase.com/project/_/auth/url-configuration) in the Supabase Dashboard. You can use [wildcard match patterns](/docs/guides/auth#redirect-urls-and-wildcards)
-like `*` and `**` to allow redirects to different forms of URLs.
+您可以配置重定向URL在Supabase Dashboard中。您可以使用[通配符匹配模式](/docs/guides/auth#redirect-urls-and-wildcards) 如`*`和`**`，以允许[重定向到不同形式的URL](https://app.supabase.com/project/_/auth/url-configuration)。
 
 </Admonition>
 
-These redirect URLs have the following structure:
+这些重定向URL具有以下结构：
 
 ```
 https://yourapp.com/...#access_token=<...>&refresh_token=<...>&...
 ```
 
-The first access and refresh tokens after a successful verification are
-contained in the URL fragment (anything after the `#` sign) of the redirect
-location. This is intentional and not configurable.
+成功验证后的第一次访问和刷新令牌是 包含在重定向的URL片段（`#`符号之后的任何内容）中 地方这是故意的，不可配置。
+客户端库被设计为侦听这种类型的URL 访问令牌、刷新令牌以及其中的一些额外信息，最后 将其保存在本地存储中，供库和应用程序进一步使用。
 
-The client libraries are designed to listen for this type of URL, extract
-the access token, refresh token and some extra information from it, and finally
-persist it in local storage for further use by the library and your app.
 
 <Admonition type="info">
 
-Web browsers do not send the URL fragment to the server they're making the
-request to. Since you may not be hosting the single-page app on a server under
-your direct control (such as on GitHub Pages or other freemium hosting
-providers), we want to prevent hosting services from getting access to your
-user's authorization credentials by default. Even if the server is under your
-direct control, `GET` requests and their full URLs are often logged. This
-approach also avoids leaking credentials in request or access logs.
+Web浏览器不会将URL片段发送到服务器 请求。
+由于您可能没有在以下服务器上托管单页应用 您的直接控制（例如在GitHub Pages或其他免费增值托管 提供商），我们希望阻止托管服务访问您的 默认情况下，用户的授权凭据。
+即使服务器在您的 直接控制、`GET`请求及其完整URL经常被记录。这 该方法还避免了在请求或访问日志中泄漏凭据。
 
 </Admonition>
 
-## Bringing it together
+## 把它放在一起
 
-As seen from the authentication flow, the initial request after successful
-login made by the browser to your app's server after user login **does not
-contain any information about the user**. This is because first the client-side
-JavaScript library must run before it makes the access and refresh token
-available to your server.
+从身份验证流程可以看出，成功后的初始请求 用户登录**后，浏览器登录到应用程序的服务器 包含有关用户**的任何信息。
+这是因为首先客户端 JavaScript库必须在生成访问和刷新令牌之前运行 可用于您的服务器。
 
-It is very important to make sure that the redirect route right after login
-works without any server-side rendering. Other routes requiring authorization
-do not have the same limitation, provided you send the access and refresh
-tokens to your server.
+确保在登录后立即重定向路由是非常重要的 无需任何服务器端渲染即可工作。
+其他需要授权的路线 不具有相同的限制，前提是发送访问和刷新 令牌发送到服务器。
 
-This is traditionally done by setting cookies. Here's an example you
-can add to the root of your application:
+这通常是通过设置cookie来完成的。这里有一个例子 可以添加到应用程序的根目录：
+
 
 ```typescript
 supabase.auth.onAuthStateChange((event, session) => {
@@ -112,15 +87,11 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-This uses the standard
-[`document.cookie` API](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)
-to set cookies on all paths of your app's domain. All subsequent requests
-made by the browser to your app's server include the `my-access-token` and
-`my-refresh-token` cookies (the names of the cookies and additional
-parameters can be changed).
+使用标准
+[`document.cookie` API](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)在应用程序域的所有路径上设置cookie。
+所有后续请求 浏览器对应用程序服务器的设置包括“我的访问令牌”和 `我的刷新令牌cookie（cookie的名称和其他 可以改变参数）。
 
-In your server-side rendering code you can now access user and session
-information:
+在服务器端呈现代码中，您现在可以访问用户和会话 信息：
 
 ```typescript
 const refreshToken = req.cookies['my-refresh-token']
@@ -140,73 +111,50 @@ if (refreshToken && accessToken) {
 await supabase.auth.getUser()
 ```
 
-Use `setSession({ access_token, refresh_token })` instead of
-`setSession(refreshToken)` or `getUser(accessToken)` as refresh tokens or access tokens alone do not properly identify a user session.
+使用`setSession({ access_token, refresh_token })`而不是 `setSession(refreshToken)`或`getUser(accessToken)`单独作为刷新令牌或访问令牌不能正确标识用户会话。
 
-Access tokens are valid only for a short amount of time.
+访问令牌仅在短时间内有效。
 
-Even though refresh tokens are long-lived, there is no guarantee that a user
-has an active session. They may have logged out and your application failed to
-remove the `my-refresh-token` cookie, or some other failure occurred that left
-a stale refresh token in the browser. Furthermore, a refresh token can only be
-used a few seconds after it was first used. Only use a refresh token if the
-access token is about to expire, which will avoid the introduction of difficult
-to diagnose logout bugs in your app.
+即使刷新令牌寿命长，也不能保证用户 具有活动会话。他们可能已注销，而您的应用程序未能 删除`我的刷新令牌`cookie，或发生其他故障浏览器中的过时刷新令牌。
+此外，刷新令牌只能是 第一次使用几秒钟后使用。仅当 访问令牌即将到期，这将避免引入困难诊断应用程序中的注销错误。 
 
-A good practice is to handle unauthorized errors by deferring rendering the
-page in the browser instead of in the server. Some user information is
-contained in the access token though, so in certain cases, you may be able to
-use this potentially stale information to render a page.
+一个好的做法是通过延迟渲染页面，而不是在服务器中。一些用户信息是 但包含在访问令牌中，因此在某些情况下，您可能能够使用这些可能过时的信息来呈现页面。
 
-## Frequently Asked Questions
 
-### How do I make the cookies `HttpOnly`?
+## 常见问题解答
 
-This is not necessary. Both the access token and refresh token are designed to
-be passed around to different components in your application. The browser-based
-side of your application needs access to the refresh token to properly maintain
-a browser session anyway.
+### 如何制作Cookie`HttpOnly`？
 
-### My server is getting invalid refresh token errors. What's going on?
+这不是必须的。访问令牌和刷新令牌都设计用于 传递给应用程序中的不同组件。基于浏览器 应用程序的一方需要访问刷新令牌才能正确维护 浏览器会话。
 
-It is likely that the refresh token sent from the browser to your server is
-stale. Make sure the `onAuthStateChange` listener callback is free of bugs and
-is registered relatively early in your application's lifetime.
+### 我的服务器收到无效的刷新令牌错误。发生什么事？
 
-When you receive this error on the server-side, try to defer
-rendering to the browser where the client library can access an up-to-date
-refresh token and present the user with a better experience.
+从浏览器发送到服务器的刷新令牌很可能是不新鲜的,确保`onAuthStateChange`侦听器回调没有错误在应用程序的生命周期中相对较早地注册。 
 
-### Should I set a shorter `Max-Age` parameter on the cookies?
+当您在服务器端收到此错误时，请尝试延迟 呈现到客户端库可以访问最新刷新令牌并为用户提供更好的体验。
 
-The `Max-Age` or `Expires` cookie parameters only control whether the browser
-sends the value to the server. Since a refresh token represents the
-long-lived authentication session of the user on that browser, setting a short
-`Max-Age` or `Expires` parameter on the cookies only results in a degraded
-user experience.
 
-The only way to ensure that a user has logged out or their session has ended
-is to get the user's details with `getUser()`.
+### 我应该在cookie上设置一个较短的`Max Age`参数吗？
 
-### What should I use for the `SameSite` property?
+`Max-Age`或`Expires`cookie参数仅控制浏览器将值发送到服务器。由于刷新令牌表示 用户在该浏览器上的长期身份验证会话，设置短 Cookie上的`Max-Age`或`Expires`参数只会导致用户体验。 
 
-Make sure you [understand the behavior of the property in different
-situations](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
-as some properties can degrade the user experience.
+确保用户已注销或会话已结束的唯一方法 是使用`getUser()`获取用户的详细信息。
 
-A good default is to use `Lax` which sends cookies when users are
-navigating to your site. Cookies typically require the `Secure` attribute,
-which only sends them over HTTPS. However, this can be a problem when
-developing on `localhost`.
 
-### Can I use server-side rendering with a CDN or cache?
+### 我应该为`SameSite`属性使用什么？
 
-Yes, but you need to be careful to include at least the refresh token cookie
-value in the cache key. Otherwise you may be accidentally serving pages with
-data belonging to different users!
+确保您[了解物业在不同情况](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite)因为某些属性会降低用户体验。
 
-Also be sure you set proper cache control headers. We recommend invalidating
-cache keys every hour or less.
+
+一个好的默认设置是使用`Lax`，当用户导航到您的网站。Cookie通常需要`安全`属性， 其仅通过HTTPS发送它们。
+然而，当 在`localhost`上开发。
+
+### 我可以使用CDN或缓存进行服务器端渲染吗？
+
+是的，但您需要小心至少包含刷新令牌cookie 值。
+否则，您可能会意外地使用 属于不同用户的数据！
+
+还要确保设置了正确的缓存控制标头。我们建议无效 每小时或更短时间缓存一次密钥。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,67 +2,67 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-linkedin',
-  title: 'Login with LinkedIn',
-  description: 'Add LinkedIn OAuth to your Supabase project',
+  title: '用LinkedIn登录',
+  description: '在你的Supabase项目中加入LinkedIn OAuth',
 }
 
-To enable LinkedIn Auth for your project, you need to set up a LinkedIn OAuth application and add the application credentials to your Supabase Dashboard.
+要为你的项目启用LinkedIn Auth，你需要设置一个LinkedIn OAuth应用程序，并将应用程序的凭证添加到你的Supabase仪表板。
 
-## Overview
+## 概述
 
-Setting up LinkedIn logins for your application consists of 3 parts:
+为你的应用程序设置LinkedIn登录，包括3个部分。
 
-- Create and configure a LinkedIn Project and App on the [LinkedIn Developer Dashboard](https://www.linkedin.com/developers/apps).
-- Add your LinkedIn `client_id` and `client_secret` to your [Supabase Project](https://app.supabase.com).
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js).
+- 在[LinkedIn Developer Dashboard](https://www.linkedin.com/developers/apps)上创建并配置一个LinkedIn项目和应用程序。
+- 将你的LinkedIn`client_id`和`client_secret`添加到你的[MemFire Cloud项目](https://cloud.memfiredb.com)。
+- 将登录代码添加到您的[JS客户端应用程序](https://github.com/supabase/supabase-js)。
 
-## Access your LinkedIn Developer account
+## 访问你的LinkedIn Developer账户
 
-- Go to [LinkedIn Developer Dashboard](https://www.linkedin.com/developers/apps).
-- Log in (if necessary.)
+- 转到[LinkedIn Developer Dashboard](https://www.linkedin.com/developers/apps)。
+- 登录（如有必要。）
 
 ![LinkedIn Developer Portal](/docs/img/guides/auth-linkedin/linkedin_developers_page.png)
 
-## Find your callback URL
+## 找到你的回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要一个回调URL，它看起来像这样。
 
-`https://<project-ref>.supabase.co/auth/v1/callback`
+`https://<project-ref>.supabase.co/auth/v1/callback`。
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `设置`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 现在只要在后面加上`/auth/v1/callback`就可以得到完整的`OAuth Redirect URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create a LinkedIn OAuth app
+## 创建一个LinkedIn OAuth应用程序
 
-- Go to [LinkedIn Developer Dashboard](https://www.linkedin.com/developers/apps).
-- Click on `Create App` at the top right
-- Enter your `LinkedIn Page` and `App Logo`
-- Save your app
-- Click `Auth` from the top menu
-- Add your `Redirect URL` to the `Authorized Redirect URLs for your app` section
-- Copy and save your newly-generated `Client ID`
-- Copy and save your newly-generated `Client Secret`
+- 转到[LinkedIn Developer Dashboard](https://www.linkedin.com/developers/apps)。
+- 点击右上方的 `创建应用程序`。
+- 输入你的 `LinkedIn Page`和 `App Logo`。
+- 保存你的应用程序
+- 从顶部菜单点击 `Auth`。
+- 将你的 `重定向URL`添加到 `为你的应用程序授权的重定向URL`部分。
+- 复制并保存你新生成的 `客户端ID`。
+- 复制并保存你新生成的 `客户端密码`。
 
-## Enter your LinkedIn credentials into your Supabase Project
+## 在你的Supabase项目中输入你的LinkedIn凭证
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- In the left sidebar, click the `Authentication` icon (near the top).
-- Click `Settings` from the list to go to the `Authentication Settings` page.
-- Enter the final (hosted) URL of your app under `Site URL` (this is important).
-- Under `External OAuth Providers` turn `LinkedIn Enabled` to ON.
-- Enter your `client_id` and `client_secret` saved in the previous step.
-- Click `Save`.
+- 转到你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 在左边的侧栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面。
+- 在 `网站URL`下输入你的应用程序的最终（托管）URL（这很重要）。
+- 在 `外部OAuth提供商`下，将 `LinkedIn启用`改为 `开启`。
+- 输入你在上一步保存的`client_id`和`client_secret`。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 将登录代码添加到你的客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `linkedin` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`linkedin`作为`提供者`。
 
 ```js
 async function signInWithLinkedIn() {
@@ -72,7 +72,7 @@ async function signInWithLinkedIn() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话和任何对象从localStorage中移除。
 
 ```js
 async function signout() {
@@ -80,10 +80,10 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
+- [Supabase账户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
 - [LinkedIn Developer Dashboard](https://api.LinkedIn.com/apps)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />

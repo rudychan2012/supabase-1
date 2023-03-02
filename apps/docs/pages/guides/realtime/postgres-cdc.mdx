@@ -6,13 +6,14 @@ export const meta = {
   description: "Getting started with Realtime's Postgres CDC feature",
 }
 
-Realtime's Postgres Change Data Capture (CDC) feature listens for database changes and sends them to clients. Clients are required to subscribe with a JWT dictating which changes they are allowed to receive based on the database's [Row Level Security](/docs/guides/auth/row-level-security).
+实时的Postgres变更数据捕获（CDC）功能监听数据库的变更，并将其发送给客户端。客户端需要通过JWT订阅，该JWT决定了他们可以根据数据库的[行级安全](/docs/guides/auth/row-level-security)接收哪些变化。
 
-Anyone with access to a valid JWT signed with the project's JWT secret is able to listen to your database's changes, unless tables have [Row Level Security](/docs/guides/auth/row-level-security) enabled and policies in place.
+任何能够访问用项目的JWT秘密签名的有效JWT的人都能够监听你的数据库的变化，除非表启用了[行级安全](/docs/guides/auth/row-level-security)并制定了策略。
 
-Clients can choose to receive `INSERT`, `UPDATE`, `DELETE`, or `*` (all) changes for all changes in a schema, a table in a schema, or a column's value in a table. Your clients should only listen to tables in the `public` schema and you must first enable the tables you want your clients to listen to.
+客户端可以选择接收 `INSERT`、`UPDATE`、`DELETE`或 `*`（all）的变化，用于接收模式中的所有变化、模式中的一个表或表中的一个列的值。你的客户应该只监听`public`模式中的表，你必须首先启用你希望客户监听的表。
 
-Postgres CDC works out of the box for tables in the `public` schema. You can listen to tables in your private schemas by granting table `SELECT` permissions to the database role found in your access token. You can run a query similar to the following:
+Postgres CDC对 `public`模式中的表是开箱即用的。你可以通过给访问令牌中的数据库角色授予表 `SELECT`的权限来监听你的私有模式中的表。你可以运行一个类似于以下的查询。
+
 
 ```sql
 GRANT SELECT ON "private_schema"."table" TO authenticated;
@@ -20,11 +21,11 @@ GRANT SELECT ON "private_schema"."table" TO authenticated;
 
 <Admonition type="caution">
 
-We strongly encourage you to enable RLS and create policies for tables in private schemas. Otherwise, any role you grant access to will have unfettered read access to the table.
+我们强烈建议你启用RLS并为私有模式中的表创建策略。否则，你所授予的任何角色都将拥有对表的不受限制的读取权限。
 
 </Admonition>
 
-You can do this in the [Replication](https://app.supabase.com/project/_/database/replication) section in the Dashboard or with the [SQL editor](https://app.supabase.com/project/_/sql):
+你可以在仪表板的[Replication](https://app.supabase.com/project/_/database/replication)部分或用[SQL editor](https://app.supabase.com/project/_/sql)来做这个。
 
 ```sql
 begin;
@@ -39,14 +40,14 @@ commit;
 alter publication supabase_realtime add table messages;
 ```
 
-By default, only `new` record changes are sent but if you want to receive the `old` record (previous values) whenever you `UPDATE` or `DELETE` a record,
-you can set the `replica identity` of your table to `full`:
+默认情况下，只发送 `新`的记录变化，但如果你想在每次 `UPDATE`或 `DELETE`一个记录时接收 `旧`的记录（以前的值）。
+你可以将你的表的`replica identity` 设置为 `full`。
 
 ```sql
 alter table messages replica identity full;
 ```
 
-To listen to all changes in the `public` schema:
+ 监听`public`模式中的所有变化：
 
 ```js
 const { createClient } = require('@supabase/supabase-js')
@@ -67,7 +68,7 @@ const channel = supabase
   .subscribe()
 ```
 
-To listen to changes on a table in the `public` schema:
+监听`public`模式中的一张表的变化：
 
 ```js
 // Supabase client setup
@@ -80,7 +81,7 @@ const channel = supabase
   .subscribe()
 ```
 
-To listen to changes when a column's value in a table matches a client-specified value:
+当表中某一列的值与客户指定的值相匹配时，监听其变化：
 
 ```js
 // Supabase client setup
@@ -100,7 +101,7 @@ const channel = supabase
   .subscribe()
 ```
 
-To listen to different events and schema/tables/filters combinations with the same channel:
+使用同一个通道来监听不同的事件和模式/表/过滤器组合：
 
 ```js
 // Supabase client setup

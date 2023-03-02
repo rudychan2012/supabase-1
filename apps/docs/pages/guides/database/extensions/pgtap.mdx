@@ -2,22 +2,23 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'pgtap',
-  title: 'pgTAP: Unit Testing',
+  title: 'pgTAP:单元测试',
   description: 'Unit testing in PostgreSQL.',
 }
 
-`pgTAP` is a unit testing extension for PostgreSQL.
 
-## Overview
+`pgTAP`是PostgreSQL的一个单元测试扩展。
 
-Let's cover some basic concepts:
+## 概述
 
-- Unit tests: allow you to test small parts of a system (like a database table!).
-- TAP: stands for [Test Anything Protocol](http://testanything.org/). It is an framework which aims to simplify the error reporting during testing.
+让我们来介绍一些基本的概念：
 
-## Usage
+- 单元测试：允许你测试一个系统的小部分（如数据库表！）。
+- TAP：代表[Test Anything Protocol](http://testanything.org/)。它是一个框架，旨在简化测试期间的错误报告。
 
-### Enable the extension
+## 使用方法
+
+### 启用扩展
 
 <Tabs
   scrollable
@@ -27,9 +28,9 @@ Let's cover some basic concepts:
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [Database](https://app.supabase.com/project/_/database/tables) page in the Dashboard.
-2. Click on **Extensions** in the sidebar.
-3. Search for "pgtap" and enable the extension.
+1. 进入仪表板中的[数据库](https://app.supabase.com/project/_/database/tables)页面。
+2. 点击侧边栏中的*扩展*。
+3. 搜索 "pgtap "并启用该扩展。
 
 </TabPanel>
 <TabPanel id="sql" label="SQL">
@@ -42,15 +43,15 @@ create extension pgtap with schema extensions;
 drop extension if exists pgtap;
 ```
 
-Even though the SQL code is `create extension`, this is the equivalent of "enabling the extension".
-To disable an extension you can call `drop extension`.
+尽管SQL代码是`create extension`，但这相当于 "启用扩展"。
+要禁用一个扩展，请调用`drop extension`。
 
-It's good practice to create the extension within a separate schema (like `extensions`) to keep your database clean.
+程序语言会自动安装在`pg_catalog`中，所以你不需要指定模式。
 
 </TabPanel>
 </Tabs>
 
-### Testing tables
+### 测试表
 
 ```sql
 begin;
@@ -62,13 +63,13 @@ select * from finish();
 rollback;
 ```
 
-API:
+API：
 
-- [`has_table()`](https://pgtap.org/documentation.html#has_table): Tests whether or not a table exists in the database
-- [`has_index()`](https://pgtap.org/documentation.html#has_index): Checks for the existence of a named index associated with the named table.
-- [`has_relation()`](https://pgtap.org/documentation.html#has_relation): Tests whether or not a relation exists in the database.
+- [`has_table()`](https://pgtap.org/documentation.html#has_table)：测试数据库中是否存在一个表。
+- [`has_index()`](https://pgtap.org/documentation.html#has_index): 检查是否存在与命名表相关的命名索引。
+- [`has_relation()`](https://pgtap.org/documentation.html#has_relation): 测试数据库中是否存在一个关系。
 
-### Testing columns
+### 测试列
 
 ```sql
 begin;
@@ -81,12 +82,12 @@ select * from finish();
 rollback;
 ```
 
-API:
+API：
 
-- [`has_column()`](https://pgtap.org/documentation.html#has_column): Tests whether or not a column exists in a given table, view, materialized view or composite type.
-- [`col_is_pk()`](https://pgtap.org/documentation.html#col_is_pk): Tests whether the specified column or columns in a table is/are the primary key for that table.
+- [`has_column()`](https://pgtap.org/documentation.html#has_column): 测试一个列是否存在于给定的表、视图、物化视图或复合类型中。
+- [`col_is_pk()`](https://pgtap.org/documentation.html#col_is_pk): 测试表中指定的列是否是该表的主键。
 
-### Testing RLS Policies
+### 测试RLS策略
 
 ```sql
 begin;
@@ -105,13 +106,13 @@ select * from finish();
 rollback;
 ```
 
-API:
+API：
 
-- [`policies_are()`](https://pgtap.org/documentation.html#policies_are): Tests that all of the policies on the named table are only the policies that should be on that table.
-- [`policy_roles_are()`](https://pgtap.org/documentation.html#policy_roles_are): Tests whether the roles to which policy applies are only the roles that should be on that policy.
-- [`policy_cmd_is()`](https://pgtap.org/documentation.html#policy_cmd_is): Tests whether the command to which policy applies is same as command that is given in function arguments.
+- [`policies_are()`](https://pgtap.org/documentation.html#policies_are)：测试指定表上的所有策略是否只是该表应该有的策略。
+- [`policy_roles_are()`](https://pgtap.org/documentation.html#policy_roles_are): 测试策略适用的角色是否只是该策略上应该有的角色。
+- [`policy_cmd_is()`](https://pgtap.org/documentation.html#policy_cmd_is): 测试策略适用的命令是否与函数参数中给出的命令相同。
 
-You can also use the `results_eq()` method to test that a Policy returns the correct data:
+你也可以使用`results_eq()`方法来测试策略是否返回正确的数据。
 
 ```sql
 begin;
@@ -133,7 +134,8 @@ API:
 - [`results_eq()`](https://pgtap.org/documentation.html#results_eq)
 - [`results_ne()`](https://pgtap.org/documentation.html#results_ne)
 
-### Testing Functions
+
+### 测试函数
 
 ```sql
 begin;
@@ -149,12 +151,12 @@ rollback;
 
 API:
 
-- [`function_returns()`](https://pgtap.org/documentation.html#function_returns): Tests that a particular function returns a particular data type
-- [`is_definer()`](https://pgtap.org/documentation.html#is_definer): Tests that a function is a security definer (i.e., a “setuid” function).
+- [`function_returns()`](https://pgtap.org/documentation.html#function_returns)：测试一个特定的函数是否返回一个特定的数据类型。
+- [`is_definer()`](https://pgtap.org/documentation.html#is_definer): 测试一个函数是否是安全定义器(即一个 "setuid "函数)。
 
-## Resources
+## 资源
 
-- Official [`pgTAP` documentation](https://pgtap.org/)
+- 官方 [`pgTAP` 文档](https://pgtap.org/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

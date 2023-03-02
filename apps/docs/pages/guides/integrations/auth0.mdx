@@ -4,112 +4,112 @@ export const meta = {
   id: 'auth0',
   title: 'Auth0',
   description:
-    'Swap out Supabase authentication with Auth0. Let Auth0 handle tokens and signing users in and out, while Supabase enforces authorization policies with Row Level Security (RLS).',
+    '用Auth0替换Supabase认证。让Auth0处理令牌和签署用户进出，而Supabase用行级安全（RLS）执行授权策略。',
 }
 
-This guide steps through building a Next.js application with Auth0 and Supabase. We configure Auth0 to handle authenticating users and managing tokens, while writing our authorization logic in Supabase - using Row Level Security policies.
+本指南通过使用Auth0和Supabase来构建一个Next.js应用程序。我们配置Auth0来处理认证用户和管理令牌，同时在Supabase中编写我们的授权逻辑--使用行级安全策略。
 
-> Note: This guide is heavily inspired by the [Using Next.js and Auth0 with Supabase](https://auth0.com/blog/using-nextjs-and-auth0-with-supabase/) article on [Auth0's blog](https://auth0.com/blog/). Check it out for a practical step-by-step guide on integrating Auth0 and Supabase.
+> 注意：本指南在很大程度上受到[Auth0的博客](https://auth0.com/blog/using-nextjs-and-auth0-with-supabase/)上的[Using Next.js and Auth0 with Supabase]文章的启发。请查看该文章，了解关于整合Auth0和Supabase的实用步骤指南。
 
-The full code example for this guide can be found [here](https://github.com/dijonmusters/supabase-auth0-example).
+本指南的完整代码示例可以在[这里](https://github.com/dijonmusters/supabase-auth0-example)找到。
 
-[Auth0](https://auth0.com/) is an authentication and authorization platform, offering numerous strategies to authenticate and manage users. It provides fine-grain control over how users sign in to your application, the token that is generated, and what data is stored about your users.
+[Auth0](https://auth0.com/)是一个认证和授权平台，为认证和管理用户提供众多策略。它对用户如何登录到你的应用程序、生成的令牌以及关于你的用户的数据的存储提供了细粒度的控制。
 
-[Next.js](https://nextjs.org/) is a web application framework built on top of React. We will be using it for this example, as it allows us to write server-side logic within our application. Auth0 have also written a [very well integrated authentication library](https://www.npmjs.com/package/@auth0/nextjs-auth0) specifically for Next.js.
+[Next.js](https://nextjs.org/)是一个建立在React之上的网络应用程序框架。我们将在这个例子中使用它，因为它允许我们在应用程序中编写服务器端逻辑。Auth0还专门为Next.js编写了一个[集成度很高的认证库](https://www.npmjs.com/package/@auth0/nextjs-auth0) 。
 
-> Note: API routes (serverless functions) in Next.js closely resemble the structure of Node server frameworks - such as Express, Koa and Fastify. The server-side logic in this guide could easily be refactored in one of these frameworks and managed as a separate application to the front-end.
+> 注意：Next.js中的API路由（无服务器函数）与Node服务器框架的结构非常相似--例如Express、Koa和Fastify。本指南中的服务器端逻辑可以很容易地在这些框架中进行重构，并作为一个独立的应用程序管理，与前端分开。
 
-If you don’t have an Auth0 account, create one [here](https://auth0.com/signup).
+如果你没有一个Auth0账户，请创建一个[这里](https://auth0.com/signup)。
 
-You will also need a Supabase account, which can be created by signing in [here](https://app.supabase.com/).
+你还需要一个Supabase账户，可以通过登录[这里](https://app.supabase.com/)来创建。
 
-## Step 1: Creating an Auth0 tenant
+## 第1步：创建一个Auth0租户
 
-From the Auth0 dashboard, click the menu to the right of the Auth0 logo, and select `Create tenant`.
+在Auth0仪表板上，点击Auth0标志右侧的菜单，选择 "创建租户"。
 
 ![Create tenant from Auth0 dashboard](/docs/img/guides/integrations/auth0/IYzHxeW.png)
 
-Enter a `Domain` for your tenant - this will need to be unique.
+为你的租户输入一个 `域名`--这将需要是唯一的。
 
-Select a `Region` - this should be geographically close to the majority of your users.
+选择一个 `地区`--这应该是在地理上接近大多数用户的地方。
 
-Select `Development` for `Environment Tag` - this should be production when you're ready to go live.
+为 `环境标签`选择 `开发`--当你准备上线时，这应该是生产环境。
 
 ![Auth0 tenant settings](/docs/img/guides/integrations/auth0/iSA3E0J.png)
 
-## Step 2: Setting up an Auth0 application
+## 第2步：设置一个Auth0应用程序
 
-From the sidebar menu, select `Applications` > `Applications` and click `Create Application`.
+从侧边栏菜单，选择 `应用程序`>`应用程序`，并点击 `创建应用程序`。
 
-Give your application a name, select the `Regular Web Applications` option and click `Create`.
+给你的应用程序一个名字，选择 `常规网络应用`选项，然后点击 `创建`。
 
 ![Auth0 application settings](/docs/img/guides/integrations/auth0/ANU4Wez.png)
 
-Select `Settings` and navigate to the `Application URIs` section, and update the following:
+选择 `设置`并导航到 `应用程序URI`部分，并更新如下。
 
-`Allowed Callback URLs`: `http://localhost:3000/api/auth/callback`
+`允许的回调URLs`: `http://localhost:3000/api/auth/callback`。
 
-`Allowed Logout URLs`: `http://localhost:3000`
+`允许的注销URLs`: `http://localhost:3000`.
 
-Scroll to the bottom of the `Settings` section and reveal the `Advanced Settings`.
+滚动到 `设置`部分的底部，显示 `高级设置`。
 
-Select `OAuth` and set `JSON Web Token Signature` to `RS256`.
+选择 `OAuth`并将 `JSON Web Token Signature`设置为 `RS256`。
 
-Confirm `OIDC Conformant` is `Enabled`.
+确认 `OIDC符合性`为 `已启用`。
 
-Click `Save` to update the settings.
+点击 `保存`来更新设置。
 
-## Step 3: Creating a Supabase project
+## 步骤 3: 创建一个Supabase项目
 
-From your [Supabase dashboard](https://app.supabase.com/), click `New project`.
+从你的[Supabase 仪表板](https://app.supabase.com/)，点击`新项目`。
 
-Enter a `Name` for your Supabase project.
+为你的Supabase项目输入一个`名称`。
 
-Enter a secure `Database Password`.
+输入一个安全的 `数据库密码`。
 
-Select the same `Region` you selected for your Auth0 tenant.
+选择与您为Auth0租户选择的相同的 `区域`。
 
-Click `Create new project`.
+点击 `创建新项目`。
 
 ![New Supabase project settings](/docs/img/guides/integrations/auth0/qnmJEU7.png)
 
-## Step 4: Creating data in Supabase
+## 第4步：在Supabase中创建数据
 
-From the sidebar menu in the [Supabase dashboard](https://app.supabase.com/), click `Table editor`, then `New table`.
+在[Supabase仪表板](https://app.supabase.com/)的侧边栏菜单中，点击 `表编辑器`，然后点击 `新建表`。
 
-Enter `todo` as the `Name` field.
+输入`todo`作为`名称`字段。
 
-Select `Enable Row Level Security (RLS)`.
+选择 `启用行级安全（RLS`。
 
-Create two new columns:
+创建两个新列。
 
-- `title` as `text`
-- `user_id` as `text`
-- `is_complete` as `bool` with the default value `false`
+- `title`为`text`.
+- `user_id`为`text`。
+- `is_complete`为`bool`，默认值为`false`。
 
-Click `Save` to create the new table.
+点击 `保存`来创建新表。
 
 ![Todo table](/docs/img/guides/integrations/auth0/33kqP4K.png)
 
-From the `Table editor` view, select the `todo` table and click `Insert row`.
+在 `表格编辑器`视图中，选择 `todo`表并点击 `插入行`。
 
-Fill out the `title` field and click `Save`.
+填写 `title`字段并点击 `保存`。
 
 ![New row settings](/docs/img/guides/integrations/auth0/mEhHAWC.png)
 
-Click `Insert row` and add a couple of extra todos.
+点击 `插入行`，添加几个额外的工作任务。
 
 ![List of todos](/docs/img/guides/integrations/auth0/dLOvhdq.png)
 
-## Step 5: Building a Next.js app
+## 第5步：构建一个Next.js应用程序
 
-Create a new Next.js project:
+创建一个新的Next.js项目。
 
 ```bash
 npx create-next-app <name-of-project>
 ```
 
-Create a `.env.local` file and enter the following values:
+创建一个`.env.local`文件并输入以下数值。
 
 ```
 AUTH0_SECRET=any-secure-value
@@ -122,7 +122,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=get-from-supabase-dashboard
 SUPABASE_JWT_SECRET=get-from-supabase-dashboard
 ```
 
-> Note: Auth0 values can be found under `Settings > Basic Information` for your application.
+> 注意：Auth0值可以在你的应用程序的 `设置>基本信息`中找到。
 
 ![Auth0 settings](/docs/img/guides/integrations/auth0/o07FaoV.png)
 
@@ -130,21 +130,21 @@ SUPABASE_JWT_SECRET=get-from-supabase-dashboard
 
 ![Supabase settings](/docs/img/guides/integrations/auth0/r1GAfLo.png)
 
-Restart your Next.js development server to read in the new values from `.env.local`.
+重新启动Next.js开发服务器，从`.env.local`中读入新的值。
 
 ```bash
 npm run dev
 ```
 
-## Step 6: Install Auth0 Next.js library
+## 第6步：安装Auth0 Next.js库
 
-Install the `@auth0/nextjs-auth0` library.
+安装`@auth0/nextjs-auth0`库。
 
 ```bash
 npm i @auth0/nextjs-auth0
 ```
 
-Create a new file `pages/api/auth/[...auth0].js` and add:
+创建一个新文件`pages/api/auth/[...auth0].js`并添加。
 
 ```jsx
 // pages/api/auth/[...auth0].js
@@ -154,9 +154,9 @@ import { handleAuth } from '@auth0/nextjs-auth0'
 export default handleAuth()
 ```
 
-> Note: This will create a few API routes for us. The main ones we will use are `/api/auth/login` and `/api/auth/logout` to handle signing users in and out.
+> 注意：这将为我们创建一些API路由。我们将使用的主要路由是`/api/auth/login`和`/api/auth/logout`来处理用户的登录和退出。
 
-Open `pages/_app.js` and wrap our `Component` with the `UserProvider` from Auth0:
+打开`pages/_app.js`，用Auth0的`UserProvider`包裹我们的`Component`。
 
 ```jsx
 // pages/_app.js
@@ -175,7 +175,7 @@ const App = ({ Component, pageProps }) => {
 export default App
 ```
 
-Update `pages/index.js` to ensure the user is logged in to view the landing page.
+更新`pages/index.js`以确保用户登录后可以查看登陆页面。
 
 ```jsx
 // pages/index.js
@@ -202,27 +202,27 @@ export const getServerSideProps = withPageAuthRequired()
 export default Index
 ```
 
-> Note: `withPageAuthRequired` will automatically redirect the user to `/api/auth/login` if they are not currently logged in.
+> 注意：`withPageAuthRequired`将自动将用户重定向到`/api/auth/login`，如果他们目前还没有登录。
 
-Test this is working by navigating to `http://localhost:3000` which should redirect you to an Auth0 sign in screen.
+通过导航到`http://localhost:3000`来测试这一点，它应该会将你重定向到一个Auth0的登录界面。
 
 ![Auth0 sign in screen](/docs/img/guides/integrations/auth0/xLRL7S7.png)
 
-Either `Sign up` for a new account, or click `Continue with Google` to sign in.
+要么 `注册`一个新账户，要么点击 `继续使用谷歌`来登录。
 
-You should now be able to view the landing page.
+现在你应该能够查看登陆页面。
 
 ![Landing page](/docs/img/guides/integrations/auth0/YdBKRy6.png)
 
-## Step 7: Sign Auth0 token for Supabase
+## 第7步：为Supabase签署Auth0令牌
 
-Currently, neither Supabase or Auth0 allow for a custom signing secret to be set for their JWT. They also use different [signing algorithms](https://auth0.com/docs/configure/applications/signing-algorithms).
+目前，Supabase和Auth0都不允许为其JWT设置自定义的签名秘密。它们还使用不同的[签名算法](https://auth0.com/docs/configure/applications/signing-algorithms)。
 
-Therefore, we need to extract the bits we need from Auth0's JWT, and sign our own to send to Supabase.
+因此，我们需要从Auth0的JWT中提取我们需要的比特，并签署我们自己的JWT以发送给Supabase。
 
-We can do that using Auth0's `afterCallback` function, which gets called anytime the user authenticates.
+我们可以使用Auth0的`afterCallback`函数来做，该函数在用户认证时被调用。
 
-Install the `jsonwebtoken` library.
+安装`jsonwebtoken`库。
 
 ```bash
 npm i jsonwebtoken
@@ -258,17 +258,17 @@ export default handleAuth({
 })
 ```
 
-Our `payload` for the JWT will contain our user's unique identifier from Auth0 - `session.user.sub` and an expiry of 1 hour.
+我们的JWT的`payload`将包含我们的用户在Auth0的唯一标识符 - `session.user.sub`和一个1小时的有效期。
 
-We are signing this JWT using Supabase's signing secret, so Supabase will be able to validate it is authentic and hasn't been tampered with in transit.
+我们使用Supabase的签名秘密对这个JWT进行签名，因此Supabase将能够验证它是真实的，在传输过程中没有被篡改。
 
-> Note: We need to sign the user out and back in again to run the `afterCallback` function, and create our new token.
+> 注意：我们需要将用户签出并再次签入，以运行`afterCallback`函数，并创建我们的新令牌。
 
-Now we just need to send the token along with the request to Supabase.
+现在我们只需要将该令牌与请求一起发送给Supabase。
 
-## Step 8: Requesting data from Supabase
+## 第八步: 从Supabase请求数据
 
-Create a new file called `utils/supabase.js` and add the following:
+创建一个名为`utils/supabase.js`的新文件并添加以下内容。
 
 ```jsx
 // utils/supabase.js
@@ -298,9 +298,9 @@ const getSupabase = (access_token) => {
 export { getSupabase }
 ```
 
-This will be our client for talking to Supabase. We can pass it an `access_token` and it will be attached to our request.
+这将是我们与Supabase对话的客户端。我们可以传递给它一个`access_token`，它将被附加到我们的请求中。
 
-Let's load our `todos` from Supabase in our landing page!
+让我们从Supabase加载我们的 `todos`到我们的登陆页面吧
 
 ```jsx
 // pages/index.js
@@ -346,7 +346,7 @@ export const getServerSideProps = withPageAuthRequired()
 export default Index
 ```
 
-Alternatively, we could fetch todos on the server using the `getServerSideProps` function.
+另外，我们可以使用`getServerSideProps`函数在服务器上获取todos。
 
 ```jsx
 // pages/index.js
@@ -393,19 +393,19 @@ export const getServerSideProps = withPageAuthRequired({
 export default Index
 ```
 
-Either way, when we reload our application, we are still getting the empty state for todos.
+无论哪种方式，当我们重新加载我们的应用程序时，我们仍然得到todos的空状态。
 
 ![Empty todo list](/docs/img/guides/integrations/auth0/XgEMwnN.png)
 
-This is because we enabled Row Level Security, which blocks all requests by default. To enable our user to select their `todos` we need to write a policy.
+这是因为我们启用了行级安全，默认情况下会阻止所有请求。为了使我们的用户能够选择他们的 `todos`，我们需要写一个策略。
 
-## Step 9: Write a policy to allow select
+## 第9步：写一个政策来允许选择
 
-Our policy will need to know who our currently logged in user is to determine whether or not they should have access. Let's create a PostgreSQL function to extract the current user from our new JWT.
+我们的策略需要知道我们当前登录的用户是谁，以确定他们是否应该有访问权。让我们创建一个PostgreSQL函数，从我们的新JWT中提取当前用户。
 
-Navigate back to the Supabase dashboard, select `SQL` from the sidebar menu, and click `New query`. This will create a new query called `new sql snippet`, which will allow us to run any SQL against our Postgres database.
+回到Supabase仪表板，从侧边栏菜单中选择`SQL`，然后点击`新查询`。这将创建一个名为`new sql snippet`的新查询，这将允许我们对我们的Postgres数据库运行任何SQL。
 
-Write the following and click `Run`.
+写下以下内容并点击`运行'。
 
 ```sql
 create or replace function auth.user_id() returns text as $$
@@ -413,57 +413,57 @@ create or replace function auth.user_id() returns text as $$
 $$ language sql stable;
 ```
 
-This will create a function called `auth.user_id()`, which will inspect the `userId` field of our JWT payload.
+这将创建一个名为`auth.user_id()`的函数，它将检查我们JWT有效载荷中的`userId`字段。
 
-> Note: To learn more about PostgreSQL functions, check out [our deep dive video](https://www.youtube.com/watch?v=MJZCCpCYEqk).
+> 注意：要了解更多关于PostgreSQL函数的信息，请查看[我们的深度研究视频](https://www.youtube.com/watch?v=MJZCCpCYEqk)。
 
-Let's create a policy that checks whether this user is the owner of the todo.
+让我们创建一个策略，检查这个用户是否是该todo的所有者。
 
-Select `Authentication` from the Supabase sidebar menu, click `Policies`, and then `New Policy` on the `todo` table.
+从Supabase侧边栏菜单中选择`Authentication`，点击`Policies`，然后在`todo`表上选择`New Policy`。
 
 ![Create new policy](/docs/img/guides/integrations/auth0/M7XyhHe.png)
 
-From the modal, select `Create a policy from scratch` and add the following.
+在模式中，选择 `从头创建一个政策`，并添加以下内容。
 
 ![Policy settings for SELECT](/docs/img/guides/integrations/auth0/wuWz3am.png)
 
-This policy is calling the function we just created to get the currently logged in user's ID `auth.user_id()` and checking whether this matches the `user_id` column for the current `todo`. If it does, then it will allow the user to select it, otherwise it will continue to deny.
+这个策略是调用我们刚刚创建的函数来获取当前登录用户的ID`auth.user_id()`，并检查这是否与当前`todo`的`user_id`列匹配。如果匹配，则允许用户选择，否则将继续拒绝。
 
-Click `Review` and then `Save policy`.
+点击 "审查"，然后点击 `保存策略`。
 
-> Note: To learn more about RLS and policies, check out [our deep dive video](https://www.youtube.com/watch?v=Ow_Uzedfohk).
+> 注意：要了解更多关于RLS和策略的信息，请查看[我们的深度研究视频](https://www.youtube.com/watch?v=Ow_Uzedfohk)。
 
-The last thing we need to do is update the `user_id` columns for our existing `todos`.
+我们需要做的最后一件事是为我们现有的`todos`更新`user_id`列。
 
-Head back to the Supabase dashboard, and select `Table editor` from the sidebar.
+回到Supabase仪表盘，从侧边栏选择 `表编辑器`。
 
 ![User ID null in Supabase Table Editor](/docs/img/guides/integrations/auth0/dLOvhdq.png)
 
-Each of our `user_id` columns are set to `NULL`!
+我们的每个`user_id`列都被设置为`NULL`!
 
-To get the ID for our Auth0 user, head over to the Auth0 dashboard, select `User Management` from the sidebar, click `Users` and select your test user.
+要获得Auth0用户的ID，请到Auth0仪表板，从侧边栏选择 `用户管理`，点击 `用户`并选择你的测试用户。
 
 ![List of users in Auth0 dashboard](/docs/img/guides/integrations/auth0/GdXS013.png)
 
-Copy their `user_id`.
+复制他们的`user_id`。
 
 ![User ID in Auth0 dashboard](/docs/img/guides/integrations/auth0/tbvd0Uj.png)
 
-Update each row in Supabase.
+更新Supabase中的每一行。
 
 ![User ID set to Auth0 user](/docs/img/guides/integrations/auth0/tPu4Tt8.png)
 
-Now when we refresh our application, we should finally see our list of `todos`!
+现在，当我们刷新我们的应用程序时，我们终于可以看到我们的 `todos`列表了!
 
-> Note: Check out [the repo](https://github.com/dijonmusters/supabase-auth0-example/blob/main/pages/index.js) for an example of writing new `todos` to Supabase.
+> 注意：查看[repo](https://github.com/dijonmusters/supabase-auth0-example/blob/main/pages/index.js)，了解向Supabase写入新的`todos`的例子。
 
-## Resources
+## 资源
 
-- [Auth0](https://auth0.com/) official website.
-- [Auth0 blog](https://auth0.com/blog/).
+- [Auth0](https://auth0.com/) 官方网站。
+- [Auth0博客](https://auth0.com/blog/)。
 - [Using Next.js and Auth0 with Supabase article](https://auth0.com/blog/using-nextjs-and-auth0-with-supabase/).
-- [Auth0 community](https://community.auth0.com/).
-- [Auth0 documentation](https://auth0.com/docs/).
+- [Auth0社区](https://community.auth0.com/)。
+- [Auth0 文档](https://auth0.com/docs/)。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

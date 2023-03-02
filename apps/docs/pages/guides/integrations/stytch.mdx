@@ -4,90 +4,90 @@ export const meta = {
   id: 'stytch',
   title: 'Stytch',
   description:
-    "Build a Next.js application powered by password-less authentication from Stytch, and Supabase's Row Level Security (RLS).",
+    "建立一个由Stytch的无密码认证和Supabase的行级安全（RLS）支持的Next.js应用程序。",
 }
 
-In this guide we will build a simple expense tracker web application using Stytch, Supabase, and Next.js.
+在本指南中，我们将使用Stytch、Supabase和Next.js构建一个简单的费用追踪网络应用。
 
-[Stytch](https://stytch.com?utm_source=supabase&utm_medium=guide) provides an all-in-one platform for passwordless auth. Stytch makes it easy for you to embed passwordless solutions into your websites and apps for better security, better conversion rates, and a better end user experience. Their easy-to-use SDKs and direct API access allows for maximum control and customization. In this example we will use [Email magic links](https://stytch.com/products/email-magic-links?utm_source=supabase&utm_medium=guide) to create and log in our users, and Session management. There is an additional, optional step to enable [Google One Tap](https://stytch.com/blog/improving-conversion-with-google-one-tap?utm_source=supabase&utm_medium=guide) which is an especially high-converting Google OAuth sign-up and login flow.
+[Stytch]（https://stytch.com?utm_source=supabase&utm_medium=guide）为无密码认证提供了一个一体化的平台。Stytch使你能够轻松地将无密码解决方案嵌入你的网站和应用程序，以获得更好的安全性、更好的转换率和更好的终端用户体验。他们易于使用的SDK和直接API访问允许最大限度地控制和定制。在这个例子中，我们将使用[Email magic links](https://stytch.com/products/email-magic-links?utm_source=supabase&utm_medium=guide)来创建和登录我们的用户，以及会话管理。还有一个额外的可选步骤是启用[Google One Tap](https://stytch.com/blog/improving-conversion-with-google-one-tap?utm_source=supabase&utm_medium=guide)，这是一个转化率特别高的Google OAuth注册和登录流程。
 
-We will leverage Supabase to store and authorize access to user data. Supabase makes it simple to set up Row Level Security (RLS) policies which ensure users can only read and write data that they are authorized to do so. If you do not already have a Supabase account, you will need to create one.
+我们将利用Supabase来存储和授权对用户数据的访问。Supabase使设置行级安全（RLS）策略变得简单，确保用户只能读取和写入他们被授权的数据。如果你还没有一个Supabase账户，你需要创建一个。
 
-This guide will use [Next.js](https://nextjs.org/) which is a web application framework built on top of React. Stytch provides a [Node.js library](https://github.com/stytchauth/stytch-node) and a [React library](https://github.com/stytchauth/stytch-react) which makes building Next.js apps super easy.
+本指南将使用[Next.js](https://nextjs.org/)，这是一个建立在React之上的Web应用框架。Stytch提供了一个[Node.js库](https://github.com/stytchauth/stytch-node)和一个[React库](https://github.com/stytchauth/stytch-react)，使构建Next.js应用程序变得超级简单。
 
-> Note: You can find a completed version of this project on [Github](https://github.com/stytchauth/stytch-nextjs-supabase).
+> 注意：你可以在[Github](https://github.com/stytchauth/stytch-nextjs-supabase)上找到这个项目的完整版本。
 
-## Step 0: Create a Stytch Account
+## 第0步：创建一个Stytch账户
 
-If you already have a Stytch account you may skip this step.
+如果你已经有一个Stytch账户，你可以跳过这一步。
 
-Go to [Stytch](https://stytch.com?utm_source=supabase&utm_medium=guide), and create an account. Note that Stytch provides two ways to create an account, either via Google OAuth, or through Email magic links.  This is the same user experience we will be building in this guide!
+进入[Stytch](https://stytch.com?utm_source=supabase&utm_medium=guide)，创建一个账户。请注意，Stytch提供了两种创建账户的方式，一是通过谷歌OAuth，二是通过电子邮件魔法链接。  这也是我们在本指南中要建立的用户体验!
 
 ![Stytch redirect URL settings](/docs/img/guides/integrations/stytch/01.png)
 
-## Step 1: Set up Stytch redirect URLs
+## 第一步：设置Stytch重定向URLs
 
-First we need to add the redirect URLs that will be used during the Email magic link flow. This step helps ensure bad actors cannot spoof your magic links and hijack redirects.
+首先，我们需要添加将在电子邮件魔法链接流程中使用的重定向URL。这一步有助于确保坏人无法欺骗你的魔法链接和劫持重定向。
 
-Navigate to your [redirect URL settings](https://stytch.com/dashboard/redirect-urls?utm_source=supabase&utm_medium=guide) in the Stytch dashboard, and under **Test environment** create an entry where the **URL** is `http://localhost:3000/api/authenticate` and the **Type** is `All`.
+在Stytch仪表板上浏览您的[重定向URL设置](https://stytch.com/dashboard/redirect-urls?utm_source=supabase&utm_medium=guide)，在**测试环境下**创建一个条目，其中**URL**为`http://localhost:3000/api/authenticate`，**Type**为`All`。
 
 ![Edit Stytch redirect URL settings](/docs/img/guides/integrations/stytch/02.png)
 
-After pressing **Confirm**, the redirect URLs dashboard will update to show your new entry. We will use this URL later on.
+按**确认**后，重定向URLs仪表板将更新显示你的新条目。我们以后将使用这个URL。
 
 ![Stytch redirect URL settings](/docs/img/guides/integrations/stytch/03.png)
 
-## Step 2: Create a Supabase project
+## 第2步：创建一个Supabase项目
 
-From your [Supabase dashboard](https://app.supabase.com/), click **New project**.
+在您的[Supabase 仪表板](https://app.supabase.com/)上，单击**新项目**。
 
-Enter a `Name` for your Supabase project.
+为您的Supabase项目输入一个`名称`。
 
-Enter a secure `Database Password`.
+输入一个安全的 `数据库密码`。
 
-Click **Create new project**. It may take a couple minutes for your project to be provisioned.
+单击**创建新项目**。您的项目可能需要几分钟的时间来配置。
 
 ![New Supabase project settings](/docs/img/guides/integrations/stytch/04.png)
 
-## Step 3: Creating data in Supabase
+## Step 3: 在Supabase中创建数据
 
-Once your Supabase project is provisioned, click Table editor, then New table. This tool is available from the sidebar menu in the [Supabase dashboard](https://app.supabase.com/).
+一旦你的Supabase项目被提供了，点击表编辑器，然后是新表。此工具可从 [Supabase 仪表板] (https://app.supabase.com/) 的侧边栏菜单中获得。
 
-Enter `expenses` as the **Name** field.
+输入 `expenses`作为**名称**字段。
 
-Select `Enable Row Level Security (RLS)`.
+选择 `启用行级安全（RLS）`。
 
-Add three new columns:
+添加三个新列。
 
-- `user_id` as `text`
+- `user_id` 为 `text`
 
-- `title` as `text`
+- `title` 为 `text`
 
-- `value` as `float8`
+- `value` 为 `float8`
 
-Click **Save** to create the new table.
+点击**保存**来创建新的表格。
 
 ![Creating a new table](/docs/img/guides/integrations/stytch/05.png)
 
-From the Table editor view, select the expenses table and click **Insert row**.
+在表编辑器视图中，选择支出表并点击**插入行**。
 
-Fill out the title and value fields (leave user_id blank for now) and click **Save**.
+填写标题和数值字段（暂时将user_id留空），然后点击**保存**。
 
 ![Creating a new row](/docs/img/guides/integrations/stytch/06.png)
 
-Use **Insert Row** to further populate the table with expenses.
+使用**插入行**来进一步将费用填充到表中。
 
 ![Multiple rows](/docs/img/guides/integrations/stytch/07.png)
 
-## Step 4: Building a Next.js app
+## Step 4: 构建一个Next.js应用程序
 
-Using a terminal, create a new Next.js project:
+使用终端，创建一个新的Next.js项目。
 
 ```bash
 npx create-next-app stytch-supabase-example
 ```
 
-Next, within `stytch-supabase-example` create a `.env.local` file and enter the following values:
+接下来，在`stytch-supabase-example`中创建一个`.env.local`文件并输入以下值。
 
 ```
 STYTCH_PROJECT_ENV=test
@@ -99,35 +99,35 @@ NEXT_PUBLIC_SUPABASE_KEY=GET_FROM_SUPABASE_DASHBOARD
 SUPABASE_SIGNING_SECRET=GET_FROM_SUPABASE_DASHBOARD
 ```
 
-> Note: Stytch values can be found in the project [dashboard](https://stytch.com/dashboard/api-keys?utm_source=supabase&utm_medium=guide) under **API Keys**.
+> 注意：Stytch值可以在项目[dashboard](https://stytch.com/dashboard/api-keys?utm_source=supabase&utm_medium=guide)的**API Keys**下找到。
 
 ![Stytch API keys](/docs/img/guides/integrations/stytch/08.png)
 
-> Note: Supabase values can be found under **Settings** > **API** for your project.
+> 注意：Supabase值可以在你的项目的**设置** > **API**下找到。
 
 ![Supabase API keys](/docs/img/guides/integrations/stytch/09.png)
 
-Start your Next.js development server to read in the new values from `.env.local`.
+启动你的Next.js开发服务器，从`.env.local`中读入新的值。
 
 ```bash
 npm run dev
 ```
 
-You should have a running Next.js application on `localhost:3000`.
+你应该在`localhost:3000`上有一个正在运行的Next.js应用程序。
 
 ## Step 5: Build the Login Form
 
-Now we will replace the default Next.js home page with a login UI. We will use the Stytch React library.
+现在我们将用一个登录界面来替换默认的Next.js主页。我们将使用Stytch React库。
 
-> Note: Stytch provides direct API access for those that want to build login UI themselves
+> 注意：Stytch为那些想自己建立登录界面的人提供了直接的API访问。
 
-Install the `@stytch/stytch-react` library.
+安装`@stytch/stytch-react`库。
 
 ```bash
 npm install @stytch/stytch-react
 ```
 
-In the root directory, create a new folder named `components` and file in that folder named `/StytchLogin.js`. Within this file, paste the snippet below. This will configure, and style the Stytch React component to use Email magic links.
+在根目录下，创建一个名为 `components`的新文件夹，并在该文件夹中创建名为 "StytchLogin.js "的文件。在这个文件中，粘贴下面的片段。这将配置和设计Stytch React组件，使其使用电子邮件魔法链接。
 
 ```jsx
 // components/StytchLogin.js
@@ -165,7 +165,7 @@ const StytchLogin = ({ publicToken }) => {
 export default StytchLogin
 ```
 
-Additionally, create a profile component by creating a file called `Profile.js` in `/components`. We will use this component to render our expenses stored in Supabase later on.
+此外，通过在`/components`中创建一个名为`Profile.js`的文件来创建一个配置文件组件。稍后我们将使用这个组件来呈现我们存储在Supabase中的费用。
 
 ```jsx
 // components/Profile.js
@@ -197,7 +197,7 @@ export default function Profile({ user }) {
 }
 ```
 
-Finally, replace the contents of the file `/pages/index.js` to render our new `StytchLogin` and `Profile` components.
+最后，替换文件`/pages/index.js`的内容来呈现我们新的`StytchLogin`和`Profile`组件。
 
 ```jsx
 // pages/index.js
@@ -226,35 +226,35 @@ export async function getServerSideProps({ req, res }) {
 export default Index
 ```
 
-On `localhost:3000` there is now a login form prompting for your email address.
+在`localhost:3000`，现在有一个登录表格，提示你的电子邮件地址。
 
 ![Email login step one](/docs/img/guides/integrations/stytch/10.png)
 
-Enter your email address and press **Continue with email**.
+输入你的电子邮件地址并按**继续使用电子邮件**。
 
 ![Email login step two](/docs/img/guides/integrations/stytch/11.png)
 
-In your inbox you will find a login request from your app.
+在你的收件箱中，你会发现一个来自你的应用程序的登录请求。
 
 ![Email login step three](/docs/img/guides/integrations/stytch/12.png)
 
-However, if you click the link in the email you will get a 404. We need to build an API route to handle the email magic link authentication.
+然而，如果你点击邮件中的链接，你会得到一个404。我们需要建立一个API路由来处理电子邮件中的神奇链接认证。
 
-## Step 6: Authenticate and start a session
+## 第6步：认证并开始一个会话
 
-To make authentication easier we will use the Stytch Node.js library. Run
+为了使认证更容易，我们将使用Stytch Node.js库。运行
 
 ```bash
 npm install stytch
 ```
 
-Additionally, we will need to store the authenticated session in a cookie. Run
+此外，我们将需要在一个cookie中存储认证的会话。运行
 
 ```bash
 npm install cookies-next
 ```
 
-Create a new folder named `utils` and inside a file named`stytchLogic.js` with the following contents
+创建一个名为`utils`的新文件夹，里面有一个名为`stytchLogic.js`的文件，内容如下
 
 ```jsx
 // utils/stytchLogic.js
@@ -338,9 +338,9 @@ export const authenticateTokenStartSession = async (req, res) => {
 }
 ```
 
-This logic is responsible for setting up the Stytch client we will use to call the API. It provides functions we will use to login, logout, and validate user sessions.
+这个逻辑负责设置我们将用来调用API的Stytch客户端。它提供了我们将用于登录、注销和验证用户会话的功能。
 
-In order to complete the email login flow, create a new file `pages/api/authenticate.js` with the contents:
+为了完成电子邮件登录流程，创建一个新的文件`pages/api/authenticate.js`，内容如下。
 
 ```jsx
 // pages/api/authenticate.js
@@ -351,7 +351,7 @@ export default async function handler(req, res) {
 }
 ```
 
-We will also create a logout API endpoint with similar contents. In `pages/api/logout.js` include the following:
+我们还将创建一个具有类似内容的logout API端点。在`pages/api/logout.js`中包括以下内容。
 
 ```jsx
 // pages/api/logout.js
@@ -362,7 +362,7 @@ export default async function handler(req, res) {
 }
 ```
 
-Finally, update `pages/index.js` by importing `getAuthenticatedUserFromSession`, and calling it to set the user variable in `getServerSideProps`.
+最后，更新`pages/index.js`，导入`getAuthenticatedUserFromSession`，并调用它来设置`getServerSideProps`中的用户变量。
 
 ```jsx
 // pages/index.js
@@ -398,27 +398,27 @@ export async function getServerSideProps({ req, res }) {
 export default Index
 ```
 
-Return to `localhost:3000`, and login again by sending yourself a new email. Upon clicking through in the email you should be presented with “Welcome $USER_ID”. If you refresh the page, you should remain in an authenticated state. If you press **Logout** then you should return to the login screen.
+返回到`localhost:3000`，通过发送新的电子邮件再次登录。在点击邮件后，你应该看到 `欢迎$USER_ID`。如果你刷新页面，你应该保持在一个认证状态。如果你按下**Logout**，那么你应该返回到登录界面。
 
 ![Profile page](/docs/img/guides/integrations/stytch/13.png)
 
-Now that we have a working login flow with persistent authentication it is time to pull in our expense data from Supabase.
+现在我们有了一个带有持久性认证的工作登录流程，是时候从Supabase中提取我们的费用数据了。
 
-## Step 7: Requesting user data from Supabase
+## 第七步：从Supabase请求用户数据
 
-First, install the Supabase client:
+首先，安装Supabase客户端。
 
 ```bash
 npm install @supabase/supabase-js
 ```
 
-In order to pass an authenticated `user_id` to Supabase we will package it within a JWT. Install jsonwebtoken:
+为了向Supabase传递认证的`user_id`，我们将把它打包在JWT中。安装jsonwebtoken。
 
 ```bash
 npm install jsonwebtoken
 ```
 
-Create a new file `utils/supabase.js` and add the following:
+创建一个新文件`utils/supabase.js`并添加以下内容。
 
 ```jsx
 // utils/supabase.js
@@ -448,9 +448,9 @@ const getSupabase = (userId) => {
 export { getSupabase }
 ```
 
-Our payload for the JWT will contain our user's unique identifier from Stytch, their `user_id`. We are signing this JWT using Supabase's signing secret, so Supabase will be able to validate it is authentic and hasn't been tampered with in transit.
+我们的JWT有效载荷将包含来自Stytch的用户的唯一标识，即他们的`user_id`。我们使用Supabase的签名秘密来签署这个JWT，所以Supabase将能够验证它是真实的，在运输过程中没有被篡改。
 
-Let's load our expenses from Supabase on the home page! Update `pages/index.js` a final time to make a request for expense data from Supabase.
+让我们在主页上从Supabase加载我们的费用吧 最后一次更新`pages/index.js`，向Supabase请求费用数据。
 
 ```jsx
 import styles from '../styles/Home.module.css'
@@ -494,17 +494,17 @@ export async function getServerSideProps({ req, res }) {
 export default Index
 ```
 
-When we reload our application, we are still getting the empty state for expenses.
+当我们重新加载我们的应用程序时，我们仍然得到费用的空状态。
 
-This is because we enabled Row Level Security, which blocks all requests by default and lets you granularly control access to the data in your database. To enable our user to select their expenses we need to write a RLS policy.
+这是因为我们启用了行级安全（Row Level Security），它默认阻止所有的请求，让你细化控制对数据库中数据的访问。为了使我们的用户能够选择他们的费用，我们需要写一个RLS策略。
 
-## Step 8: Write a policy to allow select
+## 第8步：写一个策略来允许选择
 
-Our policy will need to know who our currently logged in user is to determine whether or not they should have access. Let's create a PostgreSQL function to extract the current user from our new JWT.
+我们的策略需要知道我们当前登录的用户是谁，以确定他们是否应该有访问权。让我们创建一个PostgreSQL函数，从我们的新JWT中提取当前用户。
 
-Navigate back to the Supabase dashboard, select SQL from the sidebar menu, and click **New query**. This will create a new query,, which will allow us to run any SQL against our Postgres database.
+回到Supabase仪表板，从侧边栏菜单中选择SQL，然后点击**新查询**。这将创建一个新的查询，这将允许我们对我们的Postgres数据库运行任何SQL。
 
-Write the following and click **Run**.
+写下以下内容并点击**运行**。
 
 ```sql
 create or replace function auth.user_id() returns text as $$
@@ -512,55 +512,55 @@ create or replace function auth.user_id() returns text as $$
 $$ language sql stable;
 ```
 
-You should see the output `Success, no rows returned`. This created a function called `auth.user_id()`, which will inspect the `userId` field of our JWT payload.
+你应该看到输出`成功，没有行返回`。这创建了一个叫做`auth.user_id()`的函数，它将检查我们JWT有效载荷的`userId`字段。
 
-> Note: To learn more about PostgreSQL functions, check out this [deep dive video](https://www.youtube.com/watch?v=MJZCCpCYEqk).
+> 注意：要了解更多关于PostgreSQL函数的信息，请看这个[深入研究视频](https://www.youtube.com/watch?v=MJZCCpCYEqk)。
 
-Let's create a policy that checks whether this user is the owner of an expense.
+让我们创建一个策略，检查这个用户是否是一项开支的所有者。
 
-Select **Authentication** from the Supabase sidebar menu, click **Policies**, then **New Policy**.
+从Supabase侧边栏菜单中选择**认证**，点击**政策**，然后点击**新政策**。
 
 ![Supabase authentication page](/docs/img/guides/integrations/stytch/14.png)
 
-From the modal, select **For full customization create a policy from scratch** and add the following.
+在模式中，选择**为完全定制，从头开始创建一个政策**，并添加以下内容。
 
 ![Supabase create policy page](/docs/img/guides/integrations/stytch/15.png)
 
-This policy is calling the function we just created to get the currently logged in user's `user_id` `auth.user_id()` and checking whether this matches the `user_id` column for the current expense. If it does, then it will allow the user to select it, otherwise it will continue to deny.
+这个策略正在调用我们刚刚创建的函数，以获得当前登录用户的`user_id``auth.user_id()`，并检查这是否与当前费用的`user_id`列相匹配。如果吻合，那么它将允许用户选择，否则将继续拒绝。
 
-Click Review and then Save policy. After you've saved, click Enable RLS on the table to enable the policy we just created.
+点击审查，然后保存策略。保存后，点击表中的启用RLS，启用我们刚刚创建的策略。
 
-> Note: To learn more about RLS and policies, check out this [video](https://www.youtube.com/watch?v=Ow_Uzedfohk).
+> 注意：要了解更多关于RLS和政策的信息，请查看这个[视频](https://www.youtube.com/watch?v=Ow_Uzedfohk)。
 
-The last thing we need to do is update the `user_id` columns for our existing expenses.
+我们需要做的最后一件事是为我们现有的费用更新`user_id`列。
 
-Head back to the Supabase dashboard, and select Table editor from the sidebar. You will notice each entry has `user_id` set to `NULL`. We need to update this value to the proper `user_id`.
+回到Supabase仪表板，从侧边栏中选择表编辑器。你会注意到每个条目的`user_id`设置为`NULL`。我们需要把这个值更新为适当的`user_id`。
 
 ![Supabase null users in table](/docs/img/guides/integrations/stytch/16.png)
 
-To get the `user_id` for our Stytch user, you can pull it from the welcome page in our example app (eg `user-test-61497d40-f957-45cd-a6c8-5408d22e93bc`).
+要获得Stytch用户的`user_id`，你可以从我们的示例应用程序的欢迎页面中提取（例如`user-test-61497d40-f957-45cd-a6c8-5408d22e93bc`）。
 
 ![Get user_id](/docs/img/guides/integrations/stytch/17.png)
 
-Update each row in Supabase to this `user_id`.
+将Supabase中的每一行更新为这个`user_id`。
 
 ![Populate user_id](/docs/img/guides/integrations/stytch/18.png)
 
-Return to `localhost:3000`, and you will see your expenses listed.
+返回到`localhost:3000`，你会看到你的费用被列出。
 
 ![Listed expenses](/docs/img/guides/integrations/stytch/19.png)
 
-We now have a basic expense tracker application powered by Stytch, Supabase, and Next.js. From here you could add additional features like adding, editing, and organizing your expenses further.
+我们现在有了一个由Stytch、Supabase和Next.js驱动的基本费用追踪应用程序。从这里，你可以添加额外的功能，如添加、编辑和进一步组织你的费用。
 
-> Note: You can find a completed version of this project on [Github](https://github.com/stytchauth/stytch-nextjs-supabase).
+> 注意：你可以在[Github](https://github.com/stytchauth/stytch-nextjs-supabase)上找到这个项目的完整版本。
 
-## Optional: Add Google One Tap
+## 可选。添加谷歌一键通
 
-In this optional step, we will extend our application to allow users to login with Google One Tap in addition to Email magic links.
+在这个可选的步骤中，我们将扩展我们的应用程序，以允许用户在电子邮件魔法链接之外用Google One Tap登录。
 
-You will need to follow the first four steps of [this guide](https://stytch.com/docs/one-tap-guide?utm_source=supabase&utm_medium=guide) to create a Google project, set up Google OAuth consent, and configure credentials and redirect URLs.
+你需要按照[本指南](https://stytch.com/docs/one-tap-guide?utm_source=supabase&utm_medium=guide)的前四个步骤来创建一个谷歌项目，设置谷歌OAuth同意，并配置凭证和重定向URLs。
 
-First, we will make some adjustments to the `StytchLogin` component. We will update the configuration, so that it uses both Google OAuth, and Email magic links.
+首先，我们将对`StytchLogin`组件做一些调整。我们将更新配置，使其同时使用Google OAuth和Email魔法链接。
 
 ```jsx
 // components/StytchLogin.js
@@ -609,7 +609,7 @@ const StytchLogin = ({ publicToken }) => {
 export default StytchLogin
 ```
 
-We also need to make an adjustment to the function `authenticateTokenStartSession` in `stytchLogic.js`. Stytch has separate authentication endpoints for Email magic links and OAuth, so we need to route our token correctly.
+我们还需要对`stytchLogic.js`中的`authenticateTokenStartSession`函数做一个调整。Stytch有独立的认证端点，用于Email magic links和OAuth，所以我们需要正确地路由我们的token。
 
 ```jsx
 // utils/stytchLogic.js
@@ -649,14 +649,14 @@ export const authenticateTokenStartSession = async (req, res) => {
 }
 ```
 
-With these two changes you will now have a working Google One Tap authentication method along with email magic links.
+有了这两个变化，你现在将有一个有效的Google One Tap认证方法，以及电子邮件魔法链接。
 
 ![Google One Tap](/docs/img/guides/integrations/stytch/20.png)
 
-## Resources
+## 资源
 
-- [Stytch blog](https://stytch.com/blog?utm_source=supabase&utm_medium=guide)
-- [Stytch documentation](https://stytch.com/docs?utm_source=supabase&utm_medium=guide)
+- [Stytch博客](https://stytch.com/blog?utm_source=supabase&utm_medium=guide)
+- [Stytch文档](https://stytch.com/docs?utm_source=supabase&utm_medium=guide)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

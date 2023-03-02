@@ -20,6 +20,7 @@ export function getDocsBySlug(slug: string) {
     (realSlug.includes('reference/javascript/') &&
       !nonGeneratedReferencePages.includes(realSlug)) ||
     (realSlug.includes('reference/dart/') && !nonGeneratedReferencePages.includes(realSlug)) ||
+    (realSlug.includes('reference/wechat/') && !nonGeneratedReferencePages.includes(realSlug)) ||
     (realSlug.includes('reference/cli/') && !nonGeneratedReferencePages.includes(realSlug)) ||
     (realSlug.includes('reference/api/') && !nonGeneratedReferencePages.includes(realSlug)) ||
     (realSlug.includes('reference/auth/') && !nonGeneratedReferencePages.includes(realSlug)) ||

@@ -4,52 +4,52 @@ export const meta = {
   id: 'sequin',
   title: 'Sequin',
   description:
-    'Sync platforms like Stripe and Salesforce with your Supabase database in real-time using Sequin.',
+    '使用Sequin将Stripe和Salesforce等平台与你的Supabase数据库进行实时同步。',
 }
 
-This guide explains how to quickly setup a sync between Sequin and a Supabase Postgres database.
+本指南解释了如何快速设置Sequin和Supabase Postgres数据库之间的同步。
 
-[Sequin](https://sequin.io) allows you to sync platforms like Stripe and Salesforce with Supabase in real-time. You'll be able to read and write to your [Stripe](https://stripe.com/) customers or [Salesforce](https://www.salesforce.com/) accounts right from the Supabase client using SQL. Here's how to get setup.
+[Sequin](https://sequin.io)允许你将Stripe和Salesforce等平台与Supabase进行实时同步。你将能够使用SQL从Supabase客户端读取和写入你的[Stripe](https://stripe.com/)客户或[Salesforce](https://www.salesforce.com/)账户。下面是如何设置的。
 
-## Step 1: Connect Sequin to Supabase
+## 第1步：连接Sequin和Supabase
 
-To connect Supabase to Sequin, you'll first need to retrieve the credentials for your Supabase Postgres database:
+要将Supabase连接到Sequin，你首先需要检索Supabase Postgres数据库的凭证。
 
-1. In the Supabase dashboard, go to the settings page and open up your **Database** settings. In the **Connection info** section, you'll find the credentials you need - like `host` and `user`:
+1. 在Supabase的仪表板上，进入设置页面，打开你的**数据库**设置。在**连接信息**部分，你会发现你需要的凭证--如 "主机 "和 "用户"。
 
    ![TBD](/docs/img/guides/integrations/sequin/001_supabase_dash.png)
 
-2. In the [Sequin console](https://app.sequin.io), go to your sync's configuration and open the **Destination** section. Select **Launch or Connect** and then click **Connect** to configure the connection to your Supabase Postgres:
+2. 在[Sequin控制台]（https://app.sequin.io）中，进入你的同步配置，打开**目的地**部分。选择**启动或连接**，然后点击**连接**，配置与Supabase Postgres的连接。
 
    ![TBD](/docs/img/guides/integrations/sequin/002_connect.png)
 
-3. In the connection modal that appears, enter the `Host` and `Port` for your Supabase database and click **Continue**.
+3. 在出现的连接模式中，输入Supabase数据库的 `主机`和 `端口`，然后单击**继续**。
 
    ![TBD](/docs/img/guides/integrations/sequin/003_step_1.png)
 
-4. Now, enter the `Database name` and set the `schema` name for your sync. For instance, if your syncing Stripe, you'll likely want to name your synced schema something like `stripe`. Finally, enter the `user` and `password` for your Supabase database and then click **Continue**. Sequin will verify it can properly connect to your database with the correct permissions.
+4. 现在，输入 `数据库名称`并为同步设置 `模式`名称。例如，如果你同步Stripe，你可能想把你的同步模式命名为`stripe`之类的。最后，为你的Supabase数据库输入`用户`和`密码`，然后点击**继续**。Sequin将验证它能以正确的权限正确连接到你的数据库。
 
    ![TBD](/docs/img/guides/integrations/sequin/004_step_2.png)
 
-5. Sequin is now connected to your Supabase Postgres database and will ask you to confirm which database users should be able to access your synced schema. Select all of the users and click **Continue**:
+5. Sequin现在已经连接到你的Supabase Postgres数据库，并将要求你确认哪些数据库用户应该能够访问你的同步模式。选择所有的用户并单击**继续**。
 
    ![TBD](/docs/img/guides/integrations/sequin/005_step_3.png)
 
-6. That's it. Sequin will now create a new schema and permissions group in your Supabase database. Name the database connection in Sequin something like `Supabase` and your done!
+6. Sequin现在将在你的Supabase数据库中创建一个新的模式和权限组。将Sequin中的数据库连接命名为 `Supabase`，你就完成了!
 
-In the Supabase dashboard, you can go to the **Table Editor** and you'll see a new schema full of your synced platform data.
+在Supabase仪表板中，你可以进入**表编辑器**，你会看到一个新的模式，里面充满了你同步的平台数据。
 
 ![TBD](/docs/img/guides/integrations/sequin/006_see_data.png)
 
-## Step 2: Grant Permissions
+## 第2步：授予权限
 
-To ensure the right users can access the synced schema Sequin manages, you'll need to run a couple permission grants.
+为了确保正确的用户可以访问Sequin管理的同步模式，你需要运行几个权限授予。
 
-1. In the Sequin console, click the **Connect** button next to your sync and copy down your `Schema` and unique `Read Group`.
+1. 在Sequin控制台，点击同步旁边的**连接**按钮，复制下你的 `模式`和独特的 `阅读组`。
 
    ![TBD](/docs/img/guides/integrations/sequin/007_get_read.png)
 
-2. Now, in the Supabase dashboard, go to the **SQL Editor** and run the following permission grants:
+2. 现在，在Supabase仪表板上，进入**SQL编辑器**，运行以下权限授予。
 
    ```sql
    GRANT sequin_read_▒▒▒▒ TO postgres, anon, authenticated, service_role;
@@ -61,11 +61,11 @@ To ensure the right users can access the synced schema Sequin manages, you'll ne
    ALTER DEFAULT PRIVILEGES FOR ROLE postgres, supabase_admin IN SCHEMA {{your_schema_name}} GRANT ALL ON TABLES TO anon, authenticated, service_role;
    ```
 
-   These permission grants ensure that the various Supabase database users can access and read all the tables in your synced schema.
+   这些权限授予确保各种 Supabase 数据库用户能够访问和读取同步模式中的所有表。
 
-## Step 3: Configure the Supabase Client
+## 第三步：配置Supabase客户端
 
-Finally, you'll need to define a new [Supabase client](/docs/reference/javascript/initializing#api-schemas) in your application to access your synced schema. In the file where you initialized your Supabase client, define a new client with a `schema` parameter:
+最后，你需要在你的应用程序中定义一个新的 [Supabase 客户端](/docs/reference/javascript/initializing#api-schemas) 来访问你的同步模式。在你初始化Supabase客户端的文件中，定义一个带有`schema`参数的新客户端。
 
 ```javascript
 export const supabase_schema = createClient(
@@ -77,14 +77,14 @@ export const supabase_schema = createClient(
 );
 ```
 
-You'll use this client to query for data in your synced schema.
+你将使用这个客户端来查询你同步模式中的数据。
 
-## Resources
+## 资源
 
-- [Sequin](https://sequin.io*) official website.
-- [Sequin Console](https://app.sequin.io*).
-- [Sequin](https://docs.sequin.io/welcome) documentation.
-- [Sequin + Supabase + Stripe Tutorial](https://github.com/sequin-io/build-a-saas-with-next-js-supabase-stripe-and-sequin)
+- [Sequin](https://sequin.io*) 官方网站。
+- [Sequin Console](https://app.sequin.io*)。
+- [Sequin](https://docs.sequin.io/welcome) 文档。
+- [Sequin + Supabase + Stripe教程](https://github.com/sequin-io/build-a-saas-with-next-js-supabase-stripe-and-sequin)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

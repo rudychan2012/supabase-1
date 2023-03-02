@@ -2,29 +2,29 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'with-ionic-react',
-  title: 'Quickstart: Ionic React',
-  description: 'Learn how to use Supabase in your Ionic React App.',
+  title: '快速入门: Ionic React',
+  description: '了解如何在你的Ionic React应用程序中使用Supabase。',
   sidebar_label: 'Ionic React',
 }
 
 <QuickstartIntro />
 
-![Supabase User Management example](/docs/img/ionic-demos/ionic-angular-account.png)
+![Supabase用户管理实例](/docs/img/ionic-demos/ionic-angular-account.png)
 
 ### GitHub
 
-Should you get stuck while working through the guide, refer to [this repo](https://github.com/mhartington/supabase-ionic-react).
+如果你在阅读指南时遇到困难，请参考[此版本](https://github.com/mhartington/supabase-ionic-react)。
 
 <ProjectSetup />
 
-## Building the App
+## 构建应用程序
 
-Let's start building the React app from scratch.
+让我们开始从头开始构建React应用程序。
 
-### Initialize an Ionic React app
+### 初始化一个Ionic React应用程序
 
-We can use the [Ionic CLI](https://ionicframework.com/docs/cli) to initialize
-an app called `supabase-ionic-react`:
+我们可以使用[Ionic CLI](https://ionicframework.com/docs/cli)来初始化
+一个名为 `supabase-ionic-react`的应用程序。
 
 ```bash
 npm install -g @ionic/cli
@@ -32,22 +32,22 @@ ionic start supabase-ionic-react blank --type react
 cd supabase-ionic-react
 ```
 
-Then let's install the only additional dependency: [supabase-js](https://github.com/supabase/supabase-js)
+然后让我们安装唯一的额外依赖：[supabase-js](https://github.com/supabase/supabase-js)
 
 ```bash
 npm install @supabase/supabase-js
 ```
 
-And finally we want to save the environment variables in a `.env`.
-All we need are the API URL and the `anon` key that you copied [earlier](#get-the-api-keys).
+最后，我们要把环境变量保存在`.env`中。
+我们所需要的是API URL和你[早些时候]复制的`anon`密钥(#get-theapi-keys)。
 
 ```bash title=.env
 REACT_APP_SUPABASE_URL=YOUR_SUPABASE_URL
 REACT_APP_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
-Now that we have the API credentials in place, let's create a helper file to initialize the Supabase client. These variables will be exposed
-on the browser, and that's completely fine since we have [Row Level Security](/docs/guides/auth#row-level-security) enabled on our Database.
+现在我们已经有了API凭证，让我们创建一个辅助文件来初始化Supabase客户端。这些变量将被暴露在
+在浏览器上，这完全没有问题，因为我们的数据库已经启用了[行级安全](/docs/guides/auth#row-level-security)。
 
 ```js title=src/supabaseClient.js
 import { createClient } from '@supabase/supabase-js'
@@ -58,9 +58,9 @@ const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 ```
 
-### Set up a Login route
+### 设置一个登录路线
 
-Let's set up a React component to manage logins and sign ups. We'll use Magic Links, so users can sign in with their email without using passwords.
+让我们设置一个React组件来管理登录和注册。我们将使用Magic Links，所以用户可以用他们的电子邮件登录，而不使用密码。
 
 ```jsx title=/src/pages/Login.tsx
 import { useState } from 'react';
@@ -135,11 +135,11 @@ export function LoginPage() {
 }
 ```
 
-### Account page
+### 账号页面
 
-After a user is signed in we can allow them to edit their profile details and manage their account.
+在用户登录后，我们可以让他们编辑他们的个人资料细节和管理他们的账户。
 
-Let's create a new component for that called `Account.tsx`.
+让我们为它创建一个新的组件，叫做`Account.tsx`。
 
 ```jsx title=src/pages/Account.tsx
 import {
@@ -291,9 +291,9 @@ export function AccountPage() {
 }
 ```
 
-### Launch!
+### 启动
 
-Now that we have all the components in place, let's update `App.tsx`:
+现在我们有了所有的组件，让我们更新`App.tsx`。
 
 ```jsx title=src/App.tsx
 import { Redirect, Route } from 'react-router-dom'
@@ -343,33 +343,33 @@ const App: React.FC = () => {
 export default App
 ```
 
-Once that's done, run this in a terminal window:
+一旦完成，在终端窗口运行这个程序。
 
 ```bash
 ionic serve
 ```
 
-And then open the browser to [localhost:3000](http://localhost:3000) and you should see the completed app.
+然后打开浏览器到[localhost:3000](http://localhost:3000)，你应该看到完成的应用程序。
 
 ![Supabase Ionic React](/docs/img/ionic-demos/ionic-react.png)
 
-## Bonus: Profile photos
+## 个人照片
 
-Every Supabase project is configured with [Storage](/docs/guides/storage) for managing large files like photos and videos.
+每个Supabase项目都配置了[存储](/docs/guides/storage)，用于管理照片和视频等大文件。
 
-### Create an upload widget
+### 创建一个上传小组件
 
-First install two packages in order to interact with the user's camera.
+首先安装两个软件包，以便与用户的相机互动。
 
 ```bash
 npm install @ionic/pwa-elements @capacitor/camera
 ```
 
-[CapacitorJS](https://capacitorjs.com) is a cross platform native runtime from Ionic that enables web apps to be deployed through the app store and provides access to native deavice API.
+[CapacitorJS](https://capacitorjs.com)是Ionic的一个跨平台原生运行时间，它使网络应用通过应用商店部署，并提供对原生deavice API的访问。
 
-Ionic PWA elements is a companion package that will polyfill certain browser APIs that provide no user interface with custom Ionic UI.
+Ionic PWA元素是一个配套的软件包，它将把某些不提供用户界面的浏览器API用自定义的Ionic UI进行聚填。
 
-With those packages installed we can update our `index.tsx` to include an additional bootstapping call for the Ionic PWA Elements.
+安装了这些包后，我们可以更新我们的`index.tsx`，以包括对Ionic PWA元素的额外引导调用。
 
 ```ts title=src/index.tsx
 import React from 'react'
@@ -473,9 +473,9 @@ export function Avatar({
 }
 ```
 
-### Add the new widget
+### 添加新的小组件
 
-And then we can add the widget to the Account page:
+然后我们就可以把这个小部件添加到账号页面:
 
 ```jsx title=src/pages/Account.tsx
 // Import the new component
@@ -495,12 +495,12 @@ return (
       <Avatar url={profile.avatar_url} onUpload={updateProfile}></Avatar>
 ```
 
-## Next steps
+## 下一步
 
-At this stage you have a fully functional application!
+在这个阶段，你已经有了一个功能完备的应用程序!
 
-- Got a question? [Ask here](https://github.com/supabase/supabase/discussions).
-- Sign in: [app.supabase.com](https://app.supabase.com)
+- 有问题吗？[在此提问](https://community.memfiredb.com/).
+- 请登录[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

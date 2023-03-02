@@ -2,14 +2,14 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'nextjs',
-  title: 'Supabase Auth with Next.js',
-  description: 'Authentication helpers for Next.js API routes, middleware, and SSR.',
+  title: '使用Next.js进行Supabase认证',
+  description: 'Next的身份验证助手。js API路由、中间件和SSR。',
   sidebar_label: 'Next.js',
 }
 
-This submodule provides convenience helpers for implementing user authentication in Next.js applications.
+该子模块为在Next中实现用户身份验证提供了方便的帮助Next.js应用程序。
 
-## Install the Next.js helper library
+## 安装Next.js助手库
 
 <Tabs
   scrollable
@@ -23,14 +23,13 @@ This submodule provides convenience helpers for implementing user authentication
 npm install @supabase/auth-helpers-nextjs
 ```
 
-This library supports the following tooling versions:
+此库支持以下工具版本：
 
 - Node.js: `^10.13.0 || >=12.0.0`
 - Next.js: `>=10`
+- 注：Next.js13除了新的`app`目录方法外，其他都受支持。我们正在努力增加对此的支持，您可以关注[此处](https://github.com/supabase/auth-helpers/issues/341).
 
-> Note: Next.js 13 is stable, however, the new `app` directory and Server Components are still in beta. Check out our experimental guide on [using Auth Helpers with Next.js Server Components](/docs/guides/auth/auth-helpers/nextjs-server-components).
-
-Additionally, install the **React Auth Helpers** for components and hooks that can be used across all React-based frameworks.
+此外，为可在所有基于React的框架中使用的组件和挂钩安装**React Auth Helpers**。
 
 ```sh
 npm install @supabase/auth-helpers-react
@@ -43,14 +42,13 @@ npm install @supabase/auth-helpers-react
 yarn add @supabase/auth-helpers-nextjs
 ```
 
-This library supports the following tooling versions:
+此库支持以下工具版本：
 
 - Node.js: `^10.13.0 || >=12.0.0`
 - Next.js: `>=10`
+- 注：Next.js13除了新的`app`目录方法外，其他都受支持。我们正在努力增加对此的支持，您可以关注[此处](https://github.com/supabase/auth-helpers/issues/341).
 
-> Note: Next.js 13 is stable, however, the new `app` directory and Server Components are still in beta. Check out our experimental guide on [using Auth Helpers with Next.js Server Components](/docs/guides/auth/auth-helpers/nextjs-server-components).
-
-Additionally, install the **React Auth Helpers** for components and hooks that can be used across all React-based frameworks.
+此外，为可在所有基于React的框架中使用的组件和挂钩安装**React Auth Helpers**。
 
 ```sh
 yarn add @supabase/auth-helpers-react
@@ -59,16 +57,15 @@ yarn add @supabase/auth-helpers-react
 </TabPanel>
 </Tabs>
 
-## Set up environment variables
-
-Retrieve your project URL and anon key in your project's [API settings](https://app.supabase.com/project/_/settings/api) in the Dashboard to set up the following environment variables. For local development you can set them in a `.env.local` file. See an [example](https://github.com/supabase/auth-helpers/blob/main/examples/nextjs/.env.local.example).
+## 设置环境变量
+在项目的[API设置](https://app.supabase.com/project/_/settings/api)中检索项目URL和匿名密钥以设置以下环境变量。对于本地开发，可以在`.env.local`文件。参见[示例](https://github.com/supabase/auth-helpers/blob/main/examples/nextjs/.env.local.example)。
 
 ```bash title=.env.local
 NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 ```
 
-## Basic Setup
+## 基本设置
 
 <Tabs
   scrollable
@@ -78,7 +75,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 >
 <TabPanel id="js" label="JavaScript">
 
-Wrap your `pages/_app.js` component with the `SessionContextProvider` component:
+包装`pages/_app.js`组件与`SessionContextProvider`组件：
 
 ```jsx title=pages/_app.js
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -103,7 +100,7 @@ function MyApp({ Component, pageProps }) {
 </TabPanel>
 <TabPanel id="ts" label="TypeScript">
 
-Wrap your `pages/_app.tsx` component with the `SessionContextProvider` component:
+包装`pages/_app.js`组件与`SessionContextProvider`组件：
 
 ```tsx lines=2,8 title=pages/_app.tsx
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -132,15 +129,15 @@ function MyApp({
 </TabPanel>
 </Tabs>
 
-You can now determine if a user is authenticated by checking that the `user` object returned by the `useUser()` hook is defined.
+现在，您可以通过检查 `useUser()`钩子返回的`user`对象是否已定义来确定用户是否已通过身份验证。
 
-## Usage with TypeScript
+## 使用TypeScript
 
-You can pass types that were [generated with the Supabase CLI](/docs/reference/javascript/typescript-support#generating-types) to the Supabase Client to get enhanced type safety and auto completion:
+您可以将[使用Supabase CLI](/docs/reference/javascript/typescript-support#generating-types)生成的类型传递给Supabase客户端，以获得增强的类型安全性和自动完成：
 
-### Browser client
+### 浏览器客户端
 
-Creating a new supabase client object:
+创建新的Supabase数据库客户端对象：
 
 ```tsx
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -149,7 +146,7 @@ import { Database } from '../database.types'
 const supabaseClient = createBrowserSupabaseClient<Database>()
 ```
 
-Retrieving a supabase client object from the SessionContext:
+从SessionContext中检索超级客户端对象：
 
 ```tsx
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -158,7 +155,7 @@ import { Database } from '../database.types'
 const supabaseClient = useSupabaseClient<Database>()
 ```
 
-### Server client
+### 服务器客户端
 
 ```tsx
 // Creating a new supabase server client object (e.g. in API route):
@@ -178,9 +175,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 }
 ```
 
-## Client-side data fetching with RLS
+## 使用RLS获取客户端数据
 
-For [row level security](/docs/learn/auth-deep-dive/auth-row-level-security) to work properly when fetching data client-side, you need to make sure to use the `supabaseClient` from the `useSupabaseClient` hook and only run your query once the user is defined client-side in the `useUser()` hook:
+为了使[行级别安全](/docs/learn/auth-deep-dive/auth-row-level-security)在客户端获取数据时正常工作，您需要确保使用`supabaseClient`钩子中的 `useSupabaseClient`，并且仅在 `useUser()`钩子中定义了客户端用户后才运行查询：
+
 
 ```jsx lines=10-17
 import { Auth, ThemeSupa } from '@supabase/auth-ui-react'
@@ -226,9 +224,9 @@ const LoginPage = () => {
 export default LoginPage
 ```
 
-## Server-side rendering (SSR)
+## 服务器端渲染 (SSR)
 
-Create a server supabase client to retrieve the logged in user's session:
+创建服务器超级客户端以检索登录用户的会话：
 
 ```jsx title=pages/profile.js
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -262,9 +260,9 @@ export const getServerSideProps = async (ctx) => {
 }
 ```
 
-## Server-side data fetching with RLS
+## 使用RLS获取服务器端数据
 
-You can use the server supabase client to run [row level security](/docs/learn/auth-deep-dive/auth-row-level-security) authenticated queries server-side:
+您可以使用服务器超级数据库客户端运行[行级别安全性](/docs/learn/auth-deep-dive/auth-row-level-security)服务器端验证查询：
 
 <Tabs
   scrollable
@@ -365,9 +363,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 </TabPanel>
 </Tabs>
 
-## Server-side data fetching to OAuth APIs using `provider token` {#oauth-provider-token}
+## 使用 `provider token`将服务器端数据提取到OAuth API {#oauth-provider-token}
 
-When using third-party auth providers, sessions are initiated with an additional `provider_token` field which is persisted in the auth cookie and can be accessed within the session object. The `provider_token` can be used to make API requests to the OAuth provider's API endpoints on behalf of the logged-in user.
+当使用第三方身份验证提供程序时，会话将使用附加的 `provider_token`字段启动，该字段保存在身份验证cookie中，可以在会话对象中访问。`provider_token`可用于代表登录用户向OAuth提供程序的API端点发出API请求。
 
 <Tabs
   scrollable
@@ -480,9 +478,9 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 </TabPanel>
 </Tabs>
 
-## Protecting API routes
+## 保护API路由
 
-Create a server supabase client to retrieve the logged in user's session:
+创建服务器超级客户端以检索登录用户的会话：
 
 <Tabs
   scrollable
@@ -549,9 +547,9 @@ export default ProtectedRoute
 </TabPanel>
 </Tabs>
 
-## Auth with Next.js Middleware
+## 使用Next.js中间件进行身份验证。
 
-As an alternative to protecting individual pages you can use a [Next.js Middleware](https://nextjs.org/docs/middleware) to protect the entire directory or those that match the config object. In the following example, all requests to `/middleware-protected/*` will check whether a user is signed in, if successful the request will be forwarded to the destination route, otherwise the user will be redirected:
+作为保护单个页面的替代方案，您可以使用[Next.js中间件](https://nextjs.org/docs/middleware)以保护整个目录或与配置对象匹配的目录。在以下示例中，所有对`/middleware protected/*`的请求都将检查用户是否已登录，如果成功，请求将被转发到目标路由，否则用户将被重定向：
 
 ```ts title=middleware.ts
 import { createMiddlewareSupabaseClient } from '@supabase/auth-helpers-nextjs'
@@ -586,19 +584,19 @@ export const config = {
 }
 ```
 
-## Migration Guide
+## 迁移指南
 
-### Migrating to v0.5.X
+### 迁移到v0.5.X
 
-To make these helpers more flexible as well as more maintainable and easier to upgrade for new versions of Next.js, we're stripping them down to the most useful part which is managing the cookies and giving you an authenticated supabase-js client in any environment (client, server, middleware/edge).
+使这些助手更灵活，更易于维护，更易于为新版本的Next.js升级，我们将其分解为最有用的部分，即管理cookie，并在任何环境（客户端、服务器、中间件/边缘）中为您提供经过认证的超级js客户端。
 
-Therefore we're marking the `withApiAuth`, `withPageAuth`, and `withMiddlewareAuth` higher order functions as deprectaed and they will be removed in the next **minor** release (v0.6.X).
+因此，我们将`withApiAuth`、`withPageAuth` 和 `withMiddlewareAuth`高阶函数标记为已弃用，它们将在下一个**次要**版本（v0.6.X）中删除。
 
-Please follow the steps below to update your API routes, pages, and middleware handlers. Thanks!
+请按照以下步骤更新API路由、页面和中间件处理程序。谢谢
 
-#### `withApiAuth` deprecated!
+#### `withApiAuth`已弃用！
 
-Use `createServerSupabaseClient` within your `NextApiHandler`:
+在`NextApiHandler`中使用`createServerSubaseClient`：
 
 <Tabs
   scrollable
@@ -650,9 +648,9 @@ export default ProtectedRoute
 </TabPanel>
 </Tabs>
 
-#### `withPageAuth` deprecated!
+#### `withPageAuth`已弃用！
 
-Use `createServerSupabaseClient` within `getServerSideProps`:
+在`getServerSideProps`中使用`createServerSubaseClient`：
 
 <Tabs
   scrollable
@@ -711,7 +709,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 </TabPanel>
 </Tabs>
 
-#### `withMiddlewareAuth` deprecated!
+#### `withMiddlewareAuth`已弃用！
 
 <Tabs
   scrollable
@@ -778,11 +776,11 @@ export const config = {
 </TabPanel>
 </Tabs>
 
-### Migrating to v0.4.X and supabase-js v2
+### 迁移到v0.4.X和supabase js v2
 
-With the update to `supabase-js` v2 the `auth` API routes are no longer required, therefore you can go ahead and delete your `auth` directory under the `/pages/api/` directory. Please refer to the [v2 migration guide](/docs/reference/javascript/upgrade-guide) for the full set of changes within supabase-js.
+随着`supabase-js` v2的更新，不再需要 `auth`API路由，因此您可以继续删除 `/pages/api/`目录下的 `auth`目录。请参阅[v2迁移指南](/docs/reference/javascript/upgrade-guide)以了解supabase js中的全部更改。
 
-The `/api/auth/logout` API route has been removed, please use the `signout` method instead:
+`/api/auth/logout` api路由已删除，请改用 `signout` 方法：
 
 ```jsx
 <button
@@ -794,8 +792,7 @@ The `/api/auth/logout` API route has been removed, please use the `signout` meth
   Logout
 </button>
 ```
-
-The `supabaseClient` and `supabaseServerClient` have been removed in favor of the `createBrowserSupabaseClient` and `createServerSupabaseClient` methods. This allows you to provide the CLI-generated types to the client:
+已删除`supabaseClient` 和 `supabaseServerClient`，改用`createBrowserSupbaseClient`或`createServerSubaseClient`方法。这允许您向客户端提供CLI生成的类型：
 
 ```tsx
 // client-side
@@ -819,11 +816,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 }
 ```
 
-- The `UserProvider` has been replaced by the `SessionContextProvider`. Make sure to wrap your `pages/_app.js` componenent with the `SessionContextProvider`. Then, throughout your application you can use the `useSessionContext` hook to get the `session` and the `useSupabaseClient` hook to get an authenticated `supabaseClient`.
-- The `useUser` hook now returns the `user` object or `null`.
-- Usage with TypeScript: You can pass types that were [generated with the Supabase CLI](/docs/reference/javascript/typescript-support#generating-types) to the Supabase Client to get enhanced type safety and auto completion:
+- `UserProvider` 已被 `SessionContextProvider`替换。确保包装您的 `pages/_app.js`与`SessionContextProvider`兼容。然后，在整个应用程序中，您可以使用 `useSessionContext`钩子获取 `session`，使用`useSubaseClient`钩子获取经过身份验证的`supbaseClient`。
+- `useUser`钩子现在返回`user`对象或`null`。
+- TypeScript的用法：您可以将[使用Suabase CLI](/docs/reference/javascript/typescript-support#generating-types)生成的类型传递给Supabase客户端，以获得增强的类型安全性和自动完成:
 
-Creating a new supabase client object:
+创建新的超级数据库客户端对象：
 
 ```tsx
 import { Database } from '../database.types'
@@ -831,7 +828,7 @@ import { Database } from '../database.types'
 const [supabaseClient] = useState(() => createBrowserSupabaseClient<Database>())
 ```
 
-Retrieving a supabase client object from the SessionContext:
+从SessionContext中检索超级客户端对象：
 
 ```tsx
 import { useSupabaseClient } from '@supabase/auth-helpers-react'

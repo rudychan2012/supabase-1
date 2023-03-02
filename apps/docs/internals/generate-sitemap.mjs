@@ -23,6 +23,8 @@ async function generate() {
     'docs/reference/dart/*.mdx',
     'docs/reference/dart/generated/*.mdx',
     '!docs/reference/dart/v0.mdx', // ignore this
+    'docs/reference/wechat/*.mdx',
+    'docs/reference/wechat/generated/*.mdx',
     'docs/reference/api/*.mdx',
     'docs/reference/api/generated/*.mdx',
     'docs/reference/cli/*.mdx',

@@ -2,30 +2,30 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-email',
-  title: 'Login With Email',
-  description: 'Use Supabase to Authenticate and Authorize your users using email.',
+  title: '使用电子邮件登录',
+  description: '使用Supabase通过电子邮件对用户进行身份验证和授权。',
 }
 
-## Overview
+## 概述
 
-Setting up Email logins for your Supabase application.
+为Supabase应用程序设置电子邮件登录。
 
-- Add Email authenticator to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your application - [JavaScript](https://github.com/supabase/supabase-js) | [Flutter](https://github.com/supabase/supabase-flutter)
+- 将电子邮件验证器添加到[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到应用程序 - [JavaScript](https://github.com/supabase/supabase-js) | [Flutter](https://github.com/supabase/supabase-flutter)
 
-## Configure email settings
+## 配置电子邮件设置
 
-1. For [Site URL](https://app.supabase.com/project/_/auth/url-configuration), enter the final (hosted) URL of your app.
-1. For [Auth Providers](https://app.supabase.com/project/_/auth/providers), **enable email provider**.
+1. 对于 [网站 URL](https://app.supabase.com/project/_/auth/url-configuration), 输入应用程序的最终（托管）URL。
+1. 对于 [身份验证提供程序](https://app.supabase.com/project/_/auth/providers), **启用电子邮件提供程序**.
 
 <Admonition type="info" label="Self hosting">
 
-For self-hosting, you can update your project configuration using the files and environment variables provided.
-See the [self-hosting docs](/docs/guides/hosting/overview#configuration) for details.
+对于自托管，可以使用提供的文件和环境变量更新项目配置。
+有关详细信息，请参阅[self-hosting docs](/docs/guides/hosting/overview#configuration)。
 
 </Admonition>
 
-## Add login code to your client app
+## 将登录代码添加到客户端应用程序
 
 <Tabs
   scrollable
@@ -35,7 +35,7 @@ See the [self-hosting docs](/docs/guides/hosting/overview#configuration) for det
 >
 <TabPanel id="js" label="JavaScript">
 
-When your user signs in, call [signInWithPassword()](/docs/reference/javascript/auth-signinwithpassword) with their email address and password:
+当用户登录时，使用其电子邮件地址和密码调用[signInWithPassword()](/docs/reference/javascript/auth-signinwithpassword)：
 
 ```js
 async function signInWithEmail() {
@@ -49,7 +49,7 @@ async function signInWithEmail() {
 </TabPanel>
 <TabPanel id="dart" label="Dart">
 
-When your user signs in, call [signInWithPassword()](/docs/reference/dart/auth-signinwithpassword) with their email address and password:
+当用户登录时，使用其电子邮件地址和密码调用[signInWithPassword()](/docs/reference/javascript/auth-signinwithpassword)：
 
 ```dart
 Future<void> signInWithEmail() async {
@@ -71,7 +71,7 @@ Future<void> signInWithEmail() async {
 >
 <TabPanel id="js" label="JavaScript">
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signOut)将其从浏览器会话和localStorage中删除：
 
 ```js
 async function signOut() {
@@ -82,7 +82,7 @@ async function signOut() {
 </TabPanel>
 <TabPanel id="dart" label="Dart">
 
-When your user signs out, call [signOut()](/docs/reference/dart/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signOut)将其从浏览器会话和localStorage中删除：
 
 ```dart
 Future<void> signOut() async {
@@ -93,11 +93,11 @@ Future<void> signOut() async {
 </TabPanel>
 </Tabs>
 
-## Resources
+## 资料
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Supabase Flutter Client](https://github.com/supabase/supabase-flutter)
+- [MemFire Cloud](https://cloud.memfiredb.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Flutter客户端](https://github.com/supabase/supabase-flutter)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

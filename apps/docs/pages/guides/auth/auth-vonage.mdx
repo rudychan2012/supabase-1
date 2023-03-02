@@ -2,74 +2,74 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-vonage',
-  title: 'Phone Auth with Vonage',
-  description: 'How to set up and use Mobile OTP with Vonage and Supabase.',
+  title: '与Vonage的电话授权',
+  description: '如何在Vonage和Supabase设置和使用移动OTP。',
 }
 
-## Overview
+## 概述
 
-In this guide we'll show you how to authenticate your users with SMS based OTP (One-Time Password) tokens.
+在本指南中，我们将向您展示如何使用基于 SMS 的 OTP（一次性密码）令牌来验证您的用户。
 
-There are two reasons to use Supabase SMS OTP tokens:
+使用Supabase SMS OTP令牌有两个原因。
 
-- You want users to log in with mobile + password, and the mobile should be verified via SMS
-- You want users to log in with mobile ONLY (i.e. passwordless login)
+- 你想让用户用手机+密码登录，并且手机应该通过短信进行验证
+- 你希望用户只用手机登录（即无密码登录）。
 
-We'll cover:
+我们将介绍。
 
-- [Getting your Vonage API Key](#finding-your-vonage-api-key)
-- [Using OTP with password based logins](#using-otp-with-password-based-logins)
-- [Using OTP as a passwordless sign-in mechanism](#using-otp-as-a-passwordless-sign-in-mechanism)
+- 获取您的Vonage API密钥](#finding-your-vonage-api-key)
+- 使用OTP与基于密码的登录] (#using-otp-with-password-based-logins)
+- 使用OTP作为无密码登录机制](#using-otp-as-passwordless-sign-in-mechanism)
 
-What you'll need:
+你需要什么？
 
-- A Vonage account (sign up here: https://dashboard.nexmo.com/sign-up)
-- A Supabase project (create one here: https://app.supabase.com)
-- A mobile phone capable of receiving SMS
+- 一个Vonage账户（在此注册：https://dashboard.nexmo.com/sign-up）
+- 一个Supabase项目（在这里创建一个：https://app.supabase.com）。
+- 一部能够接收短信的移动电话
 
-## Steps
+## 步骤
 
-### Getting your Vonage credentials
+### 获得你的Vonage凭证
 
-Start by logging into your Vonage Dashboard at https://dashboard.nexmo.com/
+首先登录你的Vonage仪表板，网址是：https://dashboard.nexmo.com/
 
-You will see you API Key and API Secret here, which is actually all you need to get started.
+你会在这里看到你的API Key和API Secret，这实际上是你需要开始的全部内容。
 
-In most countries, a phone number is actually optional and you can also use any Alphanumeric Sender ID of up to 11 characters length (8 for India) as a Sender ID (from). This means you do not need a number to test with in most cases.
+在大多数国家，电话号码实际上是可选的，你也可以使用任何字母数字的发送者ID，长度不超过11个字符（印度为8个）作为发送者ID（从）。这意味着在大多数情况下，你不需要一个号码来测试。
 
-To find out more about supported countries for Alphanumeric Sender ID, check this overview: https://help.nexmo.com/hc/en-us/articles/115011781468-SMS-Features-Overview-Outbound-only-
+要了解更多关于字母数字发件人ID支持的国家，请查看以下概述：https://help.nexmo.com/hc/en-us/articles/115011781468-SMS-Features-Overview-Outbound-only-
 
-Hint: Some countries might need a Sender ID Registration to allow sending with an Alphanumeric Sender ID. You can find this information in the help article as well. If Alpha Sender IDs are not supported, you will need to buy a phone number.
+提示：有些国家可能需要一个发件人ID注册，以允许用字母数字发件人ID发送。你也可以在帮助文章中找到这些信息。如果不支持字母数字发件人ID，你将需要购买一个电话号码。
 
-### Getting a phone number (optional)
+### 获得一个电话号码（可选）
 
-If you want a phone number to send SMS from, you can buy one from the Vonage Dashboard under Numbers > Buy Numbers (https://dashboard.nexmo.com/buy-numbers).
+如果你想要一个电话号码来发送短信，你可以从Vonage控制面板上的号码>购买号码（https://dashboard.nexmo.com/buy-numbers）中购买一个。
 
-Select the country you want a number for. You will need a mobile phone number with SMS or SMS+Voice capability. After you have bought the number, you will be able to send SMS from it.
+选择你想要的号码的国家。你将需要一个具有短信或短信+语音功能的手机号码。在你买了号码之后，你就可以用它来发送短信。
 
-### Configure Supabase
+### 配置Supabase
 
-Now go to the Auth > Settings page in the Supabase dashboard (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/settings).
+现在去Supabase仪表板（https://app.supabase.com/project/YOUR-PROJECT-REF/auth/settings）中的授权>设置页面。
 
-You should see an option to enable Phone Signup.
+你应该看到一个启用电话注册的选项。
 
-Toggle it on, and copy the api key, api secret and optionally phone number values over from the Vonage dashboard. Click save.
+拨动它，并从Vonage仪表板上复制api密钥、api秘密和可选的电话号码值。点击保存。
 
-Now the backend should be setup, we can proceed to add our client-side code!
+现在后台应该已经设置好了，我们可以继续添加我们的客户端代码了
 
-#### SMS custom template
+#### 短信定制模板
 
-The SMS message sent to a phone containing an OTP code can be customized. This is useful if you need to mention a brand name or display a website address.
+发送到手机上的包含OTP代码的短信可以被定制。如果你需要提到一个品牌名称或显示一个网站地址，这很有用。
 
-Go to Auth > Templates page in the Supabase dashboard (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/templates).
+进入 Supabase 仪表板中的 Auth > Templates 页面 (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/templates)。
 
-Use the variable `.Code` in the template to display the code.
+在模板中使用变量`.Code`来显示代码。
 
-### Using OTP with password based logins
+### 使用OTP与基于密码的登录方式
 
-In this use scenario we'll be using the user's mobile phone number as an alternative to an email address when signing up along with a password. You may want to think hard about the permanency of this however. It is not uncommon for mobile phone numbers to be recycled by phone networks when users cancel their phone contracts or move countries, therefore granting access to the user's account to whoever takes over the phone number in the future.
+在这个使用场景中，我们将使用用户的手机号码作为注册时与密码一起使用的电子邮件地址的替代。然而，你可能要仔细考虑一下这个的持久性。当用户取消他们的电话合同或搬家时，手机号码被电话网络回收的情况并不少见，因此，无论谁在未来接管了这个手机号码，都可以访问用户的账户。
 
-Using supabase-js on the client you'll want to use the same `signUp` method that you'd use for email based sign ups, but with the `phone` param instead of the `email param`:
+在客户端使用supabase-js，你要使用与基于电子邮件的注册相同的`signUp`方法，但使用`phone`参数而不是`email参数`。
 
 <Tabs
   scrollable
@@ -102,9 +102,9 @@ curl -X POST 'https://xxx.supabase.co/auth/v1/signup' \
 </TabPanel>
 </Tabs>
 
-The user will now receive an SMS with a 6-digit pin that you will need to receive from them within 60-seconds before they can login to their account.
+用户现在会收到一条短信，上面有一个6位数的密码，你需要在60秒内收到他们的密码，然后他们才能登录他们的账户。
 
-You should present a form to the user so they can input the 6 digit pin, then send it along with the phone number to `verifyOTP`:
+你应该向用户提供一个表格，让他们输入6位数的密码，然后把它和电话号码一起发送给 `verifyOTP`。
 
 <Tabs
   scrollable
@@ -138,7 +138,7 @@ curl -X POST 'https://xxx.supabase.co/auth/v1/verify' \
 </TabPanel>
 </Tabs>
 
-If successful the user will now be logged in and you should receive a valid session like:
+如果成功的话，用户现在将被登录，你应该收到一个有效的会话，如。
 
 ```json
 {
@@ -149,9 +149,9 @@ If successful the user will now be logged in and you should receive a valid sess
 }
 ```
 
-The access token can be sent in the Authorization header as a Bearer token for any CRUD operations on supabase-js. See our guide on [Row Level Security](/docs/guides/auth#row-level-security) for more info on restricting access on a user basis.
+访问令牌可以作为承载令牌在授权头中发送，用于supabase-js的任何CRUD操作。请参阅我们的[行级安全]指南（/docs/guides/auth#row-level-security），了解更多关于以用户为单位限制访问的信息。
 
-Also now that the mobile has been verified, the user can use the number and password to sign in without needing to verify their number each time:
+另外，现在手机已经被验证了，用户可以使用号码和密码登录，而不需要每次都验证他们的号码。
 
 <Tabs
   scrollable
@@ -184,11 +184,11 @@ curl -X POST 'https://xxx.supabase.co/auth/v1/token?grant_type=password' \
 </TabPanel>
 </Tabs>
 
-### Using OTP as a passwordless sign-in mechanism
+### 使用OTP作为无密码登录机制
 
-In this scenario you are granting your user's the ability to login to their account without needing to set a password on their account, all they have to do to log in is verify their mobile each time using the OTP.
+在这种情况下，你将授予你的用户登录他们的账户的能力，而不需要在他们的账户上设置密码，他们所要做的就是每次使用OTP来验证他们的手机。
 
-In javascript we can use the `signIn` method with a single parameter: `phone`
+在javascript中，我们可以使用只有一个参数的`signIn`方法：`phone`。
 
 <Tabs
   scrollable
@@ -219,7 +219,7 @@ curl -X POST 'https://xxx.supabase.co/auth/v1/otp' \
 </TabPanel>
 </Tabs>
 
-The second step is the same as the previous section, you need to collect the 6-digit pin from the user and pass it along with their phone number to the verify method:
+第二步与上一节相同，你需要从用户那里收集6位数的密码，并与他们的电话号码一起传递给验证方法。
 
 <Tabs
   scrollable
@@ -253,7 +253,7 @@ curl -X POST 'https://xxx.supabase.co/auth/v1/verify' \
 </TabPanel>
 </Tabs>
 
-and the response should also be the same as above:
+并且响应也应与上述相同。
 
 ```json
 {
@@ -264,13 +264,13 @@ and the response should also be the same as above:
 }
 ```
 
-The user does not have a password therefore will need to sign in via this method each time they want to access your service.
+用户没有密码，因此每次要访问你的服务时，都需要通过这种方法登录。
 
-## Resources
+## 资源
 
-- [Vonage Signup](https://dashboard.nexmo.com/sign-up)
-- [Supabase Dashboard](https://app.supabase.com)
-- [Supabase Row Level Security](/docs/guides/auth#row-level-security)
+- [Vonage注册](https://dashboard.nexmo.com/sign-up)
+- [Supabase仪表板](https://app.supabase.com)
+- [Supabase行级安全](/docs/guides/auth#row-level-security)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,61 +2,58 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'database-usage',
-  title: 'Database usage',
-  description: 'Understanding how database usage applies to your subscription.',
+  title: '数据库的使用',
+  description: '了解数据库的使用如何适用于你的订阅。',
 }
 
-Database storage refers to the _monthly average storage usage_, as reported by Postgres. This metric is reported in your project's [billing usage](https://app.supabase.com/project/_/settings/billing/usage) and is updated daily.
+数据库存储是指月平均存储用量，由Postgres报告。这个指标在你的项目的[billing usage](https://app.supabase.com/project/_/settings/billing/usage)中报告，每天更新。
 
-For an instantaneous live view of the DB storage usage, you can execute in Postgres:
+为了即时了解数据库存储的使用情况，你可以在Postgres中执行。
 
 ```sql
 select sum(pg_database_size(pg_database.datname)) / (1024 * 1024) as db_size_mb
 from pg_database;
 ```
 
-This value is also reported in the [database settings page](https://app.supabase.com/project/_/settings/database).
+这个值也会在[数据库设置页面](https://app.supabase.com/project/_/settings/database)中报告。
 
-## Database storage management
+## 数据库存储管理
 
-Your project will be changed to read-only mode once it reaches 95% of your subscription quota, preventing further writes to your project.
-In read-only mode, clients will encounter errors such as `cannot execute INSERT in a read-only transaction`.
+一旦你的项目达到95%的订阅配额，你的项目就会被改为只读模式，防止进一步写入你的项目。
+在只读模式下，客户会遇到诸如 `无法在只读事务中执行INSERT`的错误。
 
-Regular operation (read-write mode) is automatically re-enabled once database storage usage falls under 95%.
+一旦数据库存储使用量下降到95%以下，常规操作（读写模式）将自动重新启用。
 
-If you are on Pro or Enterprise, database storage expands automatically, however you may also encounter this error if fill the database faster than it can expand.
+如果你使用的是专业版或企业版，数据库存储会自动扩展，但是如果填充数据库的速度超过了它的扩展速度，你也可能遇到这个错误。
 
-Supabase uses network-attached storage, which balances performance with scalability. Pro projects can store up to 1024TB.
-If you intend to grow beyond this, reach out to our team to learn more about our Enterprise tier.
+Supabase使用网络附加存储，在性能和可扩展性之间取得平衡。专业项目可以存储多达1024TB。
+如果你打算增长超过这个数字，请联系我们的团队，了解更多关于我们企业级的信息。
 
-### Increasing available database storage
+### 增加可用的数据库存储
 
-1. [Upgrade to the Pro or Enterprise plan](https://app.supabase.com/project/_/settings/billing/subscription) to increase your storage quota.
+1. [升级到专业或企业计划](https://app.supabase.com/project/_/settings/billing/subscription)以增加你的存储配额。
 
-2. Delete data from your project's database to lower its disk usage. If your database is already in read-only mode, run the following command to change the transaction mode to read-write for your session:
+2. 从你的项目数据库中删除数据，以降低其磁盘使用率。如果你的数据库已经处于只读模式，运行下面的命令，将你的会话的交易模式改为读写。
 
    ```sql
    SET default_transaction_read_only = 'off';
    ```
 
-   This allows you to delete data from within the session.
+   这允许你从会话中删除数据。
 
-## Vacuum operations
+## 真空操作
 
-Postgres does not immediately reclaim the physical space used by dead tuples (i.e., deleted rows) in the DB. Instead, they are internally marked as removed until a [vacuum operation](https://www.postgresql.org/docs/current/routine-vacuuming.html) is executed.
-As a result, deleting data from your database may not immediately reduce the reported disk usage.
+Postgres不会立即回收DB中死的图元（即被删除的行）所使用的物理空间。相反，在执行[真空操作](https://www.postgresql.org/docs/current/routine-vacuuming.html)之前，它们被内部标记为已被删除。
+因此，从你的数据库中删除数据可能不会立即减少报告的磁盘使用率。
 
 <Admonition type="note">
 
-Vacuum operations can temporarily increase resource utilization, which may adversely impact the observed performance of your project until the maintenance is completed.
+真空操作可以暂时增加资源利用率，这可能对你的项目的观察性能产生不利影响，直到维护完成。
 
 </Admonition>
 
-Supabase projects have automatic vacuuming enabled, which ensures that these operations are performed regularly to keep the database healthy and performant.
-However, it can be necessary to either [fine-tune](https://www.percona.com/blog/2018/08/10/tuning-autovacuum-in-postgresql-and-autovacuum-internals/)
-the [autovacuum parameters](https://www.enterprisedb.com/blog/postgresql-vacuum-and-analyze-best-practice-tips),
-or [manually initiate](https://www.postgresql.org/docs/current/sql-vacuum.html) vacuum operations.
-For example, running a manual vacuum after deleting large amounts of data from your DB could help reduce the reported disk usage by Postgres.
+Supabase项目已经启用了自动吸尘功能，这可以确保定期执行这些操作以保持数据库的健康和性能。
+然而，可能需要[微调](https://www.percona.com/blog/2018/08/10/tuning-autovacuum-in-postgresql-and-autovacuum-internals/)[自动真空参数](https://www.enterprisedb.com/blog/postgresql-vacuum-and-analyze-best-practice-tips)。 或者[手动启动](https://www.postgresql.org/docs/current/sql-vacuum.html)真空操作。 例如，在从数据库中删除大量数据后，运行手动真空操作可以帮助减少Postgres报告的磁盘使用率。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,20 +2,20 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'uuid-ossp',
-  title: 'uuid-ossp: Unique Identifiers',
+  title: 'uuid-ossp: 唯一标识符',
   description: 'A UUID generator for PostgreSQL.',
 }
 
-The `uuid-ossp` extension can be used to generate a `UUID`.
+`uuid-ossp`扩展可用于生成`UID`。
 
-## Overview
+## 概述
 
-A `UUID` is a "Universally Unique Identifer" and it is, for practical purposes, unique.
-This makes them particularly well suited as Primary Keys. It is occasionally referred to as a `GUID`, which stands for "Globally Unique Identifer".
+`UUID`是一个 `通用唯一标识符`，在实际应用中，它是唯一的。
+这使得它们特别适合作为主键。它有时也被称为 `GUID`，代表 `全球唯一标识符`。
 
-## Usage
+## 使用方法
 
-### Enable the extension
+### 启用扩展名
 
 <Tabs
   scrollable
@@ -25,12 +25,12 @@ This makes them particularly well suited as Primary Keys. It is occasionally ref
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [Database](https://app.supabase.com/project/_/database/tables) page in the Dashboard.
-2. Click on **Extensions** in the sidebar.
-3. Search for "uuid-ossp" and enable the extension.
+1. 进入仪表板中的[数据库](https://app.supabase.com/project/_/database/tables)页面。
+2. 点击侧边栏中的*扩展*。
+3. 搜索 `uuid-ossp`并启用该扩展。
 
 **Note**:
-Currently `uuid-ossp` extension is enabled by default and cannot be disabled.
+目前 `uuid-ossp`扩展被默认启用，不能被禁用。
 
 </TabPanel>
 <TabPanel id="sql" label="SQL">
@@ -43,45 +43,44 @@ create extension "uuid-ossp" with schema extensions;
 drop extension if exists "uuid-ossp";
 ```
 
-Even though the SQL code is `create extension`, this is the equivalent of "enabling the extension".
-To disable an extension, call `drop extension`.
+尽管SQL代码是`create extension`，但这相当于 "启用扩展"。
+要禁用一个扩展，请调用`drop extension`。
 
-It's good practice to create the extension within a separate schema (like `extensions`) to keep your database clean.
+程序语言会自动安装在`pg_catalog`中，所以你不需要指定模式。
 
 **Note**:
-Currently `uuid-ossp` extension is enabled by default and cannot be disabled.
+目前 `uuid-ossp`扩展被默认启用，不能被禁用。
 
 </TabPanel>
 </Tabs>
 
-### The `uuid` type
+### `Uuid`类型
 
-Once the extension is enabled, you now have access to a `uuid` type.
+一旦扩展被启用，你现在可以访问一个`uuid`类型。
 
 ### `uuid_generate_v1()`
 
-Creates a UUID value based on the combination of computer’s MAC address, current timestamp, and a random value.
+根据计算机的MAC地址、当前时间戳和一个随机值的组合创建一个UUID值。
 
 <Admonition type="note">
-  UUIDv1 leaks identifiable details, which might make it unsuitable for certain security-sensitive
-  applications.
+  UUIDv1泄露了可识别的细节，这可能使它不适合于某些安全敏感的应用.
 </Admonition>
 
 ### `uuid_generate_v4()`
 
-Creates UUID values based solely on random numbers. You can also use Postgres's built-in [`gen_random_uuid()`](https://www.postgresql.org/docs/current/functions-uuid.html) function to generate a UUIDv4.
+创建完全基于随机数的UUID值。你也可以使用Postgres内置的[`gen_random_uuid()`](https://www.postgresql.org/docs/current/functions-uuid.html)函数来生成一个UUIDv4。
 
-## Examples
+## 示例
 
-### Within a query
+### 在一个查询中
 
 ```sql
 select uuid_generate_v4();
 ```
 
-### As a Primary Key
+### 作为主键
 
-Automatically create a unique, random ID in a table:
+在表中自动创建唯一的随机ID：
 
 ```sql
 create table contacts (
@@ -93,10 +92,10 @@ create table contacts (
 );
 ```
 
-## Resources
+## 资源
 
-- [Choosing a Postgres Primary Key](https://supabase.com/blog/choosing-a-postgres-primary-key)
-- [The Basics Of PostgreSQL `UUID` Data Type](https://www.postgresqltutorial.com/postgresql-uuid/)
+- [选择一个Postgres主键](https://supabase.com/blog/choosing-a-postgres-primary-key)
+- [PostgreSQL `UID`数据类型的基础知识](https://www.postgresqltutorial.com/postgresql-uuid/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

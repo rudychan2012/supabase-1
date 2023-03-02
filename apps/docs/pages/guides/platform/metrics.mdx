@@ -2,35 +2,35 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'metrics',
-  title: 'Metrics',
-  description: 'Observability for your Supabase project',
+  title: '指标',
+  description: '你的Supabase项目的可观察性',
 }
 
-In addition to the reports and charts built in to the Supabase dashboard, each project hosted on the Supabase platform comes with a [Prometheus](https://prometheus.io/)-compatible metrics endpoint, which can be used to gather insight into the health and status of your project.
+除了Supabase仪表盘内置的报告和图表外，Supabase平台上托管的每个项目都有一个[Prometheus](https://prometheus.io/)兼容的指标端点，可用于收集对项目健康和状态的洞察力。
 
-You can use this endpoint to ingest data into your own monitoring and alerting infrastructure, as long as it is capable of scraping Prometheus-compatible endpoints, in order to set up custom rules beyond those supported by the Supabase dashboard.
+你可以使用这个端点将数据输入你自己的监控和警报基础设施，只要它能够刮取与Prometheus兼容的端点，以便设置超出Supabase仪表板支持的自定义规则。
 
 <Admonition type="note">
 
-The endpoint discussed in this article is in beta, and the metrics returned by it might evolve or be changed in the future to increase its utility.
+本文所讨论的端点处于测试阶段，它所返回的指标在未来可能会发展或改变，以提高其效用。
 
 </Admonition>
 
 <Admonition type="note">
 
-The endpoint discussed in this article is not available on self-hosted.
+本文讨论的端点在自我托管上是不可用的。
 
 </Admonition>
 
-## Accessing the metrics endpoint
+## 访问度量衡端点
 
-Your project's metrics endpoint is accessible at `https://<project-ref>.supabase.co/customer/v1/privileged/metrics`. Access to the endpoint is secured via HTTP Basic Auth; the username is `service_role`, while the password is the service role JWT available through the Supabase dashboard.
+你的项目的度量衡端点可在`https://<project-ref>.supabase.co/customer/v1/privileged/metrics`访问。对该端点的访问是通过 HTTP Basic Auth 来保证的；用户名是 `service_role`，而密码是通过 Supabase 仪表板提供的服务角色 JWT。
 
 ```shell
 > curl https://<project-ref>.supabase.co/customer/v1/privileged/metrics --user 'service_role:<service-role-jwt>'
 ```
 
-Additionally, we [maintain a guide](https://github.com/supabase/grafana-agent-fly-example/) on quickly setting up a scraping agent to work with Grafana Cloud.
+此外，我们还[维护了一份指南](https://github.com/supabase/grafana-agent-fly-example/)，介绍了如何快速设置一个与Grafana Cloud一起工作的搜刮代理。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

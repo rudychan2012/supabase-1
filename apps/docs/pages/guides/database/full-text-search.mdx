@@ -2,15 +2,15 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'full-text-search',
-  title: 'Full Text Search',
+  title: '全文搜索',
   description: 'How to use full text search in PostgreSQL.',
 }
 
-Postgres has built-in functions to handle `Full Text Search` queries. This is like a "search engine" within Postgres.
+Postgres有内置的功能来处理 `全文搜索`查询。这就像Postgres中的一个 `搜索引擎`。
 
-## Preparation
+## 准备工作
 
-For this guide we'll use the following example data:
+在本指南中，我们将使用以下示例数据：
 
 <Tabs
   scrollable
@@ -51,13 +51,13 @@ values
 </TabPanel>
 </Tabs>
 
-## Usage
+## 使用方法
 
-The functions we'll cover in this guide are:
+我们在本指南中要介绍的函数是：
 
-### `to_tsvector()` [#to-tsvector]
+### `to_tsvector()` {#to-tsvector}
 
-Converts your data into searchable "tokens". `to_tsvector()` stands for "to text search vector". For example:
+将你的数据转换为可搜索的 "标记"。`to_tsvector()`代表 `to text search vector`。例如：
 
 ```sql
 select to_tsvector('green eggs and ham')
@@ -65,20 +65,20 @@ select to_tsvector('green eggs and ham')
 -- Returns 'egg':2 'green':1 'ham':4
 ```
 
-Collectively these tokens are called a "document" which Postgres can use for comparisons.
+这些令牌统称为 "文件"，Postgres可以用它来进行比较。
 
-### `to_tsquery()` [#to-tsquery]
+### `to_tsquery()` {#to-tsquery}
 
-Converts a query string into "tokens" to match. `to_tsquery()` stands for "to text search query".
+将查询字符串转换为 `令牌`来匹配。`to_tsquery()`代表 `to text search query`。
 
-This conversion step is important because we will want to "fuzzy match" on keywords.
-For example if a user searches for "eggs", and a column has the value "egg", we probably still want to return a match.
+这个转换步骤很重要，因为我们要对关键词进行 "模糊匹配"。
+例如，如果用户搜索 `eggs`，而某一列的值是 `eggs`，我们可能仍然希望返回一个匹配。
 
-### Match: `@@` [#match]
+### Match: `@@` {#match}
 
-The `@@` symbol is the "match" symbol for Full Text Search. It returns any matches between a `to_tsvector` result and a `to_tsquery` result.
+`@@`符号是全文搜索的 "匹配 "符号。它返回`to_tsvector`结果和`to_tsquery`结果之间的任何匹配。
 
-Take the following example:
+以下面的例子为例：
 
 <Tabs
   scrollable
@@ -115,8 +115,8 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-The equality symbol above (`=`) is very "strict" on what it matches. In a full text search context, we might want to find all "Harry Potter" books and so we can rewrite the
-example above:
+
+上面的等于符号（`=`）对其匹配的内容非常 `严格`。在全文搜索的情况下，我们可能想找到所有`Harry Potter`的书，所以我们可以重写上面的例子：
 
 <Tabs
   scrollable
@@ -153,11 +153,11 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-## Basic Full Text Queries
+## 基本的全文查询
 
-### Search a single column
+### 查询一个单列
 
-To find all `books` where the `description` contain the word `big`:
+查找所有 `description`中包含`big`单词的 `books`：
 
 <Tabs
   scrollable
@@ -206,9 +206,9 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-### Search multiple columns
+### 查询多列
 
-To find all `books` where `description` or `title` contain the word `little`:
+查找所有`description`或`title`包含`little`单词的`books`：
 
 <Tabs
   scrollable
@@ -239,9 +239,9 @@ where
 </TabPanel>
 </Tabs>
 
-### Match all search words
+### 匹配所有搜索词
 
-To find all `books` where `description` contains BOTH of the words `little` and `big`, we can use the `&` symbol:
+为了找到所有`description`包含 `little` 和 `big`两个单词的 `books`，我们可以使用`&`符号：
 
 <Tabs
   scrollable
@@ -292,9 +292,9 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-### Match any search words
+### 匹配任何搜索词
 
-To find all `books` where `description` contain ANY of the words `little` or `big`, use the `|` symbol:
+查找所有`description`包含`little`或`big`中任何一个单词的`books`，使用`|`符号。
 
 <Tabs
   scrollable
@@ -346,20 +346,18 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-Notice how searching for `big` includes results with the word `bigger` (or `biggest`, etc).
+注意：搜索 `big`如何包括 `bigger`（或 `biggest`等等）的结果。
 
-## Creating Indexes
+## 创建索引
 
-Now that we have Full Text Search working, let's create an `index`. This will allow Postgres to "build" the documents pre-emptively so that they
-don't need to be created at the time we execute the query. This will make our queries much faster.
 
-### Searchable columns
+现在我们有了全文搜索的功能，让我们来创建一个 `索引`。这将允许Postgres预先 `建立`文件，这样就不需要在我们执行查询的时候创建这些文件。这将使我们的查询速度大大加快。
 
-Let's create a new column `fts` inside the `books` table to store the searchable index of the `title` and `description` columns.
+### 可搜索列
 
-We can use a special feature of Postgres called
-[Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)
-to ensure that the index is updated any time the values in the `title` and `description` columns change.
+我们在 `books`表内创建一个新的列`fts`来存储`title`和`description`列的可搜索索引。
+
+我们可以使用Postgres的一个特殊功能，叫做[生成的列](https://www.postgresql.org/docs/current/ddl-generated-columns.html) 以确保当`title`和`description`列的值发生变化时，该索引会被更新。
 
 <Tabs
   scrollable
@@ -395,9 +393,9 @@ from books;
 </TabPanel>
 </Tabs>
 
-### Search using the new column
+### 使用新列进行查询
 
-Now that we've created and populated our index, we can search it using the same techniques as before:
+现在我们已经创建并填充了我们的索引，我们可以使用与之前相同的技术来查询：
 
 <Tabs
   scrollable
@@ -444,15 +442,15 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-## Query Operators
+## 查询运算符
 
-Visit [PostgreSQL: Text Search Functions and Operators](https://www.postgresql.org/docs/current/functions-textsearch.html)
-to learn about additional query operators you can use to do more advanced `full text queries`, such as:
+访问 [PostgreSQL: 文本搜索功能和操作符](https://www.postgresql.org/docs/current/functions-textsearch.html)来了解更多的查询运算符，你可以用它来做更高级的 `全文查询`，例如：
 
-### Proximity: `<->` [#proximity]
+### 近似符: `<->` {#proximity}
 
-The proximity symbol is useful for searching for terms that are a certain "distance" apart.
-For example, to find the phrase `big dreams`, where the a match for "big" is followed immediately by a match for "dreams":
+近似符号对于搜索相隔一定 "距离 "的术语非常有用。
+例如，要找到 `big dreams`这个短语，在 `big`的匹配后面紧跟着`dreams`的匹配。
+
 
 <Tabs
   scrollable
@@ -495,7 +493,8 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-We can also use the `<->` to find words within a certain distance of eachother. For example to find `year` and `school` within 2 words of each other:
+我们还可以使用`<->`来查找彼此之间有一定距离的单词。例如，找到`year` 和`school`间隔2个词之间的距离。
+
 
 <Tabs
   scrollable
@@ -538,10 +537,10 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-### Negation: `!` [#negation]
+### 否定: `!` {#negation}
 
-The negation symbol can be used to find phrases which _don't_ contain a search term.
-For example, to find records that have the word `big` but not `little`:
+否定符号可以用来查找不包含搜索词的短语。
+例如，找到有`big`字但没有`little`字的记录：
 
 <Tabs
   scrollable
@@ -584,9 +583,9 @@ final result = await client
 </TabPanel>
 </Tabs>
 
-## Resources
+## 资源
 
-- [PostgreSQL: Text Search Functions and Operators](https://www.postgresql.org/docs/12/functions-textsearch.html)
+- [PostgreSQL: 文本搜索功能和操作符](https://www.postgresql.org/docs/12/functions-textsearch.html)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

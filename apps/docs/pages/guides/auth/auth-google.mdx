@@ -2,96 +2,96 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-google',
-  title: 'Login with Google',
-  description: 'Add Google OAuth to your Supabase project',
+  title: '使用谷歌登录',
+  description: '在你的Supabase项目中加入谷歌OAuth',
 }
 
-To enable Google Auth for your project, you need to set up a Google OAuth application and add the application credentials to your Supabase Dashboard.
+要为你的项目启用Google Auth，你需要设置一个Google OAuth应用程序，并将应用程序的凭证添加到你的Supabase仪表板。
 
-## Overview
+## 概述
 
-Setting up Google logins for your application consists of 3 parts:
+为你的应用程序设置谷歌登录包括3个部分。
 
-- Create and configure a Google Project on the [Google Cloud Platform Console](https://console.cloud.google.com/home/dashboard)
-- Add your Google OAuth keys to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js)
+- 在[Google Cloud Platform Console](https://console.cloud.google.com/home/dashboard)上创建和配置一个Google项目
+- 将你的谷歌OAuth密钥添加到你的[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到你的[JS客户端应用程序](https://github.com/supabase/supabase-js)
 
-## Access your Google Cloud Platform account
+## 访问你的谷歌云平台账户
 
-- Go to [cloud.google.com](https://cloud.google.com).
-- Click on `Sign in` at the top right to log in.
+- 转到[cloud.google.com](https://cloud.google.com)。
+- 点击右上方的 `Sign in`来登录。
 
 ![Google Developer Portal.](/docs/img/guides/auth-google/google-portal.png)
 
-## Create a Google Cloud Platform Project
+## 创建一个谷歌云平台项目
 
-- Click on `Select a Project` at the top left.
-  - (Or, if a project is currently selected, click on the current project name at the top left.)
-- Click `New Project` at the top right.
-- Fill in your app information, then click `Create`.
-  - (This can take a few minutes.)
-- This should bring you to the dashboard for your new project.
+- 点击左上角的 `选择一个项目`。
+  - (或者，如果当前选择了一个项目，点击左上角的当前项目名称。)
+- 点击右上方的 `新项目`。
+- 填写你的应用程序信息，然后点击 `创建`。
+  - 这可能需要几分钟时间。
+- 这将使你进入新项目的仪表板。
 
-## Create the OAuth Keys for your project
+## 为你的项目创建OAuth密钥
 
-From your project's dashboard screen:
+在你项目的仪表盘屏幕上。
 
-- In the search bar at the top labeled `Search products and resources` type `OAuth`.
-- Click on `OAuth consent screen` from the list of results.
-- On the `OAuth consent screen` page select `External`.
-- Click `Create`.
+- 在顶部标有 `搜索产品和资源`的搜索栏中输入 `OAuth`。
+- 在结果列表中点击 `OAuth同意界面`。
+- 在 `OAuth同意屏幕`页面选择 `外部`。
+- 点击 `创建`。
 
-## Edit your app information
+## 编辑你的应用程序信息
 
-- On the `Edit app registration` page fill out your app information.
-- Click `Save and continue` at the bottom.
+- 在 `编辑应用程序注册`页面，填写您的应用程序信息。
+- 点击底部的 `保存并继续`。
 
-## Find your callback URL
+## 找到你的回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要一个回调URL，它看起来像这样。
 
 `https://<project-ref>.supabase.co/auth/v1/callback`
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `设置`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 现在只要在后面加上`/auth/v1/callback`就可以得到完整的`OAuth Redirect URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create your Google credentials
+## 创建你的谷歌凭证
 
-- Click `Credentials` at the left to go to the `Credentials` page on the Google Cloud Platform console.
-- Click `Create Credentials` near the top then select `OAuth client ID`
-- On the `Create OAuth client ID` page, select your application type. If you're not sure, choose `Web application`.
-- Fill in your app name.
-- At the bottom, under `Authorized redirect URIs` click `Add URI`.
-- Enter your callback URI under `Authorized redirect URIs` at the bottom.
-- Enter your callback URI in the `Valid OAuth Redirect URIs` box.
-- Click `Save Changes` at the bottom right.
-- Click `Create`.
+- 点击左边的 `证书`，进入谷歌云平台控制台的 `证书`页面。
+- 点击顶部的 `创建凭证`，然后选择 `OAuth客户端ID`。
+- 在 `创建OAuth客户端ID`页面，选择你的应用程序类型。如果你不确定，选择 `网络应用`。
+- 填入你的应用程序名称。
+- 在底部，在 `授权重定向URI`下点击 `添加URI`。
+- 在底部的 `授权重定向URI`下输入你的回调URI。
+- 在 `有效的OAuth重定向URI`框中输入你的回调URI。
+- 点击右下角的 `保存更改`。
+- 点击 `创建`。
 
-Copy your new OAuth credentials
+复制你的新OAuth凭证
 
-- A box will appear called `OAuth client created`.
-- Copy and save the values under `Your Client ID` and `Your Client Secret`.
+- 会出现一个名为 `创建OAuth客户端`的框。
+- 复制并保存 `你的客户ID`和 `你的客户秘密`下的值。
 
-## Enter your Google credentials into your Supabase Project
+## 将你的谷歌凭证输入你的Supabase项目
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Enter the final (hosted) URL of your app under `Site URL` (this is important)
-- Under `External OAuth Providers` turn `Google Enabled` to ON
-- Enter your `Google Client ID` and `Google Client Secret` saved in the previous step
-- Click `Save`
+- 转到你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)
+- 在左边的侧边栏，点击 `认证`图标(靠近顶部)
+- 从列表中点击 `设置`，进入 `认证设置`页面
+- 在 `网站URL`下输入你的应用程序的最终（托管）URL（这很重要）。
+- 在 `外部OAuth供应商`下，将 `Google启用`设为 `ON`
+- 输入你在上一步保存的 `Google客户ID`和 `Google客户秘密`。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 将登录代码添加到你的客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `google` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`google`作为`供应商`。
 
 ```js
 async function signInWithGoogle() {
@@ -101,7 +101,7 @@ async function signInWithGoogle() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话和任何对象从localStorage中移除。
 
 ```js
 async function signout() {
@@ -109,11 +109,11 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Google Cloud Platform Console](https://console.cloud.google.com/home/dashboard)
+- [Supabase帐户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [谷歌云平台控制台](https://console.cloud.google.com/home/dashboard)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

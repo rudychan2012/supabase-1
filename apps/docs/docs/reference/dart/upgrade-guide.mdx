@@ -7,19 +7,19 @@ description: 'Learn how to upgrade to supabase-flutter v1.'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
-supabase-flutter focuses on improving the developer experience and making it easier to use. This guide will help you upgrade from supabase-flutter v0 to v1.
+supabase-flutter专注于改善开发者的体验，使其更容易使用。本指南将帮助你从supabase-flutter v0升级到v1。
 
-## Upgrade the client library
+## 升级客户端库
 
-Update the package in your pubspec.yaml file.
+更新你的pubspec.yaml文件中的软件包。
 
 ```yaml
 supabase_flutter: ^1.0.0
 ```
 
-## Error handling
+## 错误处理
 
-The way supabase-flutter throws error has changed in v1. In v0, errors were returned as a response. In v1, errors are thrown as exceptions. This makes it more intuitive as a Flutter developer to handle errors.
+supabase-flutter抛出错误的方式在v1中有所改变。在v1中，错误是以异常形式抛出的。这使得作为Flutter开发者处理错误时更加直观。
 
 <Tabs
   scrollable
@@ -52,11 +52,11 @@ try {
 </TabPanel>
 </Tabs>
 
-## Auth classes / methods
+## Auth类/方法
 
-### Usage of `SupabaseAuthState` and `SupabaseAuthRequiredState` classes
+### `SupabaseAuthState`和`SupabaseAuthRequiredState`类的用法
 
-In v0, `SupabaseAuthState` and `SupabaseAuthRequiredState` were required to handle automatic token refresh and to listen to auth state change. In v1, `SupabaseAuthState` and `SupabaseAuthRequiredState` are deprecated, and token refresh will happen automatically just by initializing Supabase. [`onAuthStateChange`](/docs/reference/dart/upgrade-guide#listening-to-auth-state-change) can be used to action on auth state change.
+在v0中，`SupabaseAuthState`和`SupabaseAuthRequiredState`是用来处理自动令牌刷新和监听认证状态变化的。在v1版本中，`SupabaseAuthState`和`SupabaseAuthRequiredState`被弃用，令牌刷新将通过初始化Supabase自动发生。[`onAuthStateChange`](/docs/reference/dart/upgrade-guide#listening-to-auth-state-change)可以用来对auth状态的变化采取行动。
 
 <Tabs
   scrollable
@@ -97,9 +97,9 @@ await Supabase.initialize(
 </TabPanel>
 </Tabs>
 
-### Listening to auth state change
+### 倾听认证状态的变化
 
-`onAuthStateChange` now returns a `Stream`.
+`onAuthStateChange`现在返回一个`Stream`。
 
 <Tabs
   scrollable
@@ -135,9 +135,9 @@ authSubscription.cancel();
 </TabPanel>
 </Tabs>
 
-### Sign in with email and password
+### 用电子邮件和密码登录
 
-The signIn() method has been deprecated in favor of more explicit method signatures to help with type hinting. Previously it was difficult for developers to know what they were missing (e.g., a lot of developers didn't realize they could use passwordless magic links).
+signIn()方法已被废弃，转而采用更明确的方法签名来帮助类型提示。以前，开发者很难知道他们错过了什么（例如，很多开发者没有意识到他们可以使用无密码的magic links）。
 
 <Tabs
   scrollable
@@ -161,7 +161,7 @@ await supabase.auth.signInWithPassword(email: email, password: password);
 </TabPanel>
 </Tabs>
 
-### Sign in with magic link
+### 用 magic link登录
 
 <Tabs
   scrollable
@@ -185,7 +185,7 @@ await supabase.auth.signInWithOtp(email: email);
 </TabPanel>
 </Tabs>
 
-### Sign in with a third-party OAuth provider
+### 用第三方OAuth提供商登录
 
 <Tabs
   scrollable
@@ -218,7 +218,7 @@ await supabase.auth.signInWithOAuth(
 </TabPanel>
 </Tabs>
 
-### Sign in with phone
+### 用手机登录
 
 <Tabs
   scrollable
@@ -248,7 +248,7 @@ await supabase.auth.signInWithPassword(
 </TabPanel>
 </Tabs>
 
-### Sign in with phone using OTP
+### 使用OTP用手机登录
 
 <Tabs
   scrollable
@@ -281,7 +281,7 @@ await supabase.auth.verifyOTP(
 </TabPanel>
 </Tabs>
 
-### Reset password for email
+### 重置电子邮件的密码
 
 <Tabs
   scrollable
@@ -312,7 +312,7 @@ await supabase.auth.resetPasswordForEmail(
 </TabPanel>
 </Tabs>
 
-### Get the user's current session
+### 获取用户的当前会话
 
 <Tabs
   scrollable
@@ -336,7 +336,7 @@ final Session? session = supabase.auth.currentSession;
 </TabPanel>
 </Tabs>
 
-### Get the logged-in user
+### 获取登录的用户
 
 <Tabs
   scrollable
@@ -360,7 +360,7 @@ final User? user = supabase.auth.currentUser;
 </TabPanel>
 </Tabs>
 
-### Update user data for a logged-in user
+### 更新已登录用户的用户数据
 
 <Tabs
   scrollable
@@ -390,15 +390,15 @@ await supabase.updateUser(
 </TabPanel>
 </Tabs>
 
-## Data methods
+## 数据方法
 
-`.insert()` / `.upsert()` / `.update()` / `.delete()` don't return rows by default.
+`.insert()`/`.upsert()`/`.update()`/`.delete()`默认不会返回记录。
 
-Previously, these methods return inserted/updated/deleted rows by default (which caused [some confusion](https://github.com/supabase/supabase/discussions/1548)), and you can opt to not return it by specifying `returning: 'minimal'`. Now the default behavior is to not return rows. To return inserted/updated/deleted rows, add a `.select()` call at the end.
+以前，这些方法默认返回插入/更新/删除的行(这引起了[一些混乱](https://github.com/supabase/supabase/discussions/1548))，你可以通过指定`returning: 'minimal'`来选择不返回它。现在的默认行为是不返回记录。要返回插入/更新/删除的行，在最后添加一个`.select()`的调用。
 
-Also, calling `.execute()` at the end of the query was a requirement in v0, but in v1 `.execute` is deperecated.
+另外，在查询结束时调用`.execute()`是v0中的一个要求，但在v1中`.execute`已经过时了。
 
-### Insert without returning inserted data
+### 插入而不返回插入的数据
 
 <Tabs
   scrollable
@@ -426,7 +426,7 @@ await supabase.from('my_table').insert(data);
 </TabPanel>
 </Tabs>
 
-### Insert with returning inserted data
+### 插入，并返回插入的数据
 
 <Tabs
   scrollable
@@ -453,11 +453,11 @@ final insertedData = await supabase.from('my_table').insert(data).select();
 </TabPanel>
 </Tabs>
 
-## Realtime methods
+##实时方法
 
 ### Stream
 
-`.stream()` no longer needs the `.execute()` at the end. Also, filtering by `eq` is a lot easier now. `primaryKey` is now a named parameter to make it more obvious what to pass.
+`.stream()`不再需要最后的`.execute()`。另外，通过`eq`过滤现在变得容易多了。`primaryKey`现在是一个命名的参数，以使它更明显地传递什么。
 
 <Tabs
   scrollable

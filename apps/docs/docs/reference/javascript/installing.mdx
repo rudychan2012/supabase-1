@@ -1,49 +1,37 @@
 ---
 id: installing
-title: 'Installing'
-slug: installing
+title: '安装'
+slug: 安装
 custom_edit_url: https://github.com/supabase/supabase/edit/master/web/spec/supabase.yml
 ---
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 
+所有的JavaScript库都是由Supabase团队直接建立的。
+
+其他语言由社区构建，并由Supabase支持。
+
 ## JavaScript
 
-<Tabs
-  scrollable
-  size="small"
-  type="underlined"
-  defaultActiveId="npm"
->
-<TabPanel id="npm" label="npm">
+Via NPM
 
-```sh
+```bash
 npm install @supabase/supabase-js
 ```
 
-</TabPanel>
-<TabPanel id="yarn" label="Yarn">
+Via Yarn
 
-```sh
+```bash
 yarn add @supabase/supabase-js
 ```
 
-</TabPanel>
-</Tabs>
+在[GitHub]上查找源代码(https://github.com/supabase/supabase-js).
 
-### CDN
+Or via CDN
 
 ```js
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 //or
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-```
-
-## Deno
-
-You can use supabase-js in the Deno runtime via esm.sh:
-
-```ts
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 ```

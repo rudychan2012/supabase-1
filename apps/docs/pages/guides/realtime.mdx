@@ -2,55 +2,58 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'realtime',
-  title: 'Realtime',
+  title: '实时',
   description: 'Supabase Realtime with Broadcast, Presence, and Postgres CDC.',
   sidebar_label: 'Overview',
 }
 
-Supabase provides a globally distributed cluster of [Realtime](https://github.com/supabase/realtime) servers that enable the following functionality:
+Supabase提供一个全球分布的[实时](https://github.com/supabase/realtime)服务器集群，实现了以下功能：
 
-- [Broadcast](#broadcast): Send ephemeral messages from client to clients with low latency.
-- [Presence](#presence): Track and synchronize shared state between clients.
-- [Postgres CDC](#postgres-cdc): Listen to Postgres database changes and send them to authorized clients.
+- [广播](#broadcast)：以低延迟的方式从客户端向客户端发送短暂的信息。
+- [Presence](#presence)：跟踪和同步客户端之间的共享状态。
+- [Postgres CDC](#postgres-cdc)：听取Postgres数据库的变化，并将其发送给授权客户。
 
-A [channel](https://hexdocs.pm/phoenix/channels.html) is the basic building block of Realtime and narrows the scope of data flow to subscribed clients. You can think of a channel as a chatroom where participants are able to see who's online and send and receive messages; similar to a Discord or Slack channel.
+[频道](https://hexdocs.pm/phoenix/channels.html) 是实时的基本构建块，它缩小了订阅客户端的数据流范围。
+ 你可以把一个频道想象成一个聊天室，参与者可以看到谁在网上，并发送和接收消息；类似于Discord或Slack频道。
 
-All clients can connect to a channel and take advantage of the built-in features, Broadcast and Presence, while extenstions, like Postgres CDC, must be enabled prior to use.
+所有客户端都可以连接到一个频道，并利用内置的广播和呈现功能，而扩展功能（如PostgresCDC）必须在使用前启用。
 
-## Broadcast
+## 广播
 
-Broadcast follows the [publish-subscribe pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) where a client publishes messages to a channel with a unique identifier. For example, a user could send a message to a channel with id `room-1`.
+广播遵循[发布-订阅模式](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)，客户将消息发布到具有唯一标识符的频道。例如，一个用户可以向一个id为`room-1`的频道发送消息。
 
-Other clients can elect to receive the message in real-time by subscribing to the channel with id `room-1`. If these clients are online and subscribed then they will receive the message.
+其他客户可以通过订阅id为`room-1'的频道来选择实时接收该消息。如果这些客户在线并订阅了，那么他们将收到该消息。
 
-Broadcast works by connecting your client to the nearest Realtime server, which will communicate with other servers to relay messages to other clients.
+广播的工作原理是将你的客户端连接到最近的实时服务器，该服务器将与其他服务器通信，将消息转发给其他客户端。
 
-A common use-case is sharing a user's cursor position with other clients in an online game.
+一个常见的用例是在网络游戏中与其他客户端分享用户的光标位置。
 
 ## Presence
 
-Presence utilizes an in-memory conflict-free replicated data type (CRDT) to track and synchronize shared state in an eventually consistent manner. It computes the difference between existing state and new state changes and sends the necessary updates to clients via Broadcast.
+Presence利用内存中无冲突的复制数据类型（CRDT），以最终一致的方式跟踪和同步共享状态。它计算现有状态和新的状态变化之间的差异，并通过广播向客户端发送必要的更新。
 
-When a new client subscribes to a channel, it will immediately receive the channel's latest state in a single message instead of waiting for all other clients to send their individual states.
+当一个新客户端订阅了一个频道时，它将立即在一条消息中接收该频道的最新状态，而不是等待所有其他客户端发送各自的状态。
 
-Clients are free to come-and-go as they please, and as long as they are all subscribed to the same channel then they will all have the same Presence state as each other.
+客户可以随心所欲地来来去去，只要他们都订阅了同一频道，那么他们都将拥有彼此相同的状态。
 
-The neat thing about Presence is that if a client is suddenly disconnected (for example, they go offline), their state will be automatically removed from the shared state. If you've ever tried to build an “I'm online” feature which handles unexpected disconnects, you'll appreciate how useful this is.
+Presence的好处是，如果一个客户突然断开连接（例如，他们下线了），他们的状态将自动从共享状态中删除。如果你曾经试图建立一个处理意外断开连接的 "我在线 "功能，你就会体会到这是多么有用。
+
 
 ## Postgres CDC
 
-Postgres Change Data Capture (CDC) enables you to listen to database changes and have them broadcast to authorized clients based on [Row Level Security (RLS)](/docs/guides/auth/row-level-security) policies.
+Postgres变化数据捕获（CDC）使你能够监听数据库的变化，并根据[行级安全(RLS)](/docs/guides/auth/row-level-security)策略将其广播给授权客户。
 
-This works by Realtime polling your database's logical replication slot for changes, passing those changes to the [apply_rls](https://github.com/supabase/walrus#reading-wal) SQL function to determine which clients have permission, and then using Broadcast to send those changes to clients.
+这是由实时轮询你的数据库的逻辑复制槽的变化，将这些变化传递给[apply_rls](https://github.com/supabase/walrus#reading-wal)SQL函数以确定哪些客户端有权限，然后使用广播将这些变化发送给客户端。
 
-Realtime requires a publication called `supabase_realtime` to determine which tables to poll. You must add tables to this publication prior to clients subscribing to channels that want to listen for database changes.
+实时需要一个名为`supabase_realtime`的发布来确定哪些表需要轮询。你必须在客户端订阅想要监听数据库变化的频道之前，将表添加到这个发布中。
 
-We strongly encourage you to enable RLS on your database tables and have RLS policies in place to prevent unauthorized parties from accessing your data.
+我们强烈建议你在你的数据库表上启用RLS，并制定RLS策略以防止未经授权的人访问你的数据。
 
-## See Also
 
-- [Realtime quickstart](/docs/guides/realtime/quickstart)
-- [Realtime: Multiplayer Edition](https://supabase.com/blog/supabase-realtime-multiplayer-general-availability) blog post
+## 参考资源
+
+- [快速快速入门](/docs/guides/realtime/quickstart)
+- [实时：多人版本](https://supabase.com/blog/supabase-realtime-multiplayer-general-availability) blog post
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

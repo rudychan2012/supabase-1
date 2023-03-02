@@ -2,14 +2,15 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'tables',
-  title: 'Tables and Data',
+  title: '表格和数据',
   description: 'Creating and using Postgres tables.',
 }
 
-Tables are where you store your data.
 
-Tables are similar to excel spreadsheets. They contain columns and rows.
-For example, this table has 3 "columns" (`id`, `name`, `description`) and 4 "rows" of data:
+表是存储数据的地方。
+
+表格类似于Excel电子表格。它们包含列和行。
+例如，这个表有3列（`id`, `name`, `description`）和4行的数据：
 
 | `id` | `name`               | `description`                                                                                                                                                 |
 | ---- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -18,19 +19,18 @@ For example, this table has 3 "columns" (`id`, `name`, `description`) and 4 "row
 | 3    | Revenge of the Sith  | As Obi-Wan pursues a new threat, Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy.   |
 | 4    | Star Wars            | Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire's world-destroying battle station. |
 
-There are a few important differences from a spreadsheet, but it's a good starting point if you're new to Relational databases.
+它与电子表格有一些重要的区别，但如果你是关系型数据库的新手，它是一个很好的学习起点。
 
-## Creating Tables
+## 创建表
 
-When creating a table, it's best practice to add columns at the same time.
+当创建一个表时，最好的做法是同时添加列。
 
 ![Tables and columns](/docs/img/guides/database/tables-columns.png)
 
-You must define the "data type" of each column when it is created. You can add and remove columns at any time after creating a table.
+你必须在创建每一列时定义它的 "数据类型"。你可以在创建表后随时添加和删除列。
 
-Supabase provides several options for creating tables. You can use the Dashboard or create them directly using SQL.
-We provide a SQL editor within the Dashboard, or you can [connect](../../guides/database/connecting-to-postgres) to your database
-and run the SQL queries yourself.
+Supabase 为创建表提供了几个选项。你可以使用仪表板或直接使用 SQL 创建它们。
+我们在 Dashboard 中提供了一个 SQL 编辑器，或者你可以 [连接](../../guides/database/connecting-to-postgres)到你的数据库并自己运行SQL查询。
 
 <Tabs
   scrollable
@@ -44,11 +44,12 @@ and run the SQL queries yourself.
   <source src="/docs/videos/api/api-create-table-sm.mp4" type="video/mp4" muted playsInline />
 </video>
 
-1. Go to the [Table Editor](https://app.supabase.com/project/_/editor) page in the Dashboard.
-2. Click **New Table** and create a table with the name `todos`.
-3. Click **Save**.
-4. Click **New Column** and create a column with the name `task` and type `text`.
-5. Click **Save**.
+1. 进入仪表板中的表编辑器页面。
+2. 单击**新表**，创建一个名为`todos`的表。
+3. 单击**保存**。
+4. 点击**新列**，创建一个名为`task`的列，数据类型为`text`。
+5. 单击**保存**。
+
 
 </TabPanel>
 <TabPanel id="sql" label="SQL">
@@ -66,23 +67,22 @@ create table movies (
 
 <Admonition type="note">
 
-When naming tables, use lowercase and underscores instead of spaces (e.g., `table_name`, not `Table Name`).
+当命名表时，使用小写字母和下划线而不是空格（例如，`table_name`，而不是`Table Name`）。
 
 </Admonition>
 
-## Columns
+## 列
 
-You must define the "data type" when you create a column.
+当你创建一个列时，你必须定义 "数据类型"。
 
-### Data types
+### 数据类型
 
-Every column is a predefined type. PostgreSQL provides many [default types](https://www.postgresql.org/docs/current/datatype.html), and you can even design your own (or use extensions)
-if the default types don't fit your needs.
+每个列都是一个预定义的类型。PostgreSQL提供了许多[默认类型](https://www.postgresql.org/docs/current/datatype.html)，你甚至可以设计你自己的(或使用扩展) 如果默认类型不满足你的需求。
 
 <details>
-<summary>Show/Hide default data types</summary>
+<summary>显示/隐藏默认数据类型</summary>
 
-| `Name`                            | `Aliases`   | `Description`                                                    |
+| `名称`                            | `别名`   | `描述`                                                    |
 | --------------------------------- | ----------- | ---------------------------------------------------------------- |
 | bigint                            | int8        | signed eight-byte integer                                        |
 | bigserial                         | serial8     | autoincrementing eight-byte integer                              |
@@ -132,16 +132,16 @@ if the default types don't fit your needs.
 
 <br />
 
-You can "cast" columns from one type to another, however there can be some incompatibilities between types.
-For example, if you cast a `timestamp` to a `date`, you will lose all the time information that was previously saved.
+你可以将列从一种类型变更到另一种类型，但是不同类型之间可能有一些不兼容的地方。例如，如果你把一个时间戳转换到一个日期，你将失去所有以前保存的时间信息。
 
-### Primary Keys
+### 主键
 
-A table can have a "primary key" - a unique identifier for every row of data. A few tips for Primary Keys:
+一个表可以有一个"主键"--每行数据的唯一标识符。关于主键的一些提示：
 
-- It's recommended to create a Primary Key for every table in your database.
-- You can use any column as a primary key, as long as it is unique for every row.
-- It's common to use a `uuid` type or a numbered `identity` column as your primary key.
+- 建议为你数据库中的每张表都创建一个主键。
+- 你可以使用任何列作为主键，只要它对每行都是唯一的。
+- 通常使用 `uuid` 类型或编号的`identity`列作为主键。
+
 
 ```sql
 create table movies (
@@ -149,14 +149,15 @@ create table movies (
 );
 ```
 
-In the example above, we have:
+在上面的例子中，我们已经：
 
-1. created a column called `id`
-1. assigned the data type `bigint`
-1. instructed the database that this should be `generated always as identity`, which means that Postgres will automatically assign a unique number to this column.
-1. Because it's unique, we can also use it as our `primary key`.
+1.创建了一个名为`id`的列;
+1. 指定数据类型为`bigint`;
+1. 指示数据库，这应该是`generated always as identity`，这意味着Postgres将自动给这个列分配一个唯一的数字。
+1. 因为它是唯一的，我们也可以用它作为我们的`主键'。
 
-We could also use `generated by default as identity`, which would allow us to insert our own unique values.
+我们也可以使用`generated by default as identity，这将允许我们插入我们自己的唯一值。
+
 
 ```sql
 create table movies (
@@ -164,12 +165,12 @@ create table movies (
 );
 ```
 
-## Loading data
+## 加载数据
 
-There are several ways to load data in Supabase. You can load data directly into the database or using the [APIs](../../guides/api).
-Use the "Bulk Loading" instructions if you are loading large data sets.
+有几种方法可以在Supabase中加载数据。你可以直接向数据库加载数据，或者使用[API](.../.../guides/api)。
+如果你要加载大型数据集，请使用 "批量加载 "说明。
 
-### Basic data loading
+### 基本数据加载
 
 <Tabs
   scrollable
@@ -220,35 +221,36 @@ final res = await supabase
 </TabPanel>
 </Tabs>
 
-### Bulk data loading
+### 批量数据加载
 
-When inserting large data sets it's best to use PostgreSQL's [COPY](https://www.postgresql.org/docs/current/sql-copy.html) command.
-This loads data directly from a file into a table. There are several file formats available for copying data: text, csv, binary, JSON, etc.
+当插入大型数据集时，最好使用PostgreSQL的[COPY](https://www.postgresql.org/docs/current/sql-copy.html)命令。
+这可以直接从一个文件加载数据到一个表中。有几种文件格式可用于复制数据：文本、csv、二进制、JSON等。
 
-For example, if you wanted to load a CSV file into your movies table:
+例如，如果你想把一个CSV文件加载到你的movies数据表中。
 
 ```csv title=./movies.csv
 "The Empire Strikes Back", "After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda."
 "Return of the Jedi", "After a daring mission to rescue Han Solo from Jabba the Hutt, the Rebels dispatch to Endor to destroy the second Death Star."
 ```
 
-You would [connect](../../guides/database/connecting-to-postgres#direct-connections) to your database directly and load the file with the COPY command:
+你将[连接](.../.../guides/database/connecting-to-postgres#direct-connections)到你的数据库，然后用COPY命令加载文件：
 
 ```bash
 psql -h DATABASE_URL -p 5432 -d postgres -U postgres \
   -c "COPY movies FROM './movies.csv';"
 ```
 
-## Joining tables with Foreign Keys
+## 用外键连接表
 
-Tables can be "joined" together using Foreign Keys.
+多张表可以用外键 "连接 "在一起。
 
 ![Foreign Keys](/docs/img/guides/database/foreign-keys.png)
 
-This is where the "Relational" naming comes from, as data typically forms some sort of relationship.
 
-In our "movies" example above, we might want to add a "category" for each movie (for example, "Action", or "Documentary").
-Let's create a new table called `categories` and "link" our `movies` table.
+这就是 `关系型`命名的由来，因为数据通常形成某种关系。
+
+在我们上面的`movies`例子中，我们可能想为每部电影添加一个  `category`（例如，"动作片"，或 "纪录片"）。
+让我们创建一个名为 `categories`的新表，并 `连接`我们的 `movies`表。
 
 ```sql
 create table categories (
@@ -260,12 +262,12 @@ alter table movies
   add column category_id bigint references categories;
 ```
 
-You can also create "many-to-many" relationships by creating a "join" table.
-For example if you had the following situations:
+你也可以通过创建一个 `连接`表来创建 `多对多`关系。
+例如，如果你有以下情况。
 
-- You have a list of `movies`.
-- A movie can have several `actors`.
-- An `actor` can perfom in several movies.
+- 你有一个 `movies`的列表。
+- 一部电影可以有几个`actors`。
+- 一个`actors`可以在几部电影中演出。
 
 <Tabs
   scrollable
@@ -311,19 +313,19 @@ create table performances (
 
 ## Schemas
 
-Tables belong to `schemas`. Schemas are a way of organizing your tables, often for security reasons.
+表属于`schemas`。`schemas`是组织你的表的一种方式，通常是出于安全原因。
 
 ![Schemas and tables](/docs/img/guides/database/schema-tables.png)
 
-If you don't explicitly pass a schema when creating a table, Postgres will assume that you want to create the table in the `public` schema.
+如果你在创建表时没有明确地传递模式，Postgres会假定你想在`public`模式中创建表。
 
-We can create schemas for organizing tables. For example, we might want a private schema which is hidden from our API:
+我们可以创建用于组织表的模式。例如，我们可能希望有一个私人模式，从我们的API中隐藏起来：
 
 ```sql
 create schema private;
 ```
 
-Now we can create tables inside the `private` schema:
+现在我们可以在`private`模式中创建表：
 
 ```sql
 create table salaries (
@@ -333,17 +335,18 @@ create table salaries (
 );
 ```
 
-## Views
+## 视图
 
-A View is a convenient shortcut to a query. Creating a view does not involve new tables or data. When run, an underlying query is executed, returning its results to the user.
+视图是查询的一个方便的快捷方式。创建一个视图并不涉及新的表或数据。当运行时，一个底层查询被执行，将其结果返回给用户。
 
 <Admonition type="caution">
 
-By default, PostgreSQL views bypass Row Level Security unless you change their owner (see https://github.com/supabase/supabase/discussions/901). PostgreSQL v15 (coming soon) will have a more intuitive control for this through [security invoker views](https://www.depesz.com/2022/03/22/waiting-for-postgresql-15-add-support-for-security-invoker-views/) and the previous step won't be needed.
+默认情况下，PostgreSQL视图会绕过行级安全，除非你改变它们的所有者(详见: https://github.com/supabase/supabase/discussions/901)
+PostgreSQL v15（即将推出）将通过[security invoker views](https://www.depesz.com/2022/03/22/waiting-for-postgresql-15-add-support-for-security-invoker-views/) 对此有一个更直观的控制，前面的步骤就不需要了。
 
 </Admonition>
 
-Say we have the following tables from a database of a university:
+假设我们有一个大学的数据库中的以下表格:
 
 **`students`**
 
@@ -372,7 +375,7 @@ Say we have the following tables from a database of a university:
 | 5   | 3          | 2         | A      |
 | 6   | 3          | 3         | B-     |
 
-Creating a view consisting of all the three tables will look like this:
+创建一个由所有三个表组成的视图将看起来像这样:
 
 ```sql
 create view transcripts as
@@ -389,24 +392,25 @@ create view transcripts as
 alter view transcripts owner to authenticated;
 ```
 
-Once done, we can now access the underlying query with:
+完成后，我们现在可以通过以下方式访问查询:
 
 ```sql
 select * from transcripts;
 ```
 
-### When to use views
+### 何时使用视图
 
-Views provide the several benefits:
+视图提供了几个好处：
 
-- Simplicity
-- Consistency
-- Logical Organization
-- Security
+- 简单性
+- 一致性
+- 逻辑上的组织
+- 安全性
 
-#### Simplicity
 
-As a query becomes complex it becomes a hassle to call it. Especially when we run it at regularly. In the example above, instead of repeatedly running:
+####  简单化
+
+当一个查询变得复杂时，调用它就变得很麻烦了。特别是当我们定期运行它时。在上面的例子中，与其反复运行。
 
 ```sql
 select
@@ -420,17 +424,20 @@ left join students on grades.student_id = students.id
 left join courses on grades.course_id = courses.id;
 ```
 
-We can run this instead:
+我们可以运行如下命令来替代：
 
 ```sql
 select * from transcripts;
 ```
 
-Additionally, a view behaves like a typical table. We can safely use it in table `JOIN`s or even create new views using existing views.
+此外，视图的行为就像一个典型的表。我们可以安全地在表`JOIN`中使用它，甚至可以使用现有的视图创建新的视图。
 
-#### Consistency
+#### 一致性
 
-Views ensure that the likelihood of mistakes decreases when repeatedly executing a query. In our example above, we may decide that we want to exclude the course _Introduction to Postgres_. The query would become:
+
+
+视图可以确保在重复执行查询时，出错的可能性会减少。在我们上面的例子中，我们可能决定要排除Introduction to Postgres这一课程。该查询将变成：
+
 
 ```sql
 select
@@ -445,21 +452,23 @@ from grades
 where courses.code != 'PG101';
 ```
 
-Without a view, we would need to go into every dependent query to add the new rule. This would increase in the likelihood of errors and inconsistencies, as well as introducing a lot of effort for a developer. With views, we can alter just the underlying query in the view **transcripts**. The change will be applied to all applications using this view.
+如果没有视图，我们将需要进入每个依赖性查询来添加新的规则。这将增加错误和不一致的可能性，同时也会给开发人员带来很多麻烦。有了视图，我们可以只改变**transcripts**视图中的基础查询脚本。这个改变将应用于所有使用这个视图的应用程序。
 
-#### Logical Organization
 
-With views, we can give our query a name. This is extremely useful for teams working with the same database. Instead of guessing what a query is supposed to do, a well-named view can easily explain it. For example, by looking at the name of the view **transcripts**, we can infer that the underlying query might involve the **students**, **courses**, and **grades** tables.
+#### 逻辑性组织
 
-#### Security
+通过视图，我们可以给我们的查询一个名字。这对于使用同一数据库的团队来说非常有用。与其猜测一个查询应该做什么，一个名字好的视图可以很容易地解释它。
+例如，通过查看视图的名称**transcripts**，我们可以推断出基础查询可能涉及**students**、**courses**和**grades**表。
 
-Views can restrict the amount and type of data presented to a user. Instead of allowing a user direct access to a set of tables, we provide them a view instead. We can prevent them from reading sensitive columns by excluding them from the underlying query.
+#### 安全性
 
-### Materialized Views
+视图可以限制呈现给用户的数据的数量和类型。我们不允许用户直接访问一组表，而是为他们提供一个视图。我们可以通过将敏感列从底层查询中排除来防止他们读取这些敏感列。
 
-A [materialized view](https://www.postgresql.org/docs/12/rules-materializedviews.html) is a form of view but it also stores the results to disk. In subsequent reads of a materialized view, the time taken to return its results would be much faster than a conventional view. This is because the data is readily available for a materialized view while the conventional view executes the underlying query each time it is called.
+### 物化视图
 
-Using our example above, a materialized view can be created like this:
+一个[物化视图](https://www.postgresql.org/docs/12/rules-materializedviews.html)是视图的一种形式，但它也将结果存储到磁盘上。在后续读取物化视图时，返回其结果的时间会比传统视图快得多。这是因为数据对物化视图来说是现成的，而传统视图在每次调用时都要执行底层查询。
+
+使用我们上面的例子，可以这样创建一个物化视图：
 
 ```sql
 create materialized view transcripts as
@@ -474,35 +483,35 @@ create materialized view transcripts as
     left join courses on grades.course_id = courses.id;
 ```
 
-Reading from the materialized view is the same as a conventional view:
+ 从物化视图中读取数据与传统视图相同：
 
 ```sql
 select * from transcripts;
 ```
 
-### Refreshing materialized views
+### 刷新物化视图
 
-Unfortunately, there is a trade-off - data in materialized views are not always up to date. We need to refresh it regularly to prevent the data from becoming too stale. To do so:
+不幸的是，有一个权衡 - 物化视图中的数据并不总是最新的。我们需要定期刷新它，以防止数据变得过于陈旧。要做到这一点：
 
 ```sql
 refresh materialized view transcripts;
 ```
 
-It's up to you how regularly refresh your materialized views, and it's probably different for each view depending on its use-case.
+这取决于你如何定期刷新你的物化视图，而且根据每个视图的使用情况，它可能是不同的。
 
-### Materialized views vs Conventional views
+### 物化的视图与传统的视图
 
-Materialized views are useful when execution times for queries or views are too slow. These could likely occur in views or queries involving multiple tables and billions of rows. When using such a view, however, there should be tolerance towards data being outdated. Some use-cases for materialized views are internal dashboards and analytics.
+当查询或视图的执行时间太慢时，物化视图是有用的。这些可能发生在涉及多个表和数十亿行的视图或查询中。然而，当使用这样的视图时，应该对数据过期有一定的容忍度。物化视图的一些用例是内部仪表盘和分析。
 
-Creating a materialized view is not a solution to inefficient queries. You should always seek to optimize a slow running query even if you are implementing a materialized view.
+创建物化视图并不是解决低效查询的方法。即使你正在实现一个物化视图，你也应该始终寻求优化一个运行缓慢的查询。
 
-## Resources
+## 资源
 
-- [Official Docs: Create table](https://www.postgresql.org/docs/current/sql-createtable.html)
-- [Official Docs: Create view](https://www.postgresql.org/docs/12/sql-createview.html)
-- [PostgreSQL Tutorial: Create tables](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-create-table/)
-- [PostgreSQL Tutorial: Add column](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-add-column/)
-- [PostgreSQL Tutorial: Views](https://www.postgresqltutorial.com/postgresql-views/)
+- [官方文档：创建表](https://www.postgresql.org/docs/current/sql-createtable.html)
+- [官方文档：创建视图](https://www.postgresql.org/docs/12/sql-createview.html)
+- [PostgreSQL 教程：创建表](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-create-table/)
+- [PostgreSQL 教程：添加列](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-add-column/)
+- [PostgreSQL 教程：视图](https://www.postgresqltutorial.com/postgresql-views/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -4,62 +4,62 @@ export const meta = {
   id: 'authsignal',
   title: 'Authsignal',
   description:
-    'Add an MFA step after sign-in. Use Supabase Auth to sign in with email and password and Authsignal to initiate an Authenticator App challenge.',
+    '在签到后添加一个MFA步骤。使用Supabase Auth以电子邮件和密码登录，使用Authsignal启动Authenticator App挑战。',
 }
 
-This guide shows how to integrate [Authsignal](https://www.authsignal.com/) with [Next.js](https://nextjs.org/) and [Supabase](https://supabase.com/) in order to add an MFA step after sign-in.
+本指南展示了如何将[Authsignal](https://www.authsignal.com/)与[Next.js](https://nextjs.org/)和[Supabase](https://supabase.com/)集成，以便在登录后增加一个MFA步骤。
 
-The user flow is as follows:
+用户流程如下。
 
-1. The user enters their email and password to sign in
-2. If the user has set up MFA, they're prompted to complete an MFA challenge (via Authenticator App) in order to complete sign-in
-3. If the user has not set up MFA, they're signed in immediately and will see a button to set up MFA
+1. 用户输入他们的电子邮件和密码来登录
+2. 如果用户设置了MFA，他们会被提示完成MFA挑战（通过Authenticator App）以完成登录
+3. 3. 如果用户没有设置MFA，他们会立即登录，并会看到一个设置MFA的按钮。
 
-The approach uses a temporary encrypted cookie to ensure that the Supabase auth cookies (`access_token` and `refresh_token`) are only set if the MFA challenge was successful. Session data is encrypted using [@hapi/iron](https://hapi.dev/family/iron).
+该方法使用一个临时的加密cookie，以确保Supabase auth cookies（`access_token`和`refresh_token`）只有在MFA挑战成功后才会被设置。会话数据使用[@hapi/iron](https://hapi.dev/family/iron)进行加密。
 
-The full code version of this example can be found [here](https://github.com/authsignal/supabase-example).
+这个例子的完整代码版本可以在[这里](https://github.com/authsignal/supabase-example)找到。
 
-A live demo can be found [here](https://authsignal-supabase-example.vercel.app).
+现场演示可以找到[这里](https://authsignal-supabase-example.vercel.app)。
 
-## How it works
+## 它是如何工作的
 
-1. A sign-in form posts email and password to the Next.js API route `/api/sign-in`
-2. The `signIn` API route calls the Supabase client's `signInWithEmail` method and gets back a session object
-3. The `signIn` API route then calls the Authsignal client's `track` method to determine if an MFA challenge is required
-4. If a challenge is required, the `signIn` API route saves the session object in a temporary encrypted cookie and redirects to Authsignal
-5. Once the challenge is completed, Authsignal redirects back to `/api/callback` which retrieves the session and sets the Supabase auth cookies
-6. The `callback` API route then redirects to the index page which is protected with Supabase's `withPageAuth` wrapper around `getServerSideProps`
+1. 签到表格将电子邮件和密码发送到Next.js的API路由`/api/sign-in`。
+2. `signIn` API路由调用Supabase客户端的`signInWithEmail`方法，并得到一个会话对象。
+3. 然后，`signIn`API路由调用Authsignal客户端的`track`方法，以确定是否需要MFA挑战。
+4. 如果需要挑战，`signIn`API路由将会话对象保存在一个临时加密的cookie中，并重定向到Authsignal。
+5. 一旦挑战完成，Authsignal就会重定向到`/api/callback`，后者会检索会话并设置Supabase auth cookies。
+6. `callback`API路由然后重定向到索引页面，该页面受到Supabase的`withPageAuth`包装器`getServerSideProps`的保护。
 
-## Step 1: Configuring an Authsignal tenant
+## 步骤1：配置一个Authsignal租户
 
-Go to the [Authsignal Portal](https://portal.authsignal.com) and create a new project and tenant.
+进入[Authsignal门户](https://portal.authsignal.com)，创建一个新项目和租户。
 
-You will also need to [enable at least one authenticator for your tenant](https://portal.authsignal.com/organisations/tenants/authenticators) - for example Authenticator Apps.
+你还需要[为你的租户启用至少一个认证器](https://portal.authsignal.com/organisations/tenants/authenticators)--例如Authenticator Apps。
 
-Finally, to configure the sign-in action to always challenge, go [here](https://portal.authsignal.com/actions/signIn/rules) and set the default action outcome to `CHALLENGE` and click save.
+最后，要将登录动作配置为总是challenge，请到[这里](https://portal.authsignal.com/actions/signIn/rules)，将默认动作结果设置为`CHALLENGE`，然后点击保存。
 
 ![Authsignal settings](https://raw.githubusercontent.com/authsignal/supabase-example/main/authsignal-settings.png)
 
-## Step 2: Creating a Supabase project
+## 第2步：创建一个Supabase项目
 
-From your [Supabase dashboard](https://app.supabase.com/), click `New project`.
+从你的[Supabase仪表板](https://app.supabase.com/)，点击`新项目`。
 
-Enter a `Name` for your Supabase project and enter or generate a secure `Database Password`, then click `Create new project`.
+为您的Supabase项目输入一个`名称`，并输入或生成一个安全的`数据库密码`，然后点击`创建新项目`。
 
-Once your project is created go to `Authentication -> Settings -> Auth Providers` and ensure `Enable Email provider` is checked and that `Confirm Email` is unchecked.
+一旦你的项目被创建，进入 `认证 -> 设置 -> 认证供应商`，确保 `启用电子邮件供应商`被选中，`确认电子邮件`未被选中。
 
 ![Supabase settings](https://raw.githubusercontent.com/authsignal/supabase-example/main/supabase-settings.png)
 
-## Step 3: Building a Next.js app
+## 第3步：构建一个Next.js应用程序
 
-Create a new Next.js project:
+创建一个新的Next.js项目。
 
 ```bash
 npx create-next-app --typescript supabase-authsignal-example
 cd supabase-authsignal-example
 ```
 
-Create a `.env.local` file and enter the following values:
+创建一个`.env.local`文件并输入以下数值。
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=get-from-supabase-dashboard
@@ -68,42 +68,42 @@ AUTHSIGNAL_SECRET=get-from-authsignal-dashboard
 TEMP_TOKEN_SECRET=this-is-a-secret-value-with-at-least-32-characters
 ```
 
-Supabase values can be found under `Settings > API` for your project.
+Supabase的值可以在你的项目的 `Settings > API`中找到。
 
-Authsignal values can be found under `Settings > API Keys` for your tenant.
+Authsignal的值可以在你的租户的 `Settings > API Keys`下找到。
 
-`TEMP_TOKEN_SECRET` is used to encrypt the temporary cookie. Set it to a random 32 character length string.
+`TEMP_TOKEN_SECRET`是用来加密临时cookie的。把它设置为一个随机的32个字符长度的字符串。
 
-Restart your Next.js development server to read in the new values from `.env.local`.
+重新启动你的Next.js开发服务器，从`.env.local`中读入新的值。
 
 ```bash
 npm run dev
 ```
 
-## Step 4: Installing dependencies
+## 第4步：安装依赖项
 
-Install the Supabase client and Auth helpers for Next.js:
+安装Next.js的Supabase客户端和Auth帮助器。
 
 ```
 npm install @supabase/supabase-js @supabase/auth-helpers-nextjs
 ```
 
-Install the Authsignal Node.js client:
+安装Authsignal Node.js客户端。
 
 ```
 npm install @authsignal/node
 ```
 
-Finally install 2 packages to help encrypt and serialize session data in cookies:
+最后安装2个软件包，以帮助加密和序列化cookies中的会话数据。
 
 ```
 npm install @hapi/iron cookie
 npm install --save-dev @types/cookie
 ```
 
-## Step 5: Initializing the Authsignal client
+## 第5步：初始化Authsignal客户端
 
-Add the following code to `/lib/authsignal.ts`:
+在`/lib/authsignal.ts`中添加以下代码。
 
 ```
 import { Authsignal } from "@authsignal/node";
@@ -119,17 +119,17 @@ const redirectUrl = "http://localhost:3000/api/callback";
 export const authsignal = new Authsignal({ secret, redirectUrl });
 ```
 
-The `redirectUrl` here is a Next.js API route which Authsignal will redirect back to after an MFA challenge. We'll implement this below.
+这里的 `redirectUrl`是一个Next.js API路由，Authsignal将在MFA挑战后重定向到该路由。我们将在下面实现这一点。
 
-## Step 6: Managing session data in cookies
+## 第六步：在cookie中管理会话数据
 
-Next we will add some helper functions for managing cookies:
+接下来我们将添加一些用于管理cookie的辅助函数。
 
-- `setTempCookie` encrypts and serializes the Supabase session data and sets it in a temporary cookie
-- `getSessionFromTempCookie` decrypts and parses this session data back from the cookie
-- `setAuthCookie` sets the Supabase auth cookies (`access_token` and `refresh_token`) and clears the temporary cookie
+- `setTempCookie`对Supabase会话数据进行加密和序列化，并将其置于一个临时cookie中
+- `getSessionFromTempCookie`解密并解析cookie中的会话数据
+- `setAuthCookie`设置Supabase的认证cookie（`access_token`和`refresh_token`）并清除临时cookie。
 
-Add the following code to `/lib/cookies.ts`:
+在`/lib/cookies.ts`中添加以下代码。
 
 ```
 import Iron from "@hapi/iron";
@@ -210,11 +210,11 @@ const ACCESS_TOKEN_COOKIE = "sb-access-token";
 const REFRESH_TOKEN_COOKIE = "sb-refresh-token";
 ```
 
-## Step 7: Building the UI
+## 第7步：建立用户界面
 
-We will add some form components for signing in and signing up as well as a basic home page.
+我们将添加一些用于签到和注册的表单组件，以及一个基本的主页。
 
-Add the following code to `/pages/sign-up.tsx`:
+在`/pages/sign-up.tsx`中添加以下代码。
 
 ```
 import Link from "next/link";
@@ -263,7 +263,7 @@ export default function SignUpPage() {
 }
 ```
 
-Then add the following code to `/pages/sign-in.tsx`:
+然后在`/pages/sign-in.tsx`中添加以下代码。
 
 ```
 import Link from "next/link";
@@ -316,7 +316,7 @@ export default function SignInPage() {
 }
 ```
 
-Now we will use Supabase's `withPageAuth` wrapper around `getServerSideProps` to make the home page require authentication via SSR. Replace the existing code in `/pages/index.tsx` with the following:
+现在我们将使用Supabase的`withPageAuth`包装器围绕`getServerSideProps`来使主页需要通过SSR认证。用以下内容替换`/pages/index.tsx`中的现有代码。
 
 ```
 import { getUser, User, withPageAuth } from "@supabase/auth-helpers-nextjs";
@@ -371,7 +371,7 @@ export default function HomePage({ user, isEnrolled }: Props) {
 }
 ```
 
-Optional: To make things look a bit nicer, you can add the following to `/styles/globals.css`:
+可选的:为了使事情看起来更漂亮，你可以在`/styles/globals.css`中添加以下内容。
 
 ```
 main {
@@ -423,17 +423,17 @@ a {
 }
 ```
 
-## Step 8: Adding the API routes
+## 第八步：添加API路由
 
-Now we'll replace the existing api routes in `/pages/api/` with 5 new routes:
+现在，我们将用5条新的路由替换`/pages/api/`中现有的api路由。
 
-- `/sign-in.ts`: handles signing in with Supabase and initiating the MFA challenge with Authsignal
-- `/sign-up.ts`: handles signing up with Supabase
-- `/sign-out.ts`: clears the Supabase auth cookies and signs the user out
-- `/mfa.ts`: handles the user's attempt to set up MFA or to manage their existing MFA settings
-- `/callback.ts`: handles completing the MFA challenge with Authsignal
+- `/sign-in.ts`：处理用Supabase签名和用Authsignal发起MFA挑战的问题。
+- `/sign-up.ts`: 处理与Supabase的签到事宜
+- `/sign-out.ts`: 清除Supabase的auth cookies并签出用户。
+- `/mfa.ts`: 处理用户试图设置MFA或管理他们现有的MFA设置。
+- `/callback.ts`: 处理与Authsignal一起完成MFA挑战。
 
-Add the following code to `/pages/api/sign-in.ts`:
+在`/pages/api/sign-in.ts`中添加以下代码。
 
 ```
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
@@ -471,7 +471,7 @@ export default async function signIn(
 }
 ```
 
-Then to handle new sign-ups add the following to `/pages/api/sign-up.ts`:
+然后处理新的注册，在`/pages/api/sign-up.ts`中添加以下内容。
 
 ```
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
@@ -501,7 +501,7 @@ export default async function signUp(
 const isSession = (data: any): data is Session => !!data?.access_token;
 ```
 
-To clear the auth cookies on sign-out add the following to `/pages/api/sign-out.ts`:
+为了在签出时清除认证cookies，在`/pages/api/sign-out.ts`中加入以下内容。
 
 ```
 import { supabaseClient } from "@supabase/auth-helpers-nextjs";
@@ -515,7 +515,7 @@ export default async function signOut(
 }
 ```
 
-To handle the user's actions to set up MFA or manage their existing MFA settings, add the following to `/pages/api/mfa.ts`:
+为了处理用户设置MFA或管理他们现有的MFA设置的行为，在`/pages/api/mfa.ts`中添加以下内容。
 
 ```
 import { getUser, withApiAuth } from "@supabase/auth-helpers-nextjs";
@@ -544,11 +544,11 @@ export default withApiAuth(async function mfa(
 });
 ```
 
-Because the user should be authenticated with Supabase to set up or manage MFA, we can use Supabase's `withApiAuth` wrapper to protect this route.
+因为用户应该通过Supabase的认证来设置或管理MFA，我们可以使用Supabase的`withApiAuth`包装器来保护这个路由。
 
-The `redirectToSettings` param specifies whether the user should be redirected to the MFA page settings panel after a challenge, rather than redirecting them immediately back to the application.
+`redirectToSettings`参数指定了用户是否应该在挑战后被重定向到MFA页面的设置面板，而不是立即将他们重定向到应用程序。
 
-Finally we need a route to handle the redirect back from Authsignal after an MFA challenge. Add the following to `/pages/api/callback.ts`:
+最后，我们需要一个路由来处理MFA挑战后从Authsignal重定向回来的问题。在`/pages/api/callback.ts`中添加以下内容。
 
 ```
 import { NextApiRequest, NextApiResponse } from "next";
@@ -575,14 +575,14 @@ export default async function callback(
 }
 ```
 
-That's it! You should now be able to sign up a new user and set up MFA.
+目前为止， 你现在应该可以注册一个新用户并设置MFA了。
 
-Then if you sign out, you'll be prompted to complete an MFA challenge when signing back in again.
+然后，如果你退出，当你再次登录时，会提示你完成一个MFA挑战。
 
-## Resources
+## 资源
 
-- To learn more about Authsignal take a look at the [API Documentation](https://docs.authsignal.com/).
-- You can customize the look and feel of the Authsignal Prebuilt MFA page [here](https://portal.authsignal.com/organisations/tenants/customizations).
+- 要了解更多关于Authsignal的信息，请看[API文档](https://docs.authsignal.com/)。
+- 你可以自定义Authsignal预制MFA页面的外观和感觉[这里](https://portal.authsignal.com/organisations/tenants/customizations)。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

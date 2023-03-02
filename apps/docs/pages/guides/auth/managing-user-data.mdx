@@ -2,19 +2,19 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'managing-user-data',
-  title: 'Managing User Data',
-  description: 'Securing your user data with Row Level Security.',
+  title: '管理用户数据',
+  description: '使用行级别安全性保护用户数据。',
 }
 
-For security purposes, the `auth` schema is not exposed on the auto-generated API.
+出于安全目的，`auth`模式不会在自动生成的API上公开。
 
-Even though Supabase provides an `auth.users` table, it can be helpful to create tables in the `public` schema for storing user data that you want to access via the API.
+尽管Suabase提供了`身份验证`。用户表，在`公共`模式中创建表以存储您希望通过API访问的用户数据可能会很有帮助。
 
-## Creating user tables
+## 创建用户表
 
-When you create tables to store user data, it's helpful to reference the `auth.users` table in the primary key. This ensures data integrity.
+当您创建表来存储用户数据时，引用`auth.users`表。这确保了数据的完整性。
 
-For example, a `public.profiles` table might look like this:
+例如，`public.profiles` 表可能如下所示：
 
 ```sql
 create table public.profiles (
@@ -28,10 +28,10 @@ create table public.profiles (
 alter table public.profiles enable row level security;
 ```
 
-## Public access
+## 公共通道
 
-Since Row Level Security is enabled, this table is accessible via the API but no data will be returned unless we set up some Policies.
-If we wanted the data to be _readable_ by everyone but only allow logged-in users to update their own data, the Policies would look like this:
+由于启用了行级别安全性，因此可以通过API访问此表，但除非我们设置了一些策略，否则不会返回任何数据。
+如果我们希望每个人都可以读取数据，但只允许登录用户更新自己的数据，则策略如下：
 
 ```sql
 create policy "Public profiles are viewable by everyone."
@@ -47,9 +47,9 @@ create policy "Users can update own profile."
   using ( auth.uid() = id );
 ```
 
-## Private access
+## 私人访问
 
-If the data should only be _readable_ by the user who owns the data, we just need to change the `for select` query above.
+如果数据只能由拥有数据的用户读取，我们只需要更改上面的`for select`查询。
 
 ```sql
 create policy "Profiles are viewable by users who created them."
@@ -57,7 +57,7 @@ create policy "Profiles are viewable by users who created them."
   using ( auth.uid() = id );
 ```
 
-The nice thing about this pattern? We can now query this table via the API and we don't need to include data filters in our API queries - the Policies will handle that for us:
+这种模式的好处是什么？我们现在可以通过API查询此表，我们不需要在API查询中包含数据过滤器-策略将为我们处理：
 
 ```js
 // This will return nothing while the user is logged out
@@ -71,20 +71,21 @@ const { data: profile } = await supabase
   .select('id, username, avatar_url, website')
 ```
 
-## Bypassing Row Level Security
+## 绕过行级安全性
 
-If you need to fetch a full list of user profiles, we supply a `service_key` which you can use with your API and Client Libraries to bypass Row Level Security.
+如果您需要获取完整的用户配置文件列表，我们将提供一个`service_key`，您可以使用它与API和客户端库一起绕过行级别安全性。
 
-Make sure you _NEVER_ expose this publicly. But it can be used on the server-side to fetch all of the profiles.
+确保你从未公开披露过。但它可以在服务器端用于获取所有配置文件。
 
-## Advanced techniques
 
-### Using triggers
+## 先进的技术
 
-If you want to add a row to your `public.profiles` table every time a user signs up, you can use triggers.
-If the trigger fails however, it could block the user sign ups - so make sure that the code is well-tested.
+### 使用触发器
 
-For example:
+如果要将行添加到`public`。每次用户注册时，您都可以使用触发器。
+然而，如果触发器失败，它可能会阻止用户注册，因此请确保代码经过良好测试。
+
+例如：
 
 ```sql
 -- inserts a row into public.users

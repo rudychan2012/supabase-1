@@ -2,61 +2,61 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'going-into-prod',
-  title: 'Production Readiness',
-  description: 'Things to do before making your app publicly available',
+  title: '生产准备',
+  description: '在发布你的应用程序之前要做的事情',
 }
 
-After developing your project and deciding it's Production Ready, you should run through this checklist to ensure that your project:
+在开发了你的项目并决定它可以生产后，你应该通过这个检查表来确保你的项目。
 
-- is secure
-- won't falter under the expected load
-- remains available whilst in production
+- 是安全的
+- 在预期的负载下不会动摇
+- 在生产过程中保持可用
 
-## Security
+## 安全
 
-- Ensure RLS is enabled
-  - Tables that do not have RLS enabled with reasonable policies allow any client to access and modify their data. This is unlikely to be what you want in the majority of cases.
-  - [Learn more about RLS](/docs/guides/auth/row-level-security).
-- Enable replication on tables containing sensitive data by enabling Row Level Security (RLS) and setting row security policies:
-  - Go to the Authentication > Policies page in the Supabase Dashboard to enable RLS and create security policies.
-  - Go to the Database > Replication page in the Supabase Dashboard to manage replication tables.
-- Enable 2FA on GitHub. Since your GitHub account gives you administrative rights to your Supabase project, you should protect it with a strong password and 2FA using a U2F key or a TOTP app.
-- Ensure email confirmations are enabled in the `Auth > Settings` page.
-- Use a custom SMTP server for auth emails so that your users can see that the mails are coming from a trusted domain (preferably the same domain that your app is hosted on). Grab SMTP credentials from any major email provider such as SendGrid, AWS SES, etc.
-- Think hard about how _you_ would abuse your service as an attacker, and mitigate.
-- Review these [common cybersecurity threats](https://auth0.com/docs/security/prevent-threats).
+- 确保RLS被启用
+  - 没有启用合理策略的RLS的表允许任何客户访问和修改他们的数据。在大多数情况下，这不太可能是你想要的。
+  - 了解更多关于RLS的信息](/docs/guides/auth/row-level-security)。
+- 通过启用行级安全（RLS）和设置行安全策略，在包含敏感数据的表中启用复制。
+  - 转到 Supabase Dashboard 中的 Authentication > Policies 页面，启用 RLS 并创建安全策略。
+  - 转到 Supabase 仪表板中的数据库 > 复制页面来管理复制表。
+- 在 GitHub 上启用 2FA。由于你的GitHub账户赋予你对Supabase项目的管理权限，你应该用一个强密码和使用U2F密钥或TOTP应用程序的2FA来保护它。
+- 确保在 `Auth > Settings`页面中启用电子邮件确认功能。
+- 使用一个自定义的SMTP服务器来发送认证邮件，这样你的用户就可以看到邮件是来自一个受信任的域（最好是你的应用程序所在的同一域）。从任何主要的电子邮件提供商，如SendGrid、AWS SES等，获取SMTP凭证。
+- 认真思考一下，作为攻击者，你会如何滥用你的服务，并加以缓解。
+- 审查这些[常见的网络安全威胁](https://auth0.com/docs/security/prevent-threats)。
 
-## Performance
+## 性能
 
-- Ensure that you have suitable indices to cater to your common query patterns
-  - [Learn more about indexes in Postgres](https://www.enterprisedb.com/postgres-tutorials/overview-postgresql-indexes).
-  - `pg_stat_statements` can help you [identify hot or slow queries](https://www.virtual-dba.com/blog/postgresql-performance-identifying-hot-and-slow-queries/).
-- Perform load testing (preferably on a staging env)
-  - Tools like [k6](https://k6.io/) can simulate traffic from many different users.
-- Upgrade your database if you require more resources. If you need anything beyond what is listed, contact enterprise@supabase.io.
-- If you are expecting a surge in traffic (for a big launch), let the team know by sending your Project Ref to us (support@supabase.io) with more details about your launch. We'll keep an eye on your project.
+- 确保你有合适的索引来满足你常见的查询模式
+  - [了解更多关于Postgres的索引](https://www.enterprisedb.com/postgres-tutorials/overview-postgresql-indexes)。
+  - `pg_stat_statements`可以帮助你[识别热门或缓慢的查询](https://www.virtual-dba.com/blog/postgresql-performance-identifying-hot-and-slow-queries/)。
+- 进行负载测试（最好是在暂存环境中）。
+  - 像[k6](https://k6.io/)这样的工具可以模拟来自许多不同用户的流量。
+- 如果你需要更多的资源，升级你的数据库。如果你需要超出所列的任何东西，请联系 enterprise@supabase.io。
+- 如果你期望流量激增，让团队知道，把你的项目参考资料发给我们(support@supabase.io)，并提供关于你发射的更多细节。我们将继续关注你的项目。
 
-## Availability
+## 可用性
 
-- Use your own SMTP credentials so that you have full control over the deliverability of your transactional auth emails (see Auth > Settings)
-  - you can grab SMTP credentials from any major email provider such as SendGrid, AWS SES, etc.
-  - The default rate limit for auth emails provided by Supabase is 30 new users per hour, if doing a major public announcement you will likely require more than this.
-- If your application is on the free tier and is **not** expected to be queried at least once every 7 days, then it may be paused by Supabase to save on server resources.
-  - You can restore paused projects from the Supabase dashboard.
-  - Upgrade to Pro to guarantee that your project will not be paused for inactivity.
-- Database backups are not available for download on the free tier.
-  - You can set up your own backup systems using tools like [pg_dump](https://www.postgresqltutorial.com/postgresql-backup-database/) or [wal-g](https://github.com/wal-g/wal-g).
-  - Nightly backups for Pro tier projects are available on the Supabase dashboard for up to 7 days.
-- Upgrading to the Supabase Pro Tier will give you access to email support on support@supabase.io
+- 使用你自己的SMTP凭证，这样你就可以完全控制你的交易性认证邮件的可交付性(见认证>设置）。
+  - 你可以从任何主要的电子邮件提供商，如SendGrid、AWS SES等，获取SMTP凭据。
+  - Supabase提供的认证电子邮件的默认速率限制是每小时30个新用户，如果做一个重大的公共公告，你可能需要比这更多。
+- 如果你的应用程序是免费层，并且***没有预期每7天至少被查询一次，那么Supabase可能会暂停它，以节省服务器资源。
+  - 你可以从Supabase仪表板上恢复暂停的项目。
+  - 升级到专业版，以保证你的项目不会因为不活动而被暂停。
+- 在免费层级上，数据库备份不提供下载。
+  - 你可以使用[pg_dump](https://www.postgresqltutorial.com/postgresql-backup-database/)或[wal-g](https://github.com/wal-g/wal-g)等工具建立你自己的备份系统。
+  - 专业级项目的夜间备份可在 Supabase 仪表板上获得，最长 7 天。
+- 升级到Supabase专业级后，您就可以在support@supabase.io，获得电子邮件支持。
 
-## Rate Limiting, Resource Allocation, & Abuse Prevention
+## 速率限制、资源分配和防止滥用
 
-- Supabase employs a number of safeguards against bursts of incoming traffic to prevent abuse and help maximize stability across the platform
-  - If you're expecting high load events including production launches or heavy load testing, or prolonged high resource usage please give us at least 2 weeks notice. You can do this by opening a ticket via the [support form](https://app.supabase.com/support/new).
+- Supabase采用了一系列的保障措施来防止传入流量的突发，以防止滥用并帮助最大限度地提高整个平台的稳定性。
+  - 如果您预计会发生高负荷事件，包括生产启动或重负荷测试，或长期的高资源使用，请至少提前两周通知我们。你可以通过[支持表格](https://app.supabase.com/support/new)开具票据来做到这一点。
 
-## Next steps
+## 接下来的步骤
 
-This checklist is always growing so be sure to check back frequently, and also feel free to suggest additions and amendments by making a PR on [GitHub](https://github.com/supabase/supabase).
+这份清单一直在增长，所以一定要经常回来看看，也可以通过在[GitHub](https://github.com/supabase/supabase)上做一个PR，随时提出补充和修改意见。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,76 +2,76 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-twitter',
-  title: 'Login with Twitter',
-  description: 'Add Twitter OAuth to your Supabase project',
+  title: '用Twitter登录',
+  description: '在你的Supabase项目中添加Twitter OAuth',
 }
 
-To enable Twitter Auth for your project, you need to set up a Twitter OAuth application and add the application credentials to your Supabase Dashboard.
+要为你的项目启用Twitter Auth，你需要设置一个Twitter OAuth应用程序，并将应用程序的凭证添加到你的Supabase仪表板。
 
-## Overview
+## 概述
 
-Setting up Twitter logins for your application consists of 3 parts:
+为你的应用程序设置Twitter登录由3部分组成。
 
-- Create and configure a Twitter Project and App on the [Twitter Developer Dashboard](https://developer.twitter.com/en/portal/dashboard).
-- Add your Twitter `API Key` and `API Secret Key` to your [Supabase Project](https://app.supabase.com).
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js).
+- 在[Twitter Developer Dashboard](https://developer.twitter.com/en/portal/dashboard)上创建并配置一个Twitter项目和应用程序。
+- 在你的[MemFire Cloud项目](https://cloud.memfiredb.com)中添加你的Twitter`API密钥`和`API秘钥`。
+- 将登录代码添加到您的[JS客户端应用程序](https://github.com/supabase/supabase-js)。
 
-## Access your Twitter Developer account
+## 访问你的Twitter开发者账户
 
-- Go to [developer.twitter.com](https://developer.twitter.com).
-- Click on `Sign in` at the top right to log in.
+- 转到[developer.twitter.com](https://developer.twitter.com)。
+- 点击右上方的 `Sign in`来登录。
 
 ![Twitter Developer Portal.](/docs/img/guides/auth-twitter/twitter-portal.png)
 
-## Find your callback URL
+## 找到你的回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要一个回调URL，它看起来像这样。
 
 `https://<project-ref>.supabase.co/auth/v1/callback`
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `设置`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 现在只要在后面加上`/auth/v1/callback`就可以得到完整的`OAuth Redirect URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create a Twitter OAuth app
+## 创建一个Twitter OAuth应用程序
 
-- Click `+ Create Project`.
-  - Enter your project name, click `Next`.
-  - Select your use case, click `Next`.
-  - Enter a description for your project, click `Next`.
-  - Enter a name for your app, click `Complete`.
-  - Copy and save your `API Key` (this is your `client_id`).
-  - Copy and save your `API Secret Key` (this is your `client_secret`).
-- At the bottom, under `Next, setup your App` click the link `enable 3rd party authentication`.
-- Under `App Settings`, click on the gear icon next to your app name to go to `App Settings`.
-- At the bottom, next to `Authentication settings`, click `Edit`.
-- Turn `Enable 3-legged OAuth` ON.
-- Turn `Request email address from users` ON.
-- Enter your `Callback URL`.
-- Enter your `Website URL`.
-- Enter your `Terms of service URL`.
-- Enter your `Privacy policy URL`.
-- Click `Save`.
+- 点击`+创建项目`。
+  - 输入你的项目名称，点击`下一步`。
+  - 选择你的用例，点击 `下一步`。
+  - 输入项目描述，点击 `下一步`。
+  - 为你的应用程序输入一个名称，点击`完成`。
+  - 复制并保存你的 `API Key`（这是你的 `client_id`）。
+  - 复制并保存你的 `API密匙`（这是你的 `client_secret`）。
+- 在底部，在 `下一步，设置你的应用程序`下，点击 `启用第三方认证`的链接。
+- 在 `应用程序设置`下，点击你的应用程序名称旁边的齿轮图标，进入 `应用程序设置`。
+- 在底部，在 `认证设置`旁边，点击 `编辑`。
+- 打开 `启用三条腿的OAuth`。
+- 打开 `向用户索取电子邮件地址`。
+- 输入你的 `回调URL`。
+- 输入你的 `网站URL`。
+- 输入你的 `服务条款的URL`。
+- 输入你的 `隐私政策URL`。
+- 点击 `保存`。
 
-## Enter your Twitter credentials into your Supabase Project
+## 在你的Supabase项目中输入你的Twitter凭证
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- In the left sidebar, click the `Authentication` icon (near the top).
-- Click `Settings` from the list to go to the `Authentication Settings` page.
-- Enter the final (hosted) URL of your app under `Site URL` (this is important).
-- Under `External OAuth Providers` turn `Twitter Enabled` to ON.
-- Enter your `API Key` (`client_id`) and `API Secret Key` (`client_secret`) saved in the previous step.
-- Click `Save`.
+- 转到你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 在左边的侧栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面。
+- 在 `网站URL`下输入你的应用程序的最终（托管）URL（这很重要）。
+- 在 `外部OAuth Providers`下，将 `Twitter Enabled`设为ON。
+- 输入上一步保存的 `API密钥`（`client_id`）和 `API秘钥`（`client_secret`）。
+- 点击 `保存`。
 
-## Add login code to your client app
+##在你的客户端应用程序中添加登录代码
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `twitter` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`twitter`作为`provider`。
 
 ```js
 async function signInWithTwitter() {
@@ -81,7 +81,7 @@ async function signInWithTwitter() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话和任何对象从localStorage中移除。
 
 ```js
 async function signout() {
@@ -89,11 +89,11 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Twitter Developer Dashboard](https://developer.twitter.com/en/portal/dashboard)
+- [Supabase账户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Twitter开发者仪表板](https://developer.twitter.com/en/portal/dashboard)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

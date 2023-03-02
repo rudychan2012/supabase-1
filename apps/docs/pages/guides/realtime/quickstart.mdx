@@ -2,12 +2,13 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'quickstart',
-  title: 'Realtime Quickstart',
+  title: '实时快速入门',
   description: "Getting started with Realtime's Features",
   sidebar_label: 'Quickstart',
 }
 
-Learn how to build [multiplayer.dev](https://multiplayer.dev), a collaborative app that demonstrates Broadcast, Presence, and Postgres CDC using [Realtime](/docs/guides/realtime).
+
+学习如何构建[multiplayer.dev](https://multiplayer.dev)，这是一个合作应用，它展示了使用[实时](/docs/guides/realtime)的广播、Presence和Postgres CDC。
 
 <div className="video-container">
   <iframe
@@ -18,19 +19,19 @@ Learn how to build [multiplayer.dev](https://multiplayer.dev), a collaborative a
   ></iframe>
 </div>
 
-## Install `supabase-js` Client
+## 安装`supabase-js` 客户端
 
 ```bash
 npm install @supabase/supabase-js
 ```
 
-## Cursor Positions
+## 光标位置
 
-[Broadcast](/docs/guides/realtime#broadcast) allows a client to send messages and multiple clients to receive the messages. The broadcasted messages are ephemeral. They are not persisted to the database and are directly relayed through the Realtime servers. This is ideal for sending information like cursor positions where minimal latency is important, but persisting them is not.
+[广播](/docs/guides/realtime#broadcast)允许一个客户端发送消息，多个客户端接收消息。广播的消息是短暂的。它们不会被持久化到数据库中，而是直接通过实时服务器转发。这对于发送像光标位置这样的信息是很理想的，因为最小的延迟是很重要的，但持久化则不是。
 
-In [multiplayer.dev](https://multiplayer.dev), client's cursor positions are sent to other clients in the room. However, cursor positions will be randomly generated for this example.
+在[multiplayer.dev](https://multiplayer.dev)中，客户端的光标位置被发送到房间里的其他客户端。然而，在这个例子中，光标位置将是随机生成的。
 
-You need to get the public `anon` access token from your project's [API settings](https://app.supabase.com/project/_/settings/api). Then you can set up the Supabase client and start sending a client's cursor positions to other clients in channel `room1`:
+你需要从你的项目的[API设置](https://app.supabase.com/project/_/settings/api)中获得公共的`anon`访问令牌。然后你就可以设置Supabase客户端，并开始发送一个客户端的光标位置到通道`room1`中的其他客户端。
 
 ```js
 const { createClient } = require('@supabase/supabase-js')
@@ -65,11 +66,12 @@ channel.subscribe((status) => {
 
 <Admonition type="info">
 
-JavaScript client has a default rate limit of 1 Realtime event every 100 milliseconds that's configured by `eventsPerSecond`.
+JavaScript客户端有一个默认的速率限制，即每100毫秒一个实时事件，由`eventsPerSecond`配置。
+
 
 </Admonition>
 
-Another client can subscribe to channel `room1` and receive cursor positions:
+另一个客户端可以订阅频道`room1`并接收游标位置。
 
 ```js
 // Supabase client setup
@@ -87,13 +89,13 @@ supabase
 
 <Admonition type="info">
 
-`type` must be `broadcast` and the `event` must match for clients subscribed to the channel.
+`type` 必须是 `broadcast`，`event` 必须与订阅该频道的客户相匹配。
 
 </Admonition>
 
-## Roundtrip Latency
+## 往返延时
 
-You can also configure the channel so that the server must return an acknowledgement that it received the `broadcast` message. This is useful if you want to measure the roundtrip latency:
+你也可以配置通道，使服务器必须返回一个确认函，表明它收到了 "广播 "信息。如果你想测量往返的延迟，这很有用。
 
 ```js
 // Supabase client setup
@@ -121,11 +123,12 @@ channel.subscribe(async (status) => {
 })
 ```
 
-## Track and display which users are online
+## 跟踪和显示哪些用户在线
 
-[Presence](/docs/guides/realtime#presence) stores and synchronize shared state across clients. The `sync` event is triggered whenever the shared state changes. The `join` event is triggered when new clients join the channel and `leave` event is triggered when clients leave.
+[Presence](/docs/guides/realtime#presence)存储和同步各客户端的共享状态。每当共享状态发生变化时，就会触发`sync`事件。`join`事件在新客户加入频道时被触发，`leave`事件在客户离开时被触发。
 
-Each client can use the channel's `track` method to store an object in shared state. Each client can only track one object, and if `track` is called again by the same client, then the new object overwrites the previously tracked object in the shared state. You can use one client to track and display users who are online:
+每个客户端可以使用通道的`track`方法来存储共享状态中的对象。每个客户端只能跟踪一个对象，如果`track`被同一个客户端再次调用，那么新的对象就会覆盖共享状态中先前跟踪的对象。你可以使用一个客户端来跟踪和显示在线的用户。
+
 
 ```js
 // Supabase client setup
@@ -158,7 +161,7 @@ channel.subscribe(async (status) => {
 })
 ```
 
-Then you can use another client to add another user to the channel's Presence state:
+然后，您可以使用其他客户端将其他用户添加到频道的存在状态：
 
 ```js
 // Supabase client setup
@@ -181,11 +184,12 @@ channel.subscribe(async (status) => {
 })
 ```
 
-If a channel is set up without a presence key, the server generates a random UUID. `type` must be `presence` and `event` must be either `sync`, `join`, or `leave`.
+如果一个频道在没有存在密钥的情况下被设置，服务器会生成一个随机的UUID。`type`必须是`presence`，`event`必须是`sync`，`join`，或`leave`。
 
-## Insert and Receive Persisted Messages
 
-[Postgres Change Data Capture (CDC)](/docs/guides/realtime#postgres-cdc) enables your client to insert, update, or delete database records and send the changes to clients. Create a `messages` table to keep track of messages created by users in specific rooms:
+## 插入和接收持久的信息
+
+[Postgres Change Data Capture (CDC)](/docs/guides/realtime#postgres-cdc)使你的客户能够插入、更新或删除数据库记录，并将这些变化发送给客户。创建一个`messages`表来跟踪用户在特定房间创建的消息。
 
 ```sql
 create table messages (
@@ -211,7 +215,7 @@ to anon
 using (true);
 ```
 
-If it doesn't already exist, create a `supabase_realtime` publication and add `messages` table to the publication:
+如果它还不存在，创建一个`supabase_realtime`发布，并将`messages`表添加到该出发布中。
 
 ```sql
 begin;
@@ -226,7 +230,7 @@ commit;
 alter publication supabase_realtime add table messages;
 ```
 
-You can then have a client listen for changes on the `messages` table for a specific room and send and receive persisted messages:
+然后你可以让客户端监听特定房间的`messages`表的变化，并发送和接收持久化的信息。
 
 ```js
 // Supabase client setup

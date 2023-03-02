@@ -2,76 +2,75 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-azure',
-  title: 'Login with Azure',
-  description: 'Add Azure OAuth to your Supabase project',
+  title: '使用Azure登录',
+  description: '将Azure OAuth添加到您的Supabase项目',
 }
 
-To enable Azure Auth for your project, you need to set up an Azure OAuth application and add the application credentials to your Supabase Dashboard.
+若要为您的项目启用Azure Auth，您需要设置Azure OAuth应用程序，并将应用程序凭据添加到Supabase 项目仪表。
 
-## Overview
+## 概述
 
-Azure OAuth consists of four broad steps:
+Azure OAuth由四个主要步骤组成：
 
-- Create an application under Azure Active Directory.
-- Obtain a `Application (client) ID` with “Sign In with Azure” capabilities. This will be used as the `client id`.
-- Create a `Secret ID` with “Sign In with Azure” capabilities. The value of the secret will be used as the `client secret`.
-- Add the callback url of your application to the allowlist.
+- 在Azure Active Directory下创建应用程序。
+- 获取具有“使用Azure登录”功能的`应用程序（客户端）ID`。这将用作`客户端id`。
+- 创建具有“使用Azure登录”功能的 `Secret ID`。机密的值将用作`client secret`。
+- 将应用程序的回调url添加到允许列表中。
 
-## Access your Azure Developer account
+## 访问你的Azure开发者帐户
 
-- Go to [portal.azure.com](https://portal.azure.com/#home).
-- Login and select "Azure Active Directory" under the list of Azure Services.
+- 跳转到[portal.azure.com](https://portal.azure.com/#home).
+- 登录并在Azure服务列表下选择“Azure Active Directory”。 
 
-## Register an application
+## 注册应用程序
 
-- Under Azure Active Directory, select "App registrations" in the side panel.
-- Select "New registration".
-- Choose a name and select your preferred option for the supported account types.
-- Specify the "Redirect URI".
-- The redirect / callback URI should look like this: `https://<project-ref>.supabase.co/auth/v1/callback`
-- Click "Register" at the bottom of the form.
+- 在Azure Active Directory下，在侧面板中选择 `应用程序注册` 
+- 选择`新注册`.
+- 为支持的帐户类型选择名称并选择首选选项。
+- 指定`重定向URI`。
+- 重定向/回调URI应如下所示：`https://<project-ref>.supabase.co/auth/v1/callback` 
+- 单击表单底部的`注册`。
 
-![Register an application.](/docs/img/guides/auth-azure/azure-register-app.png)
+![注册应用程序.](/docs/img/guides/auth-azure/azure-register-app.png)
 
-## Obtain a Client ID
+## 获取客户端ID
 
-This will serve as the `client_id` when you make API calls to authenticate the user.
+当您进行API调用以验证用户时，这将用作`client_id`。
 
-- Once your app has been registered, the client id can be found under the [list of app registrations](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) under the column titled "Application (client) ID".
+- 应用程序注册后，可以在[应用程序注册列表](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps)下找到客户端id在标题为`应用程序（客户端）ID`的列下。 
 
-![Obtain the client id](/docs/img/guides/auth-azure/azure-client-id.png)
+![获取客户端id](/docs/img/guides/auth-azure/azure-client-id.png)
 
-## Obtain a Secret ID
+## 获取秘密ID
 
-This will serve as the `client_secret` when you make API calls to authenticate the user.
+当您进行API调用以验证用户时，这将用作`client_secret`。
 
-- Click on the name of the app registered above.
-- Under "Essentials", click on "Client credentials".
-- Navigate to the "Client secrets" tab and select "New client secret".
-- Enter a description and choose your preferred expiry for the secret.
-- Once the secret is generated, save the `value` (not the secret ID).
+- 单击上面注册的应用程序的名称。
+- 在`Essentials`下，单击`Client credentials`。
+- 导航到`Client secrets`选项卡并选择  `New client secret`。 
+- 输入描述并选择您的首选密钥过期日期。
+- 生成密钥后，保存`value`（而不是密钥ID）。
 
-![Obtain the client secret](/docs/img/guides/auth-azure/azure-client-secret.png)
+![获取 client secret](/docs/img/guides/auth-azure/azure-client-secret.png)
 
-## Obtain the Tenant URL
+## 获取租户URL
 
-This will allow your users to use your custom Azure login page when logging in.
+这将允许您的用户在登录时使用自定义Azure登录页面。
 
-- Select the Directory (Tenant) ID value.
-- The Azure Tenant URL should look like this: `https://login.microsoftonline.com/<tenant-id>`
+- 选择目录（租户）ID值。
+- Azure租户URL应如下所示: `https://login.microsoftonline.com/<tenant-id>`
 
-![Obtain the tenant url](/docs/img/guides/auth-azure/azure-tenant-url.png)
+![获取租户URL](/docs/img/guides/auth-azure/azure-tenant-url.png)
 
-## Add login code to your client app
+## 将登录代码添加到客户端应用程序
 
 <Admonition type="tip">
 
-Supabase Auth requires that Azure returns a valid email address. Therefore you must request the `email` scope in the `signIn` method above.
+Supabase Auth要求Azure返回一个有效的电子邮件地址。因此，你必须在上面的`signIn`方法中请求`email`范围。
 
 </Admonition>
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `azure` as the `provider`:
-
+当您的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth signingwiththoauth)，将`azure`作为`provider`： 
 ```js
 async function signInWithAzure() {
   const { data, error } = await supabase.auth.signInWithOAuth(
@@ -85,7 +84,7 @@ async function signInWithAzure() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signout)将其从浏览器会话和localStorage中删除：
 
 ```js
 async function signout() {
@@ -93,9 +92,9 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资料
 
-- [Azure Developer Account](https://portal.azure.com)
+- [Azure开发者帐户](https://portal.azure.com)
 - [GitHub Discussion](https://github.com/supabase/gotrue/pull/54#issuecomment-757043573)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />

@@ -2,43 +2,43 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'custom-domains',
-  title: 'Custom Domains',
-  description: 'Configuring a Custom Domain for your Supabase project.',
+  title: '自定义域名',
+  description: '为你的Supabase项目配置一个自定义域。',
 }
 
 <Admonition type="note">
 
-Custom Domains are currently in beta, and are being slowly made available to projects.
+自定义域名目前处于测试阶段，正在慢慢向项目提供。
 
 </Admonition>
 
-Custom domains allow you to present a branded experience to your users. You can also use a subdomain for the purposes of this guide.
+自定义域名允许你向你的用户展示一个品牌的体验。为了本指南的目的，你也可以使用一个子域。
 
-To get started:
+准备
 
-1. [Install](/docs/guides/cli) the Supabase CLI 1.11.3+.
-1. [Log in](/docs/guides/cli/local-development#log-in-to-the-supabase-cli) to your Supabase account using the CLI.
-1. Ensure that you have [Owner or Admin permissions](/docs/guides/hosting/platform#manage-team-members) for the project you'd like to set up a custom domain for.
-1. Enable the Custom Domains add-on in the Billing page of the Dashboard.
+1. [安装](/docs/guides/cli) Supabase CLI 1.11.3+。
+1. 使用 CLI [登录](/docs/guides/cli/local-development#log-in-the-supabase-cli) 到您的 Supabase 账户。
+1. 确保你对你想设置自定义域的项目有[所有者或管理员权限](/docs/guides/hosting/platform#manage-team-members)。
+1. 在仪表板的计费页面中启用自定义域名插件。
 
-## Configure a Custom Domain
+## 配置一个自定义域
 
-This example assumes your Supabase project is `foobar` with a corresponding API URL `foobarbaz.supabase.co` and configures a custom domain at `api.example.com`.
+这个例子假设你的Supabase项目是 `foobar`，对应的API URL是 `foobarbaz.supabase.co`，并在 `api.example.com`配置了一个自定义域名。
 
-### Configure a CNAME
+### 配置一个CNAME
 
-Set up a CNAME record for `api.example.com`, resolving to `foobarbaz.supabase.co.`, with as low a TTL as possible.
+为`api.example.com`设置一个CNAME记录，解析到`foobarbaz.supabase.co.`，TTL越低越好。
 
-### Configure TXT Verification
+### 配置TXT验证
 
-Use the `create` subcommand of the CLI to notify Supabase of your domain and retrieve TXT verification records:
+使用CLI的`create`子命令来通知Supabase你的域名并检索TXT验证记录。
 
 ```bash
 supabase domains create --project-ref foobar --custom-hostname api.example.com --experimental
 ```
 
-The output of the `create` command includes two TXT records[^1] you will need to set up, in order to verify your control over the domain in question,
-and for us to issue SSL certificates for it. For example:
+创建命令的输出包括两个TXT记录[^1]，你将需要设置，以验证你对该域名的控制。
+并让我们为其颁发SSL证书。比如说。
 
 ```bash
 [...]
@@ -47,47 +47,47 @@ Required outstanding validation records:
         api.example.com TXT -> ca3-F1HvR9i938OgVwpCFwi1jTsbhe1hvT0Ic3efPY3Q
 ```
 
-[^1] One of the records requires you to _replace_ the CNAME record set up in [the first step](#cname-configure) with a TXT record. You'll be able to restore it back to the CNAME after the verification process has been completed.
+[^1] 其中一条记录要求你用一条TXT记录_取代[第一步](#cname-configure)中设置的CNAME记录。在验证过程完成后，你就可以把它恢复到CNAME。
 
-### Verify your domain
+### 验证你的域名
 
-Set up both records as instructed, and then use the `reverify` command for the Supabase Platform to verify the records:
+按照指示设置两个记录，然后使用Supabase平台的`reverify`命令来验证这些记录。
 
 ```bash
 supabase domains reverify --project-ref foobarbaz --experimental
 ```
 
-You might need to wait a few minutes before your updated DNS records are propagated, especially if the older records were using a high TTL.
+你可能需要等待几分钟，你的更新的DNS记录才会被传播，特别是如果旧的记录使用高TTL的话。
 
-### Activate your domain
+### 激活你的域名
 
-The final activation step reconfigures your project to start serving traffic on your custom domain (`api.example.com`).
-The auth service, in particular, will no longer work with the original URL (`foobar.supabase.co`).
-As such, it is recommended that you schedule a downtime window of 20-30 minutes, depending on the complexity of your project, to update all the services that need to know about your custom domain:
+最后的激活步骤是重新配置你的项目，开始为你的自定义域名（`api.example.com`）提供流量。
+特别是授权服务，将不再使用原来的URL（`foobar.supabase.co`）。
+因此，建议你安排20-30分钟的停机时间，这取决于你的项目的复杂性，以更新所有需要了解你的自定义域名的服务。
 
-- any client code (e.g., frontends, mobile apps)
-- any OAuth providers (e.g., google, github)
+- 任何客户端代码（例如前台、移动应用程序）。
+- 任何OAuth提供商（如谷歌、Github）。
 
-Additionally, update the DNS configuration for `api.example.com` to once more use a CNAME record that resolves to `foobarbaz.supabase.co`.
-Finally, you can use the `activate` subcommand to reconfigure your project:
+此外，更新`api.example.com`的DNS配置，再次使用CNAME记录，解析到`foobarbaz.supabase.co`。
+最后，你可以使用`activate`子命令来重新配置你的项目。
 
 ```bash
 supabase domains activate --project-ref foobarbaz --experimental
 ```
 
-## Remove a Custom Domain
+## 删除一个自定义域
 
-If you have a custom domain (`api.example.com`) set up for your Supabase project (ref `foobarbaz`, with assigned endpoints at `foobarbaz.supabase.co`), and would like to go back to using the Supabase-provisioned endpoints (`foobarbaz.supabase.co`), you can use the `delete` subcommand:
+如果你为你的Supabase项目设置了一个自定义域（`api.example.com`）（参考`foobarbaz`，分配的端点在`foobarbaz.supabase.co`），并且想回到使用Supabase提供的端点（`foobarbaz.supabase.co`），你可以使用`delete`子命令。
 
 ```bash
 supabase domains delete --project-ref foobarbaz --experimental
 ```
 
-As with the final activation stage of the process for setting up a custom domain, you'll need to update any references in your client code and OAuth providers from the custom domain to the Supabase-provisioned endpoints.
+与设置自定义域的过程的最后激活阶段一样，你需要更新你的客户代码和OAuth提供商中的任何引用，从自定义域到Supabase提供的端点。
 
-## Limitations
+## 局限性
 
-Edge functions do not honor the custom domain setting and they still have to be invoked via the `foobarbaz.supabase.co` domain.
+边缘函数不尊重自定义域的设置，它们仍然必须通过`foobarbaz.supabase.co`域来调用。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

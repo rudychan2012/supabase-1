@@ -2,83 +2,83 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-messagebird',
-  title: 'Phone Auth with MessageBird',
-  description: 'How to set up and use Mobile OTP with MessageBird and Supabase.',
+  title: '使用MessageBird的电话授权',
+  description: '如何用MessageBird和Supabase设置和使用移动OTP。',
 }
 
-## Overview
+## 概述
 
-In this guide we'll show you how to authenticate your users with SMS based OTP (One-Time Password) tokens.
+在本指南中，我们将向您展示如何使用基于 SMS 的 OTP（一次性密码）令牌来验证您的用户。
 
-There are two reasons to use Supabase SMS OTP tokens:
+使用Supabase SMS OTP令牌有两个原因。
 
-- You want users to log in with mobile + password, and the mobile should be verified via SMS
-- You want users to log in with mobile ONLY (i.e. passwordless login)
+- 你想让用户用手机+密码登录，并且手机应该通过短信进行验证
+- 你希望用户只用手机登录（即无密码登录）。
 
-We'll cover:
+我们将涵盖。
 
-- [Finding your MessageBird credentials](#finding-your-messagebird-credentials)
-- [Using OTP with password based logins](#using-otp-with-password-based-logins)
-- [Using OTP as a passwordless sign-in mechanism](#using-otp-as-a-passwordless-sign-in-mechanism)
+- 找到你的MessageBird证书](#finding-your-messagebird-credentials)
+- [使用OTP与基于密码的登录](#using-otp-with-password-based-logins)
+- 使用OTP作为无密码登录机制](#using-otp-as-passwordless-sign-in-mechanism)
 
-What you'll need:
+你需要什么？
 
-- A MessageBird account (sign up here: https://dashboard.messagebird.com/en/sign-up)
-- A Supabase project (create one here: https://app.supabase.com)
-- A mobile phone capable of receiving SMS
+- 一个MessageBird账户（在此注册：https://dashboard.messagebird.com/en/sign-up）
+- 一个Supabase项目（在这里创建一个：https://app.supabase.com）。
+- 一部能够接收短信的移动电话
 
-## Steps
+## 步骤
 
-### Finding your MessageBird credentials
+### 找到你的MessageBird凭证
 
-Start by logging into your MessageBird account and verify the mobile number you'll be using to test with: https://dashboard.messagebird.com/en/getting-started/sms
+首先登录您的MessageBird账户，并验证您将用于测试的手机号码： https://dashboard.messagebird.com/en/getting-started/sms
 
-This is the number that will be receiving the SMS OTPs.
+这是一个将接收短信OTP的号码。
 
 ![Verify your own phone number](/docs/img/guides/auth-messagebird/1.png)
 
 ![Get your API Keys](/docs/img/guides/auth-messagebird/2.png)
 
-Navigate to the [dashboard settings](https://dashboard.messagebird.com/en/settings/sms) to set the default originator. The messagebird originator is the name or number from which the message is sent.
-For more information, you can refer to the messagebird article on choosing an originator [here](https://support.messagebird.com/hc/en-us/articles/115002628665-Choosing-an-originator)
+导航到[仪表板设置](https://dashboard.messagebird.com/en/settings/sms)，设置默认发件人。messagebird发信人是发送消息的名称或号码。
+欲了解更多信息，你可以参考messagebird关于选择发起人的文章[这里](https://support.messagebird.com/hc/en-us/articles/115002628665-Choosing-an-originator)
 
 ![Set the default originator](/docs/img/guides/auth-messagebird/3.png)
 
-You will need the following values to get started:
+你将需要以下数值才能开始。
 
 - Live API Key / Test API Key
-- MessageBird originator
+- MessageBird 发起人
 
-Now go to the Auth > Settings page in the Supabase dashboard (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/settings).
+现在去Supabase仪表板中的Auth > Settings页面(https://app.supabase.com/project/YOUR-PROJECT-REF/auth/settings)。
 
-You should see an option to enable Phone Signup.
+你应该看到一个选项来启用电话注册。
 
 ![Enable Phone Sign-Up](/docs/img/guides/auth-twilio/7.png)
 
-Toggle it on, and copy the 2 values over from the messagebird dashboard. Click save.
+拨动它，并从Messagebird仪表板上复制2个值。点击保存。
 
-Note: If you use the Test API Key, the OTP will not be delivered to the mobile number specified but messagebird will log the response in the dashboard.
-If the Live API Key is used instead, the OTP will be delivered and there will be a deduction in your free credits.
+注意：如果您使用测试API密钥，OTP将不会被传送到指定的手机号码，但messagebird将在仪表板上记录响应。
+如果使用实时API密钥，OTP将被交付，但您的免费点数将被扣除。
 
 <!-- TODO: Add screenshot of UI -->
 
-Plugin MessageBird credentials
+插件MessageBird凭证
 
-Now the backend should be setup, we can proceed to add our client-side code!
+现在后台应该已经设置好了，我们可以继续添加我们的客户端代码了
 
-#### SMS custom template
+#### 短信定制模板
 
-The SMS message sent to a phone containing an OTP code can be customized. This is useful if you need to mention a brand name or display a website address.
+发送到手机上的包含OTP代码的短信可以被定制。如果你需要提到一个品牌名称或显示一个网站地址，这很有用。
 
-Go to Auth > Templates page in the Supabase dashboard (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/templates).
+进入 Supabase 仪表板中的 Auth > Templates 页面 (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/templates)。
 
-Use the variable `.Code` in the template to display the code.
+在模板中使用变量`.Code`来显示代码。
 
-### Using OTP with password based logins
+### 使用OTP与基于密码的登录方式
 
-In this use scenario we'll be using the user's mobile phone number as an alternative to an email address when signing up along with a password. You may want to think hard about the permanency of this however. It is not uncommon for mobile phone numbers to be recycled by phone networks when users cancel their phone contracts or move countries, therefore granting access to the user's account to whoever takes over the phone number in the future. Soon we'll add multi-factor auth, which will mitigate this risk, but for now you may want to give some thought to allowing your users to recover their account by some other means in an emergency.
+在这个使用场景中，我们将使用用户的手机号码作为注册时与密码一起使用的电子邮件地址的替代。然而，你可能要仔细考虑一下这个的持久性。当用户取消他们的电话合同或移动国家时，手机号码被电话网络回收的情况并不少见，因此，无论谁在未来接管了这个手机号码，都可以访问用户的账户。很快我们就会增加多因素认证，这将减轻这种风险，但现在你可能要考虑一下，让你的用户在紧急情况下通过其他方式恢复他们的账户。
 
-Using supabase-js on the client you'll want to use the same `signUp` method that you'd use for email based sign ups, but with the `phone` param instead of the `email param`:
+在客户端使用supabase-js，你要使用与基于电子邮件的注册相同的`signUp`方法，但使用`phone`参数而不是`email参数`。
 
 <Tabs
   scrollable
@@ -111,9 +111,9 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/signup' \
 </TabPanel>
 </Tabs>
 
-The user will now receive an SMS with a 6-digit pin that you will need to receive from them within 60-seconds before they can login to their account.
+用户现在会收到一条短信，上面有一个6位数的密码，你需要在60秒内收到他们的密码，然后他们才能登录他们的账户。
 
-You should present a form to the user so they can input the 6 digit pin, then send it along with the phone number to `verifyOTP`:
+你应该向用户提供一个表格，让他们输入6位数的密码，然后把它和电话号码一起发送给 `verifyOTP`。
 
 <Tabs
   scrollable
@@ -147,7 +147,7 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/verify' \
 </TabPanel>
 </Tabs>
 
-If successful the user will now be logged in and you should receive a valid session like:
+如果成功的话，用户现在将被登录，你应该收到一个有效的会话，如。
 
 ```json
 {
@@ -158,9 +158,9 @@ If successful the user will now be logged in and you should receive a valid sess
 }
 ```
 
-The access token can be sent in the Authorization header as a Bearer token for any CRUD operations on supabase-js. See our guide on [Row Level Security](/docs/guides/auth#row-level-security) for more info on restricting access on a user basis.
+访问令牌可以作为承载令牌在授权头中发送，用于supabase-js的任何CRUD操作。请参阅我们的[行级安全]指南(/docs/guides/auth#row-level-security)，了解更多关于以用户为单位限制访问的信息。
 
-Also now that the mobile has been verified, the user can use the number and password to sign in without needing to verify their number each time:
+另外，现在手机已经被验证了，用户可以使用号码和密码登录，而不需要每次都验证他们的号码。
 
 <Tabs
   scrollable
@@ -193,11 +193,11 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/token?grant_type=
 </TabPanel>
 </Tabs>
 
-### Using OTP as a passwordless sign-in mechanism
+### 使用OTP作为无密码登录机制
 
-In this scenario you are granting your user's the ability to login to their account without needing to set a password on their account, all they have to do to log in is verify their mobile each time using the OTP.
+在这种情况下，你将授予你的用户登录他们的账户的能力，而不需要在他们的账户上设置密码，他们所要做的就是每次使用OTP来验证他们的手机。
 
-In javascript we can use the `signIn` method with a single parameter: `phone`
+在javascript中，我们可以使用只有一个参数的`signIn`方法：`phone`。
 
 <Tabs
   scrollable
@@ -228,7 +228,7 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/otp' \
 </TabPanel>
 </Tabs>
 
-The second step is the same as the previous section, you need to collect the 6-digit pin from the user and pass it along with their phone number to the verify method:
+第二步与上一节相同，你需要从用户那里收集6位数的密码，并与他们的电话号码一起传递给验证方法。
 
 <Tabs
   scrollable
@@ -262,7 +262,7 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/verify' \
 </TabPanel>
 </Tabs>
 
-and the response should also be the same as above:
+并且响应也应与上述相同。
 
 ```json
 {
@@ -273,13 +273,13 @@ and the response should also be the same as above:
 }
 ```
 
-The user does not have a password therefore will need to sign in via this method each time they want to access your service.
+用户没有密码，因此每次要访问你的服务时，都需要通过这种方法登录。
 
-## Resources
+## 资源
 
 - [MessageBird Signup](https://dashboard.messagebird.com/en/sign-up)
-- [Supabase Dashboard](https://app.supabase.com)
-- [Supabase Row Level Security](/docs/guides/auth#row-level-security)
+- [Supabase仪表板](https://app.supabase.com)
+- [Supabase行级安全](/docs/guides/auth#row-level-security)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

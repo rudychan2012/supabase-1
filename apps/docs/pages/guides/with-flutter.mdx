@@ -2,55 +2,55 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'with-flutter',
-  title: 'Quickstart: Flutter',
-  description: 'Learn how to use Supabase in your Flutter App.',
+  title: '快速入门: Flutter',
+  description: '了解如何在您的 Flutter 应用程序中使用 Supabase。',
   sidebar_label: 'Flutter',
 }
 
 <QuickstartIntro />
 
-![Supabase User Management example](/docs/img/supabase-flutter-demo.png)
+![Supabase用户管理实例](/docs/img/supabase-flutter-demo.png)
 
 ### GitHub
 
-Should you get stuck while working through the guide, refer to [this repo](https://github.com/supabase/supabase/tree/master/examples/user-management/flutter-user-management).
+如果你在阅读指南时遇到困难，请参考[此版本](https://github.com/supabase/supabase/tree/master/examples/user-management/flutter-user-management)。
 
 <ProjectSetup />
 
-## Building the App
+## 构建应用程序
 
-Let's start building the Flutter app from scratch.
+让我们开始从头开始构建Flutter应用程序。
 
-### Initialize a Flutter app
+### 初始化一个Flutter应用程序
 
-We can use [`flutter create`](https://flutter.dev/docs/get-started/test-drive) to initialize
-an app called `supabase_quickstart`:
+我们可以使用[`flutter create`](https://flutter.dev/docs/get-started/test-drive)来初始化
+一个名为`supabase_quickstart`的应用程序。
 
 ```bash
 flutter create supabase_quickstart
 ```
 
-Then let's install the only additional dependency: [`supabase_flutter`](https://pub.dev/packages/supabase_flutter)
+然后让我们安装唯一的额外依赖：[`supabase_flutter`](https://pub.dev/packages/supabase_flutter)
 
-Copy and paste the following line in your pubspec.yaml to install the package:
+在你的pubspec.yaml中复制并粘贴以下一行来安装该软件包。
 
 ```yaml
 supabase_flutter: ^1.0.0
 ```
 
-Run `flutter pub get` to install the dependencies.
+运行 `flutter pub get`来安装依赖性。
 
-### Setup deep links
+### 设置深度链接
 
-Now that we have the dependencies installed let's setup deep links so users who have logged in via magic link or OAuth can come back to the app.
+现在我们已经安装了依赖性，让我们来设置深度链接，这样通过魔法链接或OAuth登录的用户就可以回到应用中来。
 
-Add `io.supabase.flutterquickstart://login-callback/` as a new [redirect URL](https://app.supabase.com/project/_/auth/url-configuration) in the Dashboard.
+添加`io.supabase.flutterquickstart://login-callback/`作为Dashboard中新的[重定向URL](https://app.supabase.com/project/_/auth/url-configuration)。
 
-![Supabase console deep link setting](/docs/img/deeplink-setting.png)
+![Supabase控制台深度链接设置](/docs/img/deeplink-setting.png)
 
-That is it on Supabase's end and the rest are platform specific settings:
+这就是Supabase的一端，其余的是平台特定的设置。
 
-For Android, add an intent-filter to enable deep linking:
+对于安卓，添加一个意图过滤器来启用深度链接。
 
 ```xml title=android/app/src/main/AndroidManifest.xml
 <manifest ...>
@@ -75,7 +75,7 @@ For Android, add an intent-filter to enable deep linking:
 </manifest>
 ```
 
-For iOS add CFBundleURLTypes to enable deep linking:
+对于iOS来说，添加CFBundleURLTypes来启用深度链接。
 
 ```xml title=ios/Runner/Info.plist"
 <!-- ... other tags -->
@@ -100,15 +100,15 @@ For iOS add CFBundleURLTypes to enable deep linking:
 </plist>
 ```
 
-For web:
+用于web:
 
-There are no additional configurations.
+没有额外的配置。
 
-### Main function
+### 主要功能
 
-Now that we have deep links ready let's initialize the Supabase client inside our `main` function with the API credentials that you copied [earlier](#get-the-api-keys).
-These variables will be exposed on the app, and that's completely fine since we have
-[Row Level Security](/docs/guides/auth#row-level-security) enabled on our Database.
+现在我们已经准备好了深度链接，让我们在`main`函数中用你复制的API凭证（#get-the-api-keys）初始化Supabase客户端。
+这些变量将被暴露在应用程序中，这完全没有问题，因为我们有
+[行级安全](/docs/guides/auth#row-level-security)在我们的数据库上启用。
 
 ```dart title=lib/main.dart
 Future<void> main() async {
@@ -122,10 +122,10 @@ Future<void> main() async {
 }
 ```
 
-### Setting up some constants and handy functions
+### 设置一些常数和方便的函数
 
-Let's also create a constant file to make it easier to use Supabase client.
-We will also include an extension method declaration to call `showSnackBar` with one line of code.
+让我们也创建一个常量文件，以使Supabase客户端更容易使用。
+我们还将包括一个扩展方法声明，用一行代码调用`showSnackBar`。
 
 ```dart title=lib/constants.dart
 import 'package:flutter/material.dart';
@@ -150,10 +150,10 @@ extension ShowSnackBar on BuildContext {
 }
 ```
 
-### Set up Splash Screen
+### 设置闪屏
 
-Let's create a splash screen that will be shown to users right after they open the app.
-This screen retrieves the current session and redirects the user accordingly.
+让我们创建一个闪屏，在用户打开应用程序后立即显示给他们。
+这个屏幕会检索当前会话并相应地重定向用户。
 
 ```dart title=lib/pages/splash_page.dart
 import 'package:flutter/material.dart';
@@ -199,12 +199,12 @@ class _SplashPageState extends State<SplashPage> {
 
 ```
 
-### Set up a Login page
+### 设置一个登录页面
 
-Let's create a Flutter widget to manage logins and sign ups.
-We'll use Magic Links, so users can sign in with their email without using passwords.
-Notice that this page sets up a listener on the user's auth state using `onAuthStateChange`.
-A new event will fire when the user comes back to the app by clicking their magic link, which this page can catch and redirect the user accordingly.
+让我们创建一个Flutter小部件来管理登录和注册。
+我们将使用Magic Links，所以用户可以用他们的电子邮件登录，而不使用密码。
+请注意，这个页面使用`onAuthStateChange`为用户的认证状态设置了一个监听器。
+当用户通过点击他们的魔法链接回到应用程序时，一个新的事件将被触发，这个页面可以捕捉到并相应地重定向用户。
 
 ```dart title=lib/pages/login_page.dart
 import 'dart:async';
@@ -299,10 +299,10 @@ class _LoginPageState extends State<LoginPage> {
 }
 ```
 
-### Set up Account page
+### 设置账号页面
 
-After a user is signed in we can allow them to edit their profile details and manage their account.
-Let's create a new widget called `account_page.dart` for that.
+在用户登录后，我们可以让他们编辑他们的个人资料和管理他们的账户。
+让我们创建一个新的widget，称为`account_page.dart`，用于此目的。
 
 ```dart title=lib/pages/account_page.dart"
 import 'package:flutter/material.dart';
@@ -435,9 +435,9 @@ class _AccountPageState extends State<AccountPage> {
 }
 ```
 
-### Launch!
+### 启动
 
-Now that we have all the components in place, let's update `lib/main.dart`:
+现在我们已经有了所有的组件，让我们来更新`lib/main.dart`。
 
 ```dart title=lib/main.dart
 import 'package:flutter/material.dart';
@@ -485,52 +485,52 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-Once that's done, run this in a terminal window to launch on Android or iOS:
+一旦完成，在终端窗口中运行这个，在安卓或iOS上启动。
 
 ```bash
 flutter run
 ```
 
-Or for web, run the following command to launch it on `localhost:3000`
+或者对于web，运行以下命令，在 `localhost:3000`启动它
 
 ```bash
 flutter run -d web-server --web-hostname localhost --web-port 3000
 ```
 
-And then open the browser to [localhost:3000](http://localhost:3000) and you should see the completed app.
+然后打开浏览器到[localhost:3000](http://localhost:3000)，你应该看到完成的应用程序。
 
-![Supabase User Management example](/docs/img/supabase-flutter-account-page.png)
+![Supabase用户管理实例](/docs/img/supabase-flutter-account-page.png)
 
-## Bonus: Profile photos
+## 简介照片
 
-Every Supabase project is configured with [Storage](/docs/guides/storage) for managing large files like
-photos and videos.
+每个Supabase项目都配置了[存储](/docs/guides/storage)，用于管理大型文件，如
+照片和视频。
 
-### Making sure we have a public bucket
+### 确保我们有一个公共桶
 
-We will be storing the image as a publicly sharable image.
-Make sure your `avatars` bucket is set to public, and if it is not, change the publicity by clicking the dot menu that appears when you hover over the bucket name.
-You should see an orange `Public` badge next to your bucket name if your bucket is set to public.
+我们将把图片存储为可公开分享的图片。
+确保你的 `avatars`桶被设置为公开的，如果不是，通过点击悬停在桶名上的点状菜单来改变公开。
+如果你的水桶被设置为公开，你应该在桶名称旁边看到一个橙色的 `公开`徽章。
 
-### Adding image uploading feature to Account page
+### 在账户页面添加图片上传功能
 
-We will use [`image_picker`](https://pub.dev/packages/image_picker) plugin to select an image from the device.
+我们将使用[`image_picker`](https://pub.dev/packages/image_picker)插件来选择设备中的图片。
 
-Add the following line in your pubspec.yaml file to install `image_picker`:
+在你的pubspec.yaml文件中添加以下一行来安装`image_picker`:
 
 ```yaml
 image_picker: ^0.8.4
 ```
 
-Using [`image_picker`](https://pub.dev/packages/image_picker) requires some additional preparation depending on the platform.
-Follow the instruction on README.md of [`image_picker`](https://pub.dev/packages/image_picker) on how to set it up for the platform you are using.
+使用[`image_picker`](https://pub.dev/packages/image_picker)需要一些额外的准备，这取决于平台。
+按照[`image_picker`](https://pub.dev/packages/image_picker)的README.md说明如何为你所使用的平台进行设置。
 
-Once you are done with all of the above, it is time to dive into coding.
+一旦你完成了上述所有工作，现在是时候深入到编码中去了。
 
-### Create an upload widget
+### 创建一个上传小组件
 
-Let's create an avatar for the user so that they can upload a profile photo.
-We can start by creating a new component:
+让我们为用户创建一个头像，以便他们可以上传个人资料照片。
+我们可以从创建一个新的组件开始。
 
 ```dart title=lib/components/avatar.dart
 import 'package:flutter/material.dart';
@@ -624,9 +624,9 @@ class _AvatarState extends State<Avatar> {
 }
 ```
 
-### Add the new widget
+### 添加新的小组件
 
-And then we can add the widget to the Account page as well as some logic to update the `avatar_url` whenever the user uploads a new avatar.
+然后我们可以在账户页面上添加小部件，以及一些逻辑来更新`avatar_url`，只要用户上传一个新的头像。
 
 ```dart title=lib/pages/account_page.dart
 import 'package:flutter/material.dart';
@@ -789,13 +789,11 @@ class _AccountPageState extends State<AccountPage> {
 }
 ```
 
-Congratulations, that is it! You have now built a fully functional user management app using Flutter and Supabase!
+恭喜您，您现在已经使用Flutter和Supabase建立了一个功能齐全的用户管理应用程序。您现在已经使用Flutter和Supabase建立了一个功能齐全的用户管理应用
 
-## See also
+## 还请参见
 
-- [Flutter Tutorial: building a Flutter chat app](https://supabase.com/blog/flutter-tutorial-building-a-chat-app)
-- [Flutter Tutorial - Part 2: Authentication and Authorization with RLS](https://supabase.com/blog/flutter-authentication-and-authorization-with-rls)
-
+- [Flutter教程：建立一个Flutter聊天应用程序](https://supabase.com/blog/flutter-tutorial-building-a-chat-app)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

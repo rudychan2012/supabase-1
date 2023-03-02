@@ -2,86 +2,86 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-twitch',
-  title: 'Login with Twitch',
-  description: 'Add Twitch OAuth to your Supabase project',
+  title: '用Twitch登录',
+  description: '在你的Supabase项目中加入Twitch OAuth',
 }
 
-To enable Twitch Auth for your project, you need to set up a Twitch Application and add the Application OAuth credentials to your Supabase Dashboard.
+要为你的项目启用Twitch Auth，你需要设置一个Twitch应用程序，并将应用程序OAuth凭证添加到你的Supabase仪表板。
 
-## Overview
+## 概述
 
-Setting up Twitch logins for your application consists of 3 parts:
+为您的应用程序设置Twitch登录，包括3个部分。
 
-- Create and configure a Twitch Application [Twitch Developer Console](https://dev.twitch.tv/console)
-- Add your Twitch OAuth Consumer keys to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js)
+- 创建和配置Twitch应用程序[Twitch Developer Console](https://dev.twitch.tv/console)
+- 将你的Twitch OAuth消费者密钥添加到你的[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到您的[JS客户端应用程序](https://github.com/supabase/supabase-js)
 
-## Access your Twitch Developer account
+## 访问您的Twitch开发者账户
 
-- Go to [dev.twitch.tv](https://dev.twitch.tv).
-- Click on `Log in with Twitch` at the top right to log in.
-- If you have not already enabled 2-Factor Authentication for your Twitch Account, you will need to do that at [Twitch Security Settings](https://www.twitch.tv/settings/security) before you can continue.
+- 转到[dev.twitch.tv](https://dev.twitch.tv)。
+- 点击右上方的 `用Twitch登录`来登录。
+- 如果你还没有为你的Twitch账户启用2-Factor Authentication，你需要在[Twitch安全设置](https://www.twitch.tv/settings/security)中进行这项操作，然后才能继续。
 
 ![Twitch Developer Page](/docs/img/guides/auth-twitch/twitch-developer-page.png)
 
-- Once logged in, go to the [Twitch Developer Console](https://dev.twitch.tv/console).
+- 登录后，进入[Twitch Developer Console]（https://dev.twitch.tv/console）。
 
 ![Twitch Developer Console](/docs/img/guides/auth-twitch/twitch-console.png)
 
-## Find your callback URL
+## 找到你的回调URL
 
-In the next step you require a callback URL, which looks like this:
+在下一步，你需要一个回调URL，它看起来像这样。
 
 `https://<project-ref>.supabase.co/auth/v1/callback`
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `设置`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 现在只要在后面加上`/auth/v1/callback`就可以得到完整的`OAuth Redirect URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create a Twitch Application
+## 创建一个Twitch应用程序
 
 ![Twitch Developer Console](/docs/img/guides/auth-twitch/twitch-console.png)
 
-- Click on `+ Register Your Application` at the top right.
+- 点击右上方的 `+注册你的申请`。
 
 ![Register Application](/docs/img/guides/auth-twitch/twitch-register-your-application.png)
 
-- Enter the name of your application.
-- Type or paste your `OAuth Redirect URL` (the callback URL from the previous step.)
-- Select a category for your app.
-- Check the Captcha box and click `Create`.
+- 输入你的应用程序的名称。
+- 输入或粘贴你的 `OAuth重定向URL`（上一步的回调URL。）
+- 为你的应用程序选择一个类别。
+- 勾选验证码框并点击 `创建`。
 
-## Retrieve your Twitch OAuth Client ID and Client Secret
+## 检索你的Twitch OAuth客户端ID和客户端秘密
 
-- Click `Manage` at the right of your application entry in the list.
+- 在列表中的应用程序条目右侧点击`管理`。
 
 ![Twitch Applications List](/docs/img/guides/auth-twitch/twitch-applications-list.png)
 
-- Copy your Client ID.
-- Click `New Secret` to create a new Client Secret.
-- Copy your Client Secret.
+- 复制你的客户ID。
+- 点击 `New Secret`来创建一个新的客户秘密。
+- 复制你的客户秘密。
 
 ![Get Client ID and Secret](/docs/img/guides/auth-twitch/twitch-get-keys.png)
 
-## Add your Twitch credentials into your Supabase Project
+## 在你的Supabase项目中添加你的Twitch凭证
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Enter the final (hosted) URL of your app under `Site URL` (this is important)
-- Under `External OAuth Providers` turn `Twitch Enabled` to ON
-- Enter your `client_id` and `client_secret` saved in the previous step
-- Click `Save`
+- 进入您的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)
+- 在左边的侧栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面
+- 在 `网站URL`下输入你的应用程序的最终（托管）URL（这很重要）。
+- 在 `外部OAuth供应商`下，将 `Twitch已启用`设为 `ON`
+- 输入上一步保存的 `client_id`和 `client_secret`。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 将登录代码添加到你的客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `twitch` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`twitch`作为`provider`。
 
 ```js
 async function signInWithTwitch() {
@@ -91,7 +91,7 @@ async function signInWithTwitch() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话和任何对象从localStorage中移除。
 
 ```js
 async function signout() {
@@ -99,12 +99,12 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Twitch Account](https://twitch.tv)
-- [Twitch Developer Console](https://dev.twitch.tv/console)
+- [Supabase账户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Twitch账户](https://twitch.tv)
+- [Twitch开发者控制台](https://dev.twitch.tv/console)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

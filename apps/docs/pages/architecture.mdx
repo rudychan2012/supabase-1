@@ -2,160 +2,154 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'architecture',
-  title: 'Architecture',
+  title: '架构',
   description: 'Supabase design and architecture',
 }
 
-Supabase is open source. We choose open source tools which are scalable and make them simple to use.
 
-Supabase is not a 1-to-1 mapping of Firebase. While we are building many of the features that Firebase offers, we are not going about it the same way:
-our technological choices are quite different; everything we use is open source; and wherever possible, we use and support existing tools rather than developing from scratch.
+MemFire Cloud 是基于Supabase去构建应用的，Supabase是开源的。我们选择了可扩展且易于使用的开源工具。   
+Supabase不是Firebase的一对一映射。虽然我们正在构建Firebase提供的许多功能，但我们的做法并不相同: 我们的技术选择截然不同; 我们使用的一切都是开源的; 在可能的情况下，我们使用并支持现有工具，而不是从头开始开发。
 
-Most notably, we use Postgres rather than a NoSQL store. This choice was deliberate. We believe that no other database offers the functionality required to compete with Firebase,
-while maintaining the scalability required to go beyond it.
+最值得注意的是，我们使用Postgres而不是NoSQL存储。这个选择是深思熟虑的。我们认为，没有其他数据库提供与Firebase竞争所需的功能， 同时保持超越它所需的可扩展性。
 
-## Architecture
+## 架构
 
-Each Supabase project consists of several tools:
+每个Supabase项目包括几个工具：:
 
 ![Supabase Architecture](/docs/img/supabase-architecture.png)
 
-### PostgreSQL (Database)
+### PostgreSQL (数据库)
 
-PostgreSQL is the core of Supabase. We do not abstract the PostgreSQL database — you can access it and use it with full privileges. We simply provide tools which makes PostgreSQL as easy to use as Firebase.
+PostgreSQL是Supabase的核心。我们不抽象PostgreSQL数据库-您可以访问它并以完全权限使用它。我们只是提供了一些工具，使PostgreSQL与Firebase一样易于使用。
 
-- Official Docs: [postgresql.org/docs](https://www.postgresql.org/docs/current/index.html)
-- Source code: [github.com/postgres/postgres](https://github.com/postgres/postgres) (mirror)
+- 官方文件: [postgresql.org/docs](https://www.postgresql.org/docs/current/index.html)
+- 源代码: [github.com/postgres/postgres](https://github.com/postgres/postgres) (mirror)
 - License: [PostgreSQL Licence](https://www.postgresql.org/about/licence/)
-- Language: C
+- 语言: C
 
-### Studio (Dashboard)
+### Studio (仪表盘)
 
-An open source Dashboard for managing your database and services.
+用于管理数据库和服务的一个开源Dashboard.
 
-- Official Docs: [Supabase docs](/docs)
-- Source code: [github.com/supabase/supabase](https://github.com/supabase/supabase/tree/master/studio)
+- 官方文件: [Supabase docs](/docs)
+- 源代码: [github.com/supabase/supabase](https://github.com/supabase/supabase/tree/master/studio)
 - License: [Apache 2](https://github.com/supabase/supabase/blob/master/LICENSE)
-- Language: TypeScript
+- 开发语言: TypeScript
 
-### GoTrue (Auth)
+### GoTrue (用户身份验证)
 
-A JWT-based API for managing users and issuing access tokens. This integrates with PostgreSQL's Row Level Security and the API servers.
+用于管理用户和颁发访问令牌的基于JWT的API。这与PostgreSQL的行级安全和API服务器集成。
 
-- Official Docs: [Supabase Auth reference docs](/docs/reference/auth)
-- Source code: [github.com/supabase/gotrue](https://github.com/supabase/gotrue)
+- 官方文件: [Supabase Auth reference docs](/docs/reference/auth)
+- 源代码: [github.com/supabase/gotrue](https://github.com/supabase/gotrue)
 - License: [MIT](https://github.com/supabase/gotrue/blob/master/LICENSE)
-- Language: Go
+- 开发语言: Go
 
 ### PostgREST (API)
 
-A standalone web server that turns your PostgreSQL database directly into a RESTful API.
-We use this with our [pg_graphql](https://github.com/supabase/pg_graphql) extension to provide a GraphQL API.
+一个将PostgreSQL数据库直接转换为RESTful API的独立web服务器。 
+我们将此与一起使用[pg_graphql](https://github.com/supabase/pg_graphql)扩展以提供GraphQL API。
 
-- Official Docs: [postgrest.org](https://postgrest.org/)
-- Source code: [github.com/PostgREST/postgrest](https://github.com/PostgREST/postgrest)
+- 官方文件: [postgrest.org](https://postgrest.org/)
+- 源代码: [github.com/PostgREST/postgrest](https://github.com/PostgREST/postgrest)
 - License: [MIT](https://github.com/PostgREST/postgrest/blob/main/LICENSE)
-- Language: Haskel
+- 开发语言: Haskel
 
 ### Realtime (API & multiplayer)
 
-A scalable websocket engine for managing user Presence, broadcasting messages, and streaming database changes.
+一个可扩展的websocket引擎，用于管理用户状态、广播消息和流数据库更改。
 
-- Official Docs: [Supabase Realtime docs](/docs/guides/realtime)
-- Source code: [github.com/supabase/realtime](https://github.com/supabase/realtime)
+- 官方文件: [Supabase Realtime docs](/docs/guides/realtime)
+- 源代码: [github.com/supabase/realtime](https://github.com/supabase/realtime)
 - License: [Apache 2](https://github.com/supabase/realtime/blob/master/LICENSE)
-- Language: Elixir
+- 开发语言: Elixir
 
-### Storage API (large file storage)
+### Storage API (大文件存储)
 
-An S3-compatible object storage service that stores metadata in Postgres.
+兼容S3的对象存储服务，在Postgres中存储元数据。
 
-- Official Docs: [Supabase Storage reference docs](/docs/reference/storage)
-- Source code: [github.com/supabase/storage-api](https://github.com/supabase/storage-api)
+- 官方文件: [Supabase Storage reference docs](/docs/reference/storage)
+- 源代码: [github.com/supabase/storage-api](https://github.com/supabase/storage-api)
 - License: [Apache 2.0](https://github.com/supabase/storage-api/blob/master/LICENSE)
-- Language: NodeJS / TypeScript
+- 开发语言: NodeJS / TypeScript
 
-### Deno (Edge Functions)
+### Deno (边缘函数)
 
-A modern runtime for JavaScript and TypeScript.
+JavaScript和TypeScript的现代运行时。
 
-- Official Docs: [deno.land](https://deno.land/)
-- Source code: [github.com/denoland/deno](https://github.com/denoland/deno)
+- 官方文件: [deno.land](https://deno.land/)
+- 源代码: [github.com/denoland/deno](https://github.com/denoland/deno)
 - License: [MIT](https://github.com/denoland/deno/blob/main/LICENSE.md)
-- Language: TypeScript / Rust
+- 开发语言: TypeScript / Rust
 
-### postgres-meta (Database management)
+### postgres-meta (数据库管理)
 
-A RESTful API for managing your Postgres. Fetch tables, add roles, and run queries.
+用于管理Postgres的RESTful API。这是用来获取表、添加角色和运行查询。
 
-- Official Docs: [supabase.github.io/postgres-meta](https://supabase.github.io/postgres-meta/)
-- Source code: [github.com/supabase/postgres-meta](https://github.com/supabase/postgres-meta)
+- 官方文件: [supabase.github.io/postgres-meta](https://supabase.github.io/postgres-meta/)
+- 源代码: [github.com/supabase/postgres-meta](https://github.com/supabase/postgres-meta)
 - License: [Apache 2.0](https://github.com/supabase/postgres-meta/blob/master/LICENSE)
-- Language: NodeJS / TypeScript
+- 开发语言: NodeJS / TypeScript
 
 ### PgBouncer
 
-A lightweight connection pooler for PostgreSQL. This is useful for connecting to Postgres when using Serverless functions.
+PostgreSQL的轻量级连接池。这对于使用无服务器函数时连接到Postgres非常有用。
 
-- Official Docs: [pgbouncer.org](http://www.pgbouncer.org/)
-- Source code: [pgbouncer/pgbouncer](https://github.com/pgbouncer/pgbouncer)
+- 官方文件: [pgbouncer.org](http://www.pgbouncer.org/)
+- 源代码: [pgbouncer/pgbouncer](https://github.com/pgbouncer/pgbouncer)
 - License: [ISC](https://github.com/pgbouncer/pgbouncer/blob/master/COPYRIGHT)
-- Language: C
+- 开发语言: C
 
 ### Kong (API Gateway)
 
-A cloud-native API gateway, built on top of Nginx.
+ 一个基于Nginx的云原生API网关。
 
-- Official Docs: [docs.konghq.com](https://docs.konghq.com/)
-- Source code: [github.com/kong/kong](https://github.com/kong/kong)
+- 官方文件: [docs.konghq.com](https://docs.konghq.com/)
+- 源代码: [github.com/kong/kong](https://github.com/kong/kong)
 - License: [Apache 2.0](https://github.com/Kong/kong/blob/master/LICENSE)
-- Language: Lua
+- 开发语言: Lua
 
-## Product Principles
+## 产品原则
 
-It is our goal to provide an architecture that any large-scale company would design for themselves,
-and then provide tooling around that architecture that is easy-to-use for indie-developers and small teams.
+我们的目标是提供一个任何大型公司都可以为自己设计的架构， 然后围绕独立开发人员和小团队易于使用的架构提供工具。
 
-We use a series of principles to ensure that scalability and usability are never mutually exclusive:
+我们使用一系列原则来确保可伸缩性和可用性永远不会相互排斥：
 
-### Everything works in isolation
+### 所有的运行都是隔离的
 
-Each system must work as a standalone tool with as few moving parts as possible.
-The litmus test for this is: "Can a user run this product with nothing but a Postgres database?"
+每个系统都必须作为一个独立的工具工作，尽可能少的移动部件。 对此的试金石是：“一个用户除了Postgres数据库之外，还能运行这个产品吗？”
 
-### Everything is integrated
+###  一切都是整合的
 
-Supabase is composable. Even though every product works in isolation, each product on the platform needs to 10x the other products.
-For integration, each tool should expose an API and Webhooks.
+Supabase是可组合的。尽管每个产品都是独立工作的，但平台上的每个产品都需要是其他产品的10倍。 对于集成，每个工具都应该公开一个API和Webhook。
 
-### Everything is extensible
+###  一切都是可扩展的
 
-We're deliberate about adding a new tool, and prefer instead to extend an existing one.
-This is the opposite of many cloud providers whose product offering expands into niche use-cases. We provide _primitives_ for developers, which allow them to achieve any goal.
-Less, but better.
+我们对增加一个新的工具很慎重，而倾向于扩展一个现有的工具。
+这与许多云计算供应商相反，他们提供的产品扩展到小众的使用场景。我们为开发者提供基本的工具，使他们能够实现任何目标。
+更少，但更好。
 
-### Everything is portable
+###  一切都是便携的
+ 
+为了避免锁定，我们使其很容易迁入和迁出。我们的云服务与我们的自我托管产品是兼容的。
+我们使用现有的标准来提高可移植性（如pg_dump和CSV文件）。如果出现了与 "Supabase "方法相竞争的新标准，我们将废除该方法，以支持该标准。
+这迫使我们在经验上进行竞争。我们的目标是成为最好的Postgres托管服务。
+### 玩长游戏
 
-To avoid lock-in, we make it easy to migrate in and out. Our cloud offering is compatible with our self-hosted product.
-We use existing standards to increase portability (like pg_dump an CSV files). If a new standard emerges which competes with a "Supabase" approach, we will deprecate the approach in favor of the standard.
-This forces us compete on experience. We aim to be the best Postgres hosting service.
 
-### Play the long game
+我们为了长期利益而牺牲了短期的胜利。例如，在Postgres的分叉中运行只有我们的客户需要的额外功能是很诱人的。
+相反，我们更倾向于支持上游缺失功能的努力，从而使整个社区受益。这有一个额外的好处，即确保可移植性和寿命。
 
-We sacrifice short-term wins for long-term gains. For example, it is tempting to run a fork of Postgres with additional functionality which only our customers need.
-Instead, we prefer to support efforts to upstream missing functionality so that the entire community benefits. This has the additional benefit of ensuring portability and longevity.
+### 为开发人员构建
 
-### Build for developers
+"开发者 "是一个特殊的用户形象：他们是_建设者。
+当评估作为努力的函数的影响时，由于开发人员可以构建产品和系统的类型，他们有很大的效率。
+随着开发人员的特征随着时间的推移而变化，Supabase将继续发展产品以适应这种不断变化的特征。
 
-"Developers" are a specific profile of user: they are _builders_.
-When assessing impact as a function of effort, developers have a large efficiency due to the type of products and systems they can build.
-As the profile of a developer changes over time, Supabase will continue to evolve the product to fit this evolving profile.
+### 支持现有工具
 
-### Support existing tools
-
-Supabase supports existing tools and communities wherever possible. Supabase is more like a "community of communities" - each tool typically has its own community
-which we work with.
-Open source is something we approach [collaboratively](https://supabase.com/blog/supabase-series-b#giving-back): we employ maintainers, sponsor projects, invest in businesses, and develop our own open source tools.
+Supabase尽可能地支持现有的工具和社区。Supabase更像是一个 "社区的社区"--每个工具通常都有自己的社区，我们与之合作。
+开源是我们[合作](https://supabase.com/blog/supabase-series-b#giving-back)的方式：我们雇佣维护者，赞助项目，投资企业，并开发我们自己的开源工具。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,76 +2,76 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-zoom',
-  title: 'Login with Zoom',
-  description: 'Add Zoom OAuth to your Supabase project',
+  title: '用Zoom登录',
+  description: '在你的Supabase项目中加入Zoom OAuth',
 }
 
-To enable Zoom Auth for your project, you need to set up a Zoom OAuth application and add the application credentials to your Supabase Dashboard.
+要为你的项目启用Zoom Auth，你需要设置一个Zoom OAuth应用程序，并将应用程序的凭证添加到你的Supabase Dashboard。
 
-## Overview
+## 概述
 
-Setting up Zoom logins for your application consists of 3 parts:
+为你的应用程序设置Zoom登录，包括三个部分。
 
-- Create and configure a Zoom OAuth App on [Zoom App Marketplace](https://marketplace.zoom.us/)
-- Add your Zoom OAuth keys to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js)
+- 在[Zoom App Marketplace]上创建和配置Zoom OAuth应用程序(https://marketplace.zoom.us/)
+- 将您的Zoom OAuth密钥添加到您的[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到您的[JS客户端应用程序](https://github.com/supabase/supabase-js)
 
-## Access your Zoom Developer account
+## 访问您的Zoom Developer账户
 
-- Go to [marketplace.zoom.us](https://marketplace.zoom.us/).
-- Click on `Sign In` at the top right to log in.
+- 转到[marketplace.zoom.us](https://marketplace.zoom.us/)。
+- 点击右上方的 "Sign In "来登录。
 
 ![Zoom Developer Portal.](/docs/img/guides/auth-zoom/zoom-portal.png)
 
-## Find your callback URL
+## 找到你的回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要一个回调URL，它看起来像这样。
 
-`https://<project-ref>.supabase.co/auth/v1/callback`
+`https://<project-ref>.supabase.co/auth/v1/callback`。
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `Settings`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 现在只要在后面加上`/auth/v1/callback`就可以得到完整的`OAuth Redirect URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create a Zoom Oauth App
+## 创建一个Zoom Oauth应用程序
 
-- Go to [marketplace.zoom.us](https://marketplace.zoom.us/).
-- Click on `Sign In` at the top right to log in.
-- Click `Build App` (from the dropdown Develop)
-- In the OAuth card, click `Create`
-- Type the name of your app
-- Choose app type
-- Click `Create`
+- 进入[marketplace.zoom.us]（https://marketplace.zoom.us/）。
+- 点击右上方的 `Sign In`来登录。
+- 点击 `建立应用程序`（从下拉式开发）。
+- 在OAuth卡中，点击`创建`。
+- 输入你的应用程序的名称
+- 选择应用类型
+- 点击 `创建`。
 
-Under `App credentials`
+在 `应用程序证书`下
 
-- Copy and save your `Client ID`.
-- Copy and save your `Client secret`.
+- 复制并保存你的 `客户端ID`。
+- 复制并保存你的 `客户端密码`。
 
-Under `Redirect URL for OAuth`
+在 `OAuth的重定向URL`下
 
-- Paste your `Callback URL`
-- Click `Continue`
+- 粘贴你的 `回调URL`。
+- 点击 `继续`。
 
-## Enter your Zoom credentials into your Supabase Project
+## 在你的Supabase项目中输入你的Zoom凭证
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Enter the final (hosted) URL of your app under `Site URL` (this is important)
-- Under `External OAuth Providers` turn `Zoom Enabled` to ON
-- Enter your `Zoom Client ID` and `Zoom Client Secret` saved in the previous step
-- Click `Save`
+- 转到你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)
+- 在左边的侧边栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面
+- 在 `网站URL`下输入你的应用程序的最终（托管）URL（这很重要）。
+- 在 `外部OAuth供应商`下，将 `Zoom启用`设为ON。
+- 输入你在上一步保存的 `Zoom Client ID`和 `Zoom Client Secret`。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 添加登录代码到你的客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `zoom` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`zoom`作为`提供者`。
 
 ```js
 async function signInWithZoom() {
@@ -81,7 +81,7 @@ async function signInWithZoom() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话中移除，并从localStorage中移除任何对象。
 
 ```js
 async function signout() {
@@ -89,10 +89,10 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
+- [Supabase账户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
 - [Zoom App Marketplace](https://marketplace.zoom.us/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />

@@ -4,16 +4,16 @@ export const meta = {
   id: 'snaplet',
   title: 'Snaplet',
   description:
-    'Get started with Supabase and Snaplet, a developer tool for working with safe, versioned, up-to-date production-like data',
+    '开始使用Supabase和Snaplet，这是一个开发工具，用于处理安全的、有版本的、最新的类似生产的数据。',
 }
 
-This step-by-step guide explains how to use Snaplet to clone your production Supabase project into another development database.
+这个分步指南解释了如何使用Snaplet将你的生产Supabase项目克隆到另一个开发数据库。
 
-[Snaplet](https://snaplet.dev/) is a developer tool that copies a Postgres database, transforming personal information, so that you can **safely code against actual data.** This functionality makes it possible to easily achieve environment parity in Supabase.
+[Snaplet](https://snaplet.dev/)是一个开发者工具，它可以复制Postgres数据库，转换个人信息，这样你就可以**安全地针对实际数据进行编码。**这个功能使得在Supabase中轻松实现环境平等成为可能。
 
-Let's get started!
+让我们开始吧!
 
-Follow along in the video below as the founder of Snaplet, Peter Pistorius, takes you through the entire process. Otherwise, you can skip the video and dive into the step-by-step guide.
+跟随下面的视频，Snaplet的创始人Peter Pistorius会带你完成整个过程。否则，你可以跳过这段视频，深入到一步步的指南中。
 
 <div className="video-container">
   <iframe
@@ -26,97 +26,97 @@ Follow along in the video below as the founder of Snaplet, Peter Pistorius, take
   ></iframe>
 </div>
 
-## Step 1: Prerequisites
+## 第1步：先决条件
 
-1. **A production Supabase project's connection string:** These can be found in Supabase via `Organization > Project > Database > Connection Pooling > Connection string`
-2. **A development Supabase project's connection string:** Same steps as above, but a different project/environment
-3. **A read-only role** in Production (recommended): This can be done by running the following statements on Supabase via `Organization > SQL Editor > + New Query`
+1. **一个生产型Supabase项目的连接字符串：**这些可以在Supabase中通过`组织 > 项目 > 数据库 > 连接池 > 连接字符串`找到。
+2. 2. **一个开发型Supabase项目的连接字符串：**与上述步骤相同，但是是不同的项目/环境。
+3. 3. **一个只读的角色**在生产部（推荐）。这可以通过在Supabase上运行以下语句来完成：`组织 > SQL编辑器 > + 新查询`。
 
-> To create a read-only role across all schemas you can checkout the Snaplet [docs](https://docs.snaplet.dev/postgresql/create-read-only-role)
+> 要在所有模式中创建一个只读角色，你可以查看Snaplet [docs](https://docs.snaplet.dev/postgresql/create-read-only-role)
 
-4. **Superuser access** for the development project. This can be done in Supabase via `Organization > SQL Editor > + New Query` and running this statement:
-   `ALTER USER postgres WITH superuser;`
+4. **4. 开发项目的**超级用户权限。这可以在Supabase中通过`组织>SQL编辑器>+新查询`并运行此语句来完成。
+   `ALTER USER postgres WITH superuser;`。
 
-## Step 2: Copying your production database
+## 步骤2：复制你的生产数据库
 
-### 2.1. Connect your data source
+### 2.1. 连接你的数据源
 
-Navigate to [https://www.snaplet.dev/](https://www.snaplet.dev/) and sign up for a new account (it’s free). Once you have successfully signed up for a new account, create a team, and start by connecting to your Supabase project.
+导航到[https://www.snaplet.dev/](https://www.snaplet.dev/)并注册一个新的帐户(这是免费的)。一旦你成功注册了一个新账户，创建一个团队，并开始连接到你的Supabase项目。
 
 ![connect-your-database](/docs/img/guides/integrations/snaplet/connect-your-database.png)
 
-Enter the credentials of your production Supabase project. Find the "Connection string" in Supabase via `Organization > Project > Settings > Database > Connection string` (at the bottom of the page).
+输入您的生产Supabase项目的凭证。通过 `组织 > 项目 > 设置 > 数据库 > 连接字符串`（在页面底部）找到 Supabase 中的 `连接字符串`。
 
-The password is the same password you used when creating the Supabase project.
+该密码与您在创建 Supabase 项目时使用的密码相同。
 
 ![supabase-connection-db-info](/docs/img/guides/integrations/snaplet/supabase-connection-db-info.png)
 
-You’ll have to confirm providing Snaplet access to your database. Snaplet will prompt you to only provide `read-only` access to your database. Snaplet has a guide in their documentation on how to do so [here](https://docs.snaplet.dev/postgresql/create-read-only-role).
+你必须确认提供Snaplet对你的数据库的访问。Snaplet会提示你对你的数据库只提供 `只读`的访问。Snaplet在他们的文档中有一个关于如何做到这一点的指南[这里](https://docs.snaplet.dev/postgresql/create-read-only-role)。
 
-> Note that whatever connection string you provide here will be that of your Data Source – essentially the production database in a real-life scenario
+> 注意，无论你在这里提供什么连接字符串，都是你的数据源的连接字符串--基本上是现实生活中的生产数据库。
 
 ![checking-database-credentials](/docs/img/guides/integrations/snaplet/checking-database-credentials.png)
 
-### 2.2. Transform your data
+### 2.2. 转换你的数据
 
 ![transform-your-data](/docs/img/guides/integrations/snaplet/transform-your-data.png)
 
-The next step is to exclude any schemas that you do not require. You are able to exclude an entire schema by clicking on the drop-down at the top, selecting the schema you would like to exclude and clicking ‘Exclude schema’. Alternatively, you can select a given schema and exclude only specific tables from that particular schema. Exclude any non-required table data (such as logs) and extensions and view your columns.
+下一步是排除任何你不需要的模式。你可以通过点击顶部的下拉菜单排除整个模式，选择你想排除的模式并点击 `排除模式`。或者，你可以选择一个给定的模式，只排除该特定模式中的特定表。排除任何非必需的表数据（如日志）和扩展，并查看你的列。
 
-At this point, Snaplet will automatically detect any columns that have Personally Identifiable Information (PII) and mark them in purple. If there are any additional columns that hold data you would like to anonymise, you can click on the respective column name and provide a replacement value for the data in that column. To complete the onboarding, click on `Review and Save` and proceed to the dashboard.
+在这一点上，Snaplet将自动检测任何有个人身份信息（PII）的列，并将它们标记为紫色。如果有任何额外的列持有你想匿名的数据，你可以点击相应的列名，并为该列的数据提供一个替换值。要完成入职，请点击 "审查和保存"，然后进入仪表板。
 
 ![create-your-first-snapshot](/docs/img/guides/integrations/snaplet/create-your-first-snapshot.png)
 
-### 2.3. Create a Snapshot
+### 2.3. 创建一个快照
 
-Create a snapshot of your production database. This is what you’re going to restore later into your data target (more on that later in the guide).
+创建一个生产数据库的快照。这是你以后要恢复到你的数据目标中的东西（在本指南后面会有更多的介绍）。
 
-## Step 3: Pasting into your development database
+## 第三步：粘贴到你的开发数据库中
 
-### 3.1. Create a data target on Supabase
+### 3.1. 在Supabase上创建一个数据目标
 
-Your data target is where you want Snaplet to restore the captured snapshot of your production project. This would most likely be either your staging or developer Supabase project. If you don’t already have a developer database setup on Supabase, create a new data target by setting up a new project on Supabase. To create a new project, follow the steps below:
+你的数据目标是你希望Snaplet恢复你的生产项目的捕获快照的地方。这很可能是你的暂存项目或开发者Supabase项目。如果您还没有在 Supabase 上设置一个开发人员数据库，请在 Supabase 上设置一个新项目来创建一个新的数据目标。要创建一个新项目，请遵循以下步骤。
 
-1. Go to [app.supabase.com](https://app.supabase.com/)
-2. Click on “new project”
-3. Enter your project details
-4. Wait for the new database to launch
+1. 转到 [app.supabase.com](https://app.supabase.com/)
+2. 2. 点击 `新项目`
+3. 输入你的项目细节
+4. 等待新数据库的启动
 
-> Remember the password you use when creating the project. You’ll need this password to connect your database to Snaplet later.
+> 记住你在创建项目时使用的密码。你将需要这个密码，以便以后将你的数据库连接到Snaplet。
 
-### 3.2. Make your `postgres` user a superuser
+### 3.2. 让你的`postgres`用户成为超级用户
 
-Snaplet requires the ability to drop the database schemas whilst restoring a snapshot. In order to do that, Snaplet requires `superuser` privileges.
+Snaplet需要在恢复快照的同时放弃数据库模式的能力。为了做到这一点，Snaplet需要`超级用户`的权限。
 
-1. Navigate to the `SQL Editor` in your Supabase console
-2. Click on `new query`
-3. Paste `alter user postgres with superuser;` into the SQL editor
-4. Run the query
+1. 在你的Supabase控制台导航到 `SQL编辑器`。
+2. 2. 点击 `新查询`。
+3. 将 `用超级用户改变用户postgres; `粘贴到SQL编辑器中。
+4. 运行查询
 
-### 3.3. Install the Snaplet CLI
+### 3.3. 安装Snaplet CLI
 
-1. Open your terminal and run `curl -sL https://app.snaplet.dev/get-cli/ | bash`
-2. Run `snaplet auth`
-3. Navigate to [https://app.snaplet.dev/access-token/cli](https://app.snaplet.dev/access-token/cli) to get your access token
-4. Paste your access token in the terminal
+1. 打开你的终端，运行`curl -sL https://app.snaplet.dev/get-cli/ | bash`。
+2. 运行`snaplet auth`。
+3. 导航到[https://app.snaplet.dev/access-token/cli](https://app.snaplet.dev/access-token/cli)以获得你的访问令牌
+4. 将你的访问令牌粘贴到终端
 
-### 3.4. Restore to the data target
+### 3.4. 恢复到数据目标
 
-You're now ready to restore your production snapshot into your Supabase development project.
+你现在准备将你的生产快照还原到你的 Supabase 开发项目中。
 
-1. Navigate to your project directory
-2. Run `snaplet setup` – you will be prompted to enter your database credentials. These are the database credentials of your **data target.** This could be your staging or development database
+1. 导航到你的项目目录
+2. 2. 运行 "snaplet setup"--你将被提示输入你的数据库凭证。这些是您的**数据目标的数据库凭据。**这可能是您的暂存数据库或开发数据库。
 
-Once completed, you will be presented with a list of databases that are connected to your Snaplet account.
+一旦完成，你将看到一个连接到你的Snaplet账户的数据库列表。
 
-1. Select a data source from the list
-2. Run `snaplet snapshot restore`
+1. 从列表中选择一个数据源
+2. 运行`snaplet snapshot restore`。
 
-## All done!
+##全部完成!
 
-As a Supabase user, you can see how this solves an issue developers all typically experience when attempting to create multiple development environments and populating each of those environments with data that can be worked with. Snaplet simplifies this process down to creating the respective Supabase projects, connecting the data source (The production database) to Snaplet and telling Snaplet where to restore that data (staging and development databases).
+作为Supabase的用户，你可以看到这如何解决了开发人员在试图创建多个开发环境并为每个环境填充可使用的数据时通常遇到的问题。Snaplet将这一过程简化为创建各自的Supabase项目，将数据源（生产数据库）连接到Snaplet，并告诉Snaplet在哪里恢复这些数据（暂存数据库和开发数据库）。
 
-If you want to learn more about Snaplet, you can explore the Snaplet [docs](https://docs.snaplet.dev/). If you have any questions, feel free to [reach out on Discord](https://discord.com/invite/6HUuajc866).
+如果你想了解更多关于Snaplet的信息，你可以浏览Snaplet [docs](https://docs.snaplet.dev/)。如果你有任何问题，请随时[在Discord上联系](https://discord.com/invite/6HUuajc866)。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,71 +2,71 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-bitbucket',
-  title: 'Login with Bitbucket',
-  description: 'Add Bitbucket OAuth to your Supabase project',
+  title: '使用Bitbucket登录',
+  description: '将Bitbucket OAuth添加到Supabase项目',
 }
 
-To enable Bitbucket Auth for your project, you need to set up a BitBucket OAuth application and add the application credentials to your Supabase Dashboard.
+要为项目启用Bitbucket身份验证，您需要设置Bitbucket OAuth应用程序，并将应用程序凭据添加到Supabase 项目仪表。
 
-## Overview
+## 概述
 
-Setting up Bitbucket logins for your application consists of 3 parts:
+为应用程序设置Bitbucket登录包括3个部分：
 
-- Create and configure a Bitbucket OAuth Consumer on [Bitbucket](https://bitbucket.org)
-- Add your Bitbucket OAuth Consumer keys to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js)
+- 在[Bitbucket](https://bitbucket.org)上创建和配置Bitbucket OAuth Consumer
+- 将Bitbucket OAuth Consumer密钥添加到[Supabase项目](https://cloud.memfiredb.com/)
+- 将登录代码添加到[Supabase JS客户端应用程序](https://github.com/supabase/supabase-js)
 
-## Access your Bitbucket account
+## 访问您的Bitbucket帐户
 
-- Go to [bitbucket.org](https://bitbucket.org/).
-- Click on `Login` at the top right to log in.
+- 跳转到[bitbucket.org](https://bitbucket.org/)。
+- 单击右上角的`登录`以登录。
 
-![Bitbucket Developer Portal.](/docs/img/guides/auth-bitbucket/bitbucket-portal.png)
+![Bitbucket开发者门户。](/docs/img/guides/auth-bitbucket/bitbucket-portal.png)
 
-## Find your callback URL
+## 查找回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要回调URL，如下所示：
 
 `https://<project-ref>.supabase.co/auth/v1/callback`
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 跳转到[MemFire Cloud项目仪表板](https://cloud.memfiredb.com).
+- 单击左侧边栏底部的`设置`图标。
+- 单击列表中的`API`。
+- 在Config / URL 下，您将找到您的API URL，您可以单击`复制`将其复制到剪贴板。 
+- 现在只需在末尾添加`/auth/v1/callback`即可获得完整`OAuth重定向URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create a Bitbucket OAuth app
+## 创建Bitbucket OAuth应用程序
 
-- Click on your profile icon at the bottom left
-- Click on `All Workspaces`
-- Select a workspace and click on it to select it
-- Click on `Settings` on the left
-- Click on `OAuth consumers` on the left under `Apps and Features` (near the bottom)
-- Click `Add Consumer` at the top
-- Enter the name of your app under `Name`
-- In `Callback URL`, type the callback URL of your app
-- Check the permissions you need (Email, Read should be enough)
-- Click `Save` at the bottom
-- Click on your app name (the name of your new OAuth Consumer)
-- Copy your `Key` (`client_key`) and `Secret` (`client_secret`) codes
+- 单击左下方的个人资料图标
+- 单击`所有工作区`
+- 选择一个工作区并单击它以选择它
+- 单击左侧的`设置`
+- 单击左侧`应用程序和功能`（靠近底部）下的`OAuth消费者`
+- 单击顶部的`添加消费者`
+- 在`name`下输入应用程序的名称
+- 在`回调URL`中，键入应用的回调URL
+- 检查您所需的权限（电子邮件，阅读应足够）
+- 单击底部的`保存`
+- 单击应用程序名称（新OAuth消费者的名称）
+- 复制`Key`(`client_key`)和`Secret` (`client_secret`)代码
 
-## Add your Bitbucket credentials into your Supabase Project
+## 将您的Bitbucket凭据添加到Supabase项目中
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Enter the final (hosted) URL of your app under `Site URL` (this is important)
-- Under `External OAuth Providers` turn `Bitbucket Enabled` to ON
-- Enter your `client_id` and `client_secret` saved in the previous step
-- Click `Save`
+- 跳转到[Supabase项目仪表板](https://cloud.memfiredb.com/)
+- 在左侧边栏中，单击`身份验证`图标（靠近顶部）
+- 单击列表中的`设置`以转到`身份验证设置`页面
+- 在`站点URL`下输入应用程序的最终（托管）URL（这很重要）
+- 在`外部OAuth提供程序`下，将`Bitbucket Enabled`设置为ON
+- 输入上一步中保存的`client_id`和`client_secret`
+- 单击`保存`
 
-## Add login code to your client app
+## 将登录代码添加到客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `bitbucket` as the `provider`:
+当您的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`bitbucket`作为`provider`：
 
 ```js
 async function signInWithBitbucket() {
@@ -76,7 +76,7 @@ async function signInWithBitbucket() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signout)将其从浏览器会话和localStorage中删除：
 
 ```js
 async function signout() {
@@ -84,11 +84,11 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资料
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Bitbucket Account](https://bitbucket.org)
+- [Supabase账户-免费额度](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Bitbucket账户](https://bitbucket.org)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

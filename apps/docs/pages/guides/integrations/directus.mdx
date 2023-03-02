@@ -4,86 +4,86 @@ export const meta = {
   id: 'directus',
   title: 'Directus',
   description:
-    'In this guide, we will show you how to create a Supabase project, install the Directus platform locally and configure the two to connect.',
+    '在本指南中，我们将向你展示如何创建一个Supabase项目，在本地安装Directus平台并配置两者的连接。',
 }
 
-In this guide, we will demonstrate how to create a new Supabase project, install a fresh instance of the Directus platform, then configure the two to work together seamlessly. If you're unfamiliar with either of these systems, don't worry! We'll start off with an overview of each platform and explain how they complement each other, noting any overlap in capabilities.
+在本指南中，我们将演示如何创建一个新的Supabase项目，安装一个新的Directus平台实例，然后配置这两个系统，使其无缝地协同工作。如果你不熟悉这两个系统中的任何一个，不要担心！我们将从每个平台的概述开始，并对其进行配置。我们将从每个平台的概述开始，并解释它们是如何相互补充的，同时注意到任何能力上的重叠。
 
-## Introduction
+## 简介
 
 ![Supabase App](/docs/img/guides/integrations/directus/supabase-20220608A.webp)
 
-[Supabase](https://supabase.com/) is an open-source Firebase alternative that provides a PostgreSQL database, storage, authentication, and a dynamic REST API based on your schema. While it is possible to self-host Supabase on your own infrastructure, this article will focus on Supabase Cloud's Free tier, which is the fastest and easiest way to get started.
+[Supabase](https://supabase.com/)是一个开源的Firebase替代品，它提供了一个PostgreSQL数据库、存储、认证和一个基于你的模式的动态REST API。虽然可以在自己的基础设施上自行托管Supabase，但本文将重点介绍Supabase云的免费层，这是最快和最容易开始的方式。
 
 ![Directus App](/docs/img/guides/integrations/directus/directus-20220608A.webp)
 
-[Directus](https://directus.io/) is an open-source data platform that layers on top of any SQL database, providing a powerful suite of tools. The Directus Engine provides dynamic REST and GraphQL APIs based on your schema, hooks and automation, authentication and access control, and file transformations. Directus Studio enables engineers and non-technical users alike to browse, manage, and visualize database content through a no-code app.
+[Directus](https://directus.io/)是一个开源的数据平台，在任何SQL数据库的基础上分层，提供一套强大的工具。Directus引擎提供基于你的模式的动态REST和GraphQL API，钩子和自动化，认证和访问控制，以及文件转换。Directus Studio使工程师和非技术用户都能通过一个无代码的应用程序来浏览、管理和可视化数据库内容。
 
 }
-Supabase is a suite of open-source tools making Postgres databases, file storage, authentication, and edge functions more accessible to developers of all skill levels. Directus is also developer tooling and additionally provides a Data Studio that is safe and intuitive enough for anyone, including non-technical users, to use. This is the crucial bit that gives the two platforms such a strong “network effect.”
+Supabase是一套开源工具，使Postgres数据库、文件存储、认证和边缘功能更容易被各种技能水平的开发者所使用。Directus也是开发者工具，另外还提供了一个数据工作室，其安全性和直观性足以让任何人（包括非技术用户）使用。这是关键的一点，使这两个平台具有如此强大的 "网络效应"。
 
-When these two systems are brought together, you get a scalable datastore, limitless connectivity options, and a no-code app that allows your technical and business teams to collaborate together efficiently.
+当这两个系统结合在一起时，你会得到一个可扩展的数据存储，无限的连接选项，以及一个无需代码的应用程序，使你的技术和业务团队能够一起高效协作。
 
-The two platforms share an overlap of capabilities that deepens their integration and offers developers the freedom of choice across a broader spectrum of connectivity. Key areas of intersection include:
+这两个平台的功能重叠，加深了它们的整合，并为开发者提供了在更广泛的连接范围内的自由选择。关键的交叉领域包括。
 
-The ability to generate _powerful_ APIs dynamically to connect data
-User management and fine-grained access control
-Digital asset storage and management.
+动态生成_强大的_API以连接数据的能力
+用户管理和细粒度的访问控制
+数字资产存储和管理。
 
-More importantly, Directus and Supabase share a common vision for your data, making them quite symbiotic. Both solutions are completely open-source, with self-hosted and cloud deployment options available. They are unopinionated in their approach, with vendor-agnostic data storage, and they both focus on providing a polished developer experience along with comprehensive documentation.
+更重要的是，Directus和Supabase对你的数据有一个共同的愿景，这使得它们相当共生。这两个解决方案都是完全开源的，有自我托管和云部署选项。它们在方法上是没有偏见的，具有与供应商无关的数据存储，而且它们都专注于提供抛光的开发者体验和全面的文档。
 
-By linking the Supabase database with your Directus Project, _you get a superset of data tools._ You'll benefit from Supabase's Postgres database and its _dev-centric_ admin app with the raw power to run SQL queries, **_as well as_** the Directus no-code app, which enables intuitive permissions-based data access for the whole team.
+通过将Supabase数据库与你的Directus项目联系起来，你将获得一套超级数据工具。你将受益于Supabase的Postgres数据库和它的_dev-centric_ admin应用程序，它具有运行SQL查询的原始能力，**_以及_** Directus no-code应用程序，它为整个团队提供直观的基于权限的数据访问。
 
-Let's dive into how we actually set up and link these two platforms to create a modern data stack powerhouse.
+让我们深入了解一下我们如何实际设置和连接这两个平台，以创建一个现代数据堆栈的动力源。
 
-## Create a Supabase Project
+##创建一个Supabase项目
 
-As mentioned, while you can [deploy Supabase locally](/docs/guides/cli/local-development). For the purpose of this guide, we'll use Supabase Cloud:
+如前所述，虽然你可以[在本地部署Supabase](/docs/guides/cli/local-development)。为了本指南的目的，我们将使用Supabase云。
 
-1. Create a **Supabase** account by signing in with GitHub.
-2. Give your organization a name (this can be changed later).
-3. Click **New Project** and select your organization.
-4. Follow the prompts, setting a project Name, Database Password, Region, and Pricing Plan, then click **Create New Project**.
-5. After your project has been provisioned, navigate to **Settings > Database** in the sidebar.
-6. Scroll down to **Connection Info** and take note of your database's **Host**, **Database Name**, **Port**, **User**, and **Password**. You will need to enter this during your Directus project setup.
+1. 通过登录GitHub创建一个**Supabase**账户。
+2.  给你的组织起一个名字（以后可以更改）。
+3. 点击**新项目**，选择你的组织。
+4. 按照提示，设置项目名称、数据库密码、地区和定价计划，然后点击**创建新项目**。
+5. 在你的项目被配置后，在侧边栏中导航到**设置>数据库**。
+6. 向下滚动到**连接信息**，注意你的数据库的**主机**，**数据库名称**，**端口**，**用户**，和**密码**。你将需要在你的Directus项目设置中输入这些信息。
 
-## Optional: Add PostGIS to Support Geometry and Mapping
+##可选。添加PostGIS以支持几何和制图
 
-To take full advantage of the built-in geometry and mapping features Directus offers, we recommend enabling Geometric Data Support. To add PostGIS, follow these steps:
+为了充分利用Directus提供的内置几何学和绘图功能，我们建议启用几何学数据支持。要添加PostGIS，请遵循以下步骤。
 
 ![Enable PostGis](/docs/img/guides/integrations/directus/enable-PostGIS-20220608A.webp)
 
-1. From the sidebar, navigate to **Database > Extensions**.
-2. Use the search bar to look up `PostGIS`.
-3. Toggle the PostGIS option to enable it.
+1. 从侧边栏，导航到**数据库>扩展**。
+2. 使用搜索栏查找 `PostGIS`。
+3. 切换PostGIS选项以使其生效。
 
-## Set up Directus
+## 设置Directus
 
-At the time of writing this article, [Directus Cloud](https://directus.cloud/) does not yet support hybrid deployments for connecting an external database. So, we'll be deploying a self-hosted instance to connect with Supabase. To install a self-hosted instance of Directus that's connected to our Supabase project, follow these steps:
+在写这篇文章的时候，[Directus Cloud](https://directus.cloud/)还不支持连接外部数据库的混合部署。因此，我们将部署一个自我托管的实例来与Supabase连接。要安装一个连接到我们的Supabase项目的自我托管的Directus实例，请遵循以下步骤。
 
-1. Run the following command in your terminal:
+1. 在你的终端中运行以下命令。
 
 ```bash
 npm init directus-project example-project
 ```
 
-2. Using the up/down arrow keys, select `Postgres` from the list:
+2. 使用上/下箭头键，从列表中选择`Postgres`。
 
 ```bash
 ? Choose your database client Postgres
 ```
 
-3. Next, you will be prompted to input database credentials. Add in the Supabase Database Connection Info noted above as follows:
+3. 接下来，你将被提示输入数据库凭证。在上面提到的Supabase数据库连接信息中添加如下内容。
 
-- **Database Host** – The IP address for your database.
-- **Port** – Port number your database is running on.
-- **Database Name** – Name of your existing database.
-- **Database User** – Name of existing user in database.
-- **Database Password** – Password to enter database.
-- **Enable SSL** – Select Y for yes or N for no.
-- **Root** – The root name.
+- **数据库主机** - 您的数据库的 IP 地址。
+- **端口** - 你的数据库所运行的端口号。
+- **数据库名称** - 你现有数据库的名称。
+- **数据库用户** - 数据库中现有用户的名称。
+- **数据库密码** - 进入数据库的密码。
+- **启用SSL** - 选择Y表示是，选择N表示不是。
+- **Root** - 根名称。
 
-4. Now, simply set an email and password for your first Directus admin account. To be clear, this is Directus-specific, and is unrelated to your database user:
+4. 现在，为你的第一个Directus管理账户简单地设置一个电子邮件和密码。要明确的是，这是Directus特有的，与你的数据库用户无关。
 
 ```bash
 Create your first admin user:
@@ -91,46 +91,46 @@ Create your first admin user:
 ? Password: ********
 ```
 
-Once this is complete, you should see details about your new project:
+一旦完成，你应该看到关于你的新项目的细节。
 
 ```bash
 Your project has been created at <file-path>/example-project.
 The configuration can be found in <file-path>/example-project/.env
 ```
 
-5. Lastly, navigate to your new project folder (in this case `example-project`) and start the platform:
+5. 最后，导航到你的新项目文件夹（在这里是`example-project`）并启动平台。
 
 ```bash
 cd example-project
 npx directus start
 ```
 
-**Please note:** To prevent public accessibility when using the supabase-js library,turn on row level security (RLS) on all these tables inside of the Supabase Dashboard. By default when RLS is turned on these tables cannot be read from or written to with the supabase-js library.
+**请注意：**为防止公众在使用supabase-js库时访问，请在Supabase仪表板内的所有这些表上开启行级安全（RLS）。默认情况下，当RLS被打开时，这些表不能被supabase-js库读出或写入。
 
-That's it! Your project is now up and running locally. You can access the Directus Studio in the browser via the URL displayed, and log in with the Directus admin credentials you entered above:
+这就是了! 你的项目现在已经启动并在本地运行了。你可以在浏览器中通过显示的URL访问Directus Studio，用你上面输入的Directus管理证书登录。
 
 ```bash
 ✨ Server started at http://localhost:8055
 ```
 
-In a matter of minutes, we've created a flexible data backend, with access to an intuitive no-code app for managing and visualizing data along with a robust connectivity toolkit. This modern data stack is flexible and scalable enough to power any data-driven project… all you need to do is build the frontend!
+在短短几分钟内，我们已经创建了一个灵活的数据后端，可以访问一个直观的无代码应用程序，用于管理和可视化数据，以及一个强大的连接工具包。这个现代数据堆栈是灵活的，可扩展的，足以为任何数据驱动的项目提供动力......你需要做的就是建立前台!
 
-## Next Steps
+## 接下来的步骤
 
-From here, the sky's the limit on what you can build. You'll probably want to invite some new collaborators to your project and start architecting your data model.
+从这里开始，你可以建立的东西是天空的极限。你可能想邀请一些新的合作者加入你的项目，并开始构建你的数据模型。
 
-Below are some additional resources to dive in and start exploring these two platforms:
+下面是一些额外的资源，可以让你潜入并开始探索这两个平台。
 
 **Directus**
 
-- See the [Directus guides](https://directus.io/guides/).
-- Join the Directus community on [Discord](https://directus.chat/).
-- Check out the source code on the official [Directus GitHub Repo](https://github.com/directus/directus).
+- 参见[Directus指南](https://directus.io/guides/)。
+- 在[Discord]上加入Directus社区(https://directus.chat/)。
+- 查看官方[Directus GitHub Repo](https://github.com/directus/directus)上的源代码。
 
 **Supabase**
 
-- Explore the [Supabase documentation](https://supabase.com/docs)
-- Join the Supabase community on [Discord](https://discord.supabase.com/)
+- 探索[Supabase文档](https://supabase.com/docs)
+- 在[Discord]上加入Supabase社区(https://discord.supabase.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

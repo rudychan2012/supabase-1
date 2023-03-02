@@ -2,44 +2,44 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'with-angular',
-  title: 'Quickstart: Angular',
-  description: 'Learn how to use Supabase in your Angular App.',
+  title: '快速入门: Angular',
+  description: '了解如何在你的Angular App中使用Supabase。',
   sidebar_label: 'Angular',
 }
 
 <QuickstartIntro />
 
-![Supabase User Management example](/docs/img/user-management-demo.png)
+![Supabase用户管理实例](/docs/img/user-management-demo.png)
 
 ### GitHub
 
-Should you get stuck while working through the guide, refer to [this repo](https://github.com/supabase/supabase/tree/master/examples/user-management/angular-user-management).
+如果你在阅读指南时遇到困难，请参考[此版本](https://github.com/supabase/supabase/tree/master/examples/user-management/angular-user-management)
 
 <ProjectSetup />
 
-## Building the App
+## 构建应用程序
 
-Let's start building the Angular app from scratch.
+让我们开始从头开始构建Angular应用程序。
 
-### Initialize an Angular app
+### 初始化一个Angular应用程序
 
-We can use the [Angular CLI](https://angular.io/cli) to initialize
-an app called `supabase-angular`:
+我们可以使用[Angular CLI]（https://angular.io/cli）来初始化
+一个名为`supabase-angular'的应用程序：
 
 ```bash
 npx ng new supabase-angular --routing false --style css
 cd supabase-angular
 ```
 
-Then let's install the only additional dependency: [supabase-js](https://github.com/supabase/supabase-js)
+然后让我们安装唯一的额外依赖：[supabase-js](https://github.com/supabase/supabase-js)
 
 ```bash
 npm install @supabase/supabase-js
 ```
 
-And finally we want to save the environment variables in the `environment.ts` file.
-All we need are the API URL and the `anon` key that you copied [earlier](#get-the-api-keys).
-These variables will be exposed on the browser, and that's completely fine since we have [Row Level Security](/docs/guides/auth#row-level-security) enabled on our Database.
+最后我们要在`environment.ts`文件中保存环境变量。
+我们所需要的是API URL和你[早些时候]复制的`anon`密钥(#get-theapi-keys)。
+这些变量将暴露在浏览器上，这完全没有问题，因为我们在数据库上启用了[行级安全](/docs/guides/auth#row-level-security)。
 
 ```ts title=environment.ts
 export const environment = {
@@ -49,7 +49,7 @@ export const environment = {
 }
 ```
 
-Now that we have the API credentials in place, let's create a **SupabaseService** with `ng g s supabase` to initialize the Supabase client and implement functions to communicate with the Supabase API.
+现在我们已经有了API凭证，让我们用`ng g s supabase`创建一个**SupabaseService**，以初始化Supabase客户端并实现与Supabase API通信的功能。
 
 ```ts title=src/app/supabase.service.ts
 import { Injectable } from '@angular/core'
@@ -128,12 +128,12 @@ export class SupabaseService {
 }
 ```
 
-Optionally, update [src/styles.css](https://raw.githubusercontent.com/supabase/supabase/master/examples/user-management/angular-user-management/src/styles.css) to style the app.
+可以选择更新[src/styles.css](https://raw.githubusercontent.com/supabase/supabase/master/examples/user-management/angular-user-management/src/styles.css)，为应用程序设置样式。
 
-### Set up a Login component
+### 设置一个登录组件
 
-Let's set up an Angular component to manage logins and sign ups. We'll use Magic Links, so users can sign in with their email without using passwords.
-Create an **AuthComponent** with `ng g c auth` Angular CLI command.
+让我们建立一个Angular组件来管理登录和注册。我们将使用Magic Links，所以用户可以用他们的电子邮件登录，而不需要使用密码。
+用`ng g c auth` Angular CLI命令创建一个**AuthComponent**。
 
 ```ts title=src/app/auth/auth.component.ts
 import { Component, OnInit } from '@angular/core'
@@ -208,10 +208,10 @@ export class AuthComponent implements OnInit {
 </div
 ```
 
-### Account page
+### 账号页面
 
-Users also need a way to edit their profile details and manage their accounts after signing in.
-Create an **AccountComponent** with the `ng g c account` Angular CLI command.
+用户还需要一种方法来编辑他们的个人资料细节，并在登录后管理他们的账户。
+用`ng g c account`Angular CLI命令创建一个**AccountComponent**。
 
 ```ts title=src/app/account/account.component.ts
 import { Component, Input, OnInit } from '@angular/core'
@@ -330,9 +330,9 @@ export class AccountComponent implements OnInit {
 </form>
 ```
 
-### Launch!
+### 启动
 
-Now that we have all the components in place, let's update **AppComponent**:
+现在我们已经有了所有的组件，让我们来更新**AppComponent**。
 
 ```ts title=src/app/app.component.ts
 import { Component, OnInit } from '@angular/core'
@@ -386,24 +386,24 @@ import { AvatarComponent } from './avatar/avatar.component'
 export class AppModule {}
 ```
 
-Once that's done, run this in a terminal window:
+一旦完成，在终端窗口运行这个程序。
 
 ```bash
 npm run start
 ```
 
-And then open the browser to [localhost:4200](http://localhost:4200) and you should see the completed app.
+然后打开浏览器到[localhost:4200](http://localhost:4200)，你应该看到完成的应用程序。
 
 ![Supabase Angular](/docs/img/supabase-angular-demo.png)
 
-## Bonus: Profile photos
+## 简介照片
 
-Every Supabase project is configured with [Storage](/docs/guides/storage) for managing large files like photos and videos.
+每个Supabase项目都配置了[存储](/docs/guides/storage)，用于管理照片和视频等大文件。
 
-### Create an upload widget
+### 创建一个上传小部件
 
-Let's create an avatar for the user so that they can upload a profile photo.
-Create an **AvatarComponent** with `ng g c avatar` Angular CLI command.
+让我们为用户创建一个头像，以便他们可以上传个人资料照片。
+用`ng g c avatar`Angular CLI命令创建一个**AvatarComponent**。
 
 ```ts title=src/app/avatar/avatar.component.ts
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
@@ -495,9 +495,9 @@ export class AvatarComponent implements OnInit {
 </div>
 ```
 
-### Add the new widget
+### 添加新的小组件
 
-And then we can add the widget on top of the **AccountComponent** html template:
+然后我们可以在**账户组件**的html模板上面添加小部件。
 
 ```html title=src/app/account.component.html
 <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
@@ -506,7 +506,7 @@ And then we can add the widget on top of the **AccountComponent** html template:
 </form>
 ```
 
-And add an `updateAvatar` function along with an `avatarUrl` getter to the **AccountComponent** typescript file:
+并在**AccountComponent** typescript文件中加入`updateAvatar`函数和`avatarUrl`获取器。
 
 ```ts title=src/app/account.component.ts
 @Component({
@@ -530,12 +530,12 @@ export class AccountComponent implements OnInit {
 }
 ```
 
-## Next steps
+## 下一步
 
-At this stage you have a fully functional application!
+在这个阶段，你已经有了一个功能完备的应用程序!
 
-- Got a question? [Ask here](https://github.com/supabase/supabase/discussions).
-- Sign in: [app.supabase.com](https://app.supabase.com)
+- 有问题吗？[在此提问](https://github.com/supabase/supabase/discussions).
+- 请登录[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

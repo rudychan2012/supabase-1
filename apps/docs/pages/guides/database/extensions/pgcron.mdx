@@ -2,16 +2,16 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'pgcron',
-  title: 'pg_cron: Job Scheduling',
+  title: 'pg_cron: 作业调度',
   description:
     'pgnet: a simple cron-based job scheduler for PostgreSQL that runs inside the database.',
 }
 
-The `pg_cron` extension is a simple cron-based job scheduler for PostgreSQL that runs inside the database.
+`pg_cron`扩展是PostgreSQL的一个简单的基于cron的工作调度器，在数据库内运行。
 
-## Usage
+## 使用方法
 
-### Enable the extension
+### 启用扩展
 
 <Tabs
   scrollable
@@ -21,9 +21,10 @@ The `pg_cron` extension is a simple cron-based job scheduler for PostgreSQL that
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [Database](https://app.supabase.com/project/_/database/tables) page in the Dashboard.
-2. Click on **Extensions** in the sidebar.
-3. Search for "pg_cron" and enable the extension.
+1. 进入仪表板中的[数据库](https://app.supabase.com/project/_/database/tables)页面。
+2. 点击侧边栏中的*扩展*。
+3. 搜索 "pg_cron "并启用该扩展。
+
 
 </TabPanel>
 <TabPanel id="sql" label="SQL">
@@ -47,9 +48,9 @@ drop extension if exists pg_cron;
 </TabPanel>
 </Tabs>
 
-### Syntax
+### 语法
 
-The schedule uses the standard cron syntax, in which \* means "run every time period", and a specific number means "but only at this time":
+该计划使用标准cron语法，其中\* 表示“每个时间段运行”，而特定数字表示“但仅在此时”：
 
 ```bash
  ┌───────────── min (0 - 59)
@@ -63,11 +64,11 @@ The schedule uses the standard cron syntax, in which \* means "run every time pe
  * * * * *
 ```
 
-## Examples
+## 示例
 
-### Delete data every week
+### 每周删除数据
 
-Delete old data on Saturday at 3:30am (GMT):
+在星期六凌晨3:30(GMT)删除旧数据:
 
 ```sql
 select cron.schedule (
@@ -77,25 +78,25 @@ select cron.schedule (
 );
 ```
 
-### Run a vacuum every day
+### 每天运行真空吸尘器
 
-Vacuum every day at 3:00am (GMT)
+每天凌晨3:00（GMT）吸尘
 
 ```sql
 SELECT cron.schedule('nightly-vacuum', '0 3 * * *', 'VACUUM');
 ```
 
-### Unschedule a job
+### 取消作业计划
 
-Unschedules a job called `'nightly-vacuum'`
+取消了一项名为`'nightly-vacuum'`的工作计划：
 
 ```sql
 SELECT cron.unschedule('nightly-vacuum');
 ```
 
-## Resources
+## 资源
 
-- [pg_cron GitHub Repository](https://github.com/citusdata/pg_cron)
+- [pg_cron GitHub库](https://github.com/citusdata/pg_cron)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

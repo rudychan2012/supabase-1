@@ -2,21 +2,21 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'managing-environments',
-  title: 'Managing Environments',
-  description: 'How to deploy Supabase schema changes with a CI / CD pipeline.',
+  title: '环境管理',
+  description: '如何用CI/CD管道部署Supabase模式变化。',
 }
 
-## Overview
+## 概述
 
-The Supabase CLI provides the tools you need to manage multiple environments.
-This guide shows you how to set up your local Supabase development environment that integrates with GitHub Actions to automatically
-test and release schema changes to staging and production Supabase projects.
+Supabase CLI 提供了你所需要的工具来管理多个环境。
+本指南向您介绍如何设置您的本地 Supabase 开发环境，该环境与 GitHub Actions 集成，以自动
+测试和发布模式变化到暂存和生产Supabase项目。
 
-To get started:
+要开始使用。
 
-- [Install the Supabase CLI](/docs/guides/cli)
-- Create a [Supabase project](https://app.supabase.com) or use an existing one
-- Initialize a local Git repository
+- 安装Supabase CLI](/docs/guides/cli)
+- 创建一个[MemFire Cloud项目](https://cloud.memfiredb.com)或使用一个现有的项目
+- 初始化一个本地的 Git 仓库
 
 <div className="video-container">
   <iframe
@@ -27,37 +27,37 @@ To get started:
   ></iframe>
 </div>
 
-## Set up a local environment
+## 设置本地环境
 
-The first step is to set up your local repository with the Supabase CLI:
+第一步是用Supabase CLI设置你的本地存储库。
 
 ```bash
 supabase init
 ```
 
-You should see a new `supabase` directory. Then you need to link your local repository with your Supabase project:
+你应该看到一个新的`supabase`目录。然后你需要将你的本地存储库与你的Supabase项目连接起来。
 
 ```bash
 supabase login
 supabase link --project-ref $PROJECT_ID
 ```
 
-You can get your `$PROJECT_ID` from your project's dashboard URL:
+你可以从你项目的仪表盘URL中获得你的`$PROJECT_ID`。
 
 ```
 https://app.supabase.com/project/<project-id>
 ```
 
-If you're using an existing Supabase project, you might have made schema changes through the Dashboard.
-Run the following command to pull these changes before making local schema changes from the CLI:
+如果你正在使用一个现有的Supabase项目，你可能已经通过Dashboard进行了模式更改。
+在从 CLI 进行本地模式更改之前，请运行下面的命令来提取这些更改。
 
 ```sql
 supabase db remote commit
 ```
 
-This command creates a new migration in `supabase/migrations/<timestamp>_remote_commit.sql` which reflects the schema changes you have made previously.
+这个命令在`supabase/migrations/<timestamp>_remote_commit.sql`中创建了一个新的迁移，反映了你之前所做的模式改变。
 
-Now commit your local changes to Git and run the local development setup:
+现在将你的本地修改提交给Git，并运行本地开发设置。
 
 ```bash
 git add .
@@ -65,26 +65,26 @@ git commit -m "init supabase"
 supabase start
 ```
 
-You are now ready to develop schema changes locally and create your first migration.
+现在你已经准备好在本地开发模式变化，并创建你的第一次迁移。
 
-## Create a new migration
+## 创建一个新的迁移
 
-There are two ways to make schema changes:
+有两种方法可以对模式进行修改。
 
-1. Manual migration: Write DDL statements manually into a migration file
-1. Auto schema diff: Make changes through Studio UI and auto generate a schema diff
+1. 手动迁移。手动将DDL语句写进迁移文件
+1. 自动模式差异。通过Studio用户界面进行修改，并自动生成一个模式差异。
 
-### Manual migration
+### 手动迁移
 
-<!-- ![Manual migration](/docs/img/guides/cli/diff-manual.png) -->
+![手动迁移](/docs/img/guides/cli/diff-manual.png)
 
-Create a new migration script by running:
+通过运行创建一个新的迁移脚本。
 
 ```bash
 supabase migration new new_employee
 ```
 
-You should see a new file created: `supabase/migrations/<timestamp>_new_employee.sql`. You can then write SQL statements in this script using a text editor:
+你应该看到一个新的文件被创建。`supabase/migrations/<timestamp>_new_employee.sql`。然后你可以用文本编辑器在这个脚本中写SQL语句。
 
 ```sql
 create table public.employees (
@@ -93,38 +93,38 @@ create table public.employees (
 );
 ```
 
-Apply the new migration to your local database:
+将新的迁移应用到你的本地数据库。
 
 ```bash
 supabase db reset
 ```
 
-This command recreates your local database from scratch and applies all migration scripts under `supabase/migrations` directory. Now your local database is up to date.
+这个命令从头开始重新创建你的本地数据库，并应用`supabase/migrations`目录下的所有迁移脚本。现在你的本地数据库是最新的了。
 
 <Admonition type="tip">
 
-The new migration command also supports stdin as input.
-This allows you to pipe in an existing script from another file or stdout:
+新的迁移命令还支持stdin作为输入。
+这允许你从另一个文件或stdout管入一个现有的脚本。
 
-`supabase migration new new_employee < create_employees_table.sql`
+`supabase migration new new_employee < create_employees_table.sql`。
 
 </Admonition>
 
-### Auto schema diff
+### 自动模式差异
 
-Unlike manual migrations, auto schema diff creates a new migration script from changes **already** applied to your local database.
+与手动迁移不同，自动模式差异是从已经应用于本地数据库的***变化中创建一个新的迁移脚本。
 
-<!-- ![Auto schema diff](/docs/img/guides/cli/diff-auto.png) -->
+![自动模式差异](/docs/img/guides/cli/diff-auto.png)
 
-Create an `employees` table under the `public` schema using Studio UI, accessible at [localhost:54323](http://localhost:54323/) by default.
+使用Studio UI在 `public`模式下创建一个 `employees`表，默认情况下可以在[localhost:54323](http://localhost:54323/)访问。
 
-Next, generate a schema diff by running the following command:
+接下来，通过运行以下命令生成一个模式差异。
 
 ```bash
 supabase db diff -f new_employee
 ```
 
-You should see that a new file `supabase/migrations/<timestamp>_new_employee.sql` is created. Open the file and verify that the generated DDL statements are the same as below.
+你应该看到一个新文件`supabase/migrations/<timestamp>_new_employee.sql`被创建。打开该文件并验证生成的DDL语句与下面的相同。
 
 ```sql
 -- This script was generated by the Schema Diff utility in pgAdmin 4
@@ -153,49 +153,49 @@ GRANT ALL ON TABLE public.employees TO postgres;
 GRANT ALL ON TABLE public.employees TO service_role;
 ```
 
-You may notice that the auto-generated migration script is more verbose than the manually written one.
-This is because the default schema diff tool does not account for default privileges added by the initial schema.
+你可能会注意到，自动生成的迁移脚本比手工编写的脚本更加冗长。
+这是因为默认的模式差异工具并没有考虑到初始模式所增加的默认权限。
 
-Commit the new migration script to git and you are ready to deploy.
+将新的迁移脚本提交到git，就可以进行部署了。
 
 <Admonition type="tip">
 
-Alternatively, you may pass in the `--use-migra` experimental flag to generate a more concise migration using [migra](https://github.com/djrobstep/migra).
-Without the `-f` file flag, the output is written to stdout by default.
+另外，你也可以传入`--use-migra`实验性标志，使用[migra](https://github.com/djrobstep/migra)生成一个更简洁的迁移。
+如果没有`-f`文件标志，默认情况下输出会写到stdout。
 
-`supabase db diff --use-migra`
+`supabase db diff --use-migra`。
 
 </Admonition>
 
-## Deploy a migration
+## 部署迁移
 
-In a production environment, we recommend using a CI/CD pipeline to deploy new migrations with GitHub Actions rather than deploying from your local machine.
+在生产环境中，我们建议使用CI/CD管道来部署带有GitHub Actions的新迁移，而不是从你的本地机器上进行部署。
 
-![Deploy migration](/docs/img/guides/cli/cicd-github.png)
+![部署迁移](/docs/img/guides/cli/cicd-github.png)
 
-This example uses two Supabase projects, one for production and one for staging.
+这个例子使用了两个Supabase项目，一个用于生产，一个用于暂存。
 
-Prepare your environments by:
+通过以下方式准备你的环境。
 
-- Creating separate Supabase projects for staging and production
-- Pushing your git repository to GitHub and enabling GitHub Actions
+- 创建独立的Supabase项目，用于暂存和生产
+- 将你的 git 仓库推送到 GitHub 并启用 GitHub 操作
 
 <Admonition type="caution">
 
-You need a _new_ project for staging. A project which has already been modified to reflect the production project's schema can't be used because the CLI would reapply these changes.
+你需要一个新的项目来进行暂存。一个已经被修改以反映生产项目模式的项目不能被使用，因为CLI会重新应用这些修改。
 
 </Admonition>
 
-### Configure GitHub Actions
+### 配置GitHub操作
 
-The Supabase CLI requires a few environment variables to run in non-interactive mode.
+Supabase CLI需要一些环境变量才能在非交互式模式下运行。
 
-- `SUPABASE_ACCESS_TOKEN` is your personal access token
-- `SUPABASE_DB_PASSWORD` is your project specific database password
+- `SUPABASE_ACCESS_TOKEN`是你的个人访问令牌
+- `SUPABASE_DB_PASSWORD`是你的项目特定数据库密码
 
-We recommend adding these as [encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) to your GitHub Actions runners.
+我们建议将这些作为[加密的秘密](https://docs.github.com/en/actions/security-guides/encrypted-secrets)添加到你的GitHub行动运行器中。
 
-Create the following files inside the `.github/workflows` directory:
+在`.github/workflows`目录下创建以下文件。
 
 <Tabs
   scrollable
@@ -304,25 +304,25 @@ jobs:
 </TabPanel>
 </Tabs>
 
-The full example code is available in the [demo repository](https://github.com/supabase/supabase-action-example).
+完整的示例代码可在[demo repository](https://github.com/supabase/supabase-action-example)中找到。
 
-Commit these files to git and push to your `main` branch on GitHub. Update these environment variables to match your Supabase projects:
+将这些文件提交到git，并推送到GitHub上的`main`分支。更新这些环境变量以匹配你的Supabase项目。
 
-- `SUPABASE_ACCESS_TOKEN`
-- `PRODUCTION_PROJECT_ID`
-- `PRODUCTION_DB_PASSWORD`
-- `STAGING_PROJECT_ID`
-- `STAGING_DB_PASSWORD`
+- `supabase_access_token`
+- `production_project_id`(生产项目名称)
+- 生产数据库密码。
+- Staging_project_id
+- `staging_db_password`
 
-When configured correctly, your repository will have CI and Release workflows that trigger on new commits pushed to `main` and `develop` branches.
+当配置正确时，你的版本库将有CI和Release工作流，在推送到`main`和`develop`分支的新提交时触发。
 
-![Correctly configured repo](/docs/img/guides/cli/ci-main.png)
+![正确配置的版本库](/docs/img/guides/cli/ci-main.png)
 
-### Open a PR with new migration
+### 用新的迁移方式打开一个PR
 
-Follow the [migration steps](#create-a-new-migration) to create a `supabase/migrations/<timestamp>_new_employee.sql` file.
+按照[迁移步骤](#create-a-new-migration)创建一个`supabase/migrations/<timestamp>_new_employee.sql`文件。
 
-Checkout a new branch `feat/employee` from `develop` , commit the migration file, and push to GitHub.
+从`develop`签出一个新的分支`feat/employee`，提交迁移文件，并推送到GitHub。
 
 ```bash
 git checkout -b feat/employee
@@ -331,46 +331,46 @@ git commit -m "Add employee table"
 git push --set-upstream origin feat/employee
 ```
 
-Open a PR from `feat/employee` to the `develop` branch to see that the CI workflow has been triggered.
+从`feat/employee`打开一个PR到`develop`分支，看看CI工作流程是否已经被触发。
 
-Once the test error is resolved, merge this PR and watch the deployment in action.
+一旦测试错误被解决，合并这个PR，观察部署的动作。
 
-### Release to production
+### 发布到生产
 
-After verifying your staging project has successfully migrated, create another PR from `develop` to `main` and merge it to deploy the migration to the production project.
+在确认你的暂存项目已经成功迁移后，从`develop`到`main`创建另一个PR，并合并它，将迁移部署到生产项目中。
 
-<!-- ![Merge new PR](/docs/img/guides/cli/ci-release.png) -->
+![合并新的PR](/docs/img/guides/cli/ci-release.png)
 
-The `release` job applies all new migration scripts merged in `supabase/migrations` directory to a linked Supabase project. You can control which project the job links to via `PROJECT_ID` environment variable.
+`release`作业将所有合并在`supabase/migrations`目录下的新迁移脚本应用到一个被链接的Supabase项目。你可以通过`PROJECT_ID`环境变量来控制作业链接到哪个项目。
 
-## Troubleshooting
+## 故障排除
 
-### Sync production project to staging
+### 将生产项目同步到暂存项目
 
-When setting up a new staging project, you might need to sync the initial schema with migrations previously applied to the production project.
+在建立一个新的暂存项目时，你可能需要将初始模式与之前应用于生产项目的迁移同步。
 
-One way is to leverage the Release workflow:
+一种方法是利用发布工作流程。
 
-- Create a new branch `develop` and choose `main` as the branch source
-- Push the `develop` branch to GitHub
+- 创建一个新的分支`develop`并选择`main`作为分支源
+- 推送`develop`分支到GitHub
 
-The GitHub Actions runner will deploy your existing migrations to the staging project.
+GitHub Actions runner会将你现有的迁移部署到暂存项目中。
 
-Alternatively, you can also apply migrations through your local CLI to a linked remote database.
+另外，你也可以通过本地CLI将迁移应用到链接的远程数据库。
 
 ```sql
 supabase db push
 ```
 
-Once pushed, check that the migration version is up to date for both local and remote databases.
+一旦推送，检查本地和远程数据库的迁移版本是否为最新的。
 
 ```sql
 supabase migration list
 ```
 
-### Permission denied on db remote commit
+### db远程提交的权限被拒绝
 
-If you have been using Supabase hosted projects for a long time, you might encounter the following permission error when executing `db remote commit`.
+如果你已经使用Supabase托管的项目很长时间了，在执行`db远程提交`时可能会遇到以下权限错误。
 
 ```bash
 Error: Error running pg_dump on remote database: pg_dump: error: query failed: ERROR:  permission denied for table _type
@@ -378,7 +378,7 @@ Error: Error running pg_dump on remote database: pg_dump: error: query failed: E
 pg_dump: error: query was: LOCK TABLE "graphql"."_type" IN ACCESS SHARE MODE
 ```
 
-To resolve this error, you need to grant `postgres` role permissions to `graphql` schema. You can do that by running the following query from Supabase dashboard's SQL Editor.
+为了解决这个错误，你需要授予`postgres`角色权限给`graphql`模式。你可以通过在Supabase仪表板的SQL编辑器中运行以下查询来实现。
 
 ```sql
 grant all on all tables in schema graphql to postgres, anon, authenticated, service_role;
@@ -386,31 +386,31 @@ grant all on all functions in schema graphql to postgres, anon, authenticated, s
 grant all on all sequences in schema graphql to postgres, anon, authenticated, service_role;
 ```
 
-### Permission denied on db push
+### 在数据库推送时被拒绝的权限
 
-If you created a table through Supabase dashboard, and your new migration script contains `ALTER TABLE` statements, you might run into permission error when applying them on staging or production databases.
+如果你通过Supabase仪表盘创建了一个表，并且你的新迁移脚本包含`ALTER TABLE`语句，当你在暂存数据库或生产数据库上应用这些语句时，可能会遇到权限错误。
 
 ```bash
 ERROR: must be owner of table employees (SQLSTATE 42501); while executing migration <timestamp>
 ```
 
-This is because tables created through Supabase dashboard are owned by `supabase_admin` role while the migration scripts executed through CLI are under `postgres` role.
+这是因为通过Supabase仪表板创建的表是由`supabase_admin`角色拥有的，而通过CLI执行的迁移脚本是在`postgres`角色下。
 
-One way to solve this is to reassign the owner of those tables to `postgres` role. For example, if your table is named `users` in the public schema, you can run the following command to reassign owner.
+解决这个问题的方法之一是将这些表的所有者重新分配给`postgres`角色。例如，如果你的表在公共模式中被命名为 "users"，你可以运行以下命令来重新分配所有者。
 
 ```sql
 ALTER TABLE users OWNER TO postgres;
 ```
 
-Apart from tables, you also need to reassign owner of other entities using their respective commands, including [types](https://www.postgresql.org/docs/current/sql-alterschema.html), [functions](https://www.postgresql.org/docs/current/sql-alterroutine.html), and [schemas](https://www.postgresql.org/docs/current/sql-altertype.html).
+除了表之外，你还需要使用各自的命令来重新分配其他实体的所有者，包括[types](https://www.postgresql.org/docs/current/sql-alterschema.html), [function](https://www.postgresql.org/docs/current/sql-alterroutine.html), 和[schemas](https://www.postgresql.org/docs/current/sql-altertype.html)。
 
-### Rebasing new migrations
+### 重置新的迁移
 
-Sometimes your teammate may merge a new migration file to git main branch, and now you need to rebase your local schema changes on top.
+有时候，你的队友可能会将一个新的迁移文件合并到git主分支上，现在你需要在上面重设你的本地模式修改。
 
-<!-- ![Rebase on main](/docs/img/guides/cli/rebase.png) -->
+![Rebase on main](/docs/img/guides/cli/rebase.png)
 
-We can handle this scenario gracefully by renaming your old migration file with a new timestamp.
+我们可以通过用新的时间戳重命名你的旧迁移文件来优雅地处理这种情况。
 
 ```bash
 git pull
@@ -420,9 +420,9 @@ mv <time>_dev_A.sql <t+2>_dev_A.sql
 supabase db reset
 ```
 
-In case [`reset`](/docs/reference/cli/usage#supabase-db-reset) fails, you can manually resolve conflicts by editing `<t+2>_dev_A.sql` file.
+如果[`reset`](/docs/reference/cli/usage#supabase-db-reset)失败，你可以通过编辑`<t+2>_dev_A.sql`文件手动解决冲突。
 
-Once validated locally, commit your changes to Git and push to GitHub.
+本地验证后，将你的修改提交给Git并推送到GitHub。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,26 +2,26 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-magic-link',
-  title: 'Login With Magic Link',
-  description: 'Use Supabase to authenticate and authorize your users using magic links.',
+  title: '使用Magic Link登录',
+  description: '使用Supabase使用魔术链接对用户进行身份验证和授权。',
 }
 
-Magic links are a form of passwordless logins where users click on a link sent to their email address to log in to their accounts.
-Magic links only work with email addresses. By default, a user can only request a magic link once every 60 seconds.
+Magic Link是一种无密码登录的形式，用户单击发送到其电子邮件地址的链接即可登录其帐户。
+Magic Link仅适用于电子邮件地址。默认情况下，用户只能每60秒请求一次Magic Link。
 
-## Overview
+## 概述
 
-Setting up Magic Link logins for your Supabase application.
+为Supabase应用程序设置Magic Link登录。
 
-- Add Magic Link authenticator to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your application - [JavaScript](https://github.com/supabase/supabase-js) | [Flutter](https://github.com/supabase/supabase-flutter)
+- 将Magic Link验证器添加到[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到应用程序 - [JavaScript](https://github.com/supabase/supabase-js) | [Flutter](https://github.com/supabase/supabase-flutter)
 
-## Add Magic Link into your Supabase Project
+## 将Magic Link添加到您的Supabase项目中
 
-1. For [Site URL](https://app.supabase.com/project/_/auth/url-configuration), enter the final (hosted) URL of your app.
-1. For [Auth Providers](https://app.supabase.com/project/_/auth/providers), **enable email provider**.
+1. 对于[网站URL](https://app.supabase.com/project/_/auth/url-configuration), 输入应用程序的最终（托管）URL。
+1. 对于 [身份验证提供程序](https://app.supabase.com/project/_/auth/providers), **启用电子邮件提供商**.
 
-## Add login code to your client app
+## 将登录代码添加到客户端应用程序
 
 <Tabs
   scrollable
@@ -31,7 +31,7 @@ Setting up Magic Link logins for your Supabase application.
 >
 <TabPanel id="js" label="JavaScript">
 
-When your user signs in, call [signInWithOtp()](/docs/reference/javascript/auth-signinwithotp) with their email address:
+当您的用户登录时，使用其电子邮件地址调用[signInWithOtp()](/docs/reference/javascript/auth-signinwithotp):
 
 ```js
 async function signInWithEmail() {
@@ -44,7 +44,7 @@ async function signInWithEmail() {
 </TabPanel>
 <TabPanel id="dart" label="Dart">
 
-When your user signs in, call [signIn()](/docs/reference/dart/auth-signinwithotp) with their email address:
+当您的用户登录时，使用其电子邮件地址调用[signIn()](/docs/reference/dart/auth-signinwithotp):
 
 ```dart
 Future<void> signInWithEmail() async {
@@ -63,7 +63,7 @@ Future<void> signInWithEmail() async {
 >
 <TabPanel id="js" label="JavaScript">
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signout)将其从浏览器会话和localStorage中删除:
 
 ```js
 async function signOut() {
@@ -74,7 +74,7 @@ async function signOut() {
 </TabPanel>
 <TabPanel id="dart" label="Dart">
 
-When your user signs out, call [signOut()](/docs/reference/dart/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/dart/auth-signout)将其从浏览器会话和localStorage中删除:
 
 ```dart
 Future<void> signOut() async {
@@ -85,11 +85,11 @@ Future<void> signOut() async {
 </TabPanel>
 </Tabs>
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Supabase Flutter Client](https://github.com/supabase/supabase-flutter)
+- [MemFire Cloud](https://cloud.memfiredb.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Flutter客户端](https://github.com/supabase/supabase-flutter)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

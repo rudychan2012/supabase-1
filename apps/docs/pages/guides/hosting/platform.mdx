@@ -2,84 +2,81 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'platform',
-  title: 'Supabase Platform',
-  description: 'Getting started with the Supabase Platform.',
+  title: 'MemFire Cloud Platform',
+  description: '开始使用MemFire Cloud平台.',
   sidebar_label: 'Overview',
 }
 
-Supabase is a hosted platform which makes it very simple to get started without needing to manage any infrastructure.
+MemFire Cloud是一个托管平台，这使得开始使用非常简单，不需要管理任何基础设施。
 
-Visit [app.supabase.com](https://app.supabase.com) and sign in to start creating projects.
+访问[MemFire Cloud](https://cloud.memfiredb.com)并登录，开始创建项目。
 
-## Projects
+## 项目
 
-Each project on Supabase comes with:
+MemFire Cloud上的每个项目都有。
 
-- A dedicated [Postgres database](/docs/guides/database)
-- [Auto-generated APIs](/docs/guides/api)
-- [Auth and user management](/docs/guides/auth)
-- [Edge Functions](/docs/guides/functions)
-- [Realtime API](/docs/guides/realtime)
-- [Storage](/docs/guides/storage)
+- 一个专门的[Postgres数据库](/docs/guides/database)
+- [自动生成的API](/docs/guides/api)
+- [授权和用户管理](/docs/guides/auth)
+- [实时API](/docs/guides/realtime)
+- [存储](/docs/guides/storage)
 
-## Organizations
+## 组织
 
-Organizations are a way to group your projects. Each organization can be configured with different team members and billing settings.
+组织是对你的项目进行分组的一种方式。每个组织可以配置不同的团队成员和计费设置。
 
-## Manage team members
+## 管理团队成员
 
-You can invite your team members into your organizations to collaborate on projects.
+你可以邀请你的团队成员进入你的组织，进行项目合作。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/invite-team.mp4" type="video/mp4" muted playsInline />
 </video>
 
-You can also assign roles to your team members with different access levels. The table below shows the corresponding permissions for each available role in the Dashboard.
+你也可以给你的团队成员分配不同访问级别的角色。下表显示了仪表板中每个可用角色的相应权限。
 
 | Permissions              | Owner | Administrator | Developer |
 | ------------------------ | ----- | ------------- | --------- |
-| **Organization**         |
-| Change organization name | ✅    |               |           |
-| Delete organization      | ✅    |               |           |
-| **Members**              |
-| Add an Owner             | ✅    |               |           |
-| Remove an Owner          | ✅    |               |           |
-| Add an Administrator     | ✅    | ✅            |           |
-| Remove an Administrator  | ✅    | ✅            |           |
-| Add a Developer          | ✅    | ✅            |           |
-| Remove a Developer       | ✅    | ✅            |           |
-| Revoke an invite         | ✅    | ✅            |           |
-| Resend an invite         | ✅    | ✅            |           |
-| **Billing**              |
-| Read invoices            | ✅    | ✅            | ✅        |
-| Read billing email       | ✅    | ✅            | ✅        |
-| Change billing email     | ✅    |               |           |
-| View subscription        | ✅    | ✅            | ✅        |
-| Update subscription      | ✅    | ✅            |           |
-| Read billing address     | ✅    | ✅            | ✅        |
-| Update billing address   | ✅    | ✅            |           |
-| Read tax codes           | ✅    | ✅            | ✅        |
-| Update tax codes         | ✅    | ✅            |           |
-| Read payment methods     | ✅    | ✅            | ✅        |
-| Update payment methods   | ✅    | ✅            |           |
-| **Projects**             |
-| Create a project         | ✅    | ✅            |           |
-| Delete a project         | ✅    | ✅            |           |
-| Update a project         | ✅    | ✅            |           |
-| Pause a project          | ✅    | ✅            |           |
-| Resume a project         | ✅    | ✅            |           |
-| Restart a project        | ✅    | ✅            | ✅        |
+| **组织**                  |
+| 更改组织名称              | ✅    |               |           |
+| 删除组织                  | ✅    |               |           |
+| **成员**                  |
+| 添加用户                  | ✅    |               |           |
+| 删除用户                  | ✅    |               |           |
+| 添加管理员                | ✅    | ✅            |           |
+| 删除管理员                | ✅    | ✅            |           |
+| 添加一个开发者            | ✅    | ✅            |           |
+| 删除一个开发者            | ✅    | ✅            |           |
+| 撤销一个邀请              | ✅    | ✅            |           |
+| 重新发送邀请              | ✅    | ✅            |           |
+| **账单管理**              |
+| 读取账单                  | ✅    | ✅            | ✅        |
+| 阅读帐单邮件              | ✅    | ✅            | ✅        |
+| 更改帐单电子邮件          | ✅    |               |           |
+| 查看订阅                  | ✅    | ✅            | ✅        |
+| 更新订阅                  | ✅    | ✅            |           |
+| 读取帐单地址              | ✅    | ✅            | ✅        |
+| 更新帐单地址              | ✅    | ✅            |           |
+| 阅读税则                  | ✅    | ✅            | ✅        |
+| 更新税则                  | ✅    | ✅            |           |
+| 阅读支付方式              | ✅    | ✅            | ✅        |
+| 更新支付方式              | ✅    | ✅            |           |
+| **项目**                 |
+| 创建项目                 | ✅    | ✅            |           |
+| 删除项目                 | ✅    | ✅            |           |
+| 更新项目                 | ✅    | ✅            |           |
+| 暂停项目                 | ✅    | ✅            |           |
+| 恢复项目                 | ✅    | ✅            |           |
+| 重启项目                 | ✅    | ✅            | ✅        |
 
-## Platform status
+## 平台状态
 
-If Supabase experiences outages, we keep you as informed as possible, as early as possible. We provide the following feedback channels:
+如果MemFire Cloud出现故障，我们会尽可能早地通知您。我们提供以下反馈渠道。
 
-- Status page: [status.supabase.com](https://status.supabase.com/)
-- RSS Feed: [status.supabase.com/history.rss](https://status.supabase.com/history.rss)
-- Atom Feed: [status.supabase.com/history.atom](https://status.supabase.com/history.atom)
-- Slack Alerts: You can receive updates via the RSS feed, using Slack's [built-in RSS functionality](https://slack.com/help/articles/218688467-Add-RSS-feeds-to-Slack) <br />`/feed subscribe https://status.supabase.com/history.atom`
+- 论坛:[https://community.memfiredb.com/](https://community.memfiredb.com/)
 
-Make sure to review our [SLA](/docs/company/sla) for details on our commitment to Platform Stability.
+
+请务必查看我们的[SLA](/docs/company/sla)，以了解我们对平台稳定性的承诺细节。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

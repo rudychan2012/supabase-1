@@ -2,24 +2,24 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'firestore-data',
-  title: 'Firestore Data Migration',
-  description: 'Migrate your Firebase Firestore database to a Supabase Postgres database.',
+  title: 'Firestore数据迁移',
+  description: '将你的Firebase Firestore数据库迁移到一个Supabase Postgres数据库。',
   sidebar_label: 'Firestore Data',
 }
 
-Supabase provides several [tools](https://github.com/supabase-community/firebase-to-supabase/tree/main/firestore) to convert data from a Firebase Firestore database to a Supabase PostgreSQL database. The process copies the entire contents of a single Firestore `collection` to a single PostgreSQL `table`.
+Supabase提供了几个[工具](https://github.com/supabase-community/firebase-to-supabase/tree/main/firestore)来转换Firebase Firestore数据库的数据到Supabase PostgreSQL数据库。这个过程将一个单一的Firestore`collection`的全部内容复制到一个单一的PostgreSQL`table`。
 
-The Firestore `collection` is "flattened" and converted to a table with basic columns of one of the following types: `text`, `numeric`, `boolean`, or `jsonb`. If your structure is more complex, you can write a program to split the newly-created `json` file into multiple, related tables before you import your `json` file(s) to Supabase.
+Firestore的 "集合 "被 "扁平化"，并转换为一个具有以下类型的基本列的表。`text`, `numeric`, `boolean`, or `jsonb`. 如果你的结构比较复杂，你可以写一个程序，在把你的`json`文件导入Supabase之前，把新创建的`json`文件分成多个相关的表。
 
-## Set up the migration tool [#set-up-migration-tool]
+## 设置迁移工具 {#set-up-migration-tool}.
 
-1. Clone the [firebase-to-supabase](https://github.com/supabase-community/firebase-to-supabase) repository:
+1. 克隆[firebase-to-supabase](https://github.com/supabase-community/firebase-to-supabase)资源库。
 
 ```bash
 git clone https://github.com/supabase-community/firebase-to-supabase.git
 ```
 
-1. In the `/firestore` directory, create a file named `supabase-service.json` with the following contents:
+1. 在`/firestore`目录下，创建一个名为`supabase-service.json`的文件，内容如下。
 
 ```json
 {
@@ -31,25 +31,25 @@ git clone https://github.com/supabase-community/firebase-to-supabase.git
 }
 ```
 
-1. Go to the [Database settings](https://app.supabase.com/project/_/settings/database) for your project in the Supabase Dashboard.
-1. Under **Connection Info**, copy the Host string and replace the entry in your `supabase-service.json` file.
-1. Enter the password you used when you created your Supabase project in the `password` entry in the `supabase-service.json` file.
+1. 进入Supabase Dashboard中你的项目的[数据库设置]（https://app.supabase.com/project/_/settings/database）。
+1. 在**连接信息**下，复制主机字符串并替换你的`supabase-service.json`文件中的条目。
+1. 在`supabase-service.json`文件的`password`条目中输入你在创建Supabase项目时使用的密码。
 
-## Generate a Firebase private key [#generate-firebase-private-key]
+##生成一个Firebase私钥 {#generate-firebase-private-key}.
 
-1. Log in to your [Firebase Console](https://console.firebase.google.com/project) and open your project.
-1. Click the gear icon next to **Project Overview** in the sidebar and select **Project Settings**.
-1. Click **Service Accounts** and select **Firebase Admin SDK**.
-1. Click **Generate new private key**.
-1. Rename the downloaded file to `firebase-service.json`.
+1. 登录到你的[Firebase控制台](https://console.firebase.google.com/project)并打开你的项目。
+1. 点击侧边栏中**项目概览旁边的齿轮图标，选择**项目设置**。
+1. 点击**服务账户**，选择**Firebase Admin SDK**。
+1. 单击**生成新的私钥**。
+1. 将下载的文件重命名为`firebase-service.json`。
 
-## Command line options
+## 命令行选项
 
-### List all Firestore collections
+### 列出所有Firestore集合
 
-`node collections.js`
+`node collections.js`。
 
-### Dump Firestore collection to JSON file
+### 将Firestore集合转储为JSON文件
 
 `node firestore2json.js <collectionName> [<batchSize>] [<limit>]`
 
@@ -57,15 +57,15 @@ git clone https://github.com/supabase-community/firebase-to-supabase.git
 - output filename is `<collectionName>.json`
 - `limit` (optional) defaults to 0 (no limit)
 
-#### Customize the JSON file with hooks
+#### 用钩子定制JSON文件
 
-You can customize the way your JSON file is written using a [custom hook](#custom-hooks). A common use for this is to "flatten" the JSON file, or to split nested data into separate, related database tables. For example, you could take a Firestore document that looks like this:
+你可以使用[自定义钩子](#custom-hooks)自定义你的JSON文件的写入方式。一个常见的用途是 "扁平化 "JSON文件，或将嵌套的数据分割到独立的、相关的数据库表中。例如，你可以采取一个Firestore文件，看起来像这样。
 
 ```json title=Firestore%20document
 [{ "user": "mark", "score": 100, "items": ["hammer", "nail", "glue"] }]
 ```
 
-And split it into two files (one table for users and one table for items):
+并把它分成两个文件（一个是用户表，一个是物品表）。
 
 ```json title=Users%20table
 [{ "user": "mark", "score": 100 }]
@@ -79,37 +79,37 @@ And split it into two files (one table for users and one table for items):
 ]
 ```
 
-### Import JSON file to Supabase (PostgreSQL) [#import-to-supabase]
+###将JSON文件导入Supabase(PostgreSQL){#import-to-supabase}。
 
-`node json2supabase.js <path_to_json_file> [<primary_key_strategy>] [<primary_key_name>]`
+`node json2supabase.js <path_to_json_file> [<primary_key_strategy>] [<primary_key_name>]`。
 
-- `<path_to_json_file>` The full path of the file you created in the previous step (`Dump Firestore collection to JSON file `), such as `./my_collection.json`
-- `[<primary_key_strategy>]` (optional) Is one of:
-  - `none` (default) No primary key is added to the table.
-  - `smallserial` Creates a key using `(id SMALLSERIAL PRIMARY KEY)` (autoincrementing 2-byte integer).
-  - `serial` Creates a key using `(id SERIAL PRIMARY KEY)` (autoincrementing 4-byte integer).
-  - `bigserial` Creates a key using `(id BIGSERIAL PRIMARY KEY)` (autoincrementing 8-byte integer).
-  - `uuid` Creates a key using `(id UUID PRIMARY KEY DEFAULT uuid_generate_v4())` (randomly generated UUID).
-  - `firestore_id` Creates a key using `(id TEXT PRIMARY KEY)` (uses existing `firestore_id` random text as key).
-- `[<primary_key_name>]` (optional) Name of primary key. Defaults to "id".
+- `<path_to_json_file>`你在上一步创建的文件的完整路径（`将Firestore集合转为JSON文件`），例如`./my_collection.json`。
+- `[<primary_key_strategy>]`（可选）是以下之一。
+  - `none` (默认) 不向表添加主键。
+  - `smallserial` 使用`(id SMALLSERIAL PRIMARY KEY)`（自动递增的2字节整数）创建一个键。
+  - `serial` 使用`(id SERIAL PRIMARY KEY)`创建一个键(自动递增的4字节整数)。
+  - `bigserial` 使用`(id BIGSERIAL PRIMARY KEY)`创建一个键(自动递增8字节的整数)。
+  - `uuid` 使用`(id UUID PRIMARY KEY DEFAULT uuid_generate_v4())`（随机生成的UUID）创建一个密钥。
+  - `firestore_id` 使用`(id TEXT PRIMARY KEY)`创建一个键（使用现有的`firestore_id`随机文本作为键）。
+- `[<primary_key_name>]`（可选）主键的名称。默认为 "id"。
 
-## Custom hooks
+## 自定义钩子
 
-Hooks are used to customize the process of exporting a collection of Firestore documents to JSON. They can be used for:
+钩子是用来定制导出Firestore文档集合到JSON的过程。它们可以用于。
 
-- Customizing or modifying keys
-- Calculating data
-- Flattening nested documents into related SQL tables
+- 自定义或修改键
+- 计算数据
+- 将嵌套的文档扁平化为相关的SQL表
 
-### Write a custom hook
+### 编写一个自定义钩子
 
-#### Create a .js file for your collection
+#### 为你的集合创建一个.js文件
 
-If your Firestore collection is called `users`, create a file called `users.js` in the current folder.
+如果你的Firestore集合叫做`users'，在当前文件夹中创建一个叫做`users.js'的文件。
 
-#### Construct your .js file
+#### 构建你的.js文件
 
-The basic format of a hook file looks like this:
+钩子文件的基本格式是这样的。
 
 ```js
 module.exports = (collectionName, doc, recordCounters, writeRecord) => {
@@ -118,19 +118,19 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
 }
 ```
 
-##### Parameters
+##### 参数
 
-- `collectionName`: The name of the collection you are processing.
-- `doc`: The current document (JSON object) being processed.
-- `recordCounters`: An internal object that keeps track of how many records have been processed in each collection.
-- `writeRecord`: This function automatically handles the process of writing data to other JSON files (useful for "flatting" your document into separate JSON files to be written to separate database tables). `writeRecord` takes the following parameters:
-  - `name`: Name of the JSON file to write to.
-  - `doc`: The document to write to the file.
-  - `recordCounters`: The same `recordCounters` object that was passed to this hook (just passes it on).
+- `collectionName`: 你要处理的集合的名称。
+- `doc`: 当前正在处理的文档（JSON对象）。
+- `recordCounters`: 一个内部对象，记录每个集合中已经处理了多少条记录。
+- `writeRecord`: 这个函数自动处理将数据写入其他JSON文件的过程（对于将你的文件 "平铺 "到不同的JSON文件中，写入不同的数据库表中很有用）。`writeRecord`需要以下参数。
+  - `name`: 要写入的JSON文件的名称。
+  - `doc`: 要写到文件中的文件。
+  - `recordCounters`: 与传递给这个钩子的`recordCounters'对象相同(只是把它传递下去)。
 
-### Examples
+### 示例
 
-#### Add a new (unique) numeric key to a collection
+#### 为一个集合添加一个新的(唯一的)数字键
 
 ```js
 module.exports = (collectionName, doc, recordCounters, writeRecord) => {
@@ -139,7 +139,7 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
 }
 ```
 
-#### Add a timestamp of when this record was dumped from Firestore
+#### 添加此记录从Firestore转储的时间戳
 
 ```js
 module.exports = (collectionName, doc, recordCounters, writeRecord) => {
@@ -148,9 +148,9 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
 }
 ```
 
-#### Flatten JSON into separate files
+#### 扁平化JSON到单独的文件
 
-Flatten the `users` collection into separate files:
+将 "用户 "集合扁平化为单独的文件:
 
 ```json
 [
@@ -169,7 +169,7 @@ Flatten the `users` collection into separate files:
 ]
 ```
 
-The `users.js` hook file:
+`users.js`钩子文件:
 
 ```js
 module.exports = (collectionName, doc, recordCounters, writeRecord) => {
@@ -185,7 +185,7 @@ module.exports = (collectionName, doc, recordCounters, writeRecord) => {
 }
 ```
 
-The result is two separate JSON files:
+其结果是两个独立的JSON文件:
 
 ```json title=users.json
 [
@@ -205,11 +205,11 @@ The result is two separate JSON files:
 ]
 ```
 
-## Resources
+## 资源
 
 - [Supabase vs Firebase](https://supabase.com/alternatives/supabase-vs-firebase)
-- [Firestore Storage Migration](/docs/guides/migrations/firebase-storage)
-- [Firebase Auth Migration](/docs/guides/migrations/firebase-auth)
+- [Firestore存储迁移](/docs/guides/migrations/firebase-storage)
+- [Firebase Auth 迁移](/docs/guides/migrations/firebase-auth)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

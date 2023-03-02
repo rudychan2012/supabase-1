@@ -47,11 +47,11 @@ const SideBar = ({ menuItems = [] }: { menuItems: any }) => {
     >
       {isInReferencePages && (
         <>
-          <Link href="/reference">
+          <Link href="/">
             <a>
               <div className="flex items-center space-x-4 opacity-75 hover:opacity-100 transition">
                 <IconArrowLeft size={16} strokeWidth={2} className="text-scale-1200" />
-                <span className="text-sm text-scale-1200">All Reference Docs</span>
+                <span className="text-sm text-scale-1200">返回文档</span>
               </div>
             </a>
           </Link>

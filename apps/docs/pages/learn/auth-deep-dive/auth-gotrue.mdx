@@ -2,15 +2,15 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-gotrue',
-  title: 'Part Four: GoTrue',
-  description: 'Supabase Deep Dive Part 4: Gotrue Overview',
+  title: '第四部分: GoTrue',
+  description: 'Supabase深潜第四部分：Gotrue概述',
 }
 
-### About
+### 关于
 
-How to restrict table access to authenticated users, row level policies, and email domain based access.
+如何将表的访问限制在认证用户、行级策略和基于电子邮件域的访问。
 
-### Watch
+### 观察
 
 <div className="video-container">
   <iframe
@@ -23,11 +23,12 @@ How to restrict table access to authenticated users, row level policies, and ema
 
 ### Gotrue Server
 
-Gotrue is an auth API server written in Go by the Netlify team, find the Supabase fork here: https://github.com/supabase/gotrue. The list of available API endpoints is available [here](https://github.com/supabase/gotrue#endpoints).
+Gotrue是一个由Netlify团队用Go编写的认证API服务器，在这里可以找到Supabase的分叉：https://github.com/supabase/gotrue
+可用的API端点列表可在[这里](https://github.com/supabase/gotrue#endpoints)。
 
-When you deploy a new Supabase project, we deploy a new instance of this server alongside your database, and also inject your database with the required `auth` schema.
+当你部署一个新的Supabase项目时，我们会在你的数据库旁边部署一个新的服务器实例，同时也为你的数据库注入所需的`auth`模式。
 
-It makes it super easy to, for example, send magic link emails which your users can use to login:
+这使得它非常容易，例如，发送神奇的链接电子邮件，你的用户可以用它来登录:
 
 ```bash
 # replace <project-ref> with your own project reference
@@ -40,21 +41,21 @@ curl -X POST 'https://<project-ref>.supabase.co/auth/v1/magiclink' \
 }'
 ```
 
-Gotrue is responsible for issuing access tokens for your users, sends confirmation, magic-link, and password recovery emails (by default we send these from a Supabase SMTP server, but you can easily plug in your own inside the dashboard at Auth > Settings) and also transacting with third party OAuth providers to get basic user data.
+Gotrue负责为你的用户发放访问令牌，发送确认邮件、魔法链接和密码恢复邮件（默认情况下，我们从Supabase的SMTP服务器发送这些邮件，但你可以在仪表板的Auth > Settings中轻松插入你自己的邮件），也可以与第三方OAuth提供商进行交易，获得基本的用户数据。
 
-The community even recently built in the functionality to request custom OAuth scopes, if your users need to interact more closely with the provider. See the scopes parameter here: [https://github.com/supabase/gotrue#get-authorize](https://github.com/supabase/gotrue#get-authorize).
+如果你的用户需要与供应商进行更密切的互动，社区最近甚至还内置了请求自定义OAuth范围的功能。请看这里的scopes参数。[https://github.com/supabase/gotrue#get-authorize](https://github.com/supabase/gotrue#get-authorize)。
 
-So let's say you want to send emails on behalf of a user via gmail, you might request the gmail.send scope by directing them to:
+因此，假设你想通过gmail代表用户发送电子邮件，你可能会请求gmail.send范围，把他们引导到：
 
 ```
 https://sjvwsaokcugktsdaxxze.supabase.co/auth/v1/authorize?provider=google&https://www.googleapis.com/auth/gmail.send
 ```
 
-You'll have to make sure your google app is verified of course in order to request these advanced scopes.
+当然，你必须确保你的谷歌应用经过验证，以便申请这些高级范围。
 
-[Gotrue-js](https://github.com/supabase/gotrue-js) (and also [gotrue-csharp](https://github.com/supabase/gotrue-csharp), [gotrue-py](https://github.com/j0/gotrue-py), [gotrue-kt](https://github.com/supabase/gotrue-kt), and [gotrue-dart](https://github.com/supabase/gotrue-dart)) are all wrappers around the gotrue API endpoints, and make for easier session management inside your client.
+[Gotrue-js](https://github.com/supabase/gotrue-js) (还有 [gotrue-csharp](https://github.com/supabase/gotrue-csharp), [gotrue-py](https://github.com/j0/gotrue-py), [gotrue-kt](https://github.com/supabase/gotrue-kt), 和 [gotrue-dart](https://github.com/supabase/gotrue-dart)) 都是对Getrue API端点的封装，使你的客户端更容易进行会话管理。
 
-But all the functionality of gotrue-js is also available in supabase-js, which uses gotrue-js internally when you do things like:
+但是gotrue-js的所有功能在supabase-js中也是可用的，当你做一些事情时，supabase-js在内部使用gotrue-js。
 
 ```jsx
 const { user, session, error } = await supabase.auth.signIn({
@@ -63,22 +64,23 @@ const { user, session, error } = await supabase.auth.signIn({
 })
 ```
 
-If you want to request a feature, or contribute to the project directly, just head to https://github.com/supabase/gotrue and open some issues/PRs, we're always open to help.
+如果你想申请一个功能，或直接为项目做贡献，只需前往 https://github.com/supabase/gotrue 
+并打开一些问题/PR，我们总是愿意帮助。
 
-In the next guide we'll be looking at how to setup external OAuth providers: Watch [Part Five: Google Oauth](../../learn/auth-deep-dive/auth-google-oauth)
+在下一个指南中，我们将研究如何设置外部OAuth提供者。观看[第五部分：Google Oauth](././learn/auth-deep-dive/auth-google-oauth)
 
-### Resources
+### 资源
 
 - JWT debugger: https://jwt.io​
 
-### Next steps
+### 下一步
 
-- Watch [Part One: JWTs](../../learn/auth-deep-dive/auth-deep-dive-jwts)
-- Watch [Part Two: Row Level Security](../../learn/auth-deep-dive/auth-row-level-security)
-- Watch [Part Three: Policies](../../learn/auth-deep-dive/auth-policies)
-<!-- - Watch [Part Four: GoTrue](../../learn/auth-deep-dive/auth-gotrue) -->
-- Watch [Part Five: Google Oauth](../../learn/auth-deep-dive/auth-google-oauth)
-- Sign up for Supabase: [app.supabase.com](https://app.supabase.com)
+- 观看[第一部分：JWTs](../../learn/auth-deep-dive/auth-deep-dive-jwts) 
+
+- [第二部分:行级安全](../../learn/auth-deep-dive/auth-row-level-security)
+- [第三部分:政策](../../learn/auth-deep-dive/auth-policies)
+<!--- [第四部分: GoTrue](../../learn/auth-deep-dive/auth-gotrue)-->
+- 注册加入[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

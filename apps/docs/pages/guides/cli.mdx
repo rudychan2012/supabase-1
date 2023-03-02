@@ -4,15 +4,15 @@ export const meta = {
   id: 'cli',
   title: 'Supabase CLI',
   description:
-    'The Supabase CLI provides tools to develop your project locally and deploy to the Supabase Platform.',
+    'Supabase CLI 提供了在本地开发项目并部署到 Supabase 平台的工具。',
   sidebar_label: 'Overview',
   toc_max_heading_level: 2,
 }
 
-The Supabase CLI provides tools to develop your project locally and deploy to the Supabase Platform.
-You can also use the CLI to manage your Supabase projects, handle database migrations and CI/CD workflows, and generate types directly from your database schema.
+Supabase CLI 提供了在本地开发项目并部署到 Supabase 平台的工具。
+你还可以使用 CLI 来管理你的 Supabase 项目，处理数据库迁移和 CI/CD 工作流程，并直接从你的数据库模式中生成类型。
 
-## Installation
+## 安装
 
 <Tabs
   scrollable
@@ -22,7 +22,7 @@ You can also use the CLI to manage your Supabase projects, handle database migra
 >
 <TabPanel id="npm" label="npm">
 
-Install the CLI as dev dependency via [npm](https://www.npmjs.com/package/supabase):
+通过[npm](https://www.npmjs.com/package/supabase)将CLI安装为dev依赖项。
 
 ```sh
 npm install supabase --save-dev
@@ -31,7 +31,7 @@ npm install supabase --save-dev
 </TabPanel>
 <TabPanel id="macos" label="macOS">
 
-Install the CLI with [Homebrew](https://brew.sh):
+用[Homebrew]（https://brew.sh）安装CLI。
 
 ```sh
 brew install supabase/tap/supabase
@@ -40,7 +40,7 @@ brew install supabase/tap/supabase
 </TabPanel>
 <TabPanel id="windows" label="Windows">
 
-Install the CLI with [Scoop](https://scoop.sh):
+用[Scoop](https://scoop.sh)安装CLI。
 
 ```powershell
 scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
@@ -50,7 +50,7 @@ scoop install supabase
 </TabPanel>
 <TabPanel id="linux" label="Linux">
 
-The CLI is available through [Homebrew](https://brew.sh) and Linux packages.
+CLI可以通过[Homebrew](https://brew.sh)和Linux软件包获得。
 
 #### Homebrew
 
@@ -58,22 +58,22 @@ The CLI is available through [Homebrew](https://brew.sh) and Linux packages.
 brew install supabase/tap/supabase
 ```
 
-#### Linux packages
+#### Linux软件包
 
-Linux packages are provided in [Releases](https://github.com/supabase/cli/releases).
-To install, download the `.apk`/`.deb`/`.rpm` file depending on your package manager
-and run one of the following:
+Linux软件包在[Release]（https://github.com/supabase/cli/releases）中提供。
+要安装，根据你的软件包管理器下载`.apk`/`.deb`/`.rpm`文件
+并运行下列程序之一。
 
-- `sudo apk add --allow-untrusted <...>.apk`
-- `sudo dpkg -i <...>.deb`
-- `sudo rpm -i <...>.rpm`
+- `sudo apk add --allow-untrusted <...>.apk`。
+- `sudo dpkg -i <...>.deb`。
+- `sudo rpm -i <...>.rpm`。
 
 </TabPanel>
 </Tabs>
 
-## Updates
+## 更新
 
-When a new [version](https://github.com/supabase/cli/releases) is released, you can update the CLI using the same methods.
+当新的[版本](https://github.com/supabase/cli/releases)发布后，你可以用同样的方法更新CLI。
 
 <Tabs
   scrollable
@@ -111,11 +111,11 @@ brew upgrade supabase
 </TabPanel>
 </Tabs>
 
-## See also
+## 还请参见
 
-- [Supabase CLI Reference](/docs/reference/cli/usage)
-- [Local Development](/docs/guides/cli/local-development)
-- [Managing Environments](/docs/guides/cli/managing-environments)
+- [Supabase CLI 参考](/docs/reference/cli/usage)
+- [本地开发](/docs/guides/cli/local-development)
+- [管理环境](/docs/guides/cli/managing-environments)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

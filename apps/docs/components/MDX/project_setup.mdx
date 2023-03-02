@@ -1,21 +1,21 @@
 import UserManagementSQLTemplate from './user_management_quickstart_sql_template.mdx'
 
-## Project set up
+## 项目设置
 
-Before we start building we're going to set up our Database and API. This is as simple as starting a new Project in Supabase
-and then creating a "schema" inside the database.
+在我们开始构建之前，我们要设置我们的数据库和API。这就像在Supabase中启动一个新项目一样简单
+然后在数据库中创建一个 "模式"。
 
-### Create a project
+### 创建一个项目
 
-1. Go to [app.supabase.com](https://app.supabase.com).
-1. Click on "New Project".
-1. Enter your project details.
-1. Wait for the new database to launch.
+1. 进入[MemFire Cloud](https://cloud.memfiredb.com)。
+1. 点击 "新项目"。
+1. 输入你的项目细节。
+1. 等待新数据库的启动。
 
-### Set up the database schema
+### 设置数据库模式
 
-Now we are going to set up the database schema. We can use the "User Management Starter" quickstart in the SQL Editor,
-or you can just copy/paste the SQL from below and run it yourself.
+现在我们要设置数据库模式。我们可以使用SQL编辑器中的 "用户管理"的模板快速启动。
+或者你可以直接复制/粘贴下面的SQL，然后自己运行它。
 
 <Tabs
   scrollable
@@ -25,9 +25,9 @@ or you can just copy/paste the SQL from below and run it yourself.
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [SQL Editor](https://app.supabase.com/project/_/sql) page in the Dashboard.
-2. Click **User Management Starter**.
-3. Click **Run**.
+1. 进入仪表版中的SQL编辑器页面。
+2. 点击 **用户管理**的模板。
+3. 点击 **运行**。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/sql-user-management-starter.mp4" type="video/mp4" muted playsInline />
@@ -41,14 +41,14 @@ or you can just copy/paste the SQL from below and run it yourself.
 </TabPanel>
 </Tabs>
 
-### Get the API Keys
+### 获取API密钥
 
-Now that you've created some database tables, you are ready to insert data using the auto-generated API.
-We just need to get the URL and `anon` key from the API settings.
+现在你已经创建了一些数据库表，你已经准备好使用自动生成的API插入数据。
+我们只需要从API设置中获得URL和`anon`密钥。
 
-1. Go to the [Settings](https://app.supabase.com/project/_/settings) page in the Dashboard.
-2. Click **API** in the sidebar.
-3. Find your API `URL`, `anon`, and `service_role` keys on this page.
+1. 进入仪表板中的设置页面。
+2. 单击侧边栏中的**API**。
+3. 在这个页面上找到你的API`URL`、`anon`和`service_role`键。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />

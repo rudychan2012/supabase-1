@@ -2,25 +2,26 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'introduction',
-  title: 'Introduction',
+  title: '介绍',
   description: 'Introduction to Supabase',
   hide_table_of_contents: true,
 }
 
-Supabase is an open source Firebase alternative providing all the backend features you need to build a product.
-You can use it completely, or just the features you need.
+MemFire Cloud是CloudBase的替代方案，提供构建产品所需的所有后端功能。 你可以使用它的全部功能，或者只使用你需要的功能。
 
-[Start a project](https://app.supabase.com) with the hosted platform or learn how to [host Supabase](/docs/guides/hosting/overview) yourself.
 
-## Learn about features
+
+
+
+## 了解功能
 
 <div className="grid md:grid-cols-12 gap-4">
   <div className="col-span-4">
     <ButtonCard
       className="card"
       to={'/guides/auth'}
-      title={'Auth'}
-      description={'User management with Row Level Security.'}
+      title={'身份验证'}
+      description={'具有行级安全性的用户管理.'}
       style={{ height: '100%' }}
     />
   </div>
@@ -28,8 +29,8 @@ You can use it completely, or just the features you need.
     <ButtonCard
       className="card"
       to={'/guides/api'}
-      title={'Auto-generated APIs'}
-      description={'Instantly generate APIs for your database.'}
+      title={'自动生成的APIs'}
+      description={'立即为数据库生成APIs.'}
       style={{ height: '100%' }}
     />
   </div>
@@ -37,17 +38,8 @@ You can use it completely, or just the features you need.
     <ButtonCard
       className="card"
       to={'/guides/database'}
-      title={'Database'}
-      description={'A dedicated, scalable Postgres database.'}
-      style={{ height: '100%' }}
-    />
-  </div>
-  <div className="col-span-4">
-    <ButtonCard
-      className="card"
-      to={'/guides/functions'}
-      title={'Edge Functions'}
-      description={'Server-side functions, distributed globally.'}
+      title={'数据库'}
+      description={'专用的、可扩展的Postgres数据库.'}
       style={{ height: '100%' }}
     />
   </div>
@@ -56,7 +48,7 @@ You can use it completely, or just the features you need.
       className="card"
       to={'/guides/realtime'}
       title={'Realtime'}
-      description={'Build with Broadcast, Presence, and Postgres CDC.'}
+      description={'使用广播、存在和Postgres CDC构建.'}
       style={{ height: '100%' }}
     />
   </div>
@@ -64,25 +56,25 @@ You can use it completely, or just the features you need.
     <ButtonCard
       className="card"
       to={'/guides/storage'}
-      title={'File Storage'}
-      description={'Store, organize, and serve large files.'}
+      title={'文件存储'}
+      description={'存储、组织和服务大型文件.'}
       style={{ height: '100%' }}
     />
   </div>
   <div className="col-span-4">
     <ButtonCard
       className="card"
-      to={'/guides/platform/logs'}
-      title={'Observability'}
-      description={'Monitor and debug your infrastucture.'}
+      to={'/guides/static-start'}
+      title={'静态托管'}
+      description={'静态托管，一键将静态网站资源部署在云端'}
       style={{ height: '100%' }}
     />
   </div>
 </div>
 
-## Start with a framework
+## 从框架开始
 
-Supabase is just Postgres, which makes it compatible with a large number of tools and frameworks.
+MemFire Cloud是基于Postgres的数据库，这使得它兼容许多工具和框架。
 
 <Frameworks />
 

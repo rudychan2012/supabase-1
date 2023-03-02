@@ -2,31 +2,32 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'timeouts',
-  title: 'Timeouts',
+  title: '超时',
   description: 'Timeouts and optimization',
 }
 
-By default, Supabase limits the maximum statement execution time to _3 seconds_ for users accessing the API using the anon key, and _8 seconds_ for authenticated users. Additionally, all users are subject to a global limit of _2 minutes_. This serves as a backstop against resource exhaustion due to either poorly written queries, or abusive usage.
+默认情况下，Suabase将使用匿名密钥访问API的用户的最大语句执行时间限制为3秒，而经过身份验证的用户的最长语句执行时间为8秒。此外，所有用户的全局限制为2分钟。这可以防止由于查询写得不好或滥用而导致的资源耗尽。
 
-### Changing the default timeout
+### 改变默认超时
 
-The timeout values were picked as a reasonable default for the majority of use-cases, but can be modified using the [`alter role`](https://www.postgresql.org/docs/current/sql-alterrole.html) statement:
+这些超时值被选为大多数情况下的合理默认值，但可以使用[`alter role`](https://www.postgresql.org/docs/current/sql-alterrole.html)语句进行修改。
+
 
 ```sql
 alter role authenticated set statement_timeout = '15s';
 ```
 
-You can also update the statement timeout for a session:
+你也可以更新一个会话的语句超时:
 
 ```sql
 set statement_timeout to 60000; -- 1 minute in milliseconds
 ```
 
-### Statement Optimization
+### 语句优化
 
-All Supabase projects come with the [`pg_stat_statements`](https://www.postgresql.org/docs/current/pgstatstatements.html) extension installed, which tracks planning and execution statistics for all statements executed against it. These statistics can be used in order to diagnose the performance of your project.
+所有Supabase项目都安装了[`pg_stat_statements`](https://www.postgresql.org/docs/current/pgstatstatements.html)扩展，它跟踪所有针对它执行的语句的计划和执行统计数据。这些统计数据可以用来诊断你的项目的性能。
 
-This data can further be used in conjunction with the [`explain`](https://www.postgresql.org/docs/current/using-explain.html) functionality of Postgres to optimize your usage.
+这些数据可以进一步与Postgres的[`explain`](https://www.postgresql.org/docs/current/using-explain.html)功能结合使用，以优化你的使用。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -15,7 +15,7 @@ const DefaultLayout = (props: Props) => {
     const key = localStorage.getItem('supabaseDarkMode')
     if (!key) {
       // Default to dark mode if no preference config
-      document.documentElement.className = 'dark'
+      document.documentElement.className = ''
     } else {
       document.documentElement.className = key === 'true' ? 'dark' : ''
     }

@@ -2,138 +2,137 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'connecting-to-postgres',
-  title: 'Database Connections',
+  title: '数据库连接',
   description: 'There are various ways to connect to your Postgres database.',
 }
 
-Supabase provides several options for programmatically connecting to your Postgres database:
 
-## Types of Connection
+Supabase提供了几个以编程方式连接到Postgres数据库的选项:
 
-- HTTP connections using the API.
-- Direct connections using Postgres' standard connection system.
-- Connection pooling using PgBouncer.
+## 连接类型
 
-### Direct vs Pooling vs API
+- 使用API的HTTP连接。
+- 使用Postgres的标准连接系统的直接连接。
+- 使用PgBouncer的连接池。
 
-- A "direct connection" is when a connection is made to the database using Postgres' native connection implementation. You should use this for tools which are always alive - usually installed on a long-running server.
-- A "connection pool" is a system (external to Postgres) which keeps connections "open". You should use this for serverless functions and tools which disconnect from the database frequently.
-- The API is an auto-generated REST interface. You should use this for all browser and application interactions. The API server internally handles a connection pool.
+### 直接连接与池化连接与API连接
 
-Why would you use a connection pool? Primarily because the way that Postgres handles connections isn't very scalable for a large number of _temporary_ connections.
-You can use these simple questions to determine which connection method to use:
+- "直接连接"是指使用Postgres的本地连接实现与数据库建立连接。你应该把它用在那些一直运行的工具上--通常安装在一个长期运行的服务器上。
+- "连接池"是一个保持连接 "开放 "的系统（在Postgres外部）。你应该把它用于无服务器功能和经常与数据库断开连接的工具。
+- API是一个自动生成的REST接口。你应该在所有的浏览器和应用程序的交互中使用它。API服务器内部处理一个连接池。
 
-- Are you connecting to a database and _maintaining_ a connection? If yes, use a direct connection.
-- Are you connecting to your database and then _disconnecting_ immediately (e.g. a serverless environment)? If yes, use a connection pool.
+为什么你要使用连接池？主要是因为Postgres处理连接的方式对于大量的临时连接来说不是很可扩展。
+你可以使用这些简单的问题来决定使用哪种连接方式。
+
+- 你是否正在连接一个数据库并保持一个连接？如果是，请使用直接连接。
+- 你是否连接到数据库，然后立即断开连接（例如，无服务器环境）？如果是，请使用连接池。
+
 
 ## API
 
-Supabase provides an auto-updating [API](/docs/guides/api). This is the easiest way to get started if you are managing data (fetching, inserting, updating).
+Supabase提供了一个自动更新的[API]（/docs/guides/api）。如果你要管理数据（获取、插入、更新），这是最简单的入门方法。
 
-### Interfaces
+### 接口
 
-We provides several types of API to suit your preferences and use-case:
+我们提供了几种类型的API来满足你的喜好和使用需求。
 
-- [REST](/docs/guides/api#rest-api): interact with your database through a REST interface.
-- [GraphQL](/docs/guides/api#graphql-api): interact with your database through a GraphQL interface.
-- [Realtime](/docs/guides/api#realtime-api): listen to database changes over websockets.
+- [REST](/docs/guides/api#rest-api)：通过REST接口与你的数据库进行交互。
+- [GraphQL](/docs/guides/api#graphql-api)：通过GraphQL接口与你的数据库互动。
+- [Realtime](/docs/guides/api#realtime-api)：通过websockets监听数据库变化。
 
-You cannot manage the database schema via the API (for security reasons). To do that you can use the dashboard or connect directly to your database.
+你不能通过API管理数据库模式（出于安全原因）。要做到这一点，你可以使用仪表板或直接连接到你的数据库。
 
-### API URL and Keys
+### API URL和密钥
 
-You can find the API URL and Keys in the [Dashboard](https://app.supabase.com/project/_/settings/api).
+你可以在[仪表板](https://app.supabase.com/project/_/settings/api)中找到API URL和密钥。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Direct connections
+## 直接连接
 
-Every Supabase project provides a full Postgres database. You can connect to the database using any tool which supports Postgres.
+每个Supabase项目都提供一个完整的Postgres数据库。你可以使用任何支持Postgres的工具连接到数据库。
 
-### Finding your connection string
+### 获取连接方式
 
-1. Go to the `Settings` section.
-2. Click `Database`.
-3. Find your Connection Info and Connection String. Direct connections are on port `5432`.
+1. 转到`设置` 栏。
+2. 点击 "数据库"。
+3. 找到你的连接信息和连接字符串。直接连接的端口为`5432`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/postgres-connection.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Connection Pool
+## 连接池
 
-Connection pools are useful for managing a large number of _temporary_ connections. For example, if you are using [Prisma](/docs/guides/integrations/prisma) deployed to a Serverless environment.
+连接池对于管理大量的临时连接非常有用。例如，如果你使用[Prisma](/docs/guides/integrations/prisma)部署到无服务器环境。
 
-### How connection pooling works
+### 连接池如何工作
 
-A "connection pool" is a system (external to Postgres) which manages connections, rather than PostgreSQL's native system. Supabase uses [PgBouncer](https://www.pgbouncer.org/) for connection pooling.
+连接池是一个管理连接的系统（Postgres外部），而不是PostgreSQL的本地系统。Supabase使用[PgBouncer](https://www.pgbouncer.org/)进行连接池的管理。
 
-When a client makes a request, PgBouncer "allocates" an available connection to the client.
-When the client transaction or session is completed the connection is returned to the pool and is free to be used by another client.
+当一个客户发出请求时，PgBouncer为客户 "分配 "一个可用的连接。
+当客户端交易或会话完成后，该连接将返回到池中，可供其他客户端使用。
 
 ![Connection pooling](/docs/img/guides/database/connection-pool.png)
 
-### Pool modes
+### 池模式
 
-Pool Mode determines how PgBouncer handles a connection.
+池模式决定了PgBouncer如何处理一个连接。
 
-#### Session
+#### 会话
 
-When a new client connects, a connection is assigned to the client until it disconnects. Afterward, the connection is returned back to the pool.
+当一个新的客户端连接时，一个连接被分配给该客户端，直到它断开连接。之后，连接会被退回到池中。
 
-All PostgreSQL features can be used with this option.
+所有 PostgreSQL 的功能都可以使用这个选项。
 
-#### Transaction
+#### 事务
 
-This is the suggested option for serverless functions. A connection is only assigned to the client for the duration of a transaction. Two consecutive transactions from the same client
-could be executed over two different connections.
+这是对无服务器功能的建议选项。一个连接只在一个事务期间分配给客户端。来自同一个客户端的两个连续的事务可以通过两个不同的连接来执行。
 
-Some session-based PostgreSQL features such as prepared statements are not available with this option.
-A comprehensive list of incompatible features can be found [here](https://www.pgbouncer.org/features.html).
+一些基于会话的PostgreSQL功能，如准备好的语句，不能使用此选项。
+一个全面的不兼容功能列表可以在[这里](https://www.pgbouncer.org/features.html)找到。
 
-#### Statement
+#### 声明
 
-This is the most granular option. Connections are returned to the pool after every statement. Transactions with multiple statements are not allowed. This is best used when `AUTOCOMMIT` is in use.
+这是最细化的选项。连接在每个语句之后都会被返回到池中。不允许有多个语句的交易。在使用`AUTOCOMMIT'时最好使用这个选项。
 
-### Finding the connection pool config
+### 寻找连接池的配置
 
-1. Go to the `Settings` section.
-2. Click `Database`.
-3. Find your Connection Info and Connection String. Connection pooling is on port `6543`.
+1. 转到 "设置 "栏。
+2. 点击 "数据库"。
+3. 找到你的连接信息和连接字符串。连接池的端口为`6543`
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/connection-pool-config.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Connecting with SSL
+## 使用SSL连接
 
-Use this when connecting to your database to prevent snooping and man-in-the-middle attacks.
+当连接到你的数据库时，使用这个方法来防止窥探和中间人攻击。
 
-Obtain your connection info and Server root certificate from your application’s dashboard.
+从你的应用程序的仪表板上获得连接信息和服务器根证书。
 ![Connection Info and Certificate.](/docs/img/guides/database/connection-info-cert.png)
 
-Assuming you’ve downloaded your certificate and it’s located at `$HOME/Downloads/prod-ca-2021.cer`, and your Host address is `db.abcdefghijklm.supabase.co` you can connect to the DB with
-SSL enabled as illustrated below:
 
-1. With `psql`
+假设你已经下载了你的证书，它位于`$HOME/Downloads/prod-ca-2021.cer`，并且你的主机地址是`db.abcdefghijklm.supabase.co`，你可以用以下方式连接到数据库启用SSL，如下图所示。
+
+1. 使用`psql`
 
 ```
 psql "sslmode=verify-full sslrootcert=$HOME/Downloads/prod-ca-2021.cer host=db.abcdefghijklm.supabase.co dbname=postgres user=postgres"
 ```
 
-2. With `pgAdmin`
-   a. Register a new Postgres server
+2. 使用 `pgAdmin`
+   a. 注册一个新的Postgres服务器
    ![Register a new postgres server.](/docs/img/guides/database/register-server-pgAdmin.png)
 
-   b. Name your server to your liking and add the connection info.
+   b. 根据个人喜好命名你的服务器，并添加连接信息.
    ![Name Postgres Server.](/docs/img/guides/database/name-pg-server.png)
    ![Add Connection Info.](/docs/img/guides/database/add-pg-server-conn-info.png)
 
-3. Navigate to the SSL tab and change the SSL mode to Require. Next navigate to the Root certificate input, it will open up a
-   file-picker modal. Select the certificate you downloaded from your Supabase dashboard and save the server details. PgAdmin
-   should now be able to connect to your Postgres via SSL.
+3. 导航到SSL标签，将SSL模式改为 "需要"。接下来导航到根证书输入，它将打开一个 文件选择器模式。选择你从Supabase仪表板上下载的证书，并保存服务器的详细信息。PgAdmin 现在应该能够通过SSL连接到你的Postgres。
    ![Add Connection Info.](/docs/img/guides/database/add-ssl-config.png)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />

@@ -4,14 +4,14 @@ export const meta = {
   id: 'polyscale',
   title: 'PolyScale',
   description:
-    'The easiest way to get low-latency reads from your Supabase database for multi-region applications is by using PolyScale, a code-free global caching service.',
+    '从你的Supabase数据库为多区域应用获得低延迟读取的最简单方法是使用PolyScale，一个无代码的全球缓存服务。',
 }
 
-[PolyScale](https://polyscale.ai) is an intelligent, serverless database caching engine which allows low-latency reads from Supabase globally, no coding required. Supabase can be connected to PolyScale in minutes, providing you fast access to your Supabase data around the globe.
+[PolyScale](https://polyscale.ai)是一个智能的、无服务器的数据库缓存引擎，它允许在全球范围内从Supabase进行低延迟读取，不需要编码。Supabase可以在几分钟内连接到PolyScale，让您在全球范围内快速访问您的Supabase数据。
 
-This guide explains how to connect Supabase to a PolyScale cache.
+本指南解释了如何将 Supabase 连接到 PolyScale 缓存。
 
-The video below illustrates how to get connected. Or you can read the steps below.
+下面的视频说明了如何进行连接。或者您可以阅读下面的步骤。
 
 <div className="video-container">
   <iframe
@@ -24,46 +24,46 @@ The video below illustrates how to get connected. Or you can read the steps belo
   ></iframe>
 </div>
 
-## Step 0: Create a PolyScale account
+## 第0步：创建一个PolyScale账户
 
-If you do not already have a PolyScale account, you can create an account [here](https://app.polyscale.ai/signup). PolyScale offers a free tier and no credit card is required.
+如果您还没有PolyScale的账户，您可以创建一个账户[这里](https://app.polyscale.ai/signup)。PolyScale提供了一个免费的层级，不需要信用卡。
 
-## Step 1: Create your PolyScale Cache
+## 第1步：创建你的PolyScale Cache
 
-### 1.1 Retrieve your Supabase Host
+### 1.1 检索你的Supabase主机
 
-In your Supabase project, click on `Settings > Database` and scroll down to the `Connection info` section to copy your database `Host`.
+在你的Supabase项目中，点击`设置>数据库`，向下滚动到`连接信息`部分，复制你的数据库`主机`。
 
 ![supabase-host](/docs/img/guides/integrations/polyscale/supabase-host.png)
 
-### 1.2 Configure your PolyScale Cache
+### 1.2 配置您的 PolyScale 缓存
 
-- In your PolyScale account, click on the **New Cache** button
-- Give the cache a **Name**
-- Select **PostgreSQL** for the **Type**
-- Enter the **Host** from Step 1.1 above
-- Enter `5432` for the **Port**
-- Click **Create**
+- 在你的PolyScale账户中，点击**新缓存**按钮
+- 给缓存一个**名称**
+- 在**类型中选择**PostgreSQL**。
+- 输入上面步骤1.1中的**主机**。
+- 输入 `5432`作为**端口**。
+- 点击**创建**
 
 ![create-cache-supabase](/docs/img/guides/integrations/polyscale/create-cache-supabase-400.png)
 
-Your cache is now created. PolyScale automatically checks to see that your database is accessible from all our global PoPs.
+你的缓存现在已经创建。PolyScale会自动检查你的数据库是否可以从我们所有的全球PoP上访问。
 
-## Step 2: Connect to your PolyScale Cache
+## 第二步：连接到你的 PolyScale 缓存
 
-Using your PolyScale cache is simple -- instead of connecting to your Supabase database directly, you'll replace your original connection string with the PolyScale connection string in your application.
+使用你的 PolyScale 缓存很简单 -- 你不用直接连接到你的 Supabase 数据库，而是在你的应用程序中用 PolyScale 的连接字符串替换你原来的连接字符串。
 
-For example, if your original connection string was: `postgres://postgres:zqSPGHFAbPLvVCKw@db.rogpiubvixysbakciwqz.supabase.co:5432`
+例如，如果你原来的连接字符串是：`postgres://postgres:zqSPGHFAbPLvVCKw@db.rogpiubvixysbakciwqz.supabase.co:5432`。
 
-Your PolyScale connection string would be: `postgres://postgres:zqSPGHFAbPLvVCKw@psedge.global:5432?application_name=a645cb93-fa53-46b2-9d6c-227e357e5bfb`
+你的PolyScale连接字符串将是。`postgres://postgres:zqSPGHFAbPLvVCKw@psedge.global:5432?application_name=a645cb93-fa53-46b2-9d6c-227e357e5bfb`。
 
-You can read more about connecting to PolyScale [here](https://docs.polyscale.ai/connecting-to-polyscale#postgresql)
+你可以阅读更多关于连接到PolyScale的信息[这里](https://docs.polyscale.ai/connecting-to-polyscale#postgresql)
 
-That's it.
+就这样了。
 
-## All done!
+## 全部完成!
 
-You can read more about PolyScale [here](https://www.polyscale.ai/) or check out our [documentation](https://docs.polyscale.ai/).
+你可以阅读更多关于PolyScale的信息[这里](https://www.polyscale.ai/)或者查看我们的[文档](https://docs.polyscale.ai/)。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

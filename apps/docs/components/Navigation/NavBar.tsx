@@ -32,8 +32,8 @@ const NavBar: FC<Props> = ({ currentPage }) => {
   }, [isDarkMode])
 
   const pageLinks = [
-    { text: 'Guides', key: 'docs', link: '/' },
-    { text: 'Reference', key: 'reference', link: '/reference' },
+    { text: '文档', key: 'docs', link: '/' },
+    // { text: 'SDK', key: 'reference', link: '/reference' },
   ]
 
   const toggleDarkMode = () => {
@@ -81,7 +81,7 @@ const NavBar: FC<Props> = ({ currentPage }) => {
             <a className="flex items-center">
               <Image
                 className="cursor-pointer"
-                src={isDarkMode ? '/docs/supabase-dark.svg' : '/docs/supabase-light.svg'}
+                src={isDarkMode ? '/docs/memfire-logo-wordmark-light.svg' : '/docs/memfire-logo-wordmark-light.svg'}
                 width={124}
                 height={24}
                 alt="Supabase Logo"
@@ -106,7 +106,7 @@ const NavBar: FC<Props> = ({ currentPage }) => {
             ))}
           </ul>
         </nav>
-        {versions.length > 0 && (
+        {/* {versions.length > 0 && (
           <div className="ml-8">
             <Listbox
               size="small"
@@ -121,7 +121,7 @@ const NavBar: FC<Props> = ({ currentPage }) => {
               ))}
             </Listbox>
           </div>
-        )}
+        )} */}
       </div>
 
       <div className="flex items-center space-x-4">
@@ -129,15 +129,15 @@ const NavBar: FC<Props> = ({ currentPage }) => {
           <ul className="flex items-center">
             <li className="px-4">
               <a
-                href="https://app.supabase.com"
+                href="https://memfiredb.com/"
                 className="text-scale-1100 text-sm"
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                Dashboard
+                开始使用
               </a>
             </li>
-            <li className="px-4">
+            {/* <li className="px-4">
               <a
                 href="https://github.com/supabase/supabase"
                 target="_blank"
@@ -181,15 +181,15 @@ const NavBar: FC<Props> = ({ currentPage }) => {
                   }}
                 />
               </a>
-            </li>
+            </li> */}
             <li className="px-4">
-              <div className="cursor-pointer" onClick={toggleDarkMode}>
+              {/* <div className="cursor-pointer" onClick={toggleDarkMode}>
                 {isDarkMode ? (
                   <IconMoon size={18} strokeWidth={2} className="text-scale-1200" />
                 ) : (
                   <IconSun size={18} strokeWidth={2} className="text-scale-1200" />
                 )}
-              </div>
+              </div> */}
             </li>
           </ul>
         </div>
@@ -197,7 +197,7 @@ const NavBar: FC<Props> = ({ currentPage }) => {
           <div className="flex items-center justify-between space-x-6 bg-scale-300 border border-scale-700 pl-3 pr-1.5 py-1.5 rounded">
             <div className="flex items-center space-x-2">
               <IconSearch className="text-scale-1100" size={18} strokeWidth={2} />
-              <p className="text-scale-800 text-sm">Search</p>
+              <p className="text-scale-800 text-sm">搜索</p>
             </div>
             <div className="flex items-center space-x-1">
               <div className="hidden text-scale-1200 md:flex items-center justify-center h-6 w-6 rounded bg-scale-500">

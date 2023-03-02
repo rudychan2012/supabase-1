@@ -14,6 +14,8 @@ export function getPageType(asPath: string) {
     page = 'reference/dart/v0'
   } else if (asPath.includes('/reference/dart')) {
     page = 'reference/dart'
+  }else if (asPath.includes('/reference/wechat')) {
+    page = 'reference/wechat'
   } else if (asPath.includes('/reference/api')) {
     page = 'reference/api'
   } else if (asPath.includes('/reference/cli')) {

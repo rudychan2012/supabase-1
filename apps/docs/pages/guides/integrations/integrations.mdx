@@ -3,37 +3,37 @@ import Layout from '~/layouts/DefaultGuideLayout'
 export const meta = {
   id: 'integrations',
   title: 'Supabase Marketplace',
-  description: 'Integrations and Partners',
+  description: '集成和合作伙伴',
 }
 
-The Supabase Marketplace brings together all the tools you need to extend your Supabase project. This includes:
+Supabase市场汇集了你需要的所有工具，以扩展你的Supabase项目。这包括。
 
-- [Experts](https://supabase.com/partners/experts) - partners to help you build and support your Supabase project.
-- [Integrations](https://supabase.com/partners/integrations) - extend your projects with external Auth, Caching, Hosting, and Low-code tools.
+- [专家](https://supabase.com/partners/experts) - 合作伙伴，帮助你建立和支持你的Supabase项目。
+- [集成](https://supabase.com/partners/integrations) - 用外部授权、缓存、托管和低代码工具扩展你的项目。
 
-## Build an integration
+## 构建一个集成
 
-Supabase provides several integration points:
+Supabase提供了几个集成点。
 
-- The [Postgres connection](/docs/guides/database/connecting-to-postgres). Anything that works with Postgres also works with Supabase projects.
-- The [Project REST API](/docs/guides/api#rest-api) & client libraries.
-- The [Project GraphQL API](/docs/guides/api#graphql-api).
-- The [Platform API](/docs/reference/api).
+- Postgres连接](/docs/guides/database/connecting-to-postgres)。任何能与Postgres一起使用的东西也能与Supabase项目一起使用。
+- 项目REST API](/docs/guides/api#rest-api) 和客户端库。
+- Project GraphQL API](/docs/guides/api#graphql-api)。
+- 平台API](/docs/reference/api)。
 
-## List your integration
+##列出你的集成
 
-[Apply to the Partners program](https://supabase.com/partners/integrations#become-a-partner) to list your integration in the Partners marketplace and in the Supabase docs.
+[申请加入合作伙伴计划](https://supabase.com/partners/integrations#become-a-partner)，在合作伙伴市场和Supabase文档中列出您的集成。
 
-Integrations are assessed on the following criteria:
+评估整合的标准如下。
 
-- **Business viability**
-  While we welcome everyone to built an integration, we only list companies that are deemed to be long-term viable. This includes an official business registration and bank account, meaningful revenue, or Venture Capital backing. We require this criteria to ensure the health of the marketplace.
-- **Compliance**
-  Integrations should not infringe on the Supabase brand/trademark. In short, you cannot use "Supabase" in the name. As the listing appears on the Supabase domain, we don't want to mislead developers into thinking that an integration is an official product.
-- **Service Level Agreements**
-  All listings are required to have their own Terms and Conditions, Privacy Policy, and Acceptable Use Policy, and the company must have resources to meet their SLAs.
-- **Maintainability**
-  All integrations are required to be maintained and functional with Supabase, and the company may be assessed on your ability to remain functional over a long time horizon.
+- **商业可行性**
+  虽然我们欢迎每个人建立一个集成，但我们只列出那些被认为是长期可行的公司。这包括正式的商业注册和银行账户，有意义的收入，或风险投资的支持。我们要求这个标准以确保市场的健康。
+- **合规性**
+  集成项目不应侵犯Supabase的品牌/商标。简而言之，你不能在名称中使用 "Supabase"。由于列表出现在Supabase域名上，我们不希望误导开发人员，使其认为集成是一个官方产品。
+- **服务水平协议**
+  所有的列表都需要有自己的条款和条件、隐私政策和可接受的使用政策，公司必须有资源来满足他们的服务水平协议。
+- **可维护性**
+  所有的整合都需要Supabase的维护和功能，公司可能会被评估你在很长一段时间内保持功能的能力。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

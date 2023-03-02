@@ -4,20 +4,20 @@ export const meta = {
   id: 'keyri',
   title: 'Keyri',
   description:
-    'QR authentication for an easy and flexible biometric solution across all platforms.',
+    '二维码认证是一个跨所有平台的简单而灵活的生物识别解决方案。',
 }
 
-Keyri can be used to incorporate sign-in-with-QR functionality into your Supabase app, allowing users to scan a QR code on your web app with your mobile app and be instantly logged into the web app without having to input any credentials.
+Keyri可用于在你的Supabase应用中加入sign-in-with-QR功能，允许用户用你的移动应用扫描你的网络应用上的QR码，并立即登录到网络应用，而无需输入任何凭证。
 
-Configuration is split into Web and Mobile components. On web, the Keyri QR Widget needs to be installed along with an event listener, and in your mobile app, install the Keyri SDK and pass into it the user's refresh token when sign-in-with-QR is initiated. When the refresh token lands in your web app, it's passed into Supabase's `setSession()` method.
+配置分为网络和移动组件。在网页上，需要安装Keyri QR Widget和一个事件监听器，而在你的移动应用程序中，安装Keyri SDK，并在启动sign-in-with-QR时将用户的刷新令牌传给它。当刷新令牌出现在你的网络应用中时，它将被传入Supabase的`setSession()`方法。
 
-# Sign up for Keyri
+# 注册Keyri
 
-First make a free account on the Keyri dashboard (<https://app.keyri.com>). On Add Your Application, set a name and input the domain on which your app will eventually be deployed. You can create multiple application in Keyri to account for your development, staging, and production environments
+首先在Keyri仪表板上建立一个免费账户(<https://app.keyri.com>)。在 `添加你的应用程序`中，设置一个名称，并输入你的应用程序最终将被部署在哪个域。你可以在Keyri中创建多个应用程序，以说明你的开发、暂存和生产环境
 
 ![](https://archbee-image-uploads.s3.amazonaws.com/FQ4YmCkDokMJylbTAsoOR/HvTIja3KfgKUIMiNVKAqP_screen-shot-2022-10-13-at-21524-pm.png)
 
-Note your application key from the Keys and Credentials section - this will be used in the Mobile portion of the implementation
+注意你在钥匙和证书部分的应用钥匙--这将被用于实施的移动部分
 
 ![](https://archbee-image-uploads.s3.amazonaws.com/FQ4YmCkDokMJylbTAsoOR/KnD6LkWs-PUDtTS1sT9Rz_screen-shot-2022-10-13-at-21746-pm.png)
 
@@ -25,9 +25,9 @@ Note your application key from the Keys and Credentials section - this will be u
 
 [![Keyri-Supabase Web Integration Video](http://img.youtube.com/vi/jrjrcpc2PFQ/0.jpg)](http://www.youtube.com/watch?v=jrjrcpc2PFQ 'Supabase & Keyri | Web Integration Overview')
 
-For your web app, first download KeyriQR.html (available [here](https://raw.githubusercontent.com/Keyri-Co/library-keyri-connect/main/KeyriQR.html)) and save it to a public directory.
+对于您的网络应用，首先下载KeyriQR.html（可在此下载）(https://raw.githubusercontent.com/Keyri-Co/library-keyri-connect/main/KeyriQR.html)，并将其保存到一个公共目录。
 
-Next, embed KeyriQR.html in your login page as an iFrame within the desired div. This serves as the widget that displays the dynamic QR code and connects with the Keyri API.
+接着，将KeyriQR.html作为iFrame嵌入到您的登录页面的所需div中。这将作为显示动态QR码并与Keyri API连接的小部件。
 
 ```html
 <div>
@@ -43,7 +43,7 @@ Next, embed KeyriQR.html in your login page as an iFrame within the desired div.
 </div>
 ```
 
-Next, for the same login view, set up an event listener to pick up the session token that the iFrame emits when the QR code is scanned by your app.
+接下来，对于同一个登录视图，设置一个事件监听器，以接收iFrame在你的应用程序扫描QR码时发出的会话令牌。
 
 ```javascript
 useEffect(() => {
@@ -60,64 +60,63 @@ useEffect(() => {
 });
 ```
 
-That's it!
 
-# Mobile
+# 移动设备
 
 [![Keyri-Supabase Mobile Integration Video](http://img.youtube.com/vi/oGMsSKyh6tc/0.jpg)](http://www.youtube.com/watch?v=oGMsSKyh6tc 'Supabase & Keyri | Mobile Integration Overview')
 
-### Install Flutter
+### 安装Flutter
 
-First, install the Flutter SDK, found at flutter.dev
+首先，安装 Flutter SDK，可在 flutter.dev 找到。
 
-Make sure to add Flutter to your PATH, for example:&#x20;
+确保将Flutter添加到您的PATH中，例如：&#x20。
 
 ```shell
 export PATH="$PATH:`pwd`/flutter/bin"
 ```
 
-### Apple - initial setup
+### 苹果 - 初始设置
 
-Download the latest version of Xcode from the Mac App Store. Make sure the Xcode provided simulator is using a 64-bit device (iPhone 5s or later). You can check the device by viewing the settings in the simulator’s **Hardware > Device** or **File > Open Simulator** menus.
+从Mac App Store下载最新版本的Xcode。确保Xcode提供的模拟器使用的是64位设备（iPhone 5s或更高）。您可以通过查看模拟器的**硬件>设备**或**文件>打开模拟器**菜单中的设置来检查该设备。
 
-### Android - initial setup
+### Android - 初始设置
 
-Download the latest version of [Android Studio](https://developer.android.com/studio). Install Android SDK and needed emulator(s).
+下载最新版本的[Android Studio](https://developer.android.com/studio)。安装Android SDK和所需的仿真器。
 
-### Create Project
+### 创建项目
 
-Run this command in your terminal/shell at the desired location for your new project
+在你的终端/Shell中为你的新项目在所需的位置运行这个命令
 
 ```shell
 $ flutter create my_app
 ```
 
-You can then CD into the new directory, and run the test app with&#x20;
+然后你可以用CD进入新目录，用&#x20运行测试应用程序。
 
 ```shell
 flutter run
 ```
 
-This is a good test - if things are configured correctly so far you should see the default Flutter test app deployed.
+这是一个很好的测试--如果到目前为止事情配置正确，你应该看到默认的Flutter测试应用已经部署。
 
-### Add dependencies (Keyri and Supabase)
+### 添加依赖项（Keyri和Supabase）
 
-Open your Pubspec.yaml file, which should be at the top level directory in your new project
+打开你的Pubspec.yaml文件，它应该在你新项目的顶层目录下
 
-Add Keyri and Supabase under **dependencies**
+在**依赖项**下添加Keyri和Supabase
 
 ![](https://archbee-image-uploads.s3.amazonaws.com/FQ4YmCkDokMJylbTAsoOR/jlAfOTEchuZpBq8TeXhJZ_screen-shot-2022-09-29-at-060908.png)
 
-One can now access Supabase and Keyri sdks in their Flutter code
+人们现在可以在他们的Flutter代码中访问Supabase和Keyri sdks。
 
-### Utilize the two together
+###将这两者结合起来使用
 
-1.  Make a request to Supabase to authenticate the user
-2.  Parse the response to extract the token
-3.  Authenticate using Keyri
-    1.  Below, we show how to utilize the EasyKeyriAuth function, which takes the user through scanning the code, creating the session, displaying the confirmation screen, and finalizing the payload transmission
-        - Note - you can find your App Key in the Keyri Developer Portal​
-    2.  Alternatively, intermediate functions in the Keyri SDK, discussed in the mobile docs, can provide control over displaying a custom QR Scanner and/or Confirmation screen
+1.  向Supabase发出请求以验证用户身份
+2.  解析响应以提取令牌
+3.  使用Keyri进行认证
+    1.  下面，我们展示了如何利用EasyKeyriAuth函数，它带领用户完成扫描代码，创建会话，显示确认屏幕，并最终完成有效载荷的传输
+        - 注意--你可以在Keyri开发者门户网站上找到你的应用程序密钥
+    2.  另外，Keyri SDK中的中间函数，在移动文档中讨论，可以提供对显示自定义QR扫描器和/或确认屏幕的控制。
 
 ```kotlin
 // Sign in user with email and password

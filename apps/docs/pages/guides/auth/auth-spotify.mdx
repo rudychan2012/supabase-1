@@ -2,75 +2,75 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-spotify',
-  title: 'Login with Spotify',
-  description: 'Add Spotify OAuth to your Supabase project',
+  title: '用Spotify登录',
+  description: '在你的Supabase项目中加入Spotify OAuth',
 }
 
-To enable Spotify Auth for your project, you need to set up a Spotify OAuth application and add the application credentials to your Supabase Dashboard.
+要为你的项目启用Spotify Auth，你需要设置一个Spotify OAuth应用程序，并将应用程序的凭证添加到你的Supabase Dashboard。
 
-## Overview
+## 概述
 
-Setting up Spotify logins for your application consists of 3 parts:
+为你的应用程序设置Spotify登录包括三个部分。
 
-- Create and configure a Spotify Project and App on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/).
-- Add your Spotify `API Key` and `API Secret Key` to your [Supabase Project](https://app.supabase.com).
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js).
+- 在[Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)上创建并配置一个Spotify项目和应用程序。
+- 在你的[MemFire Cloud项目](https://cloud.memfiredb.com)中添加你的Spotify `API密钥`和`API秘钥`。
+- 将登录代码添加到你的[JS客户端应用程序](https://github.com/supabase/supabase-js)。
 
-## Access your Spotify Developer account
+## 访问你的Spotify开发者账户
 
-- Log into [Spotify](https://spotify.com)
-- Access the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+- 登录到[Spotify](https://spotify.com)
+- 访问[Spotify开发者仪表板](https://developer.spotify.com/dashboard)
 
 ![Spotify Developer Portal.](/docs/img/guides/auth-spotify/spotify-portal.png)
 
-## Find your callback URL
+## 找到你的回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要一个回调URL，它看起来像这样。
 
-`https://<project-ref>.supabase.co/auth/v1/callback`
+`https://<project-ref>.supabase.co/auth/v1/callback`。
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `设置`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 现在只要在后面加上`/auth/v1/callback`就可以得到完整的`OAuth Redirect URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Create a Spotify OAuth app
+## 创建一个Spotify OAuth应用程序
 
-- Log into [Spotify](https://spotify.com).
-- Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-- Click `Create an App`
-- Type your `App name`
-- Type your `App description`
-- Check the box to agree with the `Developer TOS and Branding Guidelines`
-- Click `Create`
-- Save your `Client ID`
-- Save your `Client Secret`
-- Click `Edit Settings`
+- 登录到[Spotify](https://spotify.com)。
+- 进入[Spotify开发者仪表板](https://developer.spotify.com/dashboard)
+- 点击 `创建一个应用程序`。
+- 输入您的 `应用程序名称`。
+- 键入您的 `应用程序描述`。
+- 勾选同意 `开发者服务条款和品牌指南`的方框。
+- 点击 `创建`。
+- 保存您的 `客户端ID`。
+- 保存您的 `客户秘密`。
+- 点击 `编辑设置`。
 
-Under `Redirect URIs`:
+在 `重定向URI`下。
 
-- Paste your Supabase Callback URL in the box
-- Click `Add`
-- Click `Save` at the bottom
+- 将你的Supabase回调URL粘贴在框中
+- 点击 `添加`。
+- 点击底部的 `保存`。
 
-## Enter your Spotify credentials into your Supabase Project
+## 在你的Supabase项目中输入你的Spotify凭证
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- In the left sidebar, click the `Authentication` icon (near the top).
-- Click `Settings` from the list to go to the `Authentication Settings` page.
-- Enter the final (hosted) URL of your app under `Site URL` (this is important).
-- Under `External OAuth Providers` turn `Spotify Enabled` to ON.
-- Enter your `Client ID` (`client_id`) and `Client Secret` (`client_secret`) saved in the previous step.
-- Click `Save`.
+- 转到你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 在左边的侧边栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面。
+- 在 `网站URL`下输入你的应用程序的最终（托管）URL（这很重要）。
+- 在 `外部OAuth提供商`下，将 `启用Spotify`设为 `打开`。
+- 输入上一步保存的 `客户端ID`（`client_id`）和 `客户端密码`（`client_secret`）。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 将登录代码添加到你的客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `spotify` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`spotify`作为`提供者`。
 
 ```js
 async function signInWithSpotify() {
@@ -80,7 +80,7 @@ async function signInWithSpotify() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话和任何对象从localStorage中移除。
 
 ```js
 async function signout() {
@@ -88,11 +88,11 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
+- [Supabase账户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Spotify开发者仪表板](https://developer.spotify.com/dashboard/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

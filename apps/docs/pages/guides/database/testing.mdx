@@ -2,33 +2,33 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'testing',
-  title: 'Testing Your Database',
+  title: '测试你的数据库',
   description: 'Test your database schema, tables, functions, and policies.',
 }
 
-You can use the Supabase CLI to test your database. The minimum required version of the CLI is [v1.11.4](https://github.com/supabase/cli/releases). To get started:
+可以使用Supabase CLI来测试你的数据库。CLI 的最低要求版本是 [v1.11.4](https://github.com/supabase/cli/releases)。
 
-- [Install the Supabase CLI](/docs/guides/cli) on your local machine
+- 在你的本地机器上[安装Supabase CLI](/docs/guides/cli)
 
-## Creating a test
+## 创建一个测试
 
-Create a tests folder inside the supabase folder:
+在supabase文件夹内创建一个测试文件夹:
 
 ```bash
 mkdir -p ./supabase/tests/database
 ```
 
-Create a new file with the `.sql` extension which will contain the test.
+创建一个以`.sql`为扩展名的新文件，其中将包含测试：
 
 ```bash
 touch ./supabase/tests/database/hello_world.test.sql
 ```
 
-## Writing tests
+## 撰写测试
 
-All `sql` files use [pgTAP](/docs/guides/database/extensions/pgtap) as the test runner.
+所有的`sql`文件都使用[pgTAP](/docs/guides/database/extensions/pgtap)作为测试运行器。
 
-Let's write a simple test to check that our `auth.users` table has an ID column. Open `hello_world.test.sql` and add the following code:
+让我们写一个简单的测试来检查我们的`auth.users`表是否有一个ID列。打开`hello_world.test.sql`并添加以下代码：
 
 ```sql
 begin;
@@ -45,15 +45,15 @@ select * from finish();
 rollback;
 ```
 
-## Running tests
+## 运行测试
 
-To run the test, you can use:
+要运行测试，你可以使用:
 
 ```bash
 supabase test db
 ```
 
-This will produce the following output:
+这将产生以下输出:
 
 ```bash
 $ supabase test db
@@ -63,10 +63,10 @@ Files=1, Tests=1,  1 wallclock secs ( 0.01 usr  0.00 sys +  0.04 cusr  0.02 csys
 Result: PASS
 ```
 
-## More resource
+## 更多资源
 
-- [pgTAP extension](/docs/guides/database/extensions/pgtap)
-- Official [pgTAP documentation](https://pgtap.org/)
+- [pgTAP扩展](/docs/guides/database/extensions/pgtap)
+- 官方 [pgTAP文档](https://pgtap.org/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,119 +2,118 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'with-redwoodjs',
-  title: 'Quickstart: RedwoodJS',
-  description: 'Learn how to use Supabase in your RedwoodJS App.',
+  title: '快速入门: RedwoodJS',
+  description: '了解如何在你的RedwoodJS应用程序中使用Supabase。',
   sidebar_label: 'RedwoodJS',
 }
 
-## Intro
+## 介绍
 
-For the sake of consistency with the other framework Quickstart examples, we'll build a RedwoodJS a little differently than normal.
+为了与其他框架的Quickstart例子保持一致，我们将建立一个RedwoodJS，与正常情况下有点不同。
 
-We **_won't use_** Prisma to connect to the Supabase Postgres database or [Prisma migrations](https://redwoodjs.com/docs/cli-commands#prisma-migrate) as one typically might in a Redwood app.
-Instead, we'll rely on the Supabase client to do some of the work on the **web** side and use the client again on the **API** side to do data fetching as well.
+我们不使用Prisma连接到Supabase Postgres数据库或[Prisma迁移](https://redwoodjs.com/docs/cli-commands#prisma-migrate)，因为在Redwood应用中通常会这样做。
+相反，我们将依靠Supabase客户端在**网络**端做一些工作，并在**API**端再次使用客户端来做数据获取。
 
-That means you will want to refrain from running any `yarn rw prisma migrate` commands and also double check your build commands on deployment to ensure Prisma won't reset your database.
+这意味着你要避免运行任何 "yarn rw prisma migrate "命令，还要在部署时仔细检查你的构建命令，以确保Prisma不会重置你的数据库。
 
 <Admonition type="note">
 
-TLDR; Prisma currently doesn't support cross-schema foreign keys, so introspecting the schema fails due to how your Supabase `public` schema references the `auth.users`.
+TLDR; Prisma目前不支持跨模式外键，所以由于你的Supabase `public`模式是如何引用`auth.users`的，反省模式失败。
 
 </Admonition>
 
-This example provides the steps to build a simple user management app (from scratch!) using Supabase and [RedwoodJS](https://redwoodjs.com/docs/introduction). It includes:
+这个例子提供了使用Supabase和[RedwoodJS](https://redwoodjs.com/docs/introduction)建立一个简单的用户管理应用程序的步骤（从头开始！）。它包括。
 
-- Supabase [Database](/docs/guides/database): a Postgres database for storing your user data.
-- Supabase [Auth](/docs/guides/auth): users can sign in with magic links (no passwords, only email).
-- Supabase [Storage](/docs/guides/storage): users can upload a photo.
-- Instant [APIs](/docs/guides/api): APIs will be automatically generated when you create your database tables.
-- [Row Level Security](/docs/guides/auth#row-level-security): data is protected so that individuals can only access their own data.
+- MemFire Cloud [Database](/docs/guides/database)：一个用于存储用户数据的Postgres数据库。
+- MemFire Cloud [Auth](/docs/guides/auth)：用户可以用魔法链接登录（没有密码，只有电子邮件）。
+- MemFire Cloud [Storage](/docs/guides/storage)：用户可以上传照片。
+- Instant [APIs](/docs/guides/api)。当你创建你的数据库表时，API将自动生成。
+- [行级安全](/docs/guides/auth#row-level-security)：数据受到保护，个人只能访问自己的数据。
 
-By the end of this guide you'll have an app which allows users to login and update some basic profile details:
+在本指南结束时，你将拥有一个允许用户登录并更新一些基本资料细节的应用程序。
 
-![Supabase User Management example](/docs/img/user-management-demo.png)
+![Supabase用户管理实例](/docs/img/user-management-demo.png)
 
 <Admonition type="note">
 
-Note: For RedwoodJS apps, port will be 8910
+注意：对于RedwoodJS应用程序，端口将是8910。
 
 </Admonition>
 
 ### GitHub
 
-If you get stuck at any point, take a look at [this repo](https://github.com/redwoodjs/redwoodjs-supabase-quickstart).
-
+如果你在任何时候被卡住了，请看一下[这个 repo](https://github.com/redwoodjs/redwoodjs-supabase-quickstart)。
 <!-- ## Video demo
 
-Coming soon.
+即将推出。
 
-Use the annotated timeline to step through this tutorial.
+使用注释的时间线来逐步完成这个教程。
 
-## Instant deploy
+## 即时部署
 
-Want to deploy a completed version of this example without following the guide?
+想在不遵循指南的情况下部署这个例子的完整版本吗？
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsupabase%2Fsupabase%2Ftree%2Fmaster%2Fexamples%2Freact-user-management&project-name=supabase-user-management&repository-name=supabase-user-management&demo-title=Supabase%20User%20Management&demo-description=An%20example%20web%20app%20using%20Supabase%20and%20Next.js&demo-url=https%3A%2F%2Fsupabase-react-user-management.vercel.app&demo-image=https%3A%2F%2Fi.imgur.com%2FZ3HkQqe.png&integration-ids=oac_jUduyjQgOyzev1fjrW83NYOv&external-id=nextjs-user-management)
+[![用Vercel部署](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fsupabase%2Fsupabase%2Ftree%2Fmaster%2Fexamples%2Freact-user-management&project-name=supabase-user-management&repository-name=supabase-user-management&demo-title=Supabase%20User%20Management&demo-description=An%20example%20web%20app%20using%20Supabase%20and%20Next.js&demo-url=https%3A%2F%2Fsupabase-react-user-management.vercel.app&demo-image=https%3A%2F%2Fi.imgur.com%2FZ3HkQqe.png&integration-ids=oac_jUduyjQgOyzev1fjrW83NYOv&external-id=nextjs-user-management)
 
-Clicking this button the application will:
+点击这个按钮，应用程序将。
 
-- Launch and prepare the Postgres database in Supabase.
-- Launch the app in Vercel.
-- Fork the example into your own GitHub account.
-- Prepare the deployed application with all the necessary environment variables.
+- 在Supabase中启动并准备Postgres数据库。
+- 在Vercel中启动该应用程序。
+- 在你自己的GitHub账户中分叉这个例子。
+- 用所有必要的环境变量准备部署的应用程序。
 
-If you want to do it yourself, let's get started: -->
+如果你想自己做，让我们开始吧。-->
 
-## About RedwoodJS
+## 关于RedwoodJS
 
-A Redwood application is split into two parts: a frontend and a backend. This is represented as two node projects within a single monorepo.
+一个Redwood应用程序被分成两部分：一个前端和一个后端。这表现为在一个单一的monorepo中的两个node项目。
 
-The frontend project is called **`web`** and the backend project is called **`api`**. For clarity, we will refer to these in prose as **"sides"**, i.e. the "web side" and the "api side".
-They are separate projects because code on the `web side` will end up running in the user's browser while code on the `api side` will run on a server somewhere.
-
-<Admonition type="note">
-
-Important: When this guide refers to "API", that means the Supabase API and when it refers to "api side", that means the RedwoodJS `api side`.
-
-</Admonition>
-
-The **`api side`** is an implementation of a GraphQL API. The business logic is organized into "services" that represent their own internal API and can be called both from external GraphQL requests and other internal services.
-
-The **`web side`** is built with React. Redwood's router makes it simple to map URL paths to React "Page" components (and automatically code-split your app on each route).
-Pages may contain a "Layout" component to wrap content. They also contain "Cells" and regular React components.
-Cells allow you to declaratively manage the lifecycle of a component that fetches and displays data.
+前台项目被称为**`web`**，后台项目被称为**`api`**。
+它们是独立的项目，因为 "web端 "的代码最终将在用户的浏览器中运行，而 `api端`的代码将在某个服务器上运行。
 
 <Admonition type="note">
 
-For the sake of consistency with the other framework Quickstart examples, we'll build a RedwoodJS a little differently than normal.
-We **_won't use_** Prisma to connect to the Supabase Postgres database or [Prisma migrations](https://redwoodjs.com/docs/cli-commands#prisma-migrate) as one typically might in a Redwood app.
-Instead, we'll rely on the Supabase client to do some of the work on the **`web`** side and use the client again on the **`api`** side to do data fetching as well.
+重要提示：当本指南提到 `API`时，指的是Supabase API，当它提到 `api端`时，指的是RedwoodJS `api端`。
 
 </Admonition>
 
-## Project set up
+**`api端`**是一个GraphQL API的实现。业务逻辑被组织成 `服务`，代表他们自己的内部API，可以从外部GraphQL请求和其他内部服务中调用。
 
-Before we start building we're going to set up our Database and API. This is as simple as starting a new Project in Supabase
-and then creating a "schema" inside the database.
+网络端 "***是用React构建的。Redwood的路由器可以简单地将URL路径映射到React的 `页面`组件（并在每个路径上自动分割你的应用代码）。
+页面可以包含一个 `Layout`组件来包装内容。它们还包含 `单元格`和常规的React组件。
+单元允许你声明性地管理一个获取和显示数据的组件的生命周期。
 
 <Admonition type="note">
 
-When setting up Supabase, you'll interact with your project dashboard. However, most of the RedwoodJS setup steps will interact with the [Redwood CLI](https://redwoodjs.com/docs/cli-commands) to generate routes, pages, components, and more.
-So be sure to have a terminal at the ready and in your project directory.
+为了与其他框架的Quickstart例子保持一致，我们将建立一个RedwoodJS，与正常情况下有点不同。
+我们不使用Prisma来连接Supabase Postgres数据库或[Prisma迁移](https://redwoodjs.com/docs/cli-commands#prisma-migrate)，因为在Redwood应用中通常会这样做。
+相反，我们将依靠Supabase客户端来完成**`web`**方面的一些工作，并在**`api`**方面再次使用客户端来进行数据获取。
 
 </Admonition>
 
-### Create a project
+## 项目设置
 
-1. Go to [app.supabase.com](https://app.supabase.com).
-1. Click on "New Project".
-1. Enter your project details.
-1. Wait for the new database to launch.
+在我们开始构建之前，我们要设置我们的数据库和API。这就像在Supabase中启动一个新项目一样简单
+然后在数据库中创建一个 "模式"。
 
-### Set up the database schema
+<Admonition type="note">
 
-Now we are going to set up the database schema. We can use the "User Management Starter" quickstart in the SQL Editor,
-or you can just copy/paste the SQL from below and run it yourself.
+在设置Supabase时，你会与你的项目仪表板互动。然而，大多数RedwoodJS的设置步骤将与[Redwood CLI](https://redwoodjs.com/docs/cli-commands)互动，以生成路由、页面、组件等。
+因此，请确保在你的项目目录中准备好一个终端。
+
+</Admonition>
+
+### 创建一个项目
+
+1. 进入[MemFire Cloud](https://cloud.memfiredb.com)。
+1. 点击 `新项目`。
+1. 输入你的项目细节。
+1. 等待新数据库的启动。
+
+### 设置数据库模式
+
+现在我们要设置数据库模式。我们可以使用SQL编辑器中的 `用户管理启动器`快速启动。
+或者你可以直接复制/粘贴下面的SQL，然后自己运行它。
 
 <Tabs
   scrollable
@@ -124,9 +123,9 @@ or you can just copy/paste the SQL from below and run it yourself.
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [SQL Editor](https://app.supabase.com/project/_/sql) page in the Dashboard.
-2. Click **User Management Starter**.
-3. Click **Run**.
+1. 进入仪表版中的SQL编辑器页面。
+2. 点击 **用户管理**的模板。
+3. 点击**运行**。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/sql-user-management-starter.mp4" type="video/mp4" muted playsInline />
@@ -187,49 +186,49 @@ create policy "Anyone can upload an avatar."
 </TabPanel>
 </Tabs>
 
-#### Important Note about Prisma and Migrations
+#### 关于Prisma和迁移的重要说明
 
 <Admonition type="note">
 
-Because this Quick Start does not use Prisma to manage the database schema, seed it, or run migrations, you **need** to take extra care when running some of the typical Redwood CLI commands.
+因为这个快速入门并没有使用Prisma来管理数据库模式、播种或运行迁移，所以在运行一些典型的Redwood CLI命令时，你***需要格外小心。
 
 </Admonition>
 
-### Get the API Keys
+### 获取API密钥
 
-Now that you've created some database tables, you are ready to insert data using the auto-generated API.
-We just need to get the URL as well as the `anon`, `service_role` and `JWT_SECRET` keys from the API settings.
+现在你已经创建了一些数据库表，你已经准备好使用自动生成的API插入数据。
+我们只需要从API设置中获得URL以及`anon`、`service_role`和`JWT_SECRET`键。
 
-1. Go to the [API Settings](https://app.supabase.com/project/_/settings/api) page in the Dashboard.
-2. Find your API `URL`, `anon`, and `service_role` keys on this page.
+1. 进入仪表板中的[API设置](https://app.supabase.com/project/_/settings/api)页面。
+2. 在这个页面上找到你的API `URL`, `anon`, 和 `service_role`键。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Building the App
+## 构建应用程序
 
-Let's start building the RedwoodJS app from scratch.
+让我们开始从头开始构建RedwoodJS应用程序。
 
 <Admonition type="note">
 
-RedwoodJS requires Node.js (>=14.x <=16.x) and Yarn (>=1.15).
+RedwoodJS需要Node.js（>=14.x <=16.x）和Yarn（>=1.15）。
 
 </Admonition>
 
-Make sure you have installed yarn since RedwoodJS relies on it to [manage its packages in workspaces](https://classic.yarnpkg.com/lang/en/docs/workspaces/) for its `web` and `api` "sides".
+确保你已经安装了yarn，因为RedwoodJS依靠它来[在工作空间中管理它的包](https://classic.yarnpkg.com/lang/en/docs/workspaces/)，用于其`web`和`api`"side"。
 
-### Initialize a RedwoodJS app
+### 初始化一个RedwoodJS应用程序
 
-We can use [Create Redwood App](https://redwoodjs.com/docs/quick-start) command to initialize
-an app called `supabase-redwoodjs`:
+我们可以使用[Create Redwood App](https://redwoodjs.com/docs/quick-start)命令来初始化
+一个名为`supabase-redwoodjs`的应用程序。
 
 ```bash
 yarn create redwood-app supabase-redwoodjs
 cd supabase-redwoodjs
 ```
 
-While the app is installing, you should see:
+当应用程序正在安装时，你应该看到。
 
 ```bash
 ✔ Creating Redwood app
@@ -243,17 +242,17 @@ While the app is installing, you should see:
 Thanks for trying out Redwood!
 ```
 
-Then let's install the only additional dependency [supabase-js](https://github.com/supabase/supabase-js) by running the `setup auth` command:
+然后让我们通过运行`setup auth`命令来安装唯一的额外依赖[supabase-js](https://github.com/supabase/supabase-js)：
 
 ```bash
 yarn redwood setup auth supabase
 ```
 
-When prompted:
+当被提示时。
 
-> Overwrite existing /api/src/lib/auth.[jt]s?
+> 覆盖现有的/api/src/lib/auth.[jt]s？
 
-Say, **yes** and it will setup the Supabase client in your app and also provide hooks used with Supabase authentication.
+说，**是**，它将在你的应用程序中设置Supabase客户端，并提供用于Supabase验证的钩子。
 
 ```bash
 ✔ Generating auth lib...
@@ -268,8 +267,8 @@ Say, **yes** and it will setup the Supabase client in your app and also provide 
   and JWT SECRET (SUPABASE_KEY, and SUPABASE_JWT_SECRET) to your .env file.
 ```
 
-Next, we want to save the environment variables in a `.env`.
-We need the `API URL` as well as the `anon` and `jwt_secret` keys that you copied [earlier](#get-the-api-keys).
+接下来，我们要在`.env`中保存环境变量。
+我们需要`API URL`以及你[早些时候]复制的`anon`和`jwt_secret`键(#get-theapi-keys)。
 
 ```bash title=.env
 SUPABASE_URL=YOUR_SUPABASE_URL
@@ -277,7 +276,7 @@ SUPABASE_KEY=YOUR_SUPABASE_ANON_KEY
 SUPABASE_JWT_SECRET=YOUR_SUPABASE_JWT_SECRET
 ```
 
-And finally, you will also need to save **just** the `web side` environment variables to the `redwood.toml`.
+最后，你还需要把***的 `网络端`环境变量保存到 `redwood.toml`中。
 
 ```bash title=redwood.toml
 [web]
@@ -291,11 +290,10 @@ And finally, you will also need to save **just** the `web side` environment vari
   open = true
 ```
 
-These variables will be exposed on the browser, and that's completely fine.
-They allow your web app to initialize the Supabase client with your public anon key
-since we have [Row Level Security](/docs/guides/auth#row-level-security) enabled on our Database.
+这些变量将暴露在浏览器上，这完全没有问题。
+它们允许你的Web应用程序使用你的公共匿名密钥初始化Supabase客户端因为我们在数据库中启用了 [行级安全](/docs/guides/auth#row-level-security) 。
 
-You'll see these being used to configure your Supabase client in `web/src/App.js`:
+你会看到这些被用来在`web/src/App.js`中配置你的Supabase客户端。
 
 ```js title=web/src/App.js
 // ... Redwood imports
@@ -321,12 +319,12 @@ const App = () => (
 export default App
 ```
 
-And one optional step is to update the CSS file `web/src/index.css` to make the app look nice.
-You can find the full contents of this file [here](https://raw.githubusercontent.com/supabase/supabase/master/examples/user-management/react-user-management/src/index.css).
+还有一个可选的步骤是更新CSS文件`web/src/index.css`以使应用程序看起来漂亮。
+你可以找到这个文件的全部内容[这里](https://raw.githubusercontent.com/supabase/supabase/master/examples/user-management/react-user-management/src/index.css)。
 
-### Start RedwoodJS and your first Page
+### 启动RedwoodJS和你的第一个页面
 
-Let's test our setup at the moment by starting up the app:
+让我们通过启动应用程序来测试我们此刻的设置。
 
 ```bash
 yarn rw dev
@@ -334,13 +332,13 @@ yarn rw dev
 
 <Admonition type="note">
 
-Note: You can also use the alias `rw` for `redwood`, as in `yarn rw` to run Redwood CLI commands
+注意：你也可以用`rw`来表示`redwood`，如`yarn rw`来运行Redwood CLI命令。
 
 </Admonition>
 
-You should see a "Welcome to RedwoodJS" page and a message about not having any pages yet.
+你应该看到一个 `欢迎来到RedwoodJS`的页面和一个关于还没有任何页面的信息。
 
-So, let's create a "home" page:
+因此，让我们创建一个 `主页`。
 
 ```bash
 yarn rw generate page home /
@@ -355,13 +353,13 @@ yarn rw generate page home /
 
 <Admonition type="note">
 
-Note: the slash `/` is important here as it creates a root level route.
+注意：这里的斜线`/`很重要，因为它创建了一个根级路由。
 
 </Admonition>
 
-You can stop the `dev` server if you want; to see your changes, just be sure to run `yarn rw dev` again.
+如果你想的话，你可以停止`dev`服务器；要看到你的改变，只要确保再次运行`yarn rw dev`。
 
-You should see the `Home` page route in `web/src/Routes.js`:
+你应该在`web/src/Routes.js`中看到`Home`页面路由。
 
 ```bash title=web/src/Routes.js
 import { Router, Route } from '@redwoodjs/router'
@@ -378,9 +376,9 @@ const Routes = () => {
 export default Routes
 ```
 
-### Set up a Login component
+### 设置一个登录组件
 
-Let's set up a Redwood component to manage logins and sign ups. We'll use Magic Links, so users can sign in with their email without using passwords.
+让我们建立一个Redwood组件来管理登录和注册。我们将使用Magic Links，所以用户可以用他们的电子邮件登录，而不需要使用密码。
 
 ```bash
 yarn rw g component auth
@@ -392,7 +390,7 @@ yarn rw g component auth
 
 ```
 
-Now, update the `Auth.js` component to contain:
+现在，更新`Auth.js`组件，包含。
 
 ```jsx title=/web/src/components/Auth/Auth.js
 import { useState } from 'react'
@@ -450,11 +448,11 @@ const Auth = () => {
 export default Auth
 ```
 
-### Set up an Account component
+### 设置一个账户组件
 
-After a user is signed in we can allow them to edit their profile details and manage their account.
+在用户登录后，我们可以让他们编辑他们的个人资料细节和管理他们的账户。
 
-Let's create a new component for that called `Account.js`.
+让我们为其创建一个新的组件，名为`Account.js`。
 
 ```bash
 yarn rw g component account
@@ -465,7 +463,7 @@ yarn rw g component account
     ✔ Successfully wrote file `./web/src/components/Account/Account.js`
 ```
 
-And then update the file to contain:
+然后更新文件，使其包含：
 
 ```jsx title=web/src/components/Account/Account.js
 import { useState, useEffect } from 'react'
@@ -593,15 +591,15 @@ export default Account
 
 <Admonition type="note">
 
-Note: You'll see the use of `useAuth()` several times in the quickstart. Redwood's `useAuth` hook provides convenient ways to access
-logIn, logOut, currentUser, and access the `supabase` authenticate client. We'll use it to get an instance
-of the supabase client to interact with your API.
+注意：你会在快速入门中多次看到`useAuth()`的使用。Redwood的`useAuth`钩子提供了方便的方法来访问
+logIn, logOut, currentUser，以及访问`supabase`验证客户端。我们将使用它来获得一个
+的实例来与你的API交互。
 
 </Admonition>
 
-### Update Home Page
+### 更新主页
 
-Now that we have all the components in place, let's update your `HomePage` page to use them:
+现在我们已经有了所有的组件，让我们更新你的`HomePage`页面来使用它们。
 
 ```jsx title=web/src/pages/HomePage/HomePage.js
 import { useAuth } from '@redwoodjs/auth'
@@ -624,27 +622,27 @@ const HomePage = () => {
 export default HomePage
 ```
 
-> What we're doing here is showing the sign in form if you aren't logged in and your account profile if you are.
+> 我们在这里做的是，如果你没有登录，就显示登录表，如果你登录了，就显示你的账户资料。
 
-### Launch!
+### 启动
 
-Once that's done, run this in a terminal window to launch the `dev` server:
+一旦完成，在终端窗口运行这个程序，启动`dev`服务器。
 
 ```bash
 yarn rw dev
 ```
 
-And then open the browser to [localhost:8910](http://localhost:8910) and you should see the completed app.
+然后打开浏览器到[localhost:8910](http://localhost:8910)，你应该看到完成的应用程序。
 
 ![Supabase RedwoodJS](/docs/img/supabase-redwoodjs-demo.png)
 
-## Bonus: Profile photos
+## 个人照片
 
-Every Supabase project is configured with [Storage](/docs/guides/storage) for managing large files like photos and videos.
+每个Supabase项目都配置了[存储](/docs/guides/storage)，用于管理照片和视频等大文件。
 
-### Create an upload widget
+### 创建一个上传小组件
 
-Let's create an avatar for the user so that they can upload a profile photo. We can start by creating a new component:
+让我们为用户创建一个头像，以便他们可以上传个人资料照片。我们可以从创建一个新的组件开始。
 
 ```bash
 yarn rw g component avatar
@@ -654,7 +652,7 @@ yarn rw g component avatar
     ✔ Successfully wrote file `./web/src/components/Avatar/Avatar.js`
 ```
 
-Now, update your Avatar component to contain the following widget:
+现在，更新你的 "头像 "组件，使其包含以下小部件。
 
 ```jsx title=web/src/components/Avatar/Avatar.js
 import { useEffect, useState } from 'react'
@@ -745,9 +743,9 @@ const Avatar = ({ url, size, onUpload }) => {
 export default Avatar
 ```
 
-### Add the new widget
+### 添加新的小组件
 
-And then we can add the widget to the Account component:
+然后我们就可以把这个小部件添加到账户组件中。
 
 ```jsx title=web/src/components/Account/Account.js
 // Import the new component
@@ -771,14 +769,14 @@ return (
 )
 ```
 
-## Next steps
+## 下一步
 
-At this stage you have a fully functional application!
+在这个阶段，你已经有了一个功能完备的应用程序!
 
-- Got a question? [Ask here](https://github.com/supabase/supabase/discussions).
-- Sign in: [app.supabase.com](https://app.supabase.com)
-- Learn more about [RedwoodJS](https://redwoodjs.com)
-- Visit the [RedwoodJS Discourse Community](https://community.redwoodjs.com)
+- 有问题吗？[在此提问](https://community.memfiredb.com/).
+- 请登录[MemFire Cloud](https://cloud.memfiredb.com/)
+- 了解更多关于[RedwoodJS](https://redwoodjs.com)
+- 访问[RedwoodJS论述社区](https://community.redwoodjs.com)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

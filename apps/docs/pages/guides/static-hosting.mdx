@@ -1,0 +1,30 @@
+import Layout from '~/layouts/DefaultGuideLayout'
+
+export const meta = {
+  id: 'static',
+  title: '静态托管',
+  description: '静态托管',
+  sidebar_label: 'Overview',
+}
+
+MemFire Cloud静态托管可以为您的Web应用、静态资源提供快速、稳定的托管服务。无需自建服务器，可以一键快速地部署静态资源，提供快速的访问能力。
+
+
+## 主要功能
+
+### 自定义域名
+
+MemFire Cloud 静态网站托管支持自定义域名，用户可以通过使用您的私有域名访问静态资源。
+
+### 快速分发
+
+静态托管将会缓存在遍布各地的CDN服务器上。无论用户身在何地，都可以快速访问网站。
+备注说明：公测阶段，该功能未开放.
+
+
+
+
+
+export const Page = ({ children }) => <Layout meta={meta} children={children} />
+
+export default Page

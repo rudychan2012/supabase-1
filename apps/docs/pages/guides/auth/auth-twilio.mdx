@@ -2,32 +2,32 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-twilio',
-  title: 'Phone Auth with Twilio',
-  description: 'How to set up and use Mobile OTP with Twilio and Supabase.',
+  title: '使用Twilio的电话授权',
+  description: '如何用Twilio和Supabase设置和使用移动OTP。',
 }
 
-## Overview
+## 概述
 
-In this guide we'll show you how to authenticate your users with SMS based One-Time Password (OTP) tokens.
+在本指南中，我们将向您展示如何使用基于 SMS 的一次性密码 (OTP) 令牌来验证您的用户。
 
-There are two reasons to use Supabase SMS OTP tokens:
+使用 Supabase SMS OTP 令牌有两个原因。
 
-- You want users to log in with mobile number + password, and the mobile number should be verified via SMS
-- You want users to log in with mobile number ONLY (i.e. passwordless login)
+- 您想让用户用手机号码+密码登录，并且手机号码应通过短信进行验证
+- 你希望用户只用手机号码登录（即无密码登录）。
 
-We'll cover:
+我们将介绍。
 
-- [Finding your Twilio credentials](#finding-your-twilio-credentials)
-- [Using OTP with password based logins](#using-otp-with-password-based-logins)
-- [Using OTP as a passwordless sign-in mechanism](#using-otp-as-a-passwordless-sign-in-mechanism)
+- 找到你的Twilio证书](#finding-your-twilio-credentials)
+- 使用OTP和基于密码的登录] (#using-otp-with-password-based-logins)
+- 使用OTP作为无密码登录机制](#using-otp-as-passwordless-sign-in-mechanism)
 
-What you'll need:
+你需要的东西。
 
-- A Twilio account (sign up here: https://www.twilio.com/try-twilio)
-- A Supabase project (create one here: https://app.supabase.com)
-- A mobile phone capable of receiving SMS
+- 一个Twilio账户（在这里注册：https://www.twilio.com/try-twilio）。
+- 一个Supabase项目（在这里创建一个：https://app.supabase.com）。
+- 一个能够接收短信的手机
 
-## Video
+## 视频
 
 <div className="video-container">
   <iframe
@@ -38,64 +38,64 @@ What you'll need:
   ></iframe>
 </div>
 
-## Steps
+## 步骤
 
-### Finding your Twilio credentials
+### 找到你的Twilio凭证
 
-Start by logging into your Twilio account and starting a new project: https://www.twilio.com/console/projects/create
+首先登录你的Twilio账户并开始一个新的项目：https://www.twilio.com/console/projects/create
 
-Give your project a name and verify the mobile number you'll be using to test with. This is the number that will be receiving the SMS OTPs.
+给你的项目取个名字，并验证你要用来测试的手机号码。这是一个将接收短信OTP的号码。
 
 ![Name your twilio project](/docs/img/guides/auth-twilio/1.png)
 ![verify your own phone number](/docs/img/guides/auth-twilio/2.png)
 
-Select 'SMS', 'Identity & Verification', and 'With code' as options on the welcome form.
+在欢迎表格中选择 `短信`、`身份和验证`以及 `带密码`作为选项。
 
 ![Form Fields](/docs/img/guides/auth-twilio/3.png)
 
-When you're back on the [Twilio console screen](https://www.twilio.com/console), you need to scroll down and click 'Get a trial phone number' - this is the number that you'll be sending SMSs from.
+当你回到[Twilio控制台屏幕](https://www.twilio.com/console)时，你需要向下滚动并点击'获得一个试用电话号码'--这是你要发送短信的号码。
 
 ![Get a trial phone number](/docs/img/guides/auth-twilio/4.png)
 
 ![Successful phone number](/docs/img/guides/auth-twilio/5.png)
 
-You should now be able to see all three values you'll need to get started:
+现在你应该能够看到你需要的所有三个数值，以便开始工作。
 
-- Account SID
-- Auth Token
-- Sender Phone Number
+- 帐户SID
+- 授权令牌
+- 发件人电话号码
 
 ![All the credentials you'll need](/docs/img/guides/auth-twilio/6.png)
 
-Now go to the Auth > Settings page in the Supabase dashboard (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/settings).
+现在去Supabase仪表板上的Auth > Settings页面（https://app.supabase.com/project/YOUR-PROJECT-REF/auth/settings）。
 
-You should see an option to enable Phone Signup:
+你应该看到一个选项来启用电话注册。
 
 ![Enable Phone Sign-Up](/docs/img/guides/auth-twilio/7.png)
 
-Toggle it on, and copy the 3 values over from the twilio dashboard. Click save.
+拨动它，并从 twilio 仪表板上复制3个值。点击保存。
 
-Note: for "Twilio Message Service SID" you can use the Sender Phone Number generated above.
+注意：对于 "Twilio消息服务SID"，你可以使用上面生成的发送者电话号码。
 
 ![Plug in Twilio credentials](/docs/img/guides/auth-twilio/8.png)
 
-Now the backend should be setup, we can proceed to add our client-side code!
+现在后台应该已经设置好了，我们可以继续添加我们的客户端代码了!
 
-#### SMS custom template
+#### 短信定制模板
 
-The SMS message sent to a phone containing an OTP code can be customized. This is useful if you need to mention a brand name or display a website address.
+发送到手机上的包含OTP代码的短信可以被定制。如果你需要提到一个品牌名称或显示一个网站地址，这很有用。
 
-Go to Auth > Templates page in the Supabase dashboard (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/templates).
+进入 Supabase 仪表板中的 Auth > Templates 页面 (https://app.supabase.com/project/YOUR-PROJECT-REF/auth/templates)。
 
-Use the variable `.Code` in the template to display the OTP code. Here's an example in the SMS template.
+在模板中使用变量`.Code`来显示OTP代码。下面是SMS模板中的一个例子。
 
 ![example in the SMS template](/docs/img/guides/auth-twilio/9.png)
 
-### Using OTP with password based logins
+### 使用OTP与基于密码的登录
 
-In this scenario we'll be using the user's mobile phone number and a corresponding password as an alternative to signing up with an email address. Note: please thoroughly consider potential security implications when signing up with a combination of phone number and password. Phone numbers are sometimes recycled by phone networks when users cancel their phone contracts or move countries, thereby granting access to the user's account to the subsequent owner of the phone number. In the near future Supabase will support multifactor authentication, which will mitigate this risk, but for now you may want to consider allowing your users to recover their account by some other means in an emergency.
+在这种情况下，我们将使用用户的手机号码和相应的密码，作为用电子邮件地址注册的替代方法。注意：在使用电话号码和密码组合注册时，请彻底考虑潜在的安全问题。当用户取消电话合同或搬家时，电话号码有时会被电话网络回收，从而将用户账户的访问权授予该电话号码的后续所有者。在不久的将来，Supabase将支持多因素认证，这将减轻这种风险，但现在你可能要考虑让你的用户在紧急情况下通过其他方式恢复他们的账户。
 
-Using supabase-js on the client you'll want to use the same `signUp` method that you'd use for email based sign ups, but with the `phone` param instead of the `email param`:
+在客户端使用supabase-js，你要使用与基于电子邮件的注册相同的`signUp`方法，但使用`phone`参数而不是`email参数`。
 
 <Tabs
   scrollable
@@ -128,9 +128,9 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/signup' \
 </TabPanel>
 </Tabs>
 
-The user will now receive an SMS with a 6-digit pin that you will need to receive from them within 60-seconds before they can login to their account.
+用户现在会收到一条短信，上面有一个6位数的密码，你需要在60秒内收到他们的密码，然后他们才能登录他们的账户。
 
-You should present a form to the user so they can input the 6 digit pin, then send it along with the phone number to `verifyOTP`:
+你应该向用户提供一个表格，让他们输入6位数的密码，然后把它和电话号码一起发送给 `verifyOTP`。
 
 <Tabs
   scrollable
@@ -165,7 +165,7 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/verify' \
 </TabPanel>
 </Tabs>
 
-If successful the user will now be logged in and you should receive a valid session like:
+如果成功的话，用户现在将被登录，你应该收到一个有效的会话，如。
 
 ```json
 {
@@ -176,9 +176,9 @@ If successful the user will now be logged in and you should receive a valid sess
 }
 ```
 
-The access token can be sent in the Authorization header as a Bearer token for any CRUD operations on supabase-js. See our guide on [Row Level Security](/docs/guides/auth#row-level-security) for more info on restricting access on a user basis.
+访问令牌可以作为承载令牌在授权头中发送，用于supabase-js的任何CRUD操作。请参阅我们的[行级安全]指南（/docs/guides/auth#row-level-security），了解更多关于以用户为单位限制访问的信息。
 
-Also now that the mobile has been verified, the user can use the number and password to sign in without needing to verify their number each time:
+另外，现在手机已经被验证了，用户可以使用号码和密码登录，而不需要每次都验证他们的号码。
 
 <Tabs
   scrollable
@@ -211,11 +211,11 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/token?grant_type=
 </TabPanel>
 </Tabs>
 
-### Using OTP as a passwordless sign-in mechanism
+### 使用OTP作为无密码登录机制
 
-In this scenario you are granting your user's the ability to login to their account without needing to set a password on their account, all they have to do to log in is verify their mobile each time using the OTP.
+在这种情况下，你将授予你的用户登录他们的账户的能力，而不需要在他们的账户上设置密码，他们所要做的就是每次使用OTP来验证他们的手机。
 
-In javascript we can use the `signIn` method with a single parameter: `phone`
+在javascript中，我们可以使用只有一个参数的`signIn`方法：`phone`。
 
 <Tabs
   scrollable
@@ -246,7 +246,7 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/otp' \
 </TabPanel>
 </Tabs>
 
-The second step is the same as the previous section, you need to collect the 6-digit pin from the user and pass it along with their phone number to the verify method:
+第二步与上一节相同，你需要从用户那里收集6位数的密码，并与他们的电话号码一起传递给验证方法。
 
 <Tabs
   scrollable
@@ -281,7 +281,7 @@ curl -X POST 'https://cvwawazfelidkloqmbma.supabase.co/auth/v1/verify' \
 </TabPanel>
 </Tabs>
 
-and the response should also be the same as above:
+并且响应也应与上述相同。
 
 ```json
 {
@@ -292,13 +292,13 @@ and the response should also be the same as above:
 }
 ```
 
-The user does not have a password therefore will need to sign in via this method each time they want to access your service.
+用户没有密码，因此每次要访问你的服务时，都需要通过这种方法登录。
 
-## Resources
+## 资源
 
 - [Twilio Signup](https://www.twilio.com/try-twilio)
-- [Supabase Dashboard](https://app.supabase.com)
-- [Supabase Row Level Security](/docs/guides/auth#row-level-security)
+- [Supabase仪表板](https://app.supabase.com)
+- [Supabase行级安全](/docs/guides/auth#row-level-security)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

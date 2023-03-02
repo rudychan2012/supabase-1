@@ -2,35 +2,36 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'generating-types',
-  title: 'Generating Types',
+  title: '生成类型',
   description: 'How to generate types for your API and Supabase libraries.',
 }
 
-Supabase APIs are generated from your database, which means that we can use database introspection to generate type-safe API definitions.
+SubaseAPI是从数据库生成的，这意味着我们可以使用数据库来生成类型安全的API定义。
 
-## Generating types using Supabase CLI
+## 使用Suabase CLI生成类型
 
-The Supabase CLI is a single binary Go application that provides everything you need to setup a local development environment.
+Suabase CLI是一个二进制Go应用程序，它提供了设置本地开发环境所需的一切。
 
-You can [install the CLI](https://www.npmjs.com/package/supabase) via npm or other supported package managers. The minimum required version of the CLI is [v1.8.1](https://github.com/supabase/cli/releases).
+你可以通过npm或其他支持的软件包管理器[安装CLI](https://www.npmjs.com/package/supabase)。CLI的最低要求版本是[v1.8.1](https://github.com/supabase/cli/releases)。
+
 
 ```bash
 npm i supabase@">=1.8.1" --save-dev
 ```
 
-Login with your Personal Access Token:
+用你的个人访问令牌登录:
 
 ```bash
 npx supabase login
 ```
 
-Generate types for your project to produce the `types/supabase.ts` file:
+ 为你的项目生成类型，产生`types/supabase.ts`文件:
 
 ```bash
 npx supabase gen types typescript --project-id "$PROJECT_ID" --schema public > types/supabase.ts
 ```
 
-After you have generated your types, you can use them in `src/index.ts`
+在你生成了你的类型后，你可以在`src/index.ts`中使用它们.
 
 ```tsx
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -48,17 +49,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 }
 ```
 
-## Update types automatically with GitHub Actions
+## 用GitHub动作自动更新类型
 
-One way to keep your type definitions in sync with your database is to set up a GitHub action that runs on a schedule.
+让你的类型定义与数据库保持同步的一个方法是设置一个GitHub动作，按计划运行。
 
-Add the script above to your `package.json` to run it using `npm run update-types`
+将上面的脚本添加到你的`package.json`中，使用`npm run update-types`运行它。
+
 
 ```json
 "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_ID\" > types/supabase.ts"
 ```
 
-Create a file `.github/workflows/update-types.yml` with the following snippet to define the action along with the environment variables. This script will commit new type changes to your repo every night.
+创建一个文件 `.github/workflows/update-types.yml` ，用下面的片段来定义动作和环境变量。这个脚本将每天晚上提交新的类型变化到你的 repo。
 
 ```yaml
 name: Update database types
@@ -102,11 +104,11 @@ jobs:
           branch: ${{ github.ref }}
 ```
 
-Alternatively, you can use a community-supported GitHub action: [generate-supabase-db-types-github-action](https://github.com/lyqht/generate-supabase-db-types-github-action).
+或者，你也可以使用社区支持的GitHub行动:[generate-supabase-db-types-github-action](https://github.com/lyqht/generate-supabase-db-types-github-action)
 
-## Resources
+## 资源
 
-- [Generating Supabase types with GitHub Actions](https://blog.esteetey.dev/how-to-create-and-test-a-github-action-that-generates-types-from-supabase-database)
+- [用GitHub动作生成Supabase类型](https://blog.esteetey.dev/how-to-create-and-test-a-github-action-that-generates-types-from-supabase-database)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

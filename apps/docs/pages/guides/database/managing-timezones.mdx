@@ -2,15 +2,15 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'managing-timezones',
-  title: 'Timezones',
+  title: '时区',
   slug: 'managing-timezones',
   description: 'How to change your database timezone.',
 }
 
-Every Supabase database is set to UTC timezone by default. We strongly recommend keeping it this way, even if your users are in a different location.
-This is because it makes it much easier to calculate differences between timezones if you adopt the mental model that "everything in my database is in UTC time".
+每个 Supabase 数据库都默认设置为 UTC 时区。我们强烈建议保持这种方式，即使你的用户在不同的地方。
+这是因为，如果你采用 "我的数据库中的一切都在UTC时间 "的心理模式，那么计算不同时区的差异就会容易得多。
 
-### Change timezone
+### 改变时区
 
 <Tabs
   scrollable
@@ -28,14 +28,14 @@ set timezone to 'America/New_York';
 </TabPanel>
 </Tabs>
 
-### Full list of timezones
+### 时区的完整列表
 
-Get a full list of timezones supported by your database. This will return the following columns:
+获取你的数据库所支持的时区的完整列表。这将返回以下列：
 
-- `name`: Time zone name
-- `abbrev`: Time zone abbreviation
-- `utc_offset`: Offset from UTC (positive means east of Greenwich)
-- `is_dst`: True if currently observing daylight savings
+- `name`: 时区名称
+- `abbrev`: 时区缩略语
+- `utc_offset`: 与UTC的偏移（正数表示格林威治以东）。
+- `is_dst`: 如果目前遵守夏令时，则为真
 
 <Tabs
   scrollable
@@ -54,9 +54,9 @@ order by name;
 </TabPanel>
 </Tabs>
 
-### Search for a specific timezone
+### 搜索一个特定的时区
 
-Use `ilike` (case insensitive search) to find specific timezones.
+使用`ilike`（不区分大小写的搜索）来寻找特定的时区。
 
 <Tabs
   scrollable

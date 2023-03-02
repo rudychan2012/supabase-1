@@ -2,82 +2,85 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'rate-limits',
-  title: 'Realtime Rate Limits',
+  title: '实时速率限制',
   description: 'Understanding Realtime rate limiting',
   sidebar_label: 'Rate Limits',
 }
 
-Supabase Realtime is a global cluster. We've implemented some rate limits to help ensure high availability for all customers.
+Supabase Realtime是一个全球集群。我们已经实施了一些速率限制，以帮助确保所有客户的高可用性。
 
-Rate limits are configurable per project and our cluster supports millions of concurrent connections. [Contact support](https://app.supabase.com/support/new) if these limits are causing issues.
+速率限制可按项目配置，我们的集群支持数百万的并发连接。[联系支持](https://app.supabase.com/support/new)如果这些限制造成了问题。
 
-## Limits by Plan
 
-Limits are set on the Free and Pro plans accordingly. See our [pricing page](https://supabase.com/pricing) for more information.
+## 按计划限制
 
-Enterprise plans are billed on a usage basis. We still employ limiting on Enterprise plans. If you're on an Enterprise plan simply contact support and we'll increase your limits as needed.
+免费计划和专业计划都有相应的限制。更多信息见我们的[定价页](https://supabase.com/pricing)。
 
-Enterprise plan limits start at:
+企业计划是按使用量计费的。我们仍然对企业计划采用限制措施。如果你使用企业计划，只需联系支持，我们将根据需要增加你的限额。
 
-- 500 concurrent clients
-- 1,000 messages per second
-- 500 concurrent Channels
+企业计划的限制从以下几点开始。
 
-## System Limits
+- 500个并发客户
+- 每秒1,000条信息
+- 500个并发的频道
 
-The following limits apply to all projects:
 
-- 500 Channel joins per second
-- 100 Channels per connected client
+## 系统限制
 
-## Client-Side Limiting
+以下限制适用于所有项目:
 
-Some basic WebSocket message rate limiting is implemented client-side.
+- 每秒有500个频道加入
+- 每个连接的客户端有100个频道
 
-For example, the [multiplayer.dev demo](/docs/guides/realtime/quickstart#cursor-positions) instantiates the Supabase client with an `eventsPerSecond` parameter.
+## 客户端限制
 
-## Rate Limiting Errors
+一些基本的WebSocket消息速率限制在客户端实现。
 
-Rate limiting errors can appear in backend logs and messages in the WebSocket connection.
+例如，[multiplayer.dev demo](/docs/guides/realtime/quickstart#cursor-positions)实例化了带有`eventsPerSecond`参数的Supabase客户端。
 
-<Admonition type="note">
 
-Use the [Realtime Inspector](https://realtime.supabase.com/inspector/new) to reproduce an error and share those connection details with Supabase support.
+## 速率限制错误
 
-</Admonition>
-
-### Backend Logs
-
-If your project is being rate limited, check your [Realtime logs](https://app.supabase.com/project/_/database/realtime-logs).
-
-### WebSocket Errors
-
-- `tenant_events`: Clients will be disconnected if your project is generating too many messages per second. `supabase-js` should reconnect automatically when the message rate decreases below your plan limit.
-
-Some limits can cause a Channel join to be refused. Realtime will reply with one of the following WebSocket messages:
-
-- `too_many_channels`: Too many channels currently joined for a single client.
-- `too_many_connections`: Too many total concurrent connections for a project.
-- `too_many_joins`: Too many Channel joins per second.
+速率限制错误可能出现在WebSocket连接的后端日志和消息中。
 
 <Admonition type="note">
 
-Use your browser's developer tools to find the WebSocket initiation request and view individual messages.
+使用[Realtime Inspector](https://realtime.supabase.com/inspector/new)来重现错误，并与Supabase支持部门分享这些连接细节。
 
 </Admonition>
 
-## Payload Limits
+### 后端日志
 
-Realtime has a message byte size limit of 1 megabyte.
+如果你的项目被限制了速率，请检查你的[Realtime logs](https://app.supabase.com/project/_/database/realtime-logs)。
 
-## Presence Limits
+### WebSocket错误
 
-Realtime Presence is a CRDT backed in-memory key value store based on Phoenix Presence. It's more expensive to update a Presence than Broadcast a message.
+- `tenant_events`。如果你的项目每秒产生太多的消息，客户将被断开连接。`supabase-js`应该在消息率降低到你的计划限制以下时自动重新连接。
 
-The following limits apply to Presence messages:
+一些限制会导致通道加入被拒绝。Realtime将以下列WebSocket消息之一作为答复：
 
-- 10 keys per object
-- Message rate limit is 10% of your Realtime message rate limit
+- `too_many_channels`：目前有太多的频道加入到一个客户端。
+- `too_many_connections`: 一个项目有太多的并发连接。
+- `too_many_joins`: 每秒有太多的频道加入。
+
+<Admonition type="note">
+
+使用浏览器的开发工具查找WebSocket启动请求并查看单个消息。
+
+</Admonition>
+
+## 有效载荷的限制
+
+实时的信息字节大小限制为1兆字节。
+
+##  Presence的局限性
+
+实时Presence是一个基于Phoenix Presence的CRDT支持的内存键值存储。更新一个Presence比广播一个消息更昂贵。
+
+以下限制适用于Presence消息：
+
+- 每个对象有10个键
+- 消息速率限制是你的实时消息速率限制的10%。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

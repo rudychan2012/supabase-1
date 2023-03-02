@@ -2,57 +2,45 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-mfa',
-  title: 'Multi-Factor Authentication',
+  title: '多因素身份验证',
   description:
-    'Add an additional layer of security to your apps with Supabase Auth multi-factor authentication.',
+    '使用Supabase Auth多因素身份验证为应用程序添加额外的安全层。',
 }
 
 <Admonition type="note">
 
-Multi-Factor Authentication is in early access preview only. Although we
-believe it is production ready, APIs and some behavior may change based on
-feedback we receive in the preview period.
+Multi-Factor Authentication仅在早期访问预览中。
+尽管我们 相信它已经做好了生产准备，API和一些行为可能会根据 我们在预览期收到的反馈。
 
 </Admonition>
 
-Multi-factor authentication (MFA), sometimes called two-factor
-authentication (2FA), adds an additional layer of security to your
-application by verifying their identity through
-additional verification steps.
+多因素身份验证(MFA)，有时称为双因素身份验证 (2FA)，为您的 通过验证他们的身份附加验证步骤。
 
-It is considered a best practice to use MFA for your applications.
+将MFA用于应用程序被认为是最佳做法。密码薄弱或社交登录帐户受损的用户 容易被恶意接管账户。这些可以通过 MFA，因为他们要求用户提供 这两个：
 
-Users with weak passwords or compromised social login accounts are
-prone to malicious account takeovers. These can be prevented with
-MFA because they require the user to provide proof of
-both of these:
+- 他们知道的事情。 密码或访问社交登录帐户。 
 
-- Something they know.
-  Password, or access to a social-login account.
-- Something they have.
-  Access to an authenticator app (a.k.a. TOTP), mobile phone or recovery code.
+- 他们有的东西。 访问验证器应用程序（也称为TOTP）、手机或恢复代码。
 
-## Overview
 
-Supabase Auth implements only Time-based One Time Factor(TOTP) multi-factor authentication. This type of
-multi-factor authentication uses a timed one-time password generated from an
-authenticator app in the control of users.
+## 概述
 
-Applications using MFA require two important flows:
+Supabase Auth仅实现基于时间的一次性因素（TOTP）多因素认证。这种类型的多因素身份验证使用从由用户控制的验证器应用程序。
 
-1. **Enrollment flow.**
-   This lets users set up and control MFA in your app.
-2. **Authentication flow.**
-   This lets users sign in using any factors after the conventional login step.
+使用MFA的应用程序需要两个重要流程：
 
-Supabase Auth provides:
+1.**报名流程**
+   这允许用户在应用程序中设置和控制MFA。
+2.**认证流程** 
+   这允许用户在常规登录步骤之后使用任何因素登录。
 
-- **Enrollment API** - build rich user interfaces for adding and removing factors.
-- **Challenge and Verify APIs** - securely verify that the user has access to a factor.
-- **List Factors API** - build rich user interfaces for signing in with additional factors.
+Supabase Auth提供：
 
-Below is a flow chart illustrating how these APIs work together to enable MFA
-features in your app.
+-**注册API**-构建用于添加和删除因素的丰富用户界面。
+-**挑战和验证API**-安全地验证用户是否有权访问某个因素。 
+-**列出因素API**-构建丰富的用户界面，以便使用其他因素登录。
+
+以下是说明这些API如何协同工作以启用MFA的流程图 应用程序中的功能。
 
 <Mermaid
   chart={`
@@ -66,101 +54,59 @@ graph TD;
 `}
 />
 
-These sets of APIs let you control the MFA experience that works for you. You
-can create flows where MFA is optional, mandatory for all or only specific
-groups of users.
+这些API集允许您控制适用于您的MFA体验。你可以创建MFA为可选、强制或仅为特定的流用户组。
 
-Once users have enrolled or signed-in with a factor, Supabase Auth adds
-additional metadata to the user's access token (JWT) that your application can
-use to allow or deny access.
+一旦用户注册或使用某个因子登录，Supabase Auth补充道应用程序可以向用户的访问令牌（JWT）添加附加元数据用于允许或拒绝访问。
 
-This information is represented by an [Authenticator Assurance
-Level](https://pages.nist.gov/800-63-3-Implementation-Resources/63B/AAL/), a
-standard measure about the assurance Supabase Auth has of the user's identity
-for that particular session. There are two levels recognized today:
+此信息由[身份验证器保证级别](https://pages.nist.gov/800-63-3-Implementation-Resources/63B/AAL/)，一个关于确保超级认证用户身份的标准措施对于该特定会话。目前公认有两个级别：
 
-1. **Assurance Level 1: `aal1`**
-   Means that the user's identity was verified using a conventional login method
-   such as email+password, magic link, one-time password, phone auth or social
-   login.
-2. **Assurance Level 2: `aal2`**
-   Means that the user's identity was additionally verified using at least one
-   second factor, such as a TOTP code.
 
-This assurance level is encoded in the `aal` claim in the JWT associated with
-the user. By decoding this value you can create custom authorization rules in
-your frontend, backend and database that will enforce the MFA policy that works
-for your application. JWTs without an `aal` claim are at the `aal1` level.
+1.**保证级别1:`aal1`** 表示使用常规登录方法验证了用户的身份例如电子邮件+密码、magic link、一次性密码、电话授权或社交登录。 
+2.**保证级别2:`aal2`** 意味着用户的身份已使用至少一个,例如TOTP码。
 
-## Adding to your app
 
-Adding MFA to your app involves these three steps:
+该保证级别编码在与用户相关的JWT中的`aal`声明中。通过解码此值，您可以在前端、后端和数据库中创建自定义授权规则，以实施适用于应用程序的MFA策略。
+没有`aal`声明的JWT属于`aal1`级别。
 
-1. **Add enrollment flow.**
-   You need to provide a UI within your app that your users will be able to set-up
-   MFA in. You can add this right after sign-up, or as part of a separate flow in
-   the settings portion of your app.
-2. **Add challenge step to login.**
-   If a user has set-up MFA, your app's login flow needs to present a challenge
-   screen to the user asking them to prove they have access to the additional
-   factor.
-3. **Enforce rules for MFA logins.**
-   Once your users have a way to enroll and log in with MFA, you need to enforce
-   authorization rules across your app: on the frontend, backend, API servers or
-   Row-Level Security policies.
+## 正在添加到应用程序
 
-### Add enrollment flow
+将MFA添加到应用程序包括以下三个步骤：
 
-An enrollment flow provides a UI for users to set up additional authentication factors.
-Most applications add the enrollment flow in two places within their app:
+1. **添加注册流程。**您需要在应用程序中提供一个用户界面，用户可以在其中设置MFA。您可以在注册后立即添加，或作为应用程序设置部分中单独流程的一部分添加。
+2. **将挑战步骤添加到登录。**如果用户设置了MFA，您的应用程序的登录流程需要向用户显示一个挑战屏幕，要求他们证明他们可以访问附加因素。
+3. **强制执行MFA登录规则。**一旦您的用户能够使用MFA注册和登录，您就需要在整个应用程序中强制执行授权规则：在前端、后端、API服务器或行级别安全策略上。
 
-1. Right after login or sign up.
-   This lets users quickly set up MFA immediately after they log in or create an
-   account. We recommend encouraging all users to set up MFA if that makes sense
-   for your application. Many applications offer this as an opt-in step in an
-   effort to reduce onboarding friction.
-2. From within a settings page.
-   Allows users to set up, disable or modify their MFA settings.
+### 添加注册流程
 
-We recommend building one generic flow that you can reuse in both cases with
-minor modifications.
+注册流为用户提供了一个UI，用于设置其他身份验证因素。 大多数应用程序在其应用程序中的两个位置添加注册流程：
 
-Enrolling a factor for use with MFA takes three steps:
+1.登录或注册后立即。这允许用户在登录或创建MFA后立即快速设置MFA 账户如果有意义，我们建议鼓励所有用户设置MFA 用于您的应用程序。许多应用程序将此作为 努力减少上车摩擦。 
+2.在设置页面内。 允许用户设置、禁用或修改MFA设置。
 
-1. Call `supabase.auth.mfa.enroll()`.
-   This method returns a QR code and a secret. Display the QR
-   code to the user and ask them to scan it with their authenticator application.
-   If they are unable to scan the QR code, show the secret in plain text which
-   they can type or paste into their authenticator app.
-2. Calling the `supabase.auth.mfa.challenge()` API.
-   This prepares Supabase Auth to accept a verification code from the user
-   and returns a challenge ID.
-3. Calling the `supabase.auth.mfa.verify()` API.
-   This verifies that the user has indeed added the secret from step (1) into
-   their app and is working correctly. If the verification succeeds, the factor
-   immediately becomes active for the user account. If not, you should repeat
-   steps 2 and 3.
+我们建议构建一个通用流，在这两种情况下都可以通过少量修改来重用。
 
-#### Example: React
+注册MFA使用的因子需要三个步骤：
 
-Below is an example that creates a new `EnrollMFA` component that illustrates
-the important pieces of the MFA enrollment flow.
+1.调用`supabase.auth.mfa.enroll()`。 此方法返回QR码和密码。显示QR代码给用户，并要求他们用他们的验证器应用程序扫描它。
+如果他们无法扫描二维码，请以纯文本显示秘密 他们可以键入或粘贴到他们的验证器应用程序中。
 
-- When the component appears on screen, the `supabase.auth.mfa.enroll()` API is
-  called once to start the process of enrolling a new factor for the current
-  user.
-- This API returns a QR code in the SVG format, which is shown on screen using
-  a normal `<img>` tag by encoding the SVG as a data URL.
-- Once the user has scanned the QR code with their authenticator app, they
-  should enter the verification code within the `verifyCode` input field and
-  click on `Enable`.
-- A challenge is created using the `supabase.auth.mfa.challenge()` API and the
-  code from the user is submitted for verification using the
-  `supabase.auth.mfa.verify()` challenge.
-- `onEnabled` is a callback that notifies the other components that enrollment
-  has completed.
-- `onCancelled` is a callback that notifies the other components that the user
-  has clicked the `Cancel` button.
+2.调用`supabase.auth.mfa.challenge()`API。 这将准备Supabase Auth接受用户的验证码并返回挑战ID。
+
+3.调用`supabase.auth.mfa.verify()`API。 这验证了用户确实已将步骤（1）中的秘密添加到 他们的应用程序运行正常。如果验证成功 立即成为用户帐户的活动状态。如果没有，你应该重复步骤2和3。
+
+
+#### 示例：React
+
+下面是创建新的`EnrollMFA`组件的示例 MFA注册流程的重要部分。
+
+- 当组件出现在屏幕上时，`supabase.auth.mfa.enroll()`API被调用一次，以开始为当前用户注册新因子的过程。
+
+- 此API返回SVG格式的QR码，通过将SVG编码为数据URL，使用正常的`＜img＞`标记在屏幕上显示。
+
+- 用户使用其验证器应用程序扫描二维码后，应在`verifyCode`输入字段中输入验证码，然后单击`启用`。
+- 使用`supabase.auth.mfa.challenge()`API，用户的代码将使用`supabase.auth.mfa.verify()`挑战。
+- `onEnabled`是一个回调，通知其他组件注册已完成。
+- `onCancelled`是一个回调，通知其他组件用户已单击`取消`按钮。
 
 ```tsx
 /**
@@ -241,39 +187,29 @@ export function EnrollMFA({
 }
 ```
 
-### Add challenge step to login
+### 将挑战步骤添加到登录
 
-Once a user has logged in via their first factor (email+password, magic link,
-one time password, social login...) you need to perform a check if any
-additional factors need to be verified.
+一旦用户通过他们的第一因素（电子邮件+密码、magic link等）登录， 一次性密码、社交登录…）您需要检查是否需要验证任何其他因素。
 
-This can be done by using the
-`supabase.auth.mfa.getAuthenticatorAssuranceLevel()` API. When the user signs
-in and is redirected back to your app, you should call this method to extract
-the user's current and next authenticator assurance level (AAL).
+这可以通过使用`supabase.auth.mfa.getAuthenticatorAssuranceLevel()`API来完成。当用户登录并被重定向回您的应用程序时，您应该调用此方法来提取用户的当前和下一个身份验证器保证级别（AAL）。
 
-Therefore if you receive a `currentLevel` which is `aal1` but a `nextLevel`
-of `aal2`, the user should be given the option to go through MFA.
 
-Below is a table that explains the combined meaning.
+因此，如果您收到的`currentLevel`是`aal1`，但`nextLevel`为 `aal2`，则应向用户提供通过MFA的选项。
 
-| Current Level | Next Level | Meaning                                                  |
+下表解释了组合含义。
+
+| 当前级别 | 下一级 | 含义                                                  |
 | ------------: | :--------- | :------------------------------------------------------- |
 |        `aal1` | `aal1`     | User does not have MFA enrolled.                         |
 |        `aal1` | `aal2`     | User has an MFA factor enrolled but has not verified it. |
 |        `aal2` | `aal2`     | User has verified their MFA factor.                      |
 |        `aal2` | `aal1`     | User has disabled their MFA factor. (Stale JWT.)         |
 
-#### Example: React
+#### 示例：React
 
-Adding the challenge step to login depends heavily on the architecture of your
-app. However, a fairly common way to structure React apps is to have a large
-component (often named `App`) which contains most of the authenticated
-application logic.
+向登录添加挑战步骤在很大程度上取决于应用程序的架构。然而，构造React应用程序的一种相当常见的方法是拥有一个包含大部分已验证应用程序逻辑的大型组件（通常称为`App`）。
 
-This example will wrap this component with logic that will show an MFA
-challenge screen if necessary, before showing the full application. This is
-illustrated in the `AppWithMFA` example below.
+此示例将用逻辑包装此组件，如果需要，在显示完整应用程序之前，将显示MFA挑战屏幕。这在下面的`AppWithMFA`示例中进行了说明。
 
 ```tsx
 function AppWithMFA() {
@@ -311,17 +247,12 @@ function AppWithMFA() {
 }
 ```
 
-- `supabase.auth.mfa.getAuthenticatorAssuranceLevel()` does return a promise.
-  Don't worry, this is a very fast method (microseconds) as it rarely uses the
-  network.
-- `readyToShow` only makes sure the AAL check completes before showing any
-  application UI to the user.
-- If the current level can be upgraded to the next one, the MFA screen is
-  shown.
-- Once the challenge is successful, the `App` component is finally rendered on
-  screen.
+- `supbase.auth.mfa.getAuthenticatorAssuranceLevel()`不返回承诺。别担心，这是一种非常快速的方法（微秒），因为它很少使用网络。
+- `readyToShow`仅确保在向用户显示任何应用程序UI之前完成AAL检查。
+- 如果当前级别可以升级到下一级别，将显示MFA屏幕。
+- 一旦挑战成功，`app`组件将最终呈现在屏幕上。
 
-Below is the component that implements the challenge and verify logic.
+下面是实现挑战和验证逻辑的组件。
 
 ```tsx
 function AuthMFA() {
@@ -379,57 +310,35 @@ function AuthMFA() {
 }
 ```
 
-- You can extract the available MFA factors for the user by calling
-  `supabase.auth.mfa.listFactors()`. Don't worry this method is also very quick
-  and rarely uses the network.
-- If `listFactors()` returns more than one factor (or of a different type) you
-  should present the user with a choice. For simplicity this is not shown in
-  the example.
-- Each time the user presses the "Submit" button a new challenge is created for
-  the chosen factor (in this case the first one) and it is immediately
-  verified. Any errors are displayed to the user.
-- On successful verification, the client library will refresh the session in
-  the background automatically and finally call the `onSuccess` callback, which
-  will show the authenticated `App` component on screen.
 
-### Enforce rules for MFA logins
+- 您可以通过调用`supabase.auth.mfa.listFactors()`为用户提取可用的MFA因子。不用担心，这种方法也很快，很少使用网络。
+- 如果`listFactors()`返回多个因子（或不同类型），则应向用户提供选择。为了简单起见，示例中没有显示这一点。
+- 每次用户按下`提交`按钮时，都会为所选因素（在本例中为第一个因素）创建一个新的挑战，并立即进行验证。任何错误都会显示给用户。
+- 验证成功后，客户端库将在后台自动刷新会话，最后调用`onSuccess`回调，该回调将在屏幕上显示经过验证的`App`组件。
 
-Adding MFA to your app's UI does not in-and-of-itself offer a higher level of
-security to your users. You also need to enforce the MFA rules in your
-application's database, APIs and server-side rendering.
+### 强制MFA登录规则
 
-Depending on your application's needs, there are three ways you can choose to
-enforce MFA.
+将MFA添加到应用程序的UI本身并不能为用户提供更高级别的安全性。您还需要在应用程序的数据库、API和服务器端呈现中强制执行MFA规则。
 
-1. **Enforce for all users (new and existing).**
-   Any user account will have to enroll MFA to continue using your app.
-   The application will not allow access without going through MFA first.
-2. **Enforce for new users only.**
-   Only new users will be forced to enroll MFA, while old users will be encouraged
-   to do so.
-   The application will not allow access for new users without going through MFA
-   first.
-3. **Enforce only for users that have opted-in.**
-   Users that want MFA can enroll in it and the application will not allow access
-   without going through MFA first.
+根据应用程序的需要，您可以选择三种方式来实施MFA。
 
-#### Database
+1. **对所有用户（新用户和现有用户）强制执行。**任何用户帐户都必须注册MFA才能继续使用您的应用程序。应用程序将不允许在未首先通过MFA的情况下进行访问。
+2. **仅对新用户强制。**只有新用户将被强制注册MFA，而旧用户将被鼓励这样做。该应用程序将不允许新用户在未首先通过MFA的情况下访问。
+3. **仅对已选择的用户强制执行。**想要MFA的用户可以注册，如果不先通过MFA，应用程序将不允许访问。
 
-Your app should sufficiently deny or allow access to tables or rows based on
-the user's current and possible authenticator levels.
+#### 数据库
+
+您的应用程序应根据用户当前和可能的身份验证器级别充分拒绝或允许访问表或行。
 
 <Admonition type="caution">
 
-PostgreSQL has two types of policies: permissive and restrictive. This guide
-uses restrictive policies. Make sure you don't omit the `as restrictive`
-clause.
+PostgreSQL有两种策略：许可策略和限制策略。本指南使用限制性策略。确保不要省略`as restrictive`子句。
 
 </Admonition>
 
-##### Enforce for all users (new and existing)
+##### 强制所有用户（新用户和现有用户）
 
-If your app falls under this case, this is a template Row Level Security policy
-you can apply to all your tables:
+如果您的应用属于这种情况，这是一个模板行级别安全策略，您可以应用于所有表：
 
 ```sql
 create policy "Policy name."
@@ -439,16 +348,12 @@ create policy "Policy name."
   using (auth.jwt()->>'aal' = 'aal2');
 ```
 
-- Here the policy will not accept any JWTs with an `aal` claim other than
-  `aal2`, which is the highest authenticator assurance level.
-- **Using `as restrictive` ensures this policy will restrict all commands on the
-  table regardless of other policies!**
+- 在此，保单不接受除`aal2`之外的任何具有`aal`声明的JWT，这是最高的认证者保证级别。
+- **使用`as restrictive`可确保此策略将限制表上的所有命令，而不考虑其他策略**
 
-##### Enforce for new users only
+##### 仅对新用户强制
 
-If your app falls under this case, the rules get more complex. User accounts
-created past a certain timestamp must have a `aal2` level to access the
-database.
+如果你的应用属于这种情况，规则就会变得更加复杂。在特定时间戳之后创建的用户帐户必须具有`aal2`级别才能访问数据库。
 
 ```sql
 create policy "Policy name."
@@ -466,20 +371,14 @@ create policy "Policy name."
        where auth.uid() = id));
 ```
 
-- The policy will accept both `aal1` and `aal2` for users with a `created_at`
-  timestamp prior to 12th December 2022 at 00:00 UTC, but will only accept
-  `aal2` for all other timestamps.
-- The `<@` operator is PostgreSQL's ["contained in"
-  operator.](https://www.postgresql.org/docs/current/functions-array.html)
-- `NULL` appears because some JWTs originating from prior to the introduction
-  of MFA in Supabase Auth will not contain an `aal` claim.
-- **Using `as restrictive` ensures this policy will restrict all commands on the
-  table regardless of other policies!**
+- 对于在2022年12月12日00:00UTC之前具有`created_at`时间戳的用户，该策略将同时接受`aal1`和`aal2`，但仅接受所有其他时间戳的`aal2`。
+- The `<@` 运算符是PostgreSQL的[`contained in`运算符。](https://www.postgresql.org/docs/current/functions-array.html)
+- 出现`NULL`是因为在Supabase Auth中引入MFA之前的一些JWT不会包含`aal`声明。
+- **使用`as restrictive`可确保此策略将限制表上的所有命令，而不考虑其他策略**
 
-##### Enforce only for users that have opted-in
+##### 仅对已选择的用户强制
 
-Users that have enrolled MFA on their account are expecting that your
-application only works for them if they've gone through MFA.
+已在其帐户上注册MFA的用户希望您的应用程序仅在他们通过MFA后才适用。
 
 ```sql
 create policy "Policy name."
@@ -498,92 +397,56 @@ create policy "Policy name."
     ));
 ```
 
-- The policy will only accept only `aal2` when the user has at least one MFA
-  factor verified.
-- Otherwise, it will accept both `aal1` and `aal2`.
-- The `<@` operator is PostgreSQL's ["contained in"
-  operator.](https://www.postgresql.org/docs/current/functions-array.html)
-- `NULL` appears because some JWTs originating from prior to the introduction
-  of MFA in Supabase Auth will not contain an `aal` claim.
-- **Using `as restrictive` ensures this policy will restrict all commands on the
-  table regardless of other policies!**
+- 当用户至少验证了一个MFA系数时，该策略仅接受`aal2`。
+- 否则，它将同时接受`aal1`和`aal2`。
+- The `<@` 运算符是PostgreSQL的[`contained in`运算符。](https://www.postgresql.org/docs/current/functions-array.html)
+- 出现`NULL`是因为在Supabase Auth中引入MFA之前的一些JWT不会包含`aal`声明。
+- **使用`as restrictive`可确保此策略将限制表上的所有命令，而不考虑其他策略**
 
-### Server-Side Rendering
+### 服务器端渲染
 
 <Admonition type="tip">
 
-When using the Supabase JavaScript library in a server-side rendering context,
-make sure you always create a new object for each request! This will prevent
-you from accidentally rendering and serving content belonging to different
-users.
+在服务器端渲染上下文中使用Supabase JavaScript库时，请确保始终为每个请求创建一个新对象！这将防止您意外地呈现和提供属于不同用户的内容。
 
 </Admonition>
 
-It is possible to enforce MFA on the Server-Side Rendering level. However, this
-can be tricky do to well.
+可以在服务器端渲染级别上强制MFA。然而，要做好这件事可能很棘手。
 
-You can use the `supabase.auth.mfa.getAuthenticatorAssuranceLevel()` and
-`supabase.auth.mfa.listFactors()` APIs to identify the AAL level of the session
-and any factors that are enabled for a user, similar to how you would use these
-on the browser.
+您可以使用`supabase.auth.mfa.getAuthenticatorAssuranceLevel()`和`supabase.auth.mfa.listFactors()`API，用于标识会话的AAL级别以及为用户启用的任何因素，类似于您在浏览器上使用这些因素的方式。
 
-However, encountering a different AAL level on the server may not actually be a
-security problem. Consider these likely scenarios:
+然而，在服务器上遇到不同的AAL级别实际上可能不是安全问题。考虑以下可能的情况：
 
-1. User signed-in with a conventional method but closed their tab on the MFA
-   flow.
-2. User forgot a tab open for a very long time. (This happens more often than
-   you might imagine.)
-3. User has lost their authenticator device and is confused about the next
-   steps.
+1. 用户使用常规方法登录，但关闭了MFA流上的选项卡。
+2. 用户长时间忘记打开标签。（这种情况比你想象的更频繁。）
+3. 用户丢失了他们的认证器设备，对接下来的步骤感到困惑。
 
-We thus recommend you redirect users to a page where they can authenticate
-using their additional factor, instead of rendering a HTTP 401 Unauthorized or
-HTTP 403 Forbidden content.
+因此，我们建议您将用户重定向到可以使用其附加因素进行身份验证的页面，而不是呈现HTTP 401未授权或HTTP 403禁止内容。
 
 ### APIs
 
-If your application uses the Supabase Database, Storage or Edge Functions, just
-using Row Level Security policies will give you sufficient protection. In the
-event that you have other APIs that you wish to protect, follow these general
-guidelines:
+如果您的应用程序使用超级数据库、存储或边缘功能，那么仅使用行级别安全策略就可以提供足够的保护。如果您有其他需要保护的API，请遵循以下一般准则：
 
-1. **Use a good JWT verification and parsing library for your language.**
-   This will let you securely parse JWTs and extract their claims.
-2. **Retrieve the `aal` claim from the JWT and compare its value according to
-   your needs.**
-   If you've encountered an AAL level that can be increased, ask the user to
-   continue the login process instead of logging them out.
-3. **Use the `https://<project-ref>.supabase.co/rest/v1/auth/factors` REST
-   endpoint to identify if the user has enrolled any MFA factors.**
-   Only `verified` factors should be acted upon.
+1. **为您的语言使用良好的JWT验证和分析库。**这将使您能够安全地解析JWT并提取其声明。
+2. **从JWT中检索`aal`声明，并根据您的需求比较其价值。**如果您遇到可以提高的AAL级别，请要求用户继续登录过程，而不是注销。
+3. **使用`https://<project-ref>.supabase.co/rest/v1/auth/factors`rest端点，用于标识用户是否注册了任何MFA因素。**只应对`已验证`的因素采取行动。
 
-## Frequently asked questions
 
-### Why is there a challenge and verify API when challenge does not do much?
+## 常见问题解答
 
-TOTP is not going to be the only MFA factor Supabase Auth is going to support
-in the future. By separating out the challenge and verify steps, we're making
-the library forward compatible with new factors we may add in the future --
-such as SMS or WebAuthn. For example, for SMS the `challenge` endpoint would
-actually send out the SMS with the authentication code.
+### 当挑战没什么作用时，为什么会有挑战和验证API？
 
-### What's inside the QR code?
+TOTP不会是Supabase Auth未来支持的唯一MFA因素。通过分离挑战和验证步骤，我们使库向前兼容我们将来可能添加的新因素，例如SMS或WebAuthn。例如，对于SMS，`挑战`端点实际上会发送带有验证码的SMS。
 
-The TOTP QR code encodes a URI with the `otpauth` scheme. It was [initially
-introduced by Google
-Authenticator](https://github.com/google/google-authenticator/wiki/Key-Uri-Format)
-but is now universally accepted by all authenticator apps.
+### 二维码里面是什么？
 
-### How do I check _when_ a user went through MFA?
+TOTP QR码使用`otpauth`方案对URI进行编码。它最初[由Google Authenticator](https://github.com/google/google-authenticator/wiki/Key-Uri-Format)引入但现在已被所有验证器应用程序普遍接受。
 
-Access tokens issued by Supabase Auth contain an `amr` (Authentication Methods
-Reference) claim. It is an array of objects that indicate what authentication
-methods the user has used so far.
+### 如何检查用户何时通过MFA？
 
-For example, the following structure describes a user that first signed in with
-a password-based method, and then went through TOTP MFA 2 minutes and 12
-seconds later. The entries are ordered most recent method first!
+Supabase Auth发布的访问令牌包含`amr`（身份验证方法参考）声明。它是一个对象数组，指示用户迄今使用的身份验证方法。
+
+例如，以下结构描述了一个用户，该用户首先使用基于密码的方法登录，然后在2分钟12秒后通过TOTP MFA。条目首先按最新方法排序！
 
 ```json
 {
@@ -599,35 +462,27 @@ seconds later. The entries are ordered most recent method first!
   ]
 }
 ```
+使用`supabase.auth.getAuthenticatorAssuranceLevel()`方法，以便在浏览器应用程序中轻松访问此信息。
 
-Use the `supabase.auth.getAuthenticatorAssuranceLevel()` method to get easy
-access to this information in your browser app.
-
-You can use this PostgreSQL snippet in RLS policies, too:
+您也可以在RLS策略中使用PostgreSQL片段：
 
 ```sql
 json_query_path(auth.jwt(), '$.amr[0]')
 ```
 
-- [`json_query_path(json, path)`](https://www.postgresql.org/docs/current/functions-json.html#FUNCTIONS-JSON-PROCESSING-TABLE)
-  is a function that allows access to elements in a JSON object according to a
-  [SQL/JSON
-  path](https://www.postgresql.org/docs/current/functions-json.html#FUNCTIONS-SQLJSON-PATH).
-- `$.amr[0]` is a SQL/JSON path expression that fetches the most recent
-  authentication method in the JWT.
+- [`json_query_path(json, path)`](https://www.postgresql.org/docs/current/functions-json.html#FUNCTIONS-JSON-PROCESSING-TABLE) 是一个函数, 允许根据[SQL/JSON路径](https://www.postgresql.org/docs/current/functions-json.html#FUNCTIONS-SQLJSON-PATH)访问JSON对象中的元素.
+- `$.amr[0]`是一个SQL/JSON路径表达式，它获取JWT中最新的身份验证方法。
 
-Once you have extracted the most recent entry in the array, you can compare the
-`method` and `timestamp` to enforce stricter rules.
+一旦提取了数组中的最新条目，就可以比较`方法`和`时间戳`来执行更严格的规则。
 
-Currently recognized methods are:
+目前公认的方法有：
 
-- `password` - any password based sign in.
-- `otp` - any one-time password based sign in (email code, SMS code, magic
-  link).
-- `oauth` - any OAuth based sign in (social login).
-- `mfa/totp` - a TOTP additional factor.
+- `password `-任何基于密码的登录。
+- `otp`-任何基于密码的一次性登录（电子邮件代码、短信代码、magic link）。
+- `oauth` -任何基于oauth的登录（社交登录）。
+- `mfa/totp`— totp附加系数。
 
-This list will expand in the future.
+此列表将在未来扩展。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -2,62 +2,62 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-workos',
-  title: 'Login with WorkOS',
-  description: 'Add WorkOS OAuth to your Supabase project',
+  title: '使用WorkOS登录',
+  description: '在你的Supabase项目中加入WorkOS OAuth',
 }
 
-To enable WorkOS Auth for your project, you need to set up WorkOS OAuth application and add the application credentials to your Supabase Dashboard.
+要为你的项目启用WorkOS Auth，你需要设置WorkOS OAuth应用程序，并将应用程序的凭证添加到你的Supabase仪表板。
 
-## Overview
+## 概述
 
-In this guide, we will cover how to use Supabase OAuth with WorkOS to implement Single-Sign-On(SSO).
+在本指南中，我们将介绍如何使用Supabase OAuth和WorkOS来实现单点登录（SSO）。
 
-The procedure consists of five broad steps:
+该过程包括五个主要步骤。
 
-- Create a new organization from your WorkOS Dashboard.
-- Obtain the `Client ID` from the Configuration tab and configure redirect URI.
-- Obtain the `WorkOS Secret` from the credentials tab.
-- Connect a WorkOS Supported Identity Provider
-- Add your WorkOS credentials into your Supabase project
+- 在你的WorkOS仪表板上创建一个新的组织。
+- 从配置选项卡中获得 `客户端ID`，并配置重定向URI。
+- 从证书标签中获得 `WorkOS Secret`。
+- 连接一个WorkOS支持的身份提供者
+- 在Supabase项目中加入你的WorkOS凭证
 
-## Create a WorkOS Organization
+## 创建一个WorkOS组织
 
-Log in to the dashboard and hop over to the Organizations tab to create and organization
-![Create an Organization](/docs/img/guides/auth-workos/workos-create-organization.png)
+登录到仪表板，跳到 `组织`选项卡，创建一个组织。
+![创建一个组织](/docs/img/guides/auth-workos/workos-creat-organization.png)
 
-## Obtain the Client ID and configure Redirect URI
+## 获得客户ID并配置重定向URI
 
-Head over to the Configuration tab and configure the redirect URI.The redirect URI should look like `https://<project-ref>.supabase.co/auth/v1/callback`
-Note that this is distinct from the redirect URI referred to in the Supabase dashboard
+前往配置选项卡，配置重定向URI。重定向URI应该看起来像`https://<project-ref>.supabase.co/auth/v1/callback`。
+请注意，这与Supabase仪表板中提到的重定向URI不同。
 
 ![Fetch Client ID and configure Redirect URI](/docs/img/guides/auth-workos/workos-clientid-redirect-uri.png)
 
-## Obtain the WorkOS Secret
+## 获得WorkOS密匙
 
-Head over to the API Keys page and obtain the secret key.
+前往API密钥页面，获取秘密密钥。
 
 ![WorkOS Secret Key](/docs/img/guides/auth-workos/workos-secret-key.png)
 
-## Connect a WorkOS Supported Identity Provider
+## 连接一个WorkOS支持的身份提供者
 
-Set up the identity provider by visiting the setup link.
+通过访问设置链接来设置身份提供者。
 
 ![Visiting the setup link](/docs/img/guides/auth-workos/workos-setup-identity-provider.png)
 
-You can pick between any one of the many identity providers that WorkOS supports.
+你可以从WorkOS支持的众多身份提供者中选择任何一个。
 
-## Add your WorkOS credentials into your Supabase Project
+## 将你的 WorkOS 凭证加入你的 Supabase 项目中
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Under `External OAuth Providers` turn `WorkOS Enabled` to ON
-- Enter the `Client ID`, `Secret`, and `WorkOS URL` saved in the previous steps. The ``WorkOS URL` setting should be set to https://api.workos.com/
-- Click `Save`
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)
+- 在左边的侧边栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面
+- 在 `外部OAuth供应商`下，将 `WorkOS已启用`调至 `ON`。
+- 输入前面步骤中保存的 `客户端ID`、`密码`和 `WorkOS URL`。`WorkOS URL`的设置应该设置为https://api.workos.com/。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 将登录代码添加到你的客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `workos` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，将`workos`作为`provider`。
 
 ```js
 async function signInWithWorkOS() {
@@ -74,9 +74,9 @@ async function signInWithWorkOS() {
 }
 ```
 
-Refer to the [WorkOS Documentation](https://workos.com/docs/reference/sso/authorize/) to learn more about the different methods.
+请参考 [WorkOS 文档](https://workos.com/docs/reference/sso/authorize/) 以了解更多关于不同方法的信息。
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话中删除，并从localStorage中删除任何对象。
 
 ```js
 async function signout() {
@@ -84,9 +84,9 @@ async function signout() {
 }
 ```
 
-## Resources
+资源
 
-- [WorkOS Documentation](https://workos.com/docs/sso/guide)
+- [WorkOS文档](https://workos.com/docs/sso/guide)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -12,9 +12,9 @@ export default function AuthProviders() {
                 <p className="mt-0">{x.name}</p>
                 <p className="mt-0">
                   {x.official ? (
-                    <span className={`badge badge--official`}>Official</span>
+                    <span className={`badge badge--official`}>官方</span>
                   ) : (
-                    <span className={`badge badge--unofficial`}>Unofficial</span>
+                    <span className={`badge badge--unofficial`}>非官方</span>
                   )}
                 </p>
               </div>

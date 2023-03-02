@@ -2,28 +2,28 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'with-nuxt-3',
-  title: 'Quickstart: Nuxt 3',
-  description: 'Learn how to use Supabase in your Nuxt 3 App.',
+  title: '快速入门: Nuxt 3',
+  description: '了解如何在你的Nuxt 3应用程序中使用Supabase。',
   sidebar_label: 'Nuxt 3',
 }
 
 <QuickstartIntro />
 
-![Supabase User Management example](/docs/img/user-management-demo.png)
+![Supabase用户管理实例](/docs/img/user-management-demo.png)
 
 ### Github
 
-Should you get stuck while working through the guide, refer to [this repo](https://github.com/supabase/supabase/tree/master/examples/user-management/nuxt3-user-management).
+如果你在阅读指南时遇到困难，请参考[此版本](https://github.com/supabase/supabase/tree/master/examples/user-management/nuxt3-user-management)。
 
 <ProjectSetup />
 
-## Building the App
+## 构建应用程序
 
-Let's start building the Vue 3 app from scratch.
+让我们开始从头开始构建Vue 3应用程序。
 
-### Initialize a Nuxt 3 app
+### 初始化一个Nuxt 3应用程序
 
-We can use [`nuxi init`](https://v3.nuxtjs.org/getting-started/quick-start/) to create an app called `nuxt-user-management`:
+我们可以使用[`nuxi init`](https://v3.nuxtjs.org/getting-started/quick-start/)来创建一个名为`nuxt-user-management`的应用程序。
 
 ```bash
 npx nuxi init nuxt-user-management
@@ -31,26 +31,26 @@ npx nuxi init nuxt-user-management
 cd nuxt-user-management
 ```
 
-Then let's install the only additional dependency: [NuxtSupabase](https://supabase.nuxtjs.org/). We only need to import NuxtSupabase as a dev dependency.
+然后让我们安装唯一的额外依赖：[NuxtSupabase](https://supabase.nuxtjs.org/)。我们只需要将NuxtSupabase作为一个开发依赖项导入。
 
 ```bash
 npm install @nuxtjs/supabase --save-dev
 ```
 
-And finally we want to save the environment variables in a `.env`.
-All we need are the API URL and the `anon` key that you copied [earlier](#get-the-api-keys).
+最后，我们要把环境变量保存在`.env`中。
+我们所需要的是API URL和你[早些时候]复制的`anon`密钥（#get-theapi-keys）。
 
 ```bash title=.env
 SUPABASE_URL="YOUR_SUPABASE_URL"
 SUPABASE_KEY="YOUR_SUPABASE_ANON_KEY"
 ```
 
-These variables will be exposed on the browser, and that's completely fine since we have [Row Level Security](/docs/guides/auth#row-level-security) enabled on our Database.
-Amazing thing about [NuxtSupabase](https://supabase.nuxtjs.org/) is that setting environment variables is all we need to do in order to start using Supabase.
-No need to initialize Supabase. The library will take care of it automatically.
+这些变量将暴露在浏览器上，这完全没有问题，因为我们的数据库已经启用了[行级安全](/docs/guides/auth#row-level-security)。
+关于[NuxtSupabase](https://supabase.nuxtjs.org/)的神奇之处在于，为了开始使用Supabase，我们只需要设置环境变量即可。
+不需要初始化Supabase。该库将自动处理它。
 
-And one optional step is to update the CSS file `assets/main.css` to make the app look nice.
-You can find the full contents of this file [here](https://github.com/supabase-community/nuxt3-quickstarter/blob/main/assets/main.css).
+还有一个可选的步骤是更新CSS文件`assets/main.css`以使应用程序看起来漂亮。
+你可以找到这个文件的全部内容[这里](https://github.com/supabase-community/nuxt3-quickstarter/blob/main/assets/main.css)。
 
 ```typescript title=nuxt.config.ts
 import { defineNuxtConfig } from 'nuxt'
@@ -62,9 +62,9 @@ export default defineNuxtConfig({
 })
 ```
 
-### Set up Auth component
+### 设置Auth组件
 
-Let's set up a Vue component to manage logins and sign ups. We'll use Magic Links, so users can sign in with their email without using passwords.
+让我们建立一个Vue组件来管理登录和注册。我们将使用Magic Links，所以用户可以用他们的电子邮件登录，而不需要使用密码。
 
 ```html title=/components/Auth.vue
 <template>
@@ -107,14 +107,14 @@ Let's set up a Vue component to manage logins and sign ups. We'll use Magic Link
 </script>
 ```
 
-### User state
+### 用户状态
 
-To access the user information, use the composable [useSupabaseUser](https://supabase.nuxtjs.org/usage/composables/use-supabase-user) provided by the Supabase Nuxt module.
+要访问用户信息，请使用Supabase Nuxt模块提供的可组合的[useSupabaseUser](https://supabase.nuxtjs.org/usage/composables/use-supabase-user)。
 
-### Account component
+### 账号组件
 
-After a user is signed in we can allow them to edit their profile details and manage their account.
-Let's create a new component for that called `Account.vue`.
+在用户登录后，我们可以让他们编辑他们的个人资料细节和管理他们的账户。
+让我们为其创建一个新的组件，名为`Account.vue`。
 
 ```html title=components/Account.vue
 <template>
@@ -207,9 +207,9 @@ Let's create a new component for that called `Account.vue`.
 </script>
 ```
 
-### Launch!
+### 启动
 
-Now that we have all the components in place, let's update `app.vue`:
+现在我们已经有了所有的组件，让我们来更新`app.vue`。
 
 ```html title=app.vue
 <template>
@@ -224,23 +224,23 @@ Now that we have all the components in place, let's update `app.vue`:
 </script>
 ```
 
-Once that's done, run this in a terminal window:
+一旦完成，在终端窗口运行这个程序。
 
 ```bash
 npm run dev
 ```
 
-And then open the browser to [localhost:3000](http://localhost:3000) and you should see the completed app.
+然后打开浏览器到[localhost:3000](http://localhost:3000)，你应该看到完成的应用程序。
 
 ![Supabase Nuxt 3](/docs/img/supabase-vue-3-demo.png)
 
-## Bonus: Profile photos
+## 个人照片
 
-Every Supabase project is configured with [Storage](/docs/guides/storage) for managing large files like photos and videos.
+每个Supabase项目都配置了[存储](/docs/guides/storage)，用于管理照片和视频等大文件。
 
-### Create an upload widget
+### 创建一个上传小组件
 
-Let's create an avatar for the user so that they can upload a profile photo. We can start by creating a new component:
+让我们为用户创建一个头像，以便他们可以上传个人资料照片。我们可以从创建一个新的组件开始。
 
 ```html title=components/Avatar.vue
 <template>
@@ -323,9 +323,9 @@ Let's create an avatar for the user so that they can upload a profile photo. We 
 </script>
 ```
 
-### Add the new widget
+### 添加新的小组件
 
-And then we can add the widget to the Account page:
+然后我们就可以把这个小部件添加到账号页面:
 
 ```html title=components/Account.vue
 <template>
@@ -418,14 +418,14 @@ And then we can add the widget to the Account page:
 </script>
 ```
 
-That is it! You should now be able to upload a profile photo to Supabase Storage.
+你现在应该可以向Supabase Storage上传一张个人照片。
 
-## Next steps
+## 下一步
 
-At this stage you have a fully functional application!
+在这个阶段，你已经有了一个功能完备的应用程序!
 
-- Got a question? [Ask here](https://github.com/supabase/supabase/discussions).
-- Sign in: [app.supabase.com](https://app.supabase.com)
+- 有问题吗？[在此提问](https://community.memfiredb.com/).
+- 请登录[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

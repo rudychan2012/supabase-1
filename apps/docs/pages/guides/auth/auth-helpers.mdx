@@ -2,12 +2,12 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'index',
-  title: 'Auth Helpers',
-  description: 'A collection of framework-specific Auth utilities for working with Supabase.',
+  title: '身份验证帮助程序',
+  description: '用于使用Supabase的特定于框架的Auth实用程序的集合。',
   sidebar_label: 'Overview',
 }
 
-A collection of framework-specific Auth utilities for working with Supabase.
+用于使用Supabase的特定于框架的Auth实用程序的集合。
 
 <div className="container" style={{ padding: 0 }}>
   <div className="grid md:grid-cols-12 gap-4">
@@ -16,7 +16,7 @@ A collection of framework-specific Auth utilities for working with Supabase.
       <ButtonCard
         to={'/guides/auth/auth-helpers/auth-ui'}
         title={'Auth UI'}
-        description={'A pre-built React component for authenticating users.'}
+        description={'一个预建的React组件，用于验证用户。'}
       />
     </div>
     {/* Next.js */}
@@ -24,7 +24,7 @@ A collection of framework-specific Auth utilities for working with Supabase.
       <ButtonCard
         to={'/guides/auth/auth-helpers/nextjs'}
         title={'Next.js'}
-        description={'Helpers for authenticating users in Next.js applications.'}
+        description={'用于在Next.js应用程序中验证用户身份的辅助工具。'}
       />
     </div>
     {/* SvelteKit */}
@@ -32,7 +32,7 @@ A collection of framework-specific Auth utilities for working with Supabase.
       <ButtonCard
         to={'/guides/auth/auth-helpers/sveltekit'}
         title={'SvelteKit'}
-        description={'Helpers for authenticating users in SvelteKit applications.'}
+        description={'用于在SvelteKit应用程序中验证用户身份的帮助器。'}
       />
     </div>
     {/* Remix */}
@@ -40,20 +40,20 @@ A collection of framework-specific Auth utilities for working with Supabase.
       <ButtonCard
         to={'/guides/auth/auth-helpers/remix'}
         title={'Remix'}
-        description={'Helpers for authenticating users in Remix applications.'}
+        description={'用于在Remix应用程序中验证用户身份的辅助工具。'}
       />
     </div>
   </div>
 </div>
 
-## Status
+## 状态
 
-The Auth Helpers are in `beta`. They are usable in their current state, but it's likely that there will be breaking changes.
+身份验证助手处于`测试`状态。它们在当前状态下是可用的，但很可能会有突破性的变化。
 
-## Additional Links
+## 其他链接
 
-- [Source code](https://github.com/supabase/auth-helpers)
-- [Known bugs and issues](https://github.com/supabase/auth-helpers/issues)
+- [源代码](https://github.com/supabase/auth-helpers)
+- [已知错误和问题](https://github.com/supabase/auth-helpers/issues)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

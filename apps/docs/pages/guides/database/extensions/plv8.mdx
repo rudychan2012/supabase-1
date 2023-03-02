@@ -2,22 +2,22 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'plv8',
-  title: 'plv8: JavaScript Language',
+  title: 'plv8: JavaScript语言',
   description: 'JavaScript language for PostgreSQL.',
 }
 
-The `plv8` extension allows you use JavaScript within Postgres.
+`plv8`扩展允许你在Postgres中使用JavaScript。
 
-## Overview
+## 概述
 
-While Postgres natively runs SQL, it can also run other "procedural languages".
-`plv8` allows you to run JavaScript code - specifically any code that runs on the [V8 JavaScript engine](https://v8.dev).
+虽然Postgres原生运行SQL，但它也可以运行其他 "程序语言"。
+`plv8`允许你运行JavaScript代码-特别是任何在[V8 JavaScript引擎](https://v8.dev)上运行的代码。
 
-It can be used for database functions, triggers, queries and more.
+它可以用于数据库函数、触发器、查询等。
 
-## Usage
+## 使用方法
 
-### Enable the extension
+### 启用扩展
 
 <Tabs
   scrollable
@@ -27,9 +27,9 @@ It can be used for database functions, triggers, queries and more.
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [Database](https://app.supabase.com/project/_/database/tables) page in the Dashboard.
-2. Click on **Extensions** in the sidebar.
-3. Search for "plv8" and enable the extension.
+1. 进入仪表板中的[数据库](https://app.supabase.com/project/_/database/tables)页面。
+2. 点击侧边栏中的*扩展*。
+3. 搜索 "plv8 "并启用该扩展。
 
 </TabPanel>
 <TabPanel id="sql" label="SQL">
@@ -42,18 +42,17 @@ create extension plv8;
 drop extension if exists plv8;
 ```
 
-Even though the SQL code is `create extension`, this is the equivalent of "enabling the extension".
-To disable an extension, call `drop extension`.
+尽管SQL代码是`create extension`，但这相当于 "启用扩展"。
+要禁用一个扩展，请调用`drop extension`。
 
-Procedural languages are automatically installed within `pg_catalog`, so you don't need to specify a schema.
+程序语言会自动安装在`pg_catalog`中，所以你不需要指定模式。
 
 </TabPanel>
 </Tabs>
 
-### Create `plv8` functions
+### 创建`plv8`函数
 
-Functions written in `plv8` are written just like any other PostgreSQL functions, only
-with the `language` identifier set to `plv8`.
+用`plv8`编写的函数和其他PostgreSQL函数一样，只是 语言标识符设置为`plv8`。
 
 ```sql
 create or replace function function_name()
@@ -64,7 +63,7 @@ returns void as $$
 $$ language plv8;
 ```
 
-You can call `plv8` functions like any other Postgres function:
+你可以像其他Postgres函数一样调用`plv8`函数：
 
 <Tabs
   scrollable
@@ -88,11 +87,11 @@ const { data, error } = supabase.rpc('function_name')
 </TabPanel>
 </Tabs>
 
-## Examples
+## 示例
 
-### Scalar functions
+### 标量函数
 
-A [scalar function](https://plv8.github.io/#scalar-function-calls) is anything that takes in some user input and returns a single result.
+一个[标量函数](https://plv8.github.io/#scalar-function-calls)是接受某些用户输入并返回单个结果。
 
 ```sql
 create or replace function hello_world(name text)
@@ -104,9 +103,9 @@ returns text as $$
 $$ language plv8;
 ```
 
-### Executing SQL
+### 正在执行SQL
 
-You can execute SQL within `plv8` code using the [`plv8.execute` function](https://plv8.github.io/#plv8-execute).
+可以使用[`plv8.execute`函数](https://plv8.github.io/#plv8-execute)在`plv8`代码中执行SQL。
 
 ```sql
 create or replace function update_user(id bigint, first_name text)
@@ -121,9 +120,9 @@ returns smallint as $$
 $$ language plv8;
 ```
 
-### Set-returning functions
+### 设置返回函数
 
-A [set-returning function](https://plv8.github.io/#set-returning-function-calls) is anything that returns a full set of results - for example, rows in a table.
+一个[set-returning函数](https://plv8.github.io/#set-returning-function-calls)可以返回一整套结果--例如，表中的行。
 
 ```sql
 create or replace function get_messages()
@@ -137,10 +136,10 @@ returns setof messages as $$
 $$ language plv8;
 ```
 
-## Resources
+## 资源
 
-- Official [`plv8` documentation](https://plv8.github.io/)
-- [plv8 GitHub Repository](https://github.com/plv8/plv8)
+- 官方[`plv8` 文档](https://plv8.github.io/)
+- [plv8 GitHub库](https://github.com/plv8/plv8)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

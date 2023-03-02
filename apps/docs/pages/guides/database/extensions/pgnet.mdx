@@ -2,23 +2,23 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'pgnet',
-  title: 'pg_net: Async Networking',
+  title: 'pg_net: 异步网络',
   description: 'pg_net: an async networking extension for PostgreSQL.',
 }
 
 <Admonition type="caution">
 
-The pg_net API is in beta. Functions signatures may change.
+ pg_net的API还处于beta阶段。函数签名可能会改变。
 
 </Admonition>
 
-[pg_net](https://github.com/supabase/pg_net/) is a PostgreSQL extension exposing a SQL interface for async networking with a focus on scalability and UX.
+[pg_net](https://github.com/supabase/pg_net/)是一个PostgreSQL扩展，为异步网络暴露了一个SQL接口，重点是可扩展性和用户体验。
 
-It differs from the `http` extension in that it is asynchronous by default. This makes it useful in blocking functions (like triggers).
+它与`http`扩展的不同之处在于，它默认是异步的。这使得它在阻塞函数（如触发器）中很有用。
 
-## Usage
+## 用法
 
-### Enable the extension
+### 启用扩展功能
 
 <Tabs
   scrollable
@@ -28,9 +28,9 @@ It differs from the `http` extension in that it is asynchronous by default. This
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [Database](https://app.supabase.com/project/_/database/tables) page in the Dashboard.
-2. Click on **Extensions** in the sidebar.
-3. Search for "pg_net" and enable the extension.
+1. 进入仪表板中的[数据库](https://app.supabase.com/project/_/database/tables)页面。
+2. 点击侧边栏中的*扩展*.
+3. 3. 搜索 "pg_net "并启用该扩展。
 
 </TabPanel>
 <TabPanel id="sql" label="SQL">
@@ -45,23 +45,23 @@ drop extension if exists pg_net;
 drop schema net;
 ```
 
-Even though the SQL code is `create extension`, this is the equivalent of "enabling the extension".
-To disable an extension, call `drop extension`.
+尽管SQL代码是`create extension`，但这相当于 "启用扩展"。
+要禁用一个扩展，请调用`drop extension`。
 
-Procedural languages are automatically installed within `pg_catalog`, so you don't need to specify a schema.
+程序语言会自动安装在`pg_catalog`中，所以你不需要指定模式。
 
 </TabPanel>
 </Tabs>
 
-## `http_get` [#http_get]
+## `http_get` {#http_get}
 
-Creates an HTTP GET request returning the request's ID. HTTP requests are not started until the transaction is committed.
+创建一个HTTP GET请求，返回该请求的ID。在事务提交之前，HTTP请求不会被启动。
 
-### Signature
+### 签名
 
 <Admonition type="caution">
 
-This is a Postgres SECURITY DEFINER function.
+这是一个Postgres安全定义函数。
 
 </Admonition>
 
@@ -86,7 +86,7 @@ net.http_get(
     language plpgsql
 ```
 
-### Usage
+### 使用方法
 
 ```sql
 select net.http_get('https://news.ycombinator.com') as request_id;
@@ -96,19 +96,19 @@ request_id
 (1 row)
 ```
 
-After triggering `http_get`, use [`http_get_result`](#http_get_result) to get the result of the request.
+在触发了`http_get`之后，使用[`http_get_result`](#http_get_result)来获取请求的结果。
 
-## `http_post` [#http_post]
+## `http_post` {#http_post}
 
-Creates an HTTP POST request with a JSON body, returning the request's ID. HTTP requests are not started until the transaction is committed.
+创建一个带有JSON主体的HTTP POST请求，返回请求的ID。HTTP请求在事务提交之前不会被启动。
 
-The body's character set encoding matches the database's `server_encoding` setting.
+主体的字符集编码与数据库的`server_encoding`设置一致。
 
-### Signature
+### 签名
 
 <Admonition type="caution">
 
-This is a Postgres SECURITY DEFINER function
+这是一个Postgres安全定义函数。
 
 </Admonition>
 
@@ -134,7 +134,7 @@ net.http_post(
     language plpgsql
 ```
 
-### Usage
+### 使用方法
 
 ```sql
 select
@@ -148,19 +148,19 @@ request_id
 (1 row)
 ```
 
-After triggering `http_post`, use [`http_get_result`](#http_get_result) to get the result of the request.
+在触发了`http_post`之后，使用[`http_get_result`](#http_get_result)来获得请求的结果。
 
-## `http_collect_response` [#http_collect_response]
+## `http_collect_response` {#http_collect_response}
 
-Given a `request_id` reference, retrieves the response.
+给出一个`request_id`参考，检索响应。
 
-When `async:=false` is set it is recommended that [statement_timeout](https://www.postgresql.org/docs/13/runtime-config-client.html) is set for the maximum amount of time the caller is willing to wait in case the response is slow to populate.
+当`async:=false`被设置时，建议将[statement_timeout](https://www.postgresql.org/docs/13/runtime-config-client.html)设置为调用者愿意等待的最大时间，以防止响应填充缓慢。
 
-### Signature
+### 签名
 
 <Admonition type="caution">
 
-This is a Postgres SECURITY DEFINER function
+这是一个Postgres安全定义函数。
 
 </Admonition>
 
@@ -179,11 +179,11 @@ net.http_collect_response(
     parallel safe
 ```
 
-### Usage
+### 使用方法
 
 <Admonition type="caution">
 
-`net.http_collect_response` must be in a separate transaction from the calls to `net.http_<method>`
+`net.http_collect_response`必须在与调用`net.http_<method>`不同的事务中。
 
 </Admonition>
 
@@ -236,7 +236,7 @@ from
 (1 row)
 ```
 
-Where `response` is a composite:
+其中，`response`是一个组合：
 
 ```sql
 status_code integer
@@ -244,12 +244,12 @@ headers jsonb
 body text
 ```
 
-Possible values for `net.http_response_result.status` are `('PENDING', 'SUCCESS', 'ERROR')`
+`net.http_response_result.status的可能值是`('PENDING', 'SUCCESS', 'ERROR')'。
 
-## Resources
+## 资源
 
-- Source code: [github.com/supabase/pg_net](https://github.com/supabase/pg_net/)
-- Official Docs: [supabase.github.io/pg_net](https://supabase.github.io/pg_net/)
+- 源代码: [github.com/supabase/pg_net](https://github.com/supabase/pg_net/)
+- 官方文档: [supabase.github.io/pg_net](https://supabase.github.io/pg_net/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

@@ -4,69 +4,69 @@ export const meta = {
   id: 'supertokens',
   title: 'SuperTokens',
   description:
-    'Create a Next.js application secured by SuperTokens and PostgreSQL Row Level Security.',
+    '创建一个由SuperTokens和PostgreSQL行级安全保障的Next.js应用程序。',
 }
 
-[SuperTokens](https://www.supertokens.com) is an open source authentication solution which provides many stratergies for authenticating and managing users. You can use the managed service for easy setup or you can self host the solution to have complete control over your data.
+[SuperTokens](https://www.supertokens.com)是一个开源的认证解决方案，为认证和管理用户提供许多策略。你可以使用管理服务来进行简单的设置，也可以自行托管该解决方案以完全控制你的数据。
 
-In this guide we will build a simple web application using SuperTokens, Supabase, and Next.js. You will be able to sign up using SuperTokens and your email and user ID will be stored in Supabase. Once authenticated the frontend will be able to query Supabase and retrieve the user's email. Our example app will be using the [Email-Password and Social Login](https://supertokens.com/docs/thirdpartyemailpassword/introduction) recipe for authentication and session management.
+在本指南中，我们将使用SuperTokens、Supabase和Next.js构建一个简单的Web应用程序。你将能够使用SuperTokens进行注册，你的电子邮件和用户ID将被存储在Supabase中。一旦通过认证，前端将能够查询Supabase并检索用户的电子邮件。我们的示例应用程序将使用[电子邮件-密码和社交登录](https://supertokens.com/docs/thirdpartyemailpassword/introduction)配方进行认证和会话管理。
 
-We will use Supabase to store and authorize access to user data. Supabase makes it simple to setup Row Level Security(RLS) policies which ensure users can only read and write data that belongs to them.
+我们将使用Supabase来存储和授权对用户数据的访问。Supabase使得设置行级安全(RLS)策略变得非常简单，它可以确保用户只能读写属于他们的数据。
 
-### Demo App
+###演示应用程序
 
-You can find a demo app using SuperTokens, Supabase and Nexts.js on [Github](https://github.com/supertokens/supertokens-auth-react/tree/master/examples/with-supabase)
+你可以在[Github](https://github.com/supertokens/supertokens-auth-react/tree/master/examples/with-supabase)上找到一个使用SuperTokens、Supabase和Nexts.js的演示应用程序。
 
-## Step 1: Create a new Supabase project
+## 步骤1：创建一个新的Supabase项目
 
-From your [Supabase dashboard](https://app.supabase.com/), click `New project`.
+在你的[Supabase仪表板](https://app.supabase.com/)上，点击`新项目'。
 
-Enter a `Name` for your Supabase project.
+为你的Supabase项目输入一个`名称'。
 
-Enter a secure `Database Password`.
+输入一个安全的 "数据库密码"。
 
-Select the same `Region` you host your app's backend in.
+选择你的应用程序后台所在的同一个 "区域"。
 
-Click `Create new project`.
+点击 `创建新项目`。
 
 ![New Supabase project settings](/docs/img/guides/integrations/supertokens/supabase_dashboard_create.png)
 
-## Step 2: Creating tables in Supabase
+## 第2步：在Supabase中创建表
 
-From the sidebar menu in the [Supabase dashboard](https://app.supabase.com/), click `Table editor`, then `New table`.
+在[Supabase仪表板](https://app.supabase.com/)的侧边栏菜单中，点击 `表编辑器`，然后点击 `新建表`。
 
-Enter `users` as the `Name` field.
+输入`users`作为`名称`字段。
 
-Select `Enable Row Level Security (RLS)`.
+选择 `启用行级安全（RLS`。
 
-Remove the default columns
+删除默认列
 
-Create two new columns:
+创建两个新列。
 
-- `user_id` as `varchar` as primary key
-- `email` as `varchar`
+- `user_id`为`varchar`，作为主键
+- `email`为`varchar`。
 
-Click `Save` to create the new table.
+点击 `保存`来创建新表。
 
 ![Users table](/docs/img/guides/integrations/supertokens/supabase_table_create.png)
 
-## Step 3: Setup your Next.js App with SuperTokens.
+## 第三步：用SuperTokens设置你的Next.js应用程序。
 
-Since the scope of this guide is limited to the integration between SuperTokens and Supabase, you can refer to the SuperTokens website to see [how to setup your Next.js app with SuperTokens](https://supertokens.com/docs/thirdpartyemailpassword/nextjs/about).
+由于本指南的范围仅限于 SuperTokens 和 Supabase 之间的集成，您可以参考 SuperTokens 网站，查看 [如何用 SuperTokens 设置您的 Next.js 应用程序](https://supertokens.com/docs/thirdpartyemailpassword/nextjs/about)。
 
-Once you finish setting up your app, you will be greeted with the following screen
+一旦你完成了应用的设置，你将看到以下屏幕
 
 ![SuperTokens Auth Screen](/docs/img/guides/integrations/supertokens/supertokens_thirdpartyemailpassword_auth_screen.png)
 
-## Step 4: Creating a Supabase JWT to access Supabase
+## 第4步：创建一个Supabase JWT来访问Supabase
 
-In our Nextjs app when a user signs up, we want to store the user's email in Supabase. We would then retrieve this email from Supabase and display it on our frontend.
+在我们的 Nextjs 应用程序中，当用户注册时，我们希望在 Supabase 中存储用户的电子邮件。然后我们将从Supabase中检索该电子邮件，并在我们的前端显示它。
 
-To use the Supabase client to query the database we will need to create a JWT signed with your Supabase app's signing secret. This JWT will also need to contain the user's userId so Supabase knows an authenticated user is making the request.
+要使用Supabase客户端来查询数据库，我们需要创建一个用Supabase应用程序的签名秘密签名的JWT。这个JWT还需要包含用户的userId，以便Supabase知道有一个经过认证的用户在发出请求。
 
-To create this flow we will need to modify SuperTokens so that, when a user signs up or signs in, a JWT signed with Supabase's signing secret is created and attached to the user's session. Attaching the JWT to the user's session will allow us to retrieve the Supabase JWT on the frontend and backend (post session verification), using which we can query Supabase.
+为了创建这个流程，我们需要修改 SuperTokens，以便在用户注册或登录时，创建一个用 Supabase 的签名秘密签名的 JWT，并附加到用户的会话中。将JWT附加到用户的会话上将使我们能够在前端和后端（会话后验证）检索Supabase JWT，使用它我们可以查询Supabase。
 
-We want to create a Supabase JWT when we are creating a SuperTokens' session. This can be done by overriding the `createNewSession` function in your backend config.
+我们希望在创建SuperTokens的会话时创建一个Supabase JWT。这可以通过在你的后端配置中覆盖`createNewSession`函数来实现。
 
 ```ts
 // config/backendConfig.ts
@@ -120,13 +120,13 @@ let backendConfig = (): TypeInput => {
 
 ```
 
-As seen above, we will be using the `jsonwebtoken` library to create a JWT signed with Supabase's signing secret whose payload contains the user's userId.
+如上所述，我们将使用`jsonwebtoken`库来创建一个用Supabase的签名秘密签名的JWT，其有效载荷包含用户的userId。
 
-We will be storing this token in the `accessTokenPayload` which will essentially allow us to access the `supabase_token` on the frontend and backend whilst the user is logged in.
+我们将把这个令牌存储在`accessTokenPayload`中，这基本上允许我们在用户登录时在前端和后端访问`supabase_token`。
 
-## Step 5: Creating a Supabase client
+## 第五步: 创建一个Supabase客户端
 
-Create a new file called `utils/supabase.ts` and add the following:
+创建一个名为`utils/supabase.ts`的新文件并添加以下内容。
 
 ```ts
 // utils/supabase.ts
@@ -149,11 +149,11 @@ const getSupabase = (access_token) => {
 export { getSupabase }
 ```
 
-This will be our client for talking to Supabase. We can pass it an `access_token` and it will be attached to our request. This `access_token` is the same as the `supabase_token` we had created earlier.
+这将是我们与Supabase对话的客户端。我们可以传递给它一个`access_token'，它将被附加到我们的请求中。这个`access_token`与我们之前创建的`supabase_token`相同。
 
-## Step 6: Inserting users into Supabase when they sign up:
+## 第6步：当用户注册时，将其插入Supabase中。
 
-In our example app there are two ways for signing up a user. Email-Password and Social Login based authentication. We will need to override both these APIs such that when a user signs up, their email mapped to their userId is stored in Supabase.
+在我们的示例应用程序中，有两种方法可以注册用户。电子邮件-密码和基于社会登录的认证。我们将需要覆盖这两个API，以便当用户注册时，他们的电子邮件映射到他们的userId被存储在Supabase中。
 
 ```ts
 // config/backendConfig.ts
@@ -251,11 +251,11 @@ let backendConfig = (): TypeInput => {
 
 ```
 
-As seen above, we will be overriding the `emailPasswordSignUpPOST` and `thirdPartySignInUpPOST` APIs such that if a user signs up, we retrieve the Supabase JWT (which we created in the `createNewSession` function) from the user's accessTokenPayload and send a request to Supabase to insert the email-userid mapping.
+如上所述，我们将覆盖`emailPasswordSignUpPOST`和`thirdPartySignInUpPOST`API，这样，如果一个用户注册，我们从用户的accessTokenPayload中检索Supabase JWT（我们在`createNewSession'函数中创建），并向Supabase发送请求，插入email-userid的映射。
 
-## Step 7: Retrieving the user's email on the frontend
+## 第七步：在前台检索用户的电子邮件
 
-Now that our backend is setup we can modify our frontend to retrieve the user's email from Supabase.
+现在我们的后端已经设置好了，我们可以修改我们的前端来从Supabase中检索用户的电子邮件。
 
 ```tsx
 // pages/index.tsx
@@ -325,17 +325,17 @@ function ProtectedPage() {
 }
 ```
 
-As seen above we will be using SuperTokens `useSessionContext` hook to retrieve the authenticated user's `userId` and `accessTokenPayload`. Using React's `useEffect` hook we can use the Supabase client to retrieve the user's email from Supabase using the JWT retrieved from the user's `accessTokenPayload` and their `userId`.
+如上所述，我们将使用SuperTokens的`useSessionContext`钩子来检索已认证用户的`userId`和`accessTokenPayload`。使用React的`useEffect`钩子，我们可以使用Supabase客户端，使用从用户的`accessTokenPayload`中获取的JWT和他们的`userId`，从Supabase中获取用户的电子邮件。
 
-## Step 8: Create Policies to enforce Row Level Security for Select and Insert requests
+## 第8步: 创建策略来执行选择和插入请求的行级安全
 
-To enforce Row Level Security for the `Users` table we will need to create policies for Select and Insert requests.
+为了执行 `Users`表的行级安全，我们需要为选择和插入请求创建策略。
 
-These polices will retrieve the userId from the JWT and check if it matches the userId in the Supabase table
+这些策略将从JWT中获取用户身份，并检查它是否与Supabase表中的用户身份相符。
 
-To do this we will need a PostgreSQL function to extract the userId from the JWT.
+要做到这一点，我们将需要一个PostgreSQL函数来从JWT中提取userId。
 
-The payload in the JWT will have the following structure:
+JWT中的有效载荷将有以下结构。
 
 ```
 // JWT payload
@@ -345,9 +345,9 @@ The payload in the JWT will have the following structure:
 }
 ```
 
-To create the PostgreSQL function, lets navigate back to the Supabase dashboard, select `SQL` from the sidebar menu, and click `New query`. This will create a new query called `new sql snippet`, which will allow us to run any SQL against our Postgres database.
+要创建PostgreSQL功能，让我们回到Supabase仪表板，从侧边栏菜单中选择`SQL`，然后点击`新查询`。这将创建一个新的查询，称为 `新sql片段`，这将允许我们对Postgres数据库运行任何SQL。
 
-Write the following and click `Run`.
+写下以下内容并点击`运行`。
 
 ```sql
 create or replace function auth.user_id() returns text as $$
@@ -355,51 +355,51 @@ create or replace function auth.user_id() returns text as $$
 $$ language sql stable;
 ```
 
-This will create a function called `auth.user_id()`, which will inspect the `userId` field of our JWT payload.
+这将创建一个名为`auth.user_id()`的函数，它将检查我们JWT有效载荷中的`userId`字段。
 
-### SELECT query policy
+### SELECT查询策略
 
-Our first policy will check whether the user is the owner of the email.
+我们的第一个策略将检查用户是否是电子邮件的所有者。
 
-Select `Authentication` from the Supabase sidebar menu, click `Policies`, and then `New Policy` on the `Users` table.
+从Supabase侧边栏菜单中选择`Authentication`，点击`Policies`，然后在`Users`表中选择`New Policy`。
 
 ![Create new policy](/docs/img/guides/integrations/supertokens/create_policy.png)
 
-From the modal, select `Create a policy from scratch` and add the following.
+在模式中，选择 `从头创建一个政策`，并添加以下内容。
 
 ![Policy settings for SELECT](/docs/img/guides/integrations/supertokens/policy_config_select.png)
 
-This policy is calling the PostgreSQL function we just created to get the currently logged in user's ID `auth.user_id()` and checking whether this matches the `user_id` column for the current `email`. If it does, then it will allow the user to select it, otherwise it will continue to deny.
+这个策略是调用我们刚刚创建的PostgreSQL函数来获取当前登录用户的ID`auth.user_id()`，并检查这是否与当前`email`的`user_id`列匹配。如果匹配，那么它将允许用户选择，否则将继续拒绝。
 
-Click `Review` and then `Save policy`.
+点击 `Review`，然后点击 "保存策略"。
 
-### INSERT query policy
+### INSERT查询策略
 
-Our second policy will check whether the `user_id` being inserted is the same as the `userId` in the JWT.
+我们的第二个策略将检查正在插入的`user_id`是否与JWT中的`userId`相同。
 
-Create another policy and add the following:
+创建另一个策略并添加以下内容。
 
 ![Policy settings for INSERT](/docs/img/guides/integrations/supertokens/policy_config_insert.png)
 
-Similar to the previous policy we are calling the PostgreSQL function we created to get the currently logged in user's ID `auth.user_id()` and check whether this matches the `user_id` column for the row we are trying to insert. If it does, then it will allow the user to insert the row, otherwise it will continue to deny.
+与之前的策略类似，我们正在调用我们创建的PostgreSQL函数来获取当前登录用户的ID`auth.user_id()`并检查它是否与我们试图插入的行的`user_id`列相匹配。如果匹配，那么它将允许用户插入该行，否则它将继续拒绝。
 
-Click `Review` and then `Save policy`.
+点击 `Review`，然后点击 "保存策略"。
 
-## Step 9: Test your changes
+## 第九步：测试你的变化
 
-You can now sign up and you should see the following screen:
+你现在可以注册了，你应该看到以下屏幕。
 
 ![SuperTokens App Authenticated](/docs/img/guides/integrations/supertokens/supabase_app_authenticated_screen.png)
 
-If you navigate to your table you should see a new row with the user's `user_id` and `email`.
+如果你导航到你的表，你应该看到一个新的行，上面有用户的`user_id`和`email`。
 
 ![Supabase Users table](/docs/img/guides/integrations/supertokens/table_with_user.png)
 
-## Resources
+## 资源
 
-- [SuperTokens](https://supertokens.com/) official website.
-- [SuperTokens community](https://supertokens.com/discord).
-- [SuperTokens documentation](https://supertokens.com/docs/guides).
+- [SuperTokens](https://supertokens.com/) 官方网站。
+- [SuperTokens社区](https://supertokens.com/discord)。
+- [SuperTokens文档](https://supertokens.com/docs/guides)。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

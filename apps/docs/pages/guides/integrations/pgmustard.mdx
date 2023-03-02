@@ -4,69 +4,69 @@ export const meta = {
   id: 'pgmustard',
   title: 'pgMustard',
   description:
-    'Troubleshoot slow queries on Supabase with pgMustard, a visualization tool that also gives advice.',
+    '用pgMustard排除Supabase上缓慢的查询，这是一个可视化的工具，也能给出建议。',
 }
 
-This guide explains how to troubleshoot slow queries on Supabase using `explain` and pgMustard.
+本指南解释了如何使用`explain`和pgMustard对Supabase的缓慢查询进行故障排除。
 
-[pgMustard](https://pgmustard.com/) is a visualization tool for [`explain analyze`](https://www.postgresql.org/docs/current/using-explain.html#USING-EXPLAIN-ANALYZE) that also gives performance tips.
+[pgMustard](https://pgmustard.com/)是[`explain analyze`](https://www.postgresql.org/docs/current/using-explain.html#USING-EXPLAIN-ANALYZE)的一个可视化工具，它也提供性能提示。
 
-## Step 1: Get the query plan from Supabase
+## 步骤1：从Supabase获取查询计划
 
-Use `explain analyze` to get a query plan from Postgres. This will run the query behind the scenes, so be careful with data modification queries.
+使用`explain analyze`从Postgres获得一个查询计划。这将在幕后运行查询，所以对数据修改查询要小心。
 
-pgMustard requires plans to be in json format, and the buffers, verbose, and settings parameters allow it to give better tips.
+pgMustard要求计划是json格式的，缓冲区、verbose和设置参数可以让它给出更好的提示。
 
-So a good prefix for your query would be:
+所以你的查询的一个好的前缀是。
 
 ```jsx
 explain (analyze, format json, buffers, verbose, settings)
 ```
 
-Run the query, and copy the output.
+运行查询，并复制输出。
 
 ![01-supabase-run-query](/docs/img/guides/integrations/pgmustard/01-supabase-run-query.png)
 
-If you’re using the Supabase SQL Editor, this is easily copied from the cell titled `QUERY PLAN`, as seen above.
+如果你使用Supabase的SQL编辑器，这很容易从上面的`QUERY PLAN`单元格中复制出来。
 
-If you have any trouble, check out pgMustard’s guide for [getting a query plan](https://www.pgmustard.com/getting-a-query-plan).
+如果你有任何问题，请查看pgMustard的[获取查询计划]指南(https://www.pgmustard.com/getting-a-query-plan)。
 
-## Step 2: Paste the query plan into pgMustard
+## 步骤2：将查询计划粘贴到pgMustard中
 
-Paste the json output into pgMustard and press Submit.
+将json输出粘贴到pgMustard中，然后按提交。
 
 ![02-paste-plan-pgmustard](/docs/img/guides/integrations/pgmustard/02-paste-plan-pgmustard.png)
 
-## Step 3: Look through the top tips and slowest operations
+## 第3步：查看顶级提示和最慢的操作
 
-Review the top tips in pgMustard. These are scored on a scale of 0 to 5 stars, based on how much time-saving potential they have (5 stars meaning lots of potential).
+查看pgMustard中的顶级提示。这些提示的评分标准是0到5颗星，基于它们有多少节省时间的潜力（5颗星意味着有很多潜力）。
 
 ![03-review-tips-pgmustard](/docs/img/guides/integrations/pgmustard/03-review-tips-pgmustard.png)
 
-Click one of the tips, or one of the operations, to see more information.
+点击其中一个提示，或其中一个操作，以查看更多信息。
 
 ![04-click-tip-pgmustard](/docs/img/guides/integrations/pgmustard/04-click-tip-pgmustard.png)
 
-## Step 4: Consider your options
+## 第四步：考虑你的选择
 
-If you get some promising suggestions, you may wish to explore them.
+如果你得到一些有希望的建议，你不妨去探讨一下。
 
-If you don’t get any tips, your query might be quite fast for the amount of work it’s doing.
+如果你没有得到任何提示，你的查询对于它的工作量来说可能是相当快的。
 
-For the example we saw in Step 3, let's try adding an index on the `customer_name` field in Supabase.
+对于我们在步骤3中看到的例子，让我们尝试在Supabase的`customer_name`字段上添加一个索引。
 
 ![05-create-index-supabase](/docs/img/guides/integrations/pgmustard/05-create-index-supabase.png)
 
-Going through Steps 1-3 again, we now get an efficient index scan, that will scale nicely as our data grows.
+再次经历步骤1-3，我们现在得到了一个高效的索引扫描，随着数据的增长，它将有很好的扩展。
 
 ![06-check-pgmustard](/docs/img/guides/integrations/pgmustard/06-check-pgmustard.png)
 
-We could look into why Postgres isn’t choosing to do an index-only scan here, but pgMustard is letting us know that it doesn’t think we’ll gain much by doing so, by scoring the tip 0.3 out of 5.
+我们可以研究一下为什么Postgres没有选择在这里做一个纯索引扫描，但是pgMustard让我们知道，它认为我们这样做不会有什么收获，它给这个提示打了0.3分（满分5分）。
 
-## Resources
+## 资源
 
-- [pgMustard](https://www.pgmustard.com) official website.
-- [pgMustard explain glossary](https://www.pgmustard.com/docs/explain).
+- [pgMustard](https://www.pgmustard.com) 官方网站。
+- [pgMustard explain glossary](https://www.pgmustard.com/docs/explain)。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

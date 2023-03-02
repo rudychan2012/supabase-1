@@ -2,120 +2,119 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-apple',
-  title: 'Login with Apple',
-  description: 'Add Apple OAuth to your Supabase project',
+  title: '使用Apple登录',
+  description: '将Apple OAuth添加到Supabase项目',
 }
 
-To enable Apple Auth for your project, you need to set up an Apple OAuth application and add the application credentials to your Supabase Dashboard.
+要为项目启用Apple Auth，您需要设置Apple OAuth应用程序，并将应用程序凭据添加到MemFire Cloud项目仪表板。
 
-## Overview
+## 概述
 
-Apple OAuth consists of six broad steps:
+Apple OAuth包括六大步骤：
 
-- Obtaining an `App Id` with “Sign In with Apple” capabilities.
-- Obtaining a `Services Id` - this will serve as the `client_id`.
-- Obtaining a `secret key` that will be used to get our `client_secret`.
-- Generating the `client_secret` using the `secret key`.
-- Add your `client id` and `client secret` keys to your [Supabase Project](https://app.supabase.com).
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js).
+- 获取具有 `使用Apple登录` 功能的 `App Id`。
+- 获取`Services Id` - 这将用作 `client_id`。
+- 获取用于获取 `client_secret`的`secret key`。
+- 使用 `secret key`生成`client_secret`。
+- 将您的 `client id`和 `client secret` 密钥添加到[MemFire Clpud Project](https://cloud.memfiredb.com/)。
+- 将登录代码添加到[JS客户端应用程序](https://github.com/supabase/supabase-js)。
 
-## Access your Apple Developer account
+## 访问您的Apple Developer帐户
 
-- Go to [developer.apple.com](https://developer.apple.com).
-- Click on `Account` at the top right to log in.
+- 进入[developer.apple.com](https://developer.apple.com).
+- 点击右上方的 `账户`来登录。
 
 ![Apple Developer Portal.](/docs/img/guides/auth-apple/apple-developer-portal.png)
 
-## Obtain an App ID
+## 获取应用程序ID
 
-- Go to `Certificates, Identifiers & Profiles`.
-- Click on `Identifiers` at the left.
-- Click on the `+` sign in the upper left next to `Identifiers`.
-- Select `App IDs` and click `Continue`.
-- Select type `App` and click `Continue`.
-- Fill out your app information:
-  - App description.
-  - Bundle ID (Apple recommends reverse-domain name style, so if your domain is acme.com and your app is called roadrunner, use: "com.acme.roadrunner").
-  - Scroll down and check `Sign In With Apple`.
-  - Click `Continue` at the top right.
-  - Click `Register` at the top right.
+- 跳转到`Certificates, Identifiers & Profiles`文件.
+- 单击左侧的`Identifiers`。
+- 单击左上角`Identifiers`旁边的`+`符号。
+- 选择 `App IDs`并单击 `继续`。
+- 选择 `App` 类型，然后单击`继续`。
+- 填写应用程序信息：
+  - 应用程序描述。
+  - 绑定ID (苹果推荐反向域名风格，所以如果你的域名是acme.com，而您的应用程序称为roadrunner，请使用：`com.acme.roadrunner`)。
+  - 向下滚动并选中`使用Apple登录`。
+  - 单击右上角的`继续`。
+  - 单击右上角的`注册`。
 
-## Obtain a Services ID
+## 获取服务ID
 
-This will serve as the `client_id` when you make API calls to authenticate the user.
+当您进行API调用以验证用户时，这将用作`client_id`。
 
-- Go to `Certificates, Identifiers & Profiles`.
-- Click on `Identifiers` at the left.
-- Click on the `+` sign in the upper left next to `Identifiers`.
-- Select `Services IDs` and click `Continue`.
-- Fill out your information:
-  - App description.
-  - Bundle ID (you can't use the same Bundle ID from the previous step, but you can just add something to the beginning, such as "app." to make it app.com.acme.roadrunner").
-  - SAVE THIS ID -- this ID will become your `client_id` later.
-  - Click `Continue` at the top right.
-  - Click `Register` at the top right.
+- 跳转到`Certificates, Identifiers & Profiles`文件.
+- 单击左侧的`Identifiers`。
+- 单击左上角`Identifiers`旁边的`+`符号。
+- 选择 `Services IDs` 并单击“继续”。
+- 填写应用程序信息：
+  - 应用程序描述。
+  - 绑定ID (您不能使用上一步中的同一绑定的ID，但可以在开头添加一些内容，例如`app.`，使其成为app.com.acme.roadrunner).
+  - 保存此ID -- 此ID稍后将成为您的 `client_id` 。
+  - 单击右上角的`继续`。
+  - 单击右上角的`注册`。
 
-## Find your callback URL
+## 查找您的回调URL
 
-The next step requires a callback URL, which looks like this:
+ 下一步需要回调URL，如下所示：
 
 `https://<project-ref>.supabase.co/auth/v1/callback`
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 转到[MemFire Cloud项目仪表板](https://cloud.memfiredb.com).
+- 单击左侧边栏底部的 `设置` 图标。 
+- 单击列表中的 `API` 。
+- 在 Config / URL下，您将找到您的API URL，您可以单击`复制`将其复制到剪贴板。
+- 现在只需在末尾添加 `/auth/v1/callback` 即可获得完整的`OAuth重定向URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Configure your Services ID
+## 配置服务ID
 
-- Under `Identifiers`, click on your newly-created Services ID.
-- Check the box next to `Sign In With Apple` to enable it.
-- Click `Configure` to the right.
-- Make sure your newly created Bundle ID is selected under `Primary App ID`
-- Add your domain to the `Domains and Subdomains` box (do not add `https://`, just add the domain).
-- In the `Return URLs` box, type the callback URL of your app which you found in the previous step and click `Next` at the bottom right.
-- Click `Done` at the bottom.
-- Click `Continue` at the top right.
-- Click `Save` at the top right.
+- 在 `Identifiers`下，单击新创建的服务ID。
+- 选中`使用Apple登录`旁边的复选框以启用它。
+- 单击右侧的`配置`。
+- 确保在`Primary App ID`下选择了新创建的绑定ID`
+- 将域添加到`域和子域`框中（不要添加`https://`，只添加域）。
+- 在 `Return URLs` 框中，键入在上一步中找到的应用程序的回调URL，然后单击右下角的`下一步`。 
+- 单击底部的`完成`。
+- 单击右上角的`继续`。
+- 单击右上角的`保存`。
 
-## Download your secret key
+## 下载密钥
 
-Now you'll need to download a `secret key` file from Apple that will be used to generate your `client_secret`.
+现在，您需要从Apple下载一个 `secret key`文件，用于生成 `client_secret`。
 
-- Go to `Certificates, Identifiers & Profiles`.
-- Click on `Keys` at the left.
-- Click on the `+` sign in the upper left next to `Keys`.
-- Enter a `Key Name`.
-- Check `Sign In with Apple`.
-- Click `Configure` to the right.
-- Select your newly-created Services ID from the dropdown selector.
-- Click `Save` at the top right.
-- Click `Continue` at the top right.
-- Click `Register` at the top right.
-- Click `Download` at the top right.
-- Save the downloaded file -- this contains your "secret key" that will be used to generate your `client_secret`.
-- Click `Done` at the top right.
+- 跳转到`Certificates, Identifiers & Profiles`文件.
+- 单击左侧的`Keys`。
+- 单击左上角`Keys`旁边的`+`符号。
+- 输入`Key Name`。
+- 选中`使用Apple登录`。
+- 单击右上角的`保存`。
+- 从下拉选择器中选择新创建的服务ID。
+- 单击右上角的`保存`。
+- 单击右上角的`继续`。
+- 单击右上角的`注册`。
+- 单击右上角的`下载`。
+- 保存下载的文件——其中包含用于生成 `client_secret`的 `secret key`。
+- 单击右上角的`完成`。
 
-## Generate a `client_secret`
+## 生成`client_secret`
 
-The `secret key` you downloaded is used to create the `client_secret` string you'll need to authenticate your users.
+您下载的 `secret key` 用于创建验证用户所需的 `client_secret` 字符串。
 
-According to the [Apple Docs](https://developer.apple.com/documentation/signinwithapplerestapi/generate_and_validate_tokens) it needs to be a JWT
-token encrypted using the Elliptic Curve Digital Signature Algorithm (ECDSA) with the P-256 curve and the SHA-256 hash algorithm.
+根据[Apple Docs](https://developer.apple.com/documentation/signinwithapplerestapi/generate_and_validate_tokens)它必须是JWT，使用具有P-256曲线和SHA-256哈希算法的椭圆曲线数字签名算法（ECDSA）加密的令牌。
 
-At this time, the easiest way to generate this JWT token is with [Ruby](https://www.ruby-lang.org/en/).
-If you don't have Ruby installed, you can [Download Ruby Here](https://www.ruby-lang.org/en/downloads).
+此时，生成此JWT令牌的最简单方法是使用[Ruby](https://www.ruby-lang.org/en/)。
+如果您没有安装Ruby，可以在此处[下载Ruby](https://www.ruby-lang.org/en/downloads)。
 
-- Install Ruby (or check to make sure it's installed on your system).
-- Install [ruby-jwt](https://github.com/jwt/ruby-jwt).
-- From the command line, run: `sudo gem install jwt`.
+- 安装Ruby（或检查以确保它已安装在您的系统上）。
+- 安装 [ruby-jwt](https://github.com/jwt/ruby-jwt).
+- 从命令行运行：`sudo gem install jwt`。
 
-Create the script below using a text editor: `secret_gen.rb`
+使用文本编辑器创建以下脚本：`secret_gen.rb` 
 
 ```ruby
 require "jwt"
@@ -147,37 +146,37 @@ token = JWT.encode(
 puts token
 ```
 
-1. Edit the `secret_gen.rb` file:
+1. 编辑 `secret_gen.rb` 文件:
 
-- `key_file` = "Path to the private key you downloaded from Apple". It should look like this: `AuthKey_XXXXXXXXXX.p8`.
-- `team_id` = "Your Team ID". This is found at the top right of the Apple Developer site (next to your name).
-- `client_id` = "The Service ID of the service you created". This is the `Services ID` you created in the above step `Obtain a Services ID`. If you've lost this ID, you can find it in the Apple Developer Site:
-  - Go to `Certificates, Identifiers & Profiles`.
-  - Click `Identifiers` at the left.
-  - At the top right drop-down, select `Services IDs`.
-  - Find your Identifier in the list (i.e. app.com.acme.roadrunner).
-- `key_id` = "The Key ID of the private key". This can be found in the name of your downloaded secret file (For a file named `AuthKey_XXXXXXXXXX.p8` your key_id is `XXXXXXXXXX`). If you've lost this ID, you can find it in the Apple Developer Site:
-  - Go to `Certificates, Identifiers & Profiles`.
-  - Click `Keys` at the left.
-  - Click on your newly-created key in the list.
-  - Look under `Key ID` to find your key_id.
+- `key_file` = “从Apple下载的私钥的路径”。它应该是这样的：`AuthKey_XXXXXXXX.p8`。
+- `team_id` = `您的团队id`。这可以在Apple Developer网站的右上方找到（在您的名字旁边）。
+- `client_id` = `您创建的服务的服务id`。这是您在上述步骤`获取服务ID`中创建的`服务ID`。如果您丢失了此ID，可以在Apple开发者网站中找到：
+  - 跳转到`Certificates, Identifiers & Profiles`文件.
+  - 单击左侧的`Identifiers`。
+  - 在右上角的下拉列表中，选择`服务ID`。
+  - 在列表中查找您的Identifier（即app.com.acme.roadrunner）。 
+- `key_id` = `私钥的密钥id`。这可以在下载的机密文件的名称中找到（对于名为`AuthKey_XXXXXXXX.p8`的文件，您的key_id为`XXXXXXXX`）。如果您丢失了此ID，可以在Apple开发者网站中找到：
+  - 跳转到`Certificates, Identifiers & Profiles`文件.
+  - 单击左侧的`Keys`。
+  - 单击列表中新创建的密钥。
+  - 在 `Key ID` 下查找Key_ID。
 
-2. From the command line, run: `ruby secret_gen.rb > client_secret.txt`.
-3. Your `client_secret` is now stored in this `client_secret.txt` file.
+2. 从命令行运行：`ruby secret_gen.rb>client_secret.txt`。
+3. 您的 `client_secret` 现在存储在此 `client_secret.txt`文件。
 
-## Add your OAuth credentials to Supabase
+## 将OAuth凭据添加到Supabase
 
-- Go to your [Supabase Dashboard](https://app.supabase.com).
-- In the left sidebar, click the `Authentication` icon (near the top).
-- Click `Settings` from the list to go to the `Authentication Settings` page.
-- Enter the final (hosted) URL of your app under `Site URL` (this is important).
-- Under `External OAuth Providers` turn `Apple Enabled` to ON.
-- Enter your `client_id` and `client_secret` saved in the previous steps.
-- Click `Save`.
+- 跳转到[MemFire Cloud 项目仪表](https://cloud.memfiredb.com).
+- 在左侧边栏中，单击“身份验证”图标（靠近顶部）。
+- 单击列表中的`设置`以转到`身份验证设置`页面。
+- 在`站点URL`下输入应用程序的最终（托管）URL（这很重要）。 
+- 在`外部OAuth提供程序`下，将`Apple Enabled`设置为 ON。
+- 输入前面步骤中保存的 `client_id` 和 `client_secret` 。
+- 单击`保存`。
 
-## Add login code to your client app
+## 将登录代码添加到客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `apple` as the `provider`:
+当您的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，并将`apple`作为`provider`：
 
 ```js
 async function signInWithApple() {
@@ -187,7 +186,7 @@ async function signInWithApple() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signout) 将其从浏览器会话和localStorage中删除：
 
 ```js
 async function signout() {
@@ -195,12 +194,12 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资料
 
-- [Apple Developer Account](https://developer.apple.com).
+- [Apple开发者帐户](https://developer.apple.com).
 - [Ruby](https://www.ruby-lang.org/en/) Docs.
 - [ruby-jwt](https://github.com/jwt/ruby-jwt) library.
-- Thanks to [Janak Amarasena](https://medium.com/@janakda) who did all the heavy lifting in [How to configure Sign In with Apple](https://medium.com/identity-beyond-borders/how-to-configure-sign-in-with-apple-77c61e336003).
+- 感谢 [Janak Amarasena](https://medium.com/@janakda) 在[如何配置Apple登录](https://medium.com/identity-beyond-borders/how-to-configure-sign-in-with-apple-77c61e336003)中承担了所有繁重的工作。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

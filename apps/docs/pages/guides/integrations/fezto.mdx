@@ -2,11 +2,11 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'fezto',
-  title: 'Frontend Zero to One',
-  description: 'Create an app automatically from your Supabase Postgres using OpenAPI',
+  title: '前端从零到一',
+  description: '使用OpenAPI从你的Supabase Postgres自动创建一个应用程序',
 }
 
-[Frontend Zero to One is](https://www.fezto.xyz) is a service which creates an app for your Supabase Postgres database on-the-fly without any drag and drop, using the OpenAPI spec provided by PostgREST.
+[Frontend Zero to One is](https://www.fezto.xyz)是一项服务，它使用PostgREST提供的OpenAPI规范，为你的Supabase Postgres数据库即时创建一个应用程序，无需任何拖放。
 
 <div className="video-container">
   <iframe
@@ -17,16 +17,16 @@ export const meta = {
   ></iframe>
 </div>
 
-# Setup
+# 设置
 
-In the [Supabase control panel](https://app.supabase.com/), open your project and click the Settings cog icon, and then "API".
-You will need:
+在[Supabase控制面板](https://app.supabase.com/)，打开你的项目，点击设置齿轮图标，然后点击 `API`。
+你将需要
 
-1. From the Project URL copy the project ID from https://your-project-id.supabase.co
-2. From the "Project API keys" section copy the "anon" "public" API Key into the
+1. 从项目的URL中复制来自https://your-project-id.supabase.co 的项目ID
+2. 从 `项目API密钥`部分复制 `匿名`的 `公共`API密钥到
 
-Paste both into the [FEZTO Supabase setup page](https://www.fezto.xyz/#/supabase) and click Launch.
-You can now share and bookmark the browser URL which includes the projectID and anon key with others to launch the same app.
+将这两者粘贴到[FEZTO Supabase设置页面](https://www.fezto.xyz/#/supabase)并点击启动。
+现在你可以与其他人分享和收藏包括项目ID和匿名密钥的浏览器URL，以启动相同的应用程序。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

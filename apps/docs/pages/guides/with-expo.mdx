@@ -2,30 +2,30 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'with-expo',
-  title: 'Quickstart: Expo',
-  description: 'Learn how to use Supabase in your React Native App.',
+  title: '快速入门: Expo',
+  description: '了解如何在你的React Native App中使用Supabase。',
   sidebar_label: 'Expo',
   hide_table_of_contents: false,
 }
 
 <QuickstartIntro />
 
-![Supabase User Management example](/docs/img/supabase-flutter-demo.png)
+![Supabase用户管理实例](/docs/img/supabase-flutter-demo.png)
 
 ### GitHub
 
-Should you get stuck while working through the guide, refer to [this repo](https://github.com/supabase/supabase/tree/master/examples/user-management/expo-user-management).
+如果你在阅读指南时遇到困难，请参考[此版本](https://github.com/supabase/supabase/tree/master/examples/user-management/expo-user-management)
 
 <ProjectSetup />
 
-## Building the App
+## 构建应用程序
 
-Let's start building the React Native app from scratch.
+让我们开始从头开始构建React Native应用。
 
-### Initialize a React Native app
+### 初始化一个React Native应用
 
-We can use [`expo`](https://docs.expo.dev/get-started/create-a-new-app/) to initialize
-an app called `expo-user-management`:
+我们可以使用[`expo`](https://docs.expo.dev/get-started/create-a-new-app/)来初始化
+一个名为 "expo-user-management "的应用程序。
 
 ```bash
 npx create-expo-app -t expo-template-blank-typescript expo-user-management
@@ -33,17 +33,17 @@ npx create-expo-app -t expo-template-blank-typescript expo-user-management
 cd expo-user-management
 ```
 
-Then let's install the additional dependencies: [supabase-js](https://github.com/supabase/supabase-js)
+然后让我们安装额外的依赖项。[supabase-js](https://github.com/supabase/supabase-js)
 
 ```bash
 npm install @supabase/supabase-js
 npm install react-native-elements @react-native-async-storage/async-storage react-native-url-polyfill
 ```
 
-Now let's create a helper file to initialize the Supabase client.
-We need the API URL and the `anon` key that you copied [earlier](#get-the-api-keys).
-These variables will be exposed on the browser, and that's completely fine since we have
-[Row Level Security](/docs/guides/auth#row-level-security) enabled on our Database.
+现在让我们创建一个辅助文件来初始化Supabase客户端。
+我们需要API URL和你[早些时候]复制的`anon`密钥（#get-the-api-keys）。
+这些变量将被暴露在浏览器上，这完全没有问题，因为我们有
+[行级安全](/docs/guides/auth#row-level-security)在我们的数据库上启用。
 
 ```ts title=lib/supabase.ts
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -62,10 +62,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 })
 ```
 
-### Set up a Login component
+### 设置一个登录组件
 
-Let's set up a React Native component to manage logins and sign ups.
-Users would be able to sign in with their email and password.
+让我们建立一个React Native组件来管理登录和注册。
+用户将能够用他们的电子邮件和密码登录。
 
 ```tsx title=components/Auth.tsx
 import React, { useState } from 'react'
@@ -149,11 +149,11 @@ const styles = StyleSheet.create({
 })
 ```
 
-### Account page
+### 账户页面
 
-After a user is signed in we can allow them to edit their profile details and manage their account.
+在用户登录后，我们可以允许他们编辑他们的个人资料细节和管理他们的账户。
 
-Let's create a new component for that called `Account.tsx`.
+让我们为此创建一个新的组件，叫做`Account.tsx`。
 
 ```tsx title=components/Account.tsx
 import { useState, useEffect } from 'react'
@@ -278,9 +278,9 @@ const styles = StyleSheet.create({
 })
 ```
 
-### Launch!
+### 启动
 
-Now that we have all the components in place, let's update `App.tsx`:
+现在我们有了所有的组件，让我们更新`App.tsx`。
 
 ```tsx title=App.tsx
 import 'react-native-url-polyfill/auto'
@@ -312,31 +312,31 @@ export default function App() {
 }
 ```
 
-Once that's done, run this in a terminal window:
+一旦完成，在终端窗口运行这个程序。
 
 ```bash
 npm start
 ```
 
-And then press the appropriate key for the environment you want to test the app in and you should see the completed app.
+然后为你想测试的环境按下相应的键，你应该看到完成的应用程序。
 
-## Bonus: Profile photos
+## 简介照片
 
-Every Supabase project is configured with [Storage](/docs/guides/storage) for managing large files like
-photos and videos.
+每个Supabase项目都配置了[存储](/docs/guides/storage)，用于管理大型文件，如
+照片和视频。
 
-### Additional dependency installation
+### 额外的依赖安装
 
-You will need a file picker that works on the environment you will build the project for, we will use react-native-document-picker in this example.
+你将需要一个在你将建立项目的环境下工作的文件选取器，在这个例子中我们将使用 react-native-document-picker。
 
 ```bash
 expo install react-native-document-picker
 ```
 
-### Create an upload widget
+### 创建一个上传小组件
 
-Let's create an avatar for the user so that they can upload a profile photo.
-We can start by creating a new component:
+让我们为用户创建一个头像，以便他们可以上传个人资料照片。
+我们可以从创建一个新的组件开始。
 
 ```tsx title=components/Avatar.tsx
 import { useState, useEffect } from 'react'
@@ -465,9 +465,9 @@ const styles = StyleSheet.create({
 })
 ```
 
-### Add the new widget
+### 添加新的小组件
 
-And then we can add the widget to the Account page:
+然后我们就可以把小部件添加到账户页面。
 
 ```tsx title=components/Account.tsx
 // Import the new component
@@ -494,18 +494,18 @@ import Avatar from './Avatar'
 // ...
 ```
 
-Now you will need to run the prebuild command to get the application working on your chosen platform.
+现在你需要运行预编译命令，使应用程序在你选择的平台上工作。
 
 ```bash
 expo prebuild
 ```
 
-## Next steps
+## 下一步
 
-At this stage you have a fully functional application!
+在这个阶段，你已经有了一个功能完备的应用程序!
 
-- Got a question? [Ask here](https://github.com/supabase/supabase/discussions).
-- Sign in: [app.supabase.com](https://app.supabase.com)
+- 有问题吗？[在此提问](https://community.memfiredb.com/)
+- 请登录[MemFire Cloud](https://cloud.memfiredb.com/)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

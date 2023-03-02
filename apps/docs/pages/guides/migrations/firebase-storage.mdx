@@ -2,70 +2,70 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'firebase-storage',
-  title: 'Firebase Storage Migration',
-  description: 'Migrate Firebase Storage files to Supabase Storage.',
+  title: 'Firebase存储迁移',
+  description: '将Firebase存储文件迁移到Supabase存储。',
   sidebar_label: 'Firebase Storage',
 }
 
-Supabase provides several [tools](https://github.com/supabase-community/firebase-to-supabase/tree/main/storage) to convert storage files from Firebase Storage to Supabase Storage. Conversion is a two-step process:
+Supabase 提供了几个[工具](https://github.com/supabase-community/firebase-to-supabase/tree/main/storage)来将存储文件从 Firebase Storage 转换到 Supabase Storage。转换是一个两步的过程。
 
-1. Files are downloaded from a Firebase storage bucket to a local filesystem.
-2. Files are uploaded from the local filesystem to a Supabase storage bucket.
+1. 文件从 Firebase 存储桶下载到本地文件系统。
+2. 2. 文件从本地文件系统上传到Supabase存储桶中。
 
-## Set up the migration tool [#set-up-migration-tool]
+## 设置迁移工具 {#set-up-migration-tool} 1.
 
-1. Clone the [firebase-to-supabase](https://github.com/supabase-community/firebase-to-supabase) repository:
+1. 克隆[firebase-to-supabase](https://github.com/supabase-community/firebase-to-supabase) 存储库:
 
 ```bash
 git clone https://github.com/supabase-community/firebase-to-supabase.git
 ```
 
-1. In the `/storage` directory, rename [supabase-keys-sample.js](https://github.com/supabase-community/firebase-to-supabase/blob/main/storage/supabase-keys-sample.js) to `supabase-keys.js`.
-1. Go to your Supabase project's [API settings](https://app.supabase.com/project/_/settings/api) in the Dashboard.
-1. Copy the **Project URL** and update the `SUPABASE_URL` value in `supabase-keys.js`.
-1. Under **Project API keys**, copy the **service_role** key and update the `SUPABASE_KEY` value in `supabase-keys.js`.
+1. 在`/storage`目录下，将[supabase-keys-sample.js](https://github.com/supabase-community/firebase-to-supabase/blob/main/storage/supabase-keys-sample.js)重命名为`supabase-keys.js`。
+1. 转到仪表板中你的Supabase项目的[API设置](https://app.supabase.com/project/_/settings/api)。
+1. 复制**项目的URL**并更新`supabase-keys.js`中的`SUPABASE_URL`值。
+1. 在**项目API密钥**下，复制**service_role**密钥，并更新`supabase-keys.js`中的`SUPABASE_KEY`值。
 
-## Generate a Firebase private key [#generate-firebase-private-key]
+##生成一个Firebase私有密钥 {#generate-firebase-private-key}.
 
-1. Log in to your [Firebase Console](https://console.firebase.google.com/project) and open your project.
-1. Click the gear icon next to **Project Overview** in the sidebar and select **Project Settings**.
-1. Click **Service Accounts** and select **Firebase Admin SDK**.
-1. Click **Generate new private key**.
-1. Rename the downloaded file to `firebase-service.json`.
+1. 登录到你的[Firebase控制台](https://console.firebase.google.com/project)并打开你的项目。
+1. 点击侧边栏中**项目概览旁边的齿轮图标，选择**项目设置**。
+1. 点击**服务账户**，选择**Firebase Admin SDK**。
+1. 单击**生成新的私钥**。
+1. 将下载的文件重命名为`firebase-service.json`。
 
-## Command line options
+## 命令行选项
 
-### Download Firestore Storage bucket to a local filesystem folder [#download-firestore-storage-bucket]
+###下载Firestore存储桶到本地文件系统文件夹 {#download-firestore-storage-bucket}.
 
-`node download.js <prefix> [<folder>] [<batchSize>] [<limit>] [<token>]`
+`node download.js <prefix> [<folder>] [<batchSize>] [<limit>] [<token>]`。
 
-- `<prefix>`: The prefix of the files to download. To process the root bucket, use an empty prefix: "".
-- `<folder>`: (optional) Name of subfolder for downloaded files. The selected folder is created as a subfolder of the current folder (e.g., `./downloads/`). The default is `downloads`.
-- `<batchSize>`: (optional) The default is 100.
-- `<limit>`: (optional) Stop after processing this many files. For no limit, use `0`.
-- `<token>`: (optional) Begin processing at this pageToken.
+- `<prefix>`:要下载的文件的前缀。要处理根桶，使用一个空的前缀:"".
+- `<folder>`: （可选）下载文件的子文件夹的名称。所选的文件夹被创建为当前文件夹的一个子文件夹（例如，`./downloads/`）。默认是`downloads`。
+- `<batchSize>`: （可选）默认为100。
+- `<limit>`: (可选)处理完这么多文件后停止。如果没有限制，使用`0'。
+- `<token>`: (可选)从这个pageToken开始处理。
 
-To process in batches using multiple command-line executions, you must use the same parameters with a new `<token>` on subsequent calls. Use the token displayed on the last call to continue the process at a given point.
+要使用多个命令行执行分批处理，你必须在后续调用中使用相同的参数和新的`<token>`。使用最后一次调用所显示的令牌来继续在给定的点进行处理。
 
-### Upload files to Supabase Storage bucket [#upload-to-supabase-storage-bucket]
+###将文件上传到Supabase存储桶 {#upload-to-supabase-storage-bucket }
 
-`node upload.js <prefix> <folder> <bucket>`
+`node upload.js <prefix> <folder> <bucket> `
 
-- `<prefix>`: The prefix of the files to download. To process all files, use an empty prefix: "".
-- `<folder>`: Name of subfolder of files to upload. The selected folder is read as a subfolder of the current folder (e.g., `./downloads/`). The default is `downloads`.
-- `<bucket>`: Name of the bucket to upload to.
+- `<prefix>`:要下载的文件的前缀。要处理所有的文件，使用一个空的前缀:"".
+- `<folder>`: 要上传的文件的子文件夹的名称。选定的文件夹作为当前文件夹的一个子文件夹被读取（例如，`./downloads/`）。默认是`downloads`。
+- `<bucket>`: 要上传到的桶的名称。
 
 <Admonition type="note">
 
-If the bucket doesn't exist, it's created as a `non-public` bucket. You must set permissions on this new bucket in the [Supabase Dashboard](https://app.supabase.com/project/_/storage/buckets) before users can download any files.
+如果该桶不存在，它将被创建为一个 "非公共 "桶。在用户可以下载任何文件之前，您必须在[Supabase Dashboard](https://app.supabase.com/project/_/storage/buckets)中对这个新的桶设置权限。
 
 </Admonition>
 
-## Resources
+## 资源
 
 - [Supabase vs Firebase](https://supabase.com/alternatives/supabase-vs-firebase)
-- [Firestore Data Migration](/docs/guides/migrations/firestore-data)
-- [Firebase Auth Migration](/docs/guides/migrations/firebase-auth)
+- [Firestore数据迁移](/docs/guides/migrations/firestore-data)
+- [Firebase Auth 迁移](/docs/guides/migrations/firebase-auth)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

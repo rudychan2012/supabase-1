@@ -3,132 +3,132 @@ import Layout from '~/layouts/DefaultGuideLayout'
 export const meta = {
   id: 'weweb',
   title: 'WeWeb',
-  description: 'Build user interfaces on top of existing databases.',
+  description: '在现有数据库的基础上建立用户界面。',
 }
 
-This guide explains how to connect a Supabase back-end to a WeWeb front-end and then configure all the CRUD operations necessary to build an Admin Portal with user authentication, roles, and permissions.
+本指南解释了如何将Supabase后端连接到WeWeb前端，然后配置所有必要的CRUD操作，以建立一个具有用户认证、角色和权限的管理门户。
 
-[WeWeb](https://dashboard.weweb.io/sign-up) is a low-code front-end builder that allies the short learning curve of no-code with the freedom of code.
+[WeWeb](https://dashboard.weweb.io/sign-up)是一个低代码的前端构建器，将无代码的短暂学习曲线与代码的自由度结合起来。
 
-It connects to Supabase via two native integrations:
+它通过两个本地集成连接到Supabase。
 
-- one for data manipulation, and
-- another for user authentication.
+- 一个用于数据操作，另一个
+- 另一个用于用户认证。
 
-If you don't have an WeWeb account, you can create one [here](https://dashboard.weweb.io/sign-up).
+如果你没有WeWeb账户，你可以创建一个[这里](https://dashboard.weweb.io/sign-up)。
 
-Let's get started!
+让我们开始吧!
 
-## Step 1: Add the Supabase Data Source Plugin in WeWeb
+## 第1步：在WeWeb中添加Supabase数据源插件
 
-In order to read Supabase data in WeWeb, you'll first need to add the Supabase Data Source Plugin:
+为了在WeWeb中读取Supabase数据，你首先需要添加Supabase数据源插件。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-11.38.44@2x.png)
 
-Once you've added it, you will be invited to share your Supabase project URL and public API key:
+一旦你添加了它，你将被邀请分享你的Supabase项目URL和公共API密钥。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-11.39.33@2x.png)
 
-In Supabase, you can find both your project URL and public key in the `Settings` > `API` menu:
+在Supabase中，你可以在 `设置`>`API`菜单中找到你的项目URL和公钥。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-11.45.46@2x.png)
 
-Once you have added both to WeWeb, you will have the option to enable realtime tables if you wish to do so:
+一旦你把两者都添加到WeWeb中，如果你愿意，你将可以选择启用实时表。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-18-at-12.22.43@2x.png)
 
-**🚨 Warning 🚨**
+**🚨 警告 🚨**
 
-> Realtime is disabled by default in Supabase for better database performance and security. Learn more about [realtime functionalities](https://supabase.com/docs/guides/database#realtime) in our documentation.
-> Member
-> @awalias awalias 16 days ago
-> might just wanna change these ones to be relative but otherwise looks great 👍
+> 为了提高数据库的性能和安全性，Supabase中默认禁用实时功能。在我们的文档中了解更多关于[Realtime](https://supabase.com/docs/guides/database#realtime)的信息。
+> 会员
+> @awalias awalias 16 天前
+> 可能只是想把这些改成相对的，但其他方面看起来不错👍
 
 @EWMAs Reply...
 
-## Step 2: GET Data from Supabase
+## 第2步：从Supabase获取数据
 
-Once you click on `Add a Collection`, you will be invited to give your Collection a name and choose Supabase as a Data source:
+一旦你点击 "添加一个集合"，你将被邀请给你的集合一个名称，并选择Supabase作为数据源。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-11.55.15@2x.png)
 
-You will then be able to select the Table from which you want to pull data:
+然后，你将能够选择你想从中提取数据的表。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-11.57.09.gif)
 
-Notice that this gives you access to 2 separate modes to access the fields in the table:
+请注意，这使你可以用两种不同的模式来访问表中的字段。
 
-1.  a "Guided" mode, and
-2.  an "Advanced" mode.
+1. "Guided"模式，和
+2. "Advanced"模式。
 
-### Guided mode
+### Guided模式
 
-By default, the "Guided" mode returns the data from all the fields.
+默认情况下，"Guided"模式返回所有字段的数据。
 
-In the example below, we decide to exclude the data from the `created_at` field in our `vehicles` table:
+在下面的例子中，我们决定排除`vehicles`表中的`created_at`字段的数据。
 
 _![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-12.04.37@2x.png)_
 
-As a result, WeWeb does not fetch the `created_at` field.
+因此，WeWeb不会获取`created_at`字段。
 
-This is helpful because we can exclude data that we don't want to load in the frontend, either because we don't need it or because it's confidential.
+这很有帮助，因为我们可以排除那些我们不想在前台加载的数据，因为我们不需要它，或者因为它是机密。
 
-### Advanced mode
+### Advanced模式
 
-In our database, we created 2 separate tables for vehicles and locations.
+在我们的数据库中，我们为车辆和地点创建了2个独立的表。
 
-In the `vehicles` table, we made a reference to the `locations` table in our `location_id` field so we know where each car is:
+在`vehicles`表中，我们在`location_id`字段中对`locations`表做了一个引用，这样我们就知道每辆车的位置。
 
 _![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-12.30.20@2x.png)_
 
-The problem is, the link only gives us the id of the location in the `locations` table.
+问题是，该链接只给我们在`locations`表中的位置的id。
 
-If you choose the "Advanced" mode, you will be able to get the `name` field of the location instead of the `id`.
+如果你选择 `Advanced`模式，你将能够获得位置的 `name`字段，而不是 `ID`。
 
-How?
+如何获得？
 
-By [making custom queries to Supabase](https://supabase.com/docs/reference/javascript/select):
+通过[对Supabase进行自定义查询]（https://supabase.com/docs/reference/javascript/select）。
 
 _![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-18-at-12.06.17.gif)_
 
-In the example above, we are telling Supabase:
+在上面的例子中，我们要告诉Supabase。
 
-- from the table selected in the Collection – in this case the `vehicles` table – please send me the data in the `id`, `model`, and `mileage` fields
-- look for the `location_id` in the `vehicles` table in the `locations` table and send me the data in the corresponding `name` field
+- 从集合中选择的表--在这个例子中是`vehicles`表--请给我发送`id`、`model`和`mileage`字段中的数据
+- 在`locations`表中寻找`vehicles`表中的`location_id`，并将相应的`name`字段中的数据发送给我。
 
-If we only ask for the data from the `location` field of the `vehicles` table, Supabase will only return the `id`:
+如果我们只要求从`vehicles`表中的`location`字段获取数据，Supabase将只返回`id`。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/08/CleanShot-2022-08-09-at-12.39.12@2x.png)
 
-**🚨 Warning 🚨**
+**🚨 警告 🚨**
 
-> If you have enabled Row-Level Security in Supabase, make sure you have also [added a Policy](https://supabase.com/docs/learn/auth-deep-dive/auth-policies) that allows users to read the data in the table. Otherwise, WeWeb won't be able to get the data.
+> 如果你在 Supabase 中启用了行级安全，请确保你也[添加了一个策略](https://supabase.com/docs/learn/auth-deep-dive/auth-policies)，允许用户读取表中的数据。否则，WeWeb将无法获得这些数据。
 
-## Step 3: Display Supabase Data in WeWeb
+## 第三步：在WeWeb中显示Supabase数据
 
-Assuming you were able to fetch data from Supabase in a WeWeb Collection, you'll be able to bind the data from that Collection on your WeWeb pages.
+假设你能够在WeWeb集合中从Supabase中获取数据，你就能够在你的WeWeb页面上绑定该集合的数据。
 
-In the example below, we chose to display the car model and mileage in the [Data Grid element](https://docs.weweb.io/data-grid/) that comes out-of-the-box in WeWeb:
+在下面的例子中，我们选择在WeWeb中开箱即用的[数据网格元素](https://docs.weweb.io/data-grid/)中显示汽车模型和里程数。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/10/CleanShot-2022-10-21-at-12.31.05@2x.png)
 
-We chose this element because it includes a built-in inline editing mode we'll want to use later for our CRUD operations.
+我们选择这个元素是因为它包括一个内置的内联编辑模式，我们将在以后的CRUD操作中使用。
 
-#### 🔥 Pro Tip 🔥
+#### 🔥 专业小贴士 🔥
 
-> In WeWeb, you can [bind arrays of data to any Container](https://docs.weweb.io/display-collection-list/). Just bear in mind that the first child of the Container you bind the Collection to will be the repeated item. With that in mind, you might want the first child Element to be another Container with a number of items inside like a title, description, button or image.
+> 在WeWeb中，你可以[将数据的数组绑定到任何容器](https://docs.weweb.io/display-collection-list/)。只要记住，你将集合绑定到的容器的第一个孩子将是重复的项目。考虑到这一点，你可能希望第一个子元素是另一个容器，里面有一些项目，如标题、描述、按钮或图片。
 
-## Step 4: Update a record in Supabase
+## 第4步：更新Supabase中的一条记录
 
-Once you've added a Supabase Collection of data to WeWeb, you might want to allow users to manipulate the data in that Collection.
+一旦你在WeWeb上添加了一个Supabase的数据集合，你可能想让用户操作该集合中的数据。
 
-In order to do so, you'll need to create a Workflow in WeWeb.
+为了做到这一点，你需要在WeWeb中创建一个工作流。
 
-In the example below, we are using the "Update row" Workflow that comes by default with WeWeb's Data Grid Element.
+在下面的例子中，我们使用的是 `更新行`的工作流，它是WeWeb的数据网格元素所默认的。
 
-The trigger is `On Row update`.
+触发器是 ·在行更新时·。
 
-Since we added the Supabase Data Source Plugin above, we have access to all the CRUD actions available in Supabase:
+由于我们在上面添加了Supabase数据源插件，我们可以访问Supabase中的所有CRUD动作。
 
 - Select
 - Insert
@@ -136,25 +136,24 @@ Since we added the Supabase Data Source Plugin above, we have access to all the 
 - Upsert
 - Delete
 
-In this case, we choose the "Update" action:
+在这种情况下，我们选择 `更新`行动。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/10/CleanShot-2022-10-13-at-15.27.20@2x.png)
 
-Then, in our "Update" action, we select the `vehicles` table and map the `id` to the id of the Workflow Event:
+然后，在我们的 `更新`动作中，我们选择 "vehicles"表并将 `id`映射到工作流事件的id。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/10/CleanShot-2022-10-13-at-17.16.51@2x.png)
 
-Finally, we tell WeWeb we want to update the `mileage` field in our Supabase table, and send the value in the `mileage` column of our Data Grid:
+最后，我们告诉WeWeb，我们要更新Supabase表中的 `mileage`字段，并将该值发送到数据网格的 `mileage`列中。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/10/CleanShot-2022-10-13-at-17.20.24@2x.png)
 
-And that's it!
 
-If you switch to Preview mode, you will be update your Supabase table from your WeWeb Data Grid:
+如果你切换到预览模式，你将从WeWeb数据网格中更新你的Supabase表。
 
 ![](https://weweb-changelog.ghost.io/content/images/2022/10/CleanShot-2022-10-13-at-17.35.20.gif)
 
-**🔥 Pro Tip 🔥**
+**🔥 专业的提示 🔥**
 
 > By default, the fields in the Data Grid Element are Text fields but you can change the input type to Number if you need to send numerical data to your database:
 

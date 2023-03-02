@@ -1,21 +1,21 @@
 const Nav = [
   {
-    label: 'Getting Started',
+    label: '开始',
     items: [
-      { name: 'Supabase JavaScript Library', url: '/reference/javascript', items: [] },
-      { name: 'Installing', url: '/reference/javascript/installing', items: [] },
-      { name: 'Initializing', url: '/reference/javascript/initializing', items: [] },
-      { name: 'Typescript Support', url: '/reference/javascript/typescript-support', items: [] },
-      { name: 'Release Notes', url: '/reference/javascript/release-notes', items: [] },
+      { name: 'JavaScript 客户端', url: '/reference/javascript', items: [] },
+      { name: '安装', url: '/reference/javascript/installing', items: [] },
+      { name: '初始化客户端', url: '/reference/javascript/initializing', items: [] },
+      { name: '支持Typescript', url: '/reference/javascript/typescript-support', items: [] },
+      { name: '版本说明', url: '/reference/javascript/release-notes', items: [] },
       {
-        name: 'Upgrading to supabase-js v2',
+        name: '升级到supabase-js v2',
         url: '/reference/javascript/upgrade-guide',
         items: [],
       },
     ],
   },
   {
-    label: 'Auth',
+    label: '认证',
     items: [
       { name: 'signUp()', url: '/reference/javascript/auth-signup', items: [] },
       {
@@ -45,9 +45,9 @@ const Nav = [
     ],
   },
   {
-    label: 'Auth (Server Only)',
+    label: '认证 (仅限服务端)',
     items: [
-      { name: 'Overview', url: '/reference/javascript/supabase-auth-admin-api', items: [] },
+      { name: '概述', url: '/reference/javascript/supabase-auth-admin-api', items: [] },
       { name: 'listUsers()', url: '/reference/javascript/auth-admin-listusers', items: [] },
       { name: 'createUser()', url: '/reference/javascript/auth-admin-createuser', items: [] },
       { name: 'deleteUser()', url: '/reference/javascript/auth-admin-deleteuser', items: [] },
@@ -66,19 +66,19 @@ const Nav = [
     ],
   },
   {
-    label: 'Database',
+    label: '数据库',
     items: [
-      { name: 'Fetch data: select()', url: '/reference/javascript/select', items: [] },
-      { name: 'Create data: insert()', url: '/reference/javascript/insert', items: [] },
-      { name: 'Modify data: update()', url: '/reference/javascript/update', items: [] },
-      { name: 'Upsert data: upsert()', url: '/reference/javascript/upsert', items: [] },
-      { name: 'Delete data: delete()', url: '/reference/javascript/delete', items: [] },
-      { name: 'Postgres functions: rpc()', url: '/reference/javascript/rpc', items: [] },
+      { name: '获取数据: select()', url: '/reference/javascript/select', items: [] },
+      { name: '创建数据: insert()', url: '/reference/javascript/insert', items: [] },
+      { name: '修改数据: update()', url: '/reference/javascript/update', items: [] },
+      { name: '上传数据: upsert()', url: '/reference/javascript/upsert', items: [] },
+      { name: '删除数据: delete()', url: '/reference/javascript/delete', items: [] },
+      { name: 'Postgres函数: rpc()', url: '/reference/javascript/rpc', items: [] },
       {
-        name: 'Filters',
+        name: '过滤器',
         url: undefined,
         items: [
-          { name: 'Using Filters', url: '/reference/javascript/using-filters', items: [] },
+          { name: '使用过滤器', url: '/reference/javascript/using-filters', items: [] },
           { name: 'eq()', url: '/reference/javascript/eq', items: [] },
           { name: 'neq()', url: '/reference/javascript/neq', items: [] },
           { name: 'gt()', url: '/reference/javascript/gt', items: [] },
@@ -105,10 +105,10 @@ const Nav = [
         ],
       },
       {
-        name: 'Modifiers',
+        name: '修改器',
         url: undefined,
         items: [
-          { name: 'Using Modifiers', url: '/reference/javascript/using-modifiers', items: [] },
+          { name: '使用修改器', url: '/reference/javascript/using-modifiers', items: [] },
           { name: 'select()', url: '/reference/javascript/db-modifiers-select', items: [] },
           { name: 'order()', url: '/reference/javascript/order', items: [] },
           { name: 'limit()', url: '/reference/javascript/limit', items: [] },
@@ -122,7 +122,7 @@ const Nav = [
     ],
   },
   {
-    label: 'Functions',
+    label: '函数',
     items: [{ name: 'invoke()', url: '/reference/javascript/invoke', items: [] }],
   },
   {
@@ -135,7 +135,7 @@ const Nav = [
     ],
   },
   {
-    label: 'Storage',
+    label: '存储',
     items: [
       { name: 'createBucket()', url: '/reference/javascript/storage-createbucket', items: [] },
       { name: 'getBucket()', url: '/reference/javascript/storage-getbucket', items: [] },

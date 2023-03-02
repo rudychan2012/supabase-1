@@ -2,70 +2,70 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-notion',
-  title: 'Login with Notion',
-  description: 'Add Notion OAuth to your Supabase project',
+  title: '用Notion登录',
+  description: '在你的Supabase项目中加入Notion OAuth',
 }
 
-To enable Notion Auth for your project, you need to set up a Notion Application and add the Application OAuth credentials to your Supabase Dashboard.
+要为你的项目启用Notion Auth，你需要设置一个Notion应用程序，并将应用程序OAuth凭证添加到你的Supabase仪表板。
 
-## Overview
+## 概述
 
-Setting up Notion logins for your application consists of 3 parts:
+为你的应用程序设置Notion登录包括3个部分。
 
-- Create and configure a Notion Application [Notion Developer Portal](https://www.notion.so/my-integrations)
-- Retrieve your OAuth client ID and OAuth client secret and add them to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js)
+- 创建和配置一个Notion应用程序[Notion Developer Portal](https://www.notion.so/my-integrations)
+- 检索你的OAuth客户端ID和OAuth客户端秘密，并将它们添加到你的[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到你的[JS客户端应用程序](https://github.com/supabase/supabase-js)
 
-## Create your notion integration
+## 创建你的notion集成
 
-- Go to [developers.notion.com](https://developers.notion.com/).
-- Click "View my integrations" and login.
+- 进入[developer.notion.com](https://developers.notion.com/)。
+- 点击 `查看我的集成`并登录。
 
 ![notion.so](/docs/img/guides/auth-notion/notion.png)
 
-- Once logged in, go to [notion.so/my-integrations](https://notion.so/my-integrations) and create a new integration.
-- When creating your integration, ensure that you select "Public integration" under "Integration type" and "Read user information including email addresses" under "Capabilities".
-- You will need to add a redirect uri, see [Add the redirect uri](#add-the-redirect-uri)
-- Once you've filled in the necessary fields, click "Submit" to finish creating the integration.
+- 登录后，进入[notion.so/my-integrations](https://notion.so/my-integrations)，创建一个新的集成。
+- 当创建你的集成时，确保你在 `集成类型`下选择 `公共集成`，在 `功能`下选择 `读取用户信息包括电子邮件地址`。
+- 你将需要添加一个重定向URI，见[添加重定向URI](#add-the-redirect-uri)
+- 一旦你填写了必要的字段，点击 `提交`，完成创建集成。
 
 ![notion.so](/docs/img/guides/auth-notion/notion-developer.png)
 
-## Add the redirect URI
+## 添加重定向URI
 
-- After selecting "Public integration", you should see an option to add "Redirect URIs".
+- 在选择 `公共集成`后，你应该看到一个添加 `重定向URI`的选项。
 
 ![notion.so](/docs/img/guides/auth-notion/notion-redirect-uri.png)
 
-You can retrieve the redirect uri with the following steps:
+你可以通过以下步骤检索重定向URI。
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)。
+- 点击左侧边栏底部的 `设置`图标。
+- 点击列表中的 `API`。
+- 在配置/URL下，你会发现你的API URL，你可以点击`复制`将其复制到剪贴板。
+- 在后面加上`/auth/v1/callback`以获得完整的`OAuth重定向URI`。
 
-Your redirect uri should look like the following: `https://<project-ref>.supabase.co/auth/v1/callback`
+你的重定向URI应该是下面的样子。`https://<project-ref>.supabase.co/auth/v1/callback`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Add your Notion credentials into your Supabase Project
+## 在你的Supabase项目中添加你的Notion凭证
 
-- Once you've created your notion integration, you should be able to retrieve the "OAuth client ID" and "OAuth client secret" from the "OAuth Domain and URIs" tab.
+- 一旦你创建了你的Notion集成，你应该能够从 `OAuth域和URI`标签中检索到 `OAuth客户端ID`和 `OAuth客户端秘密`。
 
 ![notion.so](/docs/img/guides/auth-notion/notion-creds.png)
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Under `External OAuth Providers` turn `Notion Enabled` to ON
-- Enter the "OAuth client ID" and "OAuth client secret" obtained in the `client id` and `client secret` fields.
-- Click `Save`
+- 进入你的[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)
+- 在左边的侧边栏，点击 `认证`图标（靠近顶部）。
+- 从列表中点击 `设置`，进入 `认证设置`页面
+- 在 `外部OAuth提供商`下，将 `已启用的移动`调为 `打开`。
+- 在`client id`和`client secret`字段中输入获得的 `OAuth client ID `和 `OAuth client secret`。
+- 点击 `保存`。
 
-## Add login code to your client app
+## 在你的客户端应用程序中添加登录代码
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `notion` as the `provider`:
+当你的用户登录时，调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth)，用`notion`作为`provider`。
 
 ```js
 async function signInWithNotion() {
@@ -75,7 +75,7 @@ async function signInWithNotion() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当你的用户签出时，调用[signOut()](/docs/reference/javascript/auth-signout)，将他们从浏览器会话和任何对象从localStorage中移除。
 
 ```js
 async function signout() {
@@ -83,11 +83,11 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [Notion Account](https://notion.so)
+- [Supabase账户 - 免费层](https://supabase.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Notion账户](https://notion.so)
 - [Notion Developer Portal](https://www.notion.so/my-integrations)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />

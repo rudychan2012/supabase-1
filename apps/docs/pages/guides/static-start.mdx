@@ -1,0 +1,61 @@
+import Layout from '~/layouts/DefaultGuideLayout'
+
+export const meta = {
+  id: 'static',
+  title: '快速开始',
+  description: '快速开始',
+  sidebar_label: '快速开始',
+}
+
+## 使用说明
+
+配置静态网站托管时，您需要指定网站的默认首页index.html。
+
+```js
+
+ ├── index.html
+ ├── error.html
+ ├── example.txt
+ └── subdir/
+      └── index.html
+
+```
+
+## 准备工作
+
+- 拥有MemFire Cloud账号;
+- 已完成MemFire Cloud平台实名认证;
+- 创建MemFire Cloud应用开发。
+
+
+## 步骤1：写一个简单的HTML
+
+下面我们创建一个简单的HTML文件，命名为index.html：
+
+```js
+<html><head><meta charset="utf-8" /></head><body>
+    Hello MemFire Cloud!
+  </body></html>
+
+```
+
+## 步骤2：打包压缩
+
+打包压缩index.html文件，其中压缩包必须为ZIP格式。
+备注说明：公测环境下，压缩包大小不超过20MB。
+
+## 步骤3：上传压缩包，完成部署
+
+1.登录MemFire Cloud平台，进入我的应用->某应用->静态托管页面。
+
+![静态托管](/docs/img/static1.png)
+
+2.点击上传文件，选中网站压缩包进行上传。
+
+![静态托管](/docs/img/static2.png)
+
+完成上传操作后，用户即可通过MemFire Cloud平台提供的**访问地址**进行访问托管的静态网站。
+
+export const Page = ({ children }) => <Layout meta={meta} children={children} />
+
+export default Page

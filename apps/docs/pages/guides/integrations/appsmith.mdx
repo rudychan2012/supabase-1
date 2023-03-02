@@ -4,70 +4,70 @@ export const meta = {
   id: 'appsmith',
   title: 'Appsmith',
   description:
-    'Get started with Supabase and Appsmith, an open-source framework for building internal tools.',
+    '开始使用Supabase和Appsmith，一个用于构建内部工具的开源框架。',
 }
 
-This guide explains how to quickly build a Support Dashboard by connecting a Supabase back-end to an Appsmith front-end.
+本指南解释了如何通过连接Supabase后端和Appsmith前端来快速建立一个支持仪表板。
 
-[Appsmith](https://www.appsmith.com/) is an open-source framework for building internal tools. It lets you drag-and-drop UI components to build pages, connect to any API, database or GraphQL source and write logic with JavaScript objects.
+[Appsmith](https://www.appsmith.com/)是一个用于构建内部工具的开源框架。它让你可以拖放UI组件来构建页面，连接到任何API、数据库或GraphQL源，并使用JavaScript对象编写逻辑。
 
-If you don’t have an Appsmith account, create one [here](https://app.appsmith.com/user/signup).
+如果你没有一个Appsmith账户，请创建一个[这里](https://app.appsmith.com/user/signup)。
 
-Let’s get started!
+让我们开始吧!
 
-## Step 1: Set up your Backend on Supabase
+## 第1步：在Supabase上设置你的后端
 
-- On the [Supabase dashboard](https://app.supabase.com), click `New project` and set the name to **Support Dashboard**
+- 在[Supabase仪表板](https://app.supabase.com)上，点击 `新项目`，将名称设为**支持仪表板**。
 
 ![create-project-supabase-01](/docs/img/guides/integrations/appsmith/create-project-supabase-01.png)
 
-- Create a new table by clicking on the Create Table option on the side navigation.
-- Supabase provides many ways to add data to the tables, from writing queries to creating schemas using UI to simply uploading CSV files. For our support dashboard, we will be creating the **tickets** table by uploading the [CSV file](https://raw.githubusercontent.com/vihar/datasets/master/tickets.csv) on Supabase.
+- 通过点击侧面导航中的创建表选项来创建一个新的表。
+- Supabase提供了许多向表添加数据的方法，从编写查询到使用用户界面创建模式到简单地上传CSV文件。对于我们的支持仪表板，我们将通过在Supabase上上传[CSV文件](https://raw.githubusercontent.com/vihar/datasets/master/tickets.csv)来创建**tickets**表。
 
 ![create-table-supabase-02](/docs/img/guides/integrations/appsmith/create-table-supabase-02.png)
 
-The database is now set up.
+现在数据库已经设置好了。
 
-## Step 2: Connect the database to Appsmith
+## 第二步：将数据库连接到Appsmith
 
-- Note down the database connection information under Project Settings in Supabase.
+- 记下Supabase中项目设置下的数据库连接信息。
 
 ![project-settings-supabase-03](/docs/img/guides/integrations/appsmith/project-settings-supabase-03.png)
 
-- On Appsmith, create a new application under the dashboard under your preferred organization.
-- Click on the `+` icon next to Datasources on the left navigation bar under Page1
-- Next, click on Create New tab and choose PostgreSQL datasource, you’ll see the following screenshot:
+- 在Appsmith上，在你喜欢的组织下的仪表板下创建一个新的应用程序。
+- 点击左侧导航栏上Page1下数据源旁边的`+`图标
+- 接下来，点击创建新标签，选择PostgreSQL数据源，你会看到下面的截图。
 
 ![create-datasource-appsmith-04](/docs/img/guides/integrations/appsmith/create-datasource-appsmith-04.png)
 
-- Fill out the form to connect to your Supabase instance. Click **Test** to test connection and then **Save** to save the datasource
+- 填写表格以连接到你的Supabase实例。点击**测试**来测试连接，然后点击**保存**来保存数据源。
 
 ![connect-supabase-datasource-05](/docs/img/guides/integrations/appsmith/connect-supabase-datasource-05.png)
 
-## Step 3: Build UI on Appsmith
+## 第3步：在Appsmith上建立UI
 
-- Click on the + icon next to widgets and drag and drop a Tab widget. We can configure using the property pane by clicking on the cog icon on the top-right corner.
-- As seen in the below screenshot, we have added four tabs to support the dashboard.
+- 点击小组件旁边的+图标，拖放一个Tab小组件。我们可以通过点击右上角的齿轮图标，使用属性窗格进行配置。
+- 如下面的截图所示，我们已经添加了四个标签来支持仪表板。
 
 ![property-pane-appsmith-06](/docs/img/guides/integrations/appsmith/property-pane-appsmith-06.png)
 
-- Add widgets to the **Home** tab to create the dashboard as shown in the screenshot below. For eg: **Critical Open Issues** is a **Text** widget and below it is an **Input** widget which we will bind later to display the number of open tickets.
+- 在**主页**标签上添加部件，以创建仪表板，如下图所示。比如说。**关键的开放问题**是一个**文本**部件，在它下面是一个**输入**部件，我们将在后面绑定显示开放票据的数量。
 
-- Set up the **New** button to open a modal which will have a form to raise a new ticket.
+- 设置**新**按钮，打开一个模态，其中有一个表单可以提出一个新票据。
 
 ![bind-query-appsmith-07](/docs/img/guides/integrations/appsmith/bind-query-appsmith-07.png)
 
-- In the modal widget, add a few widgets to accept input when creating a new ticket. Please refer to the screenshot below.
+- 在模态小部件中，添加一些小部件，以便在创建新票时接受输入。请参考下面的屏幕截图。
 
 ![modal-appsmith-08](/docs/img/guides/integrations/appsmith/modal-appsmith-08.png)
 
-## Step 4: Writing Queries in Appsmith and binding data to widgets
+## 第4步：在Appsmith中编写查询，并将数据绑定到部件上
 
-- Click on the + icon next to Datasources on the navigation bar and click New Query next to the Supabase connection here to create a new query.
+- 点击导航栏上数据源旁边的 "+"图标，然后点击这里的Supabase连接旁边的 `新查询`来创建一个新查询。
 
 ![create-query-appsmith-09](/docs/img/guides/integrations/appsmith/create-query-appsmith-09.png)
 
-- Rename the query to create_new_ticket under the query pane; here we can write SQL that can collect the data from the widgets using mustache templates.
+- 将查询重命名为查询窗格下的create_new_ticket；在这里我们可以写SQL，可以使用mustache模板从widgets收集数据。
 
 ```jsx
 INSERT INTO PUBLIC."tickets"("id","createdAt","user","updatedAt","description",
@@ -78,8 +78,8 @@ VALUES('{{appsmith.store.ticket.id}}','{{moment().format('yyyy-mm-ddHH:MM:ss')}}
 '{{c_category.selectedOptionValue}}','{{c_assignee.selectedOptionValue}}');
 ```
 
-- Click the **Confirm** button on the modal and under **Events**, set the **onClick** property to execute the create_new_ticket query.
-- Create a second query named **get_tickets** that will list all the tickets.
+- 点击模式上的**确认**按钮，在**事件下，设置**onClick**属性以执行create_new_ticket查询。
+- 创建第二个名为**get_tickets**的查询，将列出所有的票。
 
   ***
 
@@ -87,7 +87,7 @@ VALUES('{{appsmith.store.ticket.id}}','{{moment().format('yyyy-mm-ddHH:MM:ss')}}
 SELECT * FROM public."tickets";
 ```
 
-- Drag and drop a table widget under the **Assigned To Me** tab. Open the property pane and add the following snippet under **Table Data** to bind the query results.
+- 在**分配给我的**标签下拖放一个表格小组件。打开属性窗格，在**表数据**下添加以下片段，以绑定查询结果。
 
 ```jsx
 {
@@ -99,7 +99,7 @@ SELECT * FROM public."tickets";
 }
 ```
 
-- Drag and drop a table widget under the **Resolved** tab. Open the property pane and add the following snippet under **Table Data** to bind the query results.
+- 在**解决的**标签下拖放一个表格小组件。打开属性窗格，在**表数据**下添加以下片段，以绑定查询结果。
 
 ```jsx
 {
@@ -109,7 +109,7 @@ SELECT * FROM public."tickets";
 }
 ```
 
-- Drag and drop a table widget under the **Closed** tab. Open the property pane and add the following snippet under **Table Data** to bind the query results.
+- 在**关闭的**标签下拖放一个表格小组件。打开属性窗格，在**表数据**下添加以下片段，以绑定查询结果。
 
 ```jsx
 {
@@ -119,11 +119,11 @@ SELECT * FROM public."tickets";
 }
 ```
 
-## Step 5: Creating Charts in Appsmith
+## 第5步：在Appsmith中创建图表
 
-- On the **Home** tab, click on the first Chart widget. Add Title **Open Issues By Category**. Change the **Chart Type** property to **Column Chart**.
-- Update the x-axis and y-axis Labels under **Axis** on the property pane.
-- Add the following code snippet under the **Series Data** property to bind the data to be displayed on the x and y axes.
+- 在**首页**选项卡上，点击第一个图表小部件。添加标题**按类别打开问题**。将**图表类型**属性改为**柱状图**。
+- 在属性窗格的**轴**下更新X轴和Y轴的标签。
+- 在**系列数据**属性下添加以下代码片断，以绑定要显示在x轴和y轴上的数据。
 
 ```jsx
 [
@@ -142,8 +142,8 @@ SELECT * FROM public."tickets";
 ]
 ```
 
-- The second chart will be a pie chart. Add the title, axes labels as mentioned above,
-- Add the following code snippet under the **Series Data** property of the pie chart.
+- 第二个图表将是一个饼状图。如上所述，添加标题、坐标轴标签。
+- 在饼图的**系列数据**属性下添加以下代码片断。
 
 ```jsx
 [
@@ -162,11 +162,11 @@ SELECT * FROM public."tickets";
 ]
 ```
 
-## Resources
+## 资源
 
-- [Appsmith](https://www.appsmith.com/) official website.
-- [Appsmith GitHub](https://github.com/appsmithorg).
-- [Appsmith](https://docs.appsmith.com/) documentation.
+- [Appsmith](https://www.appsmith.com/) 官方网站。
+- [Appsmith GitHub](https://github.com/appsmithorg)。
+- [Appsmith](https://docs.appsmith.com/) 文档。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

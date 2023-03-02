@@ -6,97 +6,97 @@ export const meta = {
   description: 'Create an internal CRUD dashboard with Supabase and Dashibase in 15 mins.',
 }
 
-Are you tired of building admin panels? [Dashibase](https://dashibase.com/) is a super fast way to build internal CRUD dashboards with a Notion-like UI.
+你是否厌倦了构建管理面板？[Dashibase](https://dashibase.com/)是一种超级快速的方法，可以用类似Notion的UI来构建内部CRUD仪表盘。
 
-This guide walks you through how to build a customer admin panel using Supabase on the backend and Dashibase on the front so that you and your team can easily find and update customer information.
+本指南将指导你如何在后台使用Supabase和在前台使用Dashibase建立一个客户管理面板，这样你和你的团队就可以轻松地找到和更新客户信息。
 
-## Quick explanation
+## 快速解释
 
-Just so we are on the same page, here are some of the terms we use:
+为了使我们处于同一起跑线上，以下是我们使用的一些术语。
 
-- **Data source:** This is the data that powers your dashboard (i.e. your Supabase database).
-- **Dashboard:** This is the friendly interface that you build on top of your Supabase database using Dashibase.
-- **Page:** Each dashboard can have multiple pages. Each page can have multiple blocks of text or tables.
+- **数据源：**这是为你的仪表板提供动力的数据（即你的Supabase数据库）。
+- 仪表盘：**这是你使用Dashibase在Supabase数据库之上建立的友好界面。
+- **页面：**每个仪表板可以有多个页面。每个页面可以有多个文本块或表格。
 
-Now that is out of the way, let's build our customer admin panel.
+现在已经结束了，让我们来建立我们的客户管理面板。
 
-(Start your stopwatch!)
+(开始你的秒表！)
 
-## Step 1. Connect Supabase to Dashibase
+## 步骤1. 将Supabase连接到Dashibase
 
-First, in Dashibase, go to “Data Sources” via the left sidebar and click on “Connect data source” in the upper-right corner.
+首先，在Dashibase中，通过左边的侧边栏进入 "数据源"，点击右上角的 "连接数据源"。
 
-Note: We do not download or store any of your database data.
+注意：我们不会下载或存储你的任何数据库数据。
 
 ![Connect Supabase to Dashibase](/docs/img/guides/integrations/dashibase/connect-database.png)
 
-Enter your database credentials, which you can find in Supabase under Settings > Database > Connection info. For additional security, you can also download your SSL certificate and upload it to Dashibase.
+输入你的数据库凭证，你可以在Supabase的设置>数据库>连接信息下找到。为了增加安全性，你也可以下载你的SSL证书并将其上传到Dashibase。
 
 ![Supabase credentials](/docs/img/guides/integrations/dashibase/supabase-credentials.png)
 
-## Step 2. Set up your data access policy
+## 第2步。设置你的数据访问策略
 
-Once you have connected your database, you can also control what your team can see and edit in your database via Dashibase. There are usually certain data that you don’t want others to edit or even see (e.g. address, email, identification number).
+一旦你连接了你的数据库，你也可以通过Dashibase控制你的团队可以在数据库中看到和编辑什么。通常有一些数据是你不希望别人编辑甚至看到的（如地址、电子邮件、身份证号码）。
 
-Note: If you prefer to restrict access to your database _before_ you connect to Dashibase for security reasons, you can [create a restricted user](https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/) via [Supabase's SQL Editor](/docs/guides/database#the-sql-editor). The slight advantage of doing this in Dashibase is that there is a GUI, which makes it easier to set up the access control (but we understand some developers might find it more secure to restrict the access themselves).
+注意：如果你喜欢在连接到Dashibase之前出于安全原因限制对数据库的访问，你可以通过[Supabase的SQL编辑器](/docs/guides/database#the-sql-editor)[创建一个受限用户](https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/)。在Dashibase中这样做的一点好处是有一个GUI，这使得设置访问控制更容易（但我们理解一些开发人员可能会发现自己限制访问更安全）。
 
 ![Set data access in Dashibase](/docs/img/guides/integrations/dashibase/set-data-access.png)
 
-You can even control which columns within a table that others can see and edit. In the example below, for the `tags` table, the `name` column can be read and updated, the `created_at` column can be read, and the `id` column cannot even be read.
+你甚至可以控制别人可以看到和编辑表中的哪些列。在下面的例子中，对于`tags`表，`name`列可以被读取和更新，`created_at`列可以被读取，而`id`列甚至不能被读取。
 
 ![Set column-level access in Dashibase](/docs/img/guides/integrations/dashibase/set-column-access.png)
 
-Once you are happy with the data access control, you can decide who in your organization can edit this data source (usually other developers) or use this data source to create dashboards.
+在签到后添加一个MFA步骤。使用Supabase Auth以电子邮件和密码登录，使用Authsignal启动Authenticator App挑战。
 
 ![Set user access to data source in Dashibase](/docs/img/guides/integrations/dashibase/data-source-user-access.png)
 
-## Step 3. Build your dashboard
+## 第3步。建立你的仪表板
 
-To create a dashboard, go to “Dashboards” via the left sidebar in Dashibase and click on “Create dashboard” in the upper-right corner.
+要创建一个仪表盘，通过Dashibase的左侧边栏进入 `仪表盘`，点击右上角的 `创建仪表盘`。
 
-Here’s where the fun begins. There are many ways to build your dashboards in Dashibase using features such as markdown formatting and slash command.
+这里是有趣的开始。在Dashibase中，有许多方法可以使用markdown格式和斜线命令等功能来建立你的仪表盘。
 
-You will see some automatically-generated content in your dashboard so that you can set up your dashboard more quickly. For this example, let's clear them out and start from scratch.
+你会在仪表盘中看到一些自动生成的内容，这样你就可以更快地设置你的仪表盘了。对于这个例子，让我们把它们清除掉，从头开始。
 
 ![Automatically-generated content for your dashboard](/docs/img/guides/integrations/dashibase/initial-dashboard-content.png)
 
-Using our Notion-like UI, you can quickly build out your dashboard through typing. For example, you can type '/table' to add a table from your database to your dashboard. No more dragging components across your screen and dropping them on a blank canvas repeatedly.
+使用我们类似Notion的用户界面，你可以通过输入快速建立你的仪表盘。例如，你可以键入'/table'来从你的数据库中添加一个表到你的仪表盘上。不再需要在屏幕上拖动组件，也不再需要在空白的画布上反复拖动它们。
 
 ![Automatically-generated content for your dashboard](/docs/img/guides/integrations/dashibase/slash-command.gif)
 
-If you have set up [foreign keys in your Supabase database](/docs/guides/database/tables#joining-tables-with-foreign-keys), you can easily show data from multiple tables on the table in your Dashibase dashboard. Simply click on the "Columns" button beside the "Filter" button and select the columns you want to show or hide. For this example, we want to show the customers' country and plan price, which are in separate `countries` and `plans` tables.
+如果你已经设置了[Supabase数据库中的外键](/docs/guides/database/tables#joining-tables-with-foreign-keys)，你就可以在Dashibase仪表板的表格上轻松显示多个表的数据。只需点击 `过滤器`按钮旁边的 `列`按钮，选择你想显示或隐藏的列。在这个例子中，我们想显示客户的国家和计划价格，它们分别在 `国家`和 `计划`表中。
 
 ![Setting up the Customers table](/docs/img/guides/integrations/dashibase/customers-table.png)
 
-For all the tables in your dashboard, you can rename the column headers, add filter and sort, adjust the column width, and more.
+对于你的仪表盘中的所有表格，你可以重命名列标题，添加过滤器和排序，调整列的宽度，以及更多。
 
-You can also add text to provide context or instructions for the rest of your team as they are using your dashboard. This saves you the trouble of having your dashboard and documentation in separate places.
+你还可以添加文本，为你的团队其他成员在使用你的仪表盘时提供背景或说明。这为你省去了将仪表盘和文档放在不同地方的麻烦。
 
 ![Customers table with instructions](/docs/img/guides/integrations/dashibase/customers-table-with-text.png)
 
-Most importantly, we automatically generate a single-item view for each of the items on your table so that you do not have to manually create it yourself. You can easily edit or rearrange the blocks just like in Notion.
+最重要的是，我们为你表中的每个项目自动生成一个单项视图，这样你就不必自己手动创建。你可以像在Notion中一样轻松地编辑或重新安排这些块。
 
 ![Automatically generated single-item view](/docs/img/guides/integrations/dashibase/single-item-view.png)
 
-## Step 4. Share your dashboard with your team
+## 第四步。与你的团队分享你的仪表板
 
-Finally, save and share the dashboard with your team. There are two levels of access:
+最后，保存并与你的团队分享仪表盘。有两个级别的访问。
 
-- Edit dashboard: Edit the text blocks, edit the tables, etc.
-- Use dashboard: View and update the data via the dashboard
+- 编辑仪表盘。编辑文本块，编辑表格，等等。
+- 使用仪表盘。通过仪表盘查看和更新数据
 
-Click on the “Share” button in the upper-right corner of your dashboard to share access:
+点击仪表盘右上角的 `分享`按钮，可以分享访问权限。
 
 ![Share dashboard access](/docs/img/guides/integrations/dashibase/share-dashboard.png)
 
-Now your team can use this customer admin panel to find and update customer information easily!
+现在你的团队可以使用这个客户管理面板，轻松查找和更新客户信息
 
-P.S. How long did we take? :)
+P.S. 我们花了多长时间？ :)
 
-## Resources
+## 资源
 
-- [Dashibase website](https://dashibase.com/)
-- [Dashibase open-source repo](https://github.com/dashibase)
+- [Dashibase网站](https://dashibase.com/)
+- [Dashibase开源版本](https://github.com/dashibase)
 - [Dashibase Twitter](https://twitter.com/dashibase)
 - [Dashibase Discord](https://discord.gg/crhDFYvbbq)
 

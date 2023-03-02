@@ -2,81 +2,81 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'auth-github',
-  title: 'Login with GitHub',
-  description: 'Add GitHub OAuth to your Supabase project',
+  title: '使用GitHub登录',
+  description: '将GitHub OAuth添加到Supabase项目',
 }
 
-To enable GitHub Auth for your project, you need to set up a GitHub OAuth application and add the application credentials to your Supabase Dashboard.
+要为项目启用GitHub Auth，您需要设置一个GitHub OAuth应用程序，并将应用程序凭据添加到Supabase Dashboard。
 
-## Overview
+## 概述
 
-Setting up GitHub logins for your application consists of 3 parts:
+为应用程序设置GitHub登录由三部分组成:
 
-- Create and configure a GitHub OAuth App on [GitHub](https://github.com)
-- Add your GitHub OAuth keys to your [Supabase Project](https://app.supabase.com)
-- Add the login code to your [Supabase JS Client App](https://github.com/supabase/supabase-js)
+- 在[GitHub](https://github.com)上创建和配置GitHub OAuth应用程序
+- 将GitHub OAuth密钥添加到[MemFire Cloud项目](https://cloud.memfiredb.com)
+- 将登录代码添加到[JS客户端应用程序](https://github.com/supabase/supabase-js)
 
-## Access your GitHub account
+## 访问您的GitHub帐户
 
-- Go to [github.com](https://github.com).
-- Click on `Sign In` at the top right to log in.
+- 进入 [github.com](https://github.com).
+- 单击右上角的`登录`以登录。
 
-![GitHub Developer Portal.](/docs/img/guides/auth-github/github-portal.png)
+![GitHub开发者门户。](/docs/img/guides/auth-github/github-portal.png)
 
-## Create a GitHub Oauth App
+## 创建GitHub Oauth应用程序
 
-Go to the [GitHub Developer Settings](https://github.com/settings/developers) page:
+转到[GitHub开发者设置页面](https://github.com/settings/developers):
 
-- Click on your profile photo at the top right
-- Click Settings near the bottom of the menu
-- In the left sidebar, click `Developer settings` (near the bottom)
-- In the left sidebar, click `OAuth Apps`
+- 单击右上方的个人资料照片
+- 单击菜单底部附近的设置
+- 在左侧边栏中，单击`开发人员设置`（靠近底部）
+- 在左侧边栏中，单击`OAuth Apps`
 
-## Find your callback URL
+## 查找回调URL
 
-The next step requires a callback URL, which looks like this:
+下一步需要回调URL，如下所示：
 
 `https://<project-ref>.supabase.co/auth/v1/callback`
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com).
-- Click on the `Settings` icon at the bottom of the left sidebar.
-- Click on `API` in the list.
-- Under Config / URL you'll find your API URL, you can click `Copy` to copy it to the clipboard.
-- Now just add `/auth/v1/callback` to the end of that to get your full `OAuth Redirect URI`.
+- 转到[MemFire Cloud项目仪表板](https://cloud.memfiredb.com).
+- 单击左侧边栏底部的`设置`图标。
+- 单击列表中的`API`。
+- 在Config/URL下，您将找到您的API URL，您可以单击`复制`将其复制到剪贴板。
+- 现在只需在末尾添加`/auth/v1/callback`即可获得完整的`OAuth重定向URI`。
 
 <video width="99%" muted playsInline controls="true">
   <source src="/docs/videos/api/api-url-and-key.mp4" type="video/mp4" muted playsInline />
 </video>
 
-## Register a new OAuth application
+## 注册新的OAuth应用程序
 
-- Click `Register a new application`. If you've created an app before, click `New OAuth App` here.
-- In `Application name`, type the name of your app.
-- In `Homepage URL`, type the full URL to your app's website.
-- In `Authorization callback URL`, type the callback URL of your app.
-- Enter the URL in the `Valid OAuth Redirect URIs` box.
-- Click `Save Changes` at the bottom right.
-- Click `Register Application`.
+- 单击`注册新应用程序`。如果您以前创建过应用程序，请单击此处的`新建OAuth应用程序`。
+- 在`应用程序名称`中，键入应用程序的名称。
+- 在`主页URL`中，键入应用程序网站的完整URL。
+- 在`授权回调URL`中，键入应用的回调URL。
+- 在`有效OAuth重定向URI`框中输入URL。
+- 单击右下角的`保存更改`。
+- 单击`注册应用程序`。
 
-Copy your new OAuth credentials
+复制新的OAuth凭据
 
-- Copy and save your `Client ID`.
-- Click `Generate a new client secret`.
-- Copy and save your `Client secret`.
+- 复制并保存`客户端ID`。
+- 单击`生成新客户端密钥`。
+- 复制并保存`客户端密码`。
 
-## Enter your GitHub credentials into your Supabase Project
+## 将您的GitHub凭据输入到Supabase项目中
 
-- Go to your [Supabase Project Dashboard](https://app.supabase.com)
-- In the left sidebar, click the `Authentication` icon (near the top)
-- Click `Settings` from the list to go to the `Authentication Settings` page
-- Enter the final (hosted) URL of your app under `Site URL` (this is important)
-- Under `External OAuth Providers` turn `GitHub Enabled` to ON
-- Enter your `GitHub Client ID` and `GitHub Client Secret` saved in the previous step
-- Click `Save`
+- 转到[MemFire Cloud项目仪表板](https://cloud.memfiredb.com)
+- 在左侧边栏中，单击`身份验证`图标（靠近顶部）
+- 单击列表中的`设置`以转到`身份验证设置`页面
+- 在`站点URL`下输入应用程序的最终（托管）URL（这很重要）
+- 在`外部OAuth提供程序`下，将`已启用GitHub`设置为ON
+- 输入上一步中保存的`GitHub客户端ID `和`GitHubClient Secret`
+- 单击`保存`
 
-## Add login code to your client app
+## 将登录代码添加到客户端应用程序
 
-When your user signs in, call [signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth) with `github` as the `provider`:
+当您的用户登录时,调用[signInWithOAuth()](/docs/reference/javascript/auth-signinwithoauth),将`github`作为`provider`:
 
 ```js
 async function signInWithGitHub() {
@@ -86,7 +86,7 @@ async function signInWithGitHub() {
 }
 ```
 
-When your user signs out, call [signOut()](/docs/reference/javascript/auth-signout) to remove them from the browser session and any objects from localStorage:
+当用户注销时，调用[signOut()](/docs/reference/javascript/auth-signout)将其从浏览器会话和localStorage中删除：
 
 ```js
 async function signout() {
@@ -94,11 +94,11 @@ async function signout() {
 }
 ```
 
-## Resources
+## 资源
 
-- [Supabase Account - Free Tier OK](https://supabase.com)
-- [Supabase JS Client](https://github.com/supabase/supabase-js)
-- [GitHub Developer Settings](https://github.com/settings/developers)
+- [MemFire Cloud](https://cloud.memfiredb.com)
+- [JS客户端](https://github.com/supabase/supabase-js)
+- [Flutter客户端](https://github.com/supabase/supabase-flutter)
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

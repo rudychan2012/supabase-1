@@ -4,55 +4,55 @@ export const meta = {
   id: 'plasmic',
   title: 'Plasmic',
   description:
-    'Get started with Supabase and Plasmic, an open-source framework for building internal tools.',
+    '开始使用Supabase和Plasmic，一个构建内部工具的开源框架。',
 }
 
-In this guide, we will show you how to build a crowd-sourced Pokemon Pokedex, by connecting **Supabase**, an open source Firebase backend alternative, with **Plasmic**, a visual builder for the web. While many users leverage Plasmic to quickly launch and iterate on landing pages, in this tutorial we’ll show just how powerful Plasmic can be as a general-purpose visual builder for React, which can be used to design and implement fully featured read-write applications.
+在本指南中，我们将向你展示如何通过连接**Supabase**，一个开源的Firebase后台替代品，和**Plasmic**，一个网络可视化构建器，来建立一个众包的口袋妖怪Pokedex。虽然许多用户利用Plasmic来快速启动和迭代登陆页面，但在本教程中，我们将展示Plasmic作为React的通用视觉构建器有多么强大，它可以用来设计和实现全功能的读写应用程序。
 
-You can play with the live demo here:
+你可以在这里玩一下现场演示。
 [https://plasmic-supabase-demo.vercel.app/](https://plasmic-supabase-demo.vercel.app/)
 
-You can also take a look at the Plasmic project here:
+你也可以在这里看一下Plasmic项目。
 [https://studio.plasmic.app/projects/66RKaSPCwKxYjCfXWHCxn6](https://studio.plasmic.app/projects/66RKaSPCwKxYjCfXWHCxn6)
 
-> You’ll need to enable 3rd-party cookies in your browser for the project to properly load.
+> 你需要在你的浏览器中启用第三方cookie，以便正确加载该项目。
 
 ![pokedex-screenshot](/docs/img/guides/integrations/plasmic/application-screenshot-00.png)
 
-At a high level,
+在一个较高的水平上。
 
-- **Supabase** is used to store the database of Pokemon (backed by Postgres) and provides an authentication backend. Our code base includes React components for querying the database, displaying this data, and supporting user sessions.
-- **Plasmic** is used to create the pages and visual design of the application. We import our Supabase components into the Studio, which can be visually assembled and configured there (e.g. for displaying data).
-- Plasmic designed pages are rendered back into the Next.js application.
+- **Supabase**用于存储口袋妖怪的数据库（由Postgres支持），并提供一个认证后端。我们的代码基础包括React组件，用于查询数据库，显示这些数据，并支持用户会话。
+- **Plasmic**被用来创建应用程序的页面和视觉设计。我们将我们的Supabase组件导入工作室，可以在那里进行可视化组装和配置（例如，用于显示数据）。
+- Plasmic设计的页面被渲染回Next.js应用程序中。
 
-## Step 1: Set up your Backend on Supabase
+## 第1步：在Supabase上设置你的后端
 
-- On the [Supabase dashboard](https://app.supabase.com/), click `New project` and set the name of the project.
-  By default, Supabase will already be set up for user signups with email, with users being stored in a `users` table.
+- 在[Supabase仪表板](https://app.supabase.com/)上，点击 `新建项目`并设置项目名称。
+  默认情况下，Supabase已经为用户注册设置了电子邮件，用户被存储在`users`表中。
 
 ![create-project-supabase](/docs/img/guides/integrations/plasmic/create-project-supabase-01.png)
 
-- Navigate to the `Table Editor` on the left side navigation bar. Here we can create a `New table` to store our Pokemon entries. Make sure you are in the `schema public` view. Create a new table called `entries`, with 6 columns:
-  - `id`: is a unique ID for the entry. This column should be generated automatically as the primary column.
-  - `user_id`: Create a relation to the `user` table by clicking on the link icon next to the column name. Here, you can select the `id` column of the `user` table.
-  - `name`, `description`, `imageUrl`: This will store the name, description, and imageUrl for each Pokemon.
-  - `inserted_at` : This will be an automatically populated column, set to when the row was first inserted.
+- 导航到左侧导航栏的 "表编辑器"。在这里我们可以创建一个 `新表`来存储我们的小精灵条目。确保你是在 `schema public`视图中。创建一个名为`entries`的新表，有6个列。
+  - `id`：是条目的唯一ID。这一列应该作为主列自动生成。
+  - `user_id`: 通过点击列名旁边的链接图标，创建一个与`user`表的关系。在这里，你可以选择`用户`表的`id`列。
+  - `名称`, `描述`, `图像Url`: 这将存储每个小精灵的名称、描述和imageUrl。
+  - `inserted_at`：这将是一个自动填充的列，设置为该行首次插入的时间。
 
-> Note: In this tutorial we’ve turned off “[Row Level Security (RLS)](/docs/guides/auth/row-level-security)”. In practice, you will want to create policies that restrict who gets to create, edit, and delete posts. By turning this off, any user can modify the database without restrictions.
+> 注意：在本教程中，我们关闭了`[行级安全（RLS）](/docs/guides/auth/row-level-security)`。在实践中，你会想要创建策略，限制谁可以创建、编辑和删除帖子。通过关闭这个功能，任何用户都可以不受限制地修改数据库。
 
 ![create-table-supabase](/docs/img/guides/integrations/plasmic/create-table-supabase-02.png)
 
-For your convenience, feel free to import the following CSV into Supabase to pre-populate your database. In order to import, you must select `Import data via spreadsheet`, in the new table dialog box. (It does not work on existing tables.)
+为方便起见，请随时将以下CSV导入Supabase，以预先填充您的数据库。为了进行导入，你必须在新表的对话框中选择 `通过电子表格导入数据`。(它对现有的表不起作用）。
 
 [pokedex-export.csv](/docs/img/guides/integrations/plasmic/pokedex-export.csv)
 
-## Step 2: Set up your codebase
+## 第二步：建立你的代码库
 
-We have a working code example for you [here](https://github.com/plasmicapp/plasmic/tree/master/examples/supabase-demo). This starter comes with all of the code components you need to get started querying Supabase through Plasmic Studio.
+我们为你准备了一个工作代码实例[这里](https://github.com/plasmicapp/plasmic/tree/master/examples/supabase-demo)。这个启动器包含了所有的代码组件，你需要通过Plasmic Studio开始查询Supabase。
 
-> Code components are React components defined in your code base that we import into Plasmic Studio for use. Your project will be configured to look for these at `http://localhost:3000/plasmic-host` You can use these components in your design, as well as style them. Check out `supabase-demo/plasmic-init.ts` to see how they are registered with Plasmic.
+> 代码组件是在你的代码库中定义的React组件，我们将其导入Plasmic Studio中使用。你的项目将被配置为在`http://localhost:3000/plasmic-host`寻找这些组件，你可以在你的设计中使用这些组件，也可以对它们进行样式设计。查看`supabase-demo/plasmic-init.ts`以了解它们如何在Plasmic注册。
 
-First, clone the repo to your development machine and install the dependencies.
+首先，克隆 Repo 到你的开发机器上，并安装依赖项。
 
 ```bash
 git clone git@github.com:plasmicapp/plasmic.git
@@ -60,49 +60,49 @@ cd plasmic/examples/supabase-demo/
 yarn install
 ```
 
-Copy `.env.example` to `.env.local`, which will store the environment variables when running a local development server. Add your Supabase project’s URL and public key, which you can find in the `API` tab on the left pane of your Supabase dashboard.
+将`.env.example`复制到`.env.local`，它将存储运行本地开发服务器时的环境变量。添加你的Supabase项目的URL和公钥，你可以在Supabase仪表板左窗格的`API`标签中找到。
 
-Now run the dev server, which listens at `http://localhost:3000`
+现在运行开发服务器，它的监听地址是`http://localhost:3000`。
 
 ```bash
 yarn dev
 ```
 
-## Step 3: Explore the existing application
+## 第3步：探索现有的应用程序
 
-Navigate to [http://localhost:3000](http://localhost:3000) in your web browser. The project will already be set up for user signups, logins, and an admin interface for adding and editing Pokemon to the database. Feel free to sign up with your email address for an account and add Pokemon to the database. Supabase will require that you verify your email address before you can log in.
+在你的网络浏览器中导航到[http://localhost:3000](http://localhost:3000)。该项目将已经设置了用户注册、登录和一个管理界面，用于添加和编辑小精灵到数据库。欢迎使用你的电子邮件地址注册一个账户，并将小精灵添加到数据库中。Supabase会要求你在登录前验证你的电子邮件地址。
 
-If you pre-populated the database in Step 1. you should see the following homepage after logging in. Otherwise, feel free to add Pokemon manually via the UI.
+如果你在步骤1中预先填充了数据库，你在登录后应该看到以下主页。否则，请随时通过用户界面手动添加小精灵。
 
 ![application-screenshot](/docs/img/guides/integrations/plasmic/application-screenshot-03.png)
 
-## Step 4: Clone the Plasmic project
+## 第四步：克隆Plasmic项目
 
-Now let’s try to make some additions! The code base is currently configured to a read-only copy of the Plasmic project. Let’s make an editable copy first.
+现在让我们试着做一些补充! 代码库目前被配置为Plasmic项目的只读副本。让我们先做一个可编辑的副本。
 
-Open the default starter Plasmic project here:
+在这里打开默认的启动版Plasmic项目。
 [https://studio.plasmic.app/projects/66RKaSPCwKxYjCfXWHCxn6](https://studio.plasmic.app/projects/66RKaSPCwKxYjCfXWHCxn6)
 
 ![clone-project-plasmic](/docs/img/guides/integrations/plasmic/clone-project-plasmic-04.png)
 
-To make an editable copy, click on the `Copy Project` button in the blue bar. This will clone the project and redirect you to your copy.
+要制作一个可编辑的副本，点击蓝条上的 `复制项目`按钮。这将克隆该项目，并将你重定向到你的副本。
 
-### Step 4a: Configure your code base to use the new Plasmic project
+###步骤4a: 配置你的代码库以使用新的Plasmic项目
 
-Take note of the `project ID` and `API token`. You can find the project ID in the URL:
-`https://studio.plasmic.app/projects/PROJECTID`.
+注意到 `项目ID`和 `API令牌`。你可以在URL中找到项目ID。
+`https://studio.plasmic.app/projects/PROJECTID`。
 
-The API token can be found by clicking the `Code` button in the top bar.
+API令牌可以通过点击顶部栏的 `代码`按钮找到。
 
 ![api-token-plasmic](/docs/img/guides/integrations/plasmic/api-token-plasmic-05.png)
 
-Now go back to `.env.local` and update the corresponding project ID and token fields.
+现在回到`.env.local`并更新相应的项目ID和token字段。
 
-### Step 4b: Configure your Plasmic project app host
+### 步骤 4b: 配置你的Plasmic项目应用主机
 
-To tell Plasmic to look for your code components on your dev server, you’ll need to update your project’s app host to `http://localhost:3000/plasmic-host`.
+为了告诉Plasmic在你的开发服务器上寻找你的代码组件，你需要更新你的项目应用主机为`http://localhost:3000/plasmic-host`。
 
-> Note: At this point, you’ll need to keep your dev server running at `http://localhost:3000`for the project to load.
+> 注意：在这一点上，你需要保持你的开发服务器运行在`http://localhost:3000`，以便项目加载。
 
 <video width="99%" autoPlay="autoplay" muted playsInline controls={true}>
   <source
@@ -113,13 +113,13 @@ To tell Plasmic to look for your code components on your dev server, you’ll ne
   />
 </video>
 
-After restarting the dev server and Plasmic Studio, you should now be able to make edits across Plasmic Studio and your codebase.
+在重启开发服务器和Plasmic Studio后，你现在应该可以在Plasmic Studio和你的代码库中进行编辑。
 
-## Step 5: Create a new page for our Pokedex gallery
+## 第5步：为我们的Pokedex画廊创建一个新页面
 
-Let’s make a visual gallery for our Pokemon by using the code components from the code base.
+让我们通过使用代码库中的代码组件为我们的小精灵制作一个视觉画廊。
 
-Create a new page called `Gallery`, and set a path for this page (`/gallery`).
+创建一个名为 `Gallery`的新页面，并为该页面设置一个路径（`/gallery`）。
 
 <video width="99%" autoPlay="autoplay" muted playsInline controls={true}>
   <source
@@ -130,29 +130,29 @@ Create a new page called `Gallery`, and set a path for this page (`/gallery`).
   />
 </video>
 
-Insert a `SupabaseGrid` by searching the AddDrawer (by clicking the blue + button)
+通过搜索AddDrawer插入一个`SupabaseGrid`(通过点击蓝色的+按钮)
 
-> For source see `components/CodeComponents/DatabaseComponents.tsx`
+> 来源见`components/CodeComponents/DatabaseComponents.tsx`。
 
 ![add-supabasegrid-plasmic](/docs/img/guides/integrations/plasmic/add-supabasegrid-plasmic-07.png)
 
-Then in the right-hand panel, configure the props on `SupabaseGrid`.
+然后在右边的面板中，配置`SupabaseGrid`上的道具。
 
-- `tableName` should match the table you created in Supabase
-- `tableColumns` are a comma-delimited list of columns you want to select from the table
-- We also set the number of columns and spacing shown in the grid
+- `tableName`应该与你在Supabase中创建的表相匹配。
+- `tableColumns`是一个以逗号分隔的列表，列出了你想从表中选择的列。
+- 我们还可以设置网格中显示的列数和间距
 
 ![set-props-plasmic](/docs/img/guides/integrations/plasmic/set-props-plasmic-08.png)
 
-The `SupabaseGrid` will loop over the rows from the query.
+`SupabaseGrid`将循环播放查询中的行。
 
-Now customize the repeated content by inserting instances of `SupabaseField`. Select the type of content and a selector string to fetch a single value. In the example below, we use `{{row.imageUrl}}` to retrieve the `imageUrl` column of the row. Apply any styling and layout you want on these elements.
+现在通过插入`SupabaseField`的实例来定制重复的内容。选择内容的类型和一个选择器字符串来获取一个单一的值。在下面的例子中，我们使用`{{row.imageUrl}}`来获取该行的`imageUrl`列。在这些元素上应用你想要的任何风格和布局。
 
 ![add-supabasefield-plasmic](/docs/img/guides/integrations/plasmic/add-supabasefield-plasmic-09.png)
 
-### Putting it all together (video)
+### 把这一切放在一起（视频）
 
-For your convenience, the following video shows you how to create the page end-to-end.
+为了您的方便，下面的视频向您展示了如何创建页面的端到端。
 
 <video width="99%" autoPlay="autoplay" muted playsInline controls={true}>
   <source
@@ -163,21 +163,21 @@ For your convenience, the following video shows you how to create the page end-t
   />
 </video>
 
-## Step 6: Check your dev server
+## 第六步：检查你的开发服务器
 
-If you have been running your development server this whole time, you’ll see that we have been automatically fetching and rebuilding your site as you make changes in Plasmic Studio. If you need to restart your dev server, just run:
+如果你一直在运行你的开发服务器，你会发现当你在Plasmic Studio中进行修改时，我们会自动获取并重建你的网站。如果你需要重新启动你的开发服务器，只要运行。
 
 ```bash
 yarn dev
 ```
 
-See the results at `http://localhost:3000/gallery`.
+请看结果：`http://localhost:3000/gallery`。
 
-## How does this all work under the hood?
+## 这一切是如何在引擎盖下工作的？
 
 ### SupabaseGrid
 
-`SupabaseGrid` is a code component that was registered in `plasmic-init.ts`. The `props` field is used to tell the Plasmic Studio the component prop interface, which allows us to expose these props in the right pane as shown in the screenshots earlier. See the docs for details on [component registration](https://docs.plasmic.app/learn/registering-code-components/).
+`SupabaseGrid`是一个在`plasmic-init.ts`中注册的代码组件。`props`字段用来告诉Plasmic Studio组件的prop接口，这使得我们可以在右边的窗格中公开这些prop，如前面的截图所示。关于[组件注册](https://docs.plasmic.app/learn/registering-code-components/)的详细信息，请参见文档。
 
 ```tsx
 // plasmic-init.ts
@@ -223,7 +223,7 @@ PLASMIC.registerComponent(SupabaseGrid, {
 
 ### SupabaseQuery
 
-`SupabaseGrid` wraps a `SupabaseQuery` component, where we perform the query based on the provided props and store the result in a `SupabaseQueryContext`. This will be used in downstream components to display the data.
+`SupabaseGrid`包装了一个`SupabaseQuery`组件，我们根据提供的道具进行查询，并将结果存储在`SupabaseQueryContext`中。这将被用于下游的组件来显示数据。
 
 ```tsx
 // supabase-demo/components/CodeComponents/DatabaseComponents.tsx
@@ -258,11 +258,11 @@ export function SupabaseQuery(props: SupabaseQueryProps) {
 }
 ```
 
-Note that this code component is defined in your codebase. Feel free to augment it to expose more powerful querying capabilities to the Plasmic Studio.
+注意，这个代码组件是在你的代码库中定义的。你可以自由地增加它，以便向Plasmic工作室提供更强大的查询能力。
 
 ### SupabaseGridCollection
 
-`SupabaseGrid` also nests a `SupabaseGridCollection` under the `SupabaseQuery`. This code component is a simple CSS grid, where we retrieve the Supabase query results from `SupabaseQueryContext`, and iterate over the results. For each row, we populate a `RowContext`, which will be used by the children to read the results of a single row. Note the use of `repeatedElement`, a special convenience function that enables the component’s children to be repeated. In this case, this represents a single card to be shown in the gallery.
+`SupabaseGrid`也在`SupabaseQuery`下嵌套一个`SupabaseGridCollection`。这个代码组件是一个简单的CSS网格，我们从`SupabaseQueryContext`中获取Supabase的查询结果，并对结果进行迭代。对于每一行，我们填充一个`RowContext`，它将被孩子们用来读取单行的结果。注意`repeatedElement`的使用，这是一个特殊的便利函数，使组件的子代可以重复。在这种情况下，这代表了将在画廊中显示的一张卡片。
 
 ```tsx
 // supabase-demo/components/CodeComponents/DisplayCollections.tsx
@@ -298,7 +298,7 @@ export function SupabaseGridCollection(props: SupabaseGridCollectionProps) {
 
 ### SupabaseField
 
-`SupabaseField` will either render a `SupabaseTextField` or `SupabaseImgField` depending on the type. These code components simply read a single value from the contexts and display the data.
+`SupabaseField`将渲染一个`SupabaseTextField`或`SupabaseImgField`，取决于类型。这些代码组件只是从上下文中读取一个值并显示数据。
 
 ```tsx
 // supabase-demo/components/CodeComponents/DisplayCollections.tsx
@@ -312,7 +312,7 @@ export function SupabaseTextField({ name, className }: { name?: string; classNam
 }
 ```
 
-In summary, by populating state into React contexts, we can store and retrieve data for use in other code components, which can be used for arbitrarily powerful interactions in Plasmic Studio.
+总之，通过将状态填充到React上下文中，我们可以存储和检索数据以用于其他代码组件，这可以用于Plasmic Studio中任意强大的互动。
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />
 

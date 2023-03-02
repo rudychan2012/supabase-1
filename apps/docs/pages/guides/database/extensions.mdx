@@ -2,14 +2,14 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'extensions',
-  title: 'Overview',
+  title: '总览',
   description: 'Using Postgres extensions.',
 }
 
-Extensions are exactly as they sound - they "extend" the database with functionality which isn't part of the Postgres core.
-Supabase has pre-installed some of the most useful open source extensions.
+扩展和它们的名字一样 - 它们用不属于Postgres核心的功能来 "扩展 "数据库。
+Supabase已经预装了一些最有用的开源扩展。
 
-### Enable and disable extensions
+### 启用和停用扩展功能
 
 <Tabs
   scrollable
@@ -19,9 +19,9 @@ Supabase has pre-installed some of the most useful open source extensions.
 >
 <TabPanel id="dashboard" label="Dashboard">
 
-1. Go to the [Database](https://app.supabase.com/project/_/database/tables) page in the Dashboard.
-2. Click **Extensions** in the sidebar.
-3. Enable or disable an extension.
+1. 进入仪表板中的[数据库](https://app.supabase.com/project/_/database/tables)页面。
+2. 单击侧边栏中的**扩展程序**。
+3. 启用或停用一个扩展。
 
 <video width="99%" muted playsInline controls={true}>
   <source src="/docs/videos/toggle-extensions.mp4" type="video/mp4" muted playsInline />
@@ -50,9 +50,9 @@ Enabling some extensions with `create extension <extension-name> with schema ext
 </TabPanel>
 </Tabs>
 
-### Full list of extensions
+### 完整的扩展列表
 
-Supabase is pre-configured with over 50 extensions. You can also install your own SQL extensions directly in the database through our SQL editor.
+Supabase预先配置了50多个扩展。你也可以通过SQL编辑器在数据库中直接安装所需的SQL扩展。
 
 <Extensions />
 
