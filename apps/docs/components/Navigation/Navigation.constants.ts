@@ -269,8 +269,8 @@ export const menuItems: NavMenu = {
     {
       label: '教程',
       items: [
-        { name: '手机认证', url: '/guides/phoneAuth', items: [] },
-        { name: '微信小程序登录', url: '/guides/wechatAuth', items: [] },
+        { name: '手机登录认证', url: '/guides/phoneAuth', items: [] },
+        { name: '微信小程序登录认证', url: '/guides/wechatAuth', items: [] },
         // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
       ],
     },

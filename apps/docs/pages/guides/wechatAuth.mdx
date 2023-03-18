@@ -2,17 +2,17 @@ import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
   id: 'functions',
-  title: '微信小程序登录不同场景示例',
-  description: '微信小程序登录不同场景示例',
-  sidebar_label: '微信小程序登录',
+  title: '微信小程序登录认证',
+  description: '微信小程序登录认证',
+  sidebar_label: '微信小程序登录认证',
 }
 
 
-## 前言
+### 前言
 
-为了顺应国内用户的使用习惯，MemFire Cloud 的SDK推出了微信可以在不同应用场景下的登录方式，以下两种场景是MemFire Cloud 推荐的微信登录方式，我们以简单的小示例来做示范，具体的实现还需要根绝业务自身的场景来判断。
+为了顺应国内用户的使用习惯，MemFire Cloud 的SDK推出了微信可以在不同应用场景下的登录方式，以下两种场景是MemFire Cloud 推荐的微信登录方式，我们以简单的小示例来做示范，具体的实现还需要根据业务自身的场景来判断。
 
-## 示例代码1
+###  ① 微信用户授权登录
 
 首次进入小程序，点击登录后会立即跳转个人中心页进行个人资料的修改，或者可以点击个人中心页面进行个人资料的修改
 
@@ -23,10 +23,14 @@ export const meta = {
 ![微信认证](/docs/img/wechatauth1.png)
 
 图例
+<div className="image-flex">
+
 ![微信认证](/docs/img/wechatauth2.png)
 ![微信认证](/docs/img/wechatauth5.png)
 ![微信认证](/docs/img/wechatauth3.png)
 ![微信认证](/docs/img/wechatauth6.png)
+
+</div>
 
 首页代码示例：
 
@@ -37,7 +41,7 @@ html
 
 ```
 
-js
+SDK使用教程
 
 signInWithWechat接口接受一个wx.login返回的code参数，通过code兑换openid等信息，并判断用户是否存在，不存在则自动创建
 
@@ -131,7 +135,8 @@ html
 
 ```
 
-js
+SDK使用教程
+
 进入页面先调用getUser()判断是否登陆过，登录过会通过这个接口去获取用户信息，获取之后进行信息回填；没有登陆过则不会进行信息回填。
 
 - 修改头像选择图片时，需要将头像的临时地址上传到memfire cloud的云存储生成永久图片，再进行下载,在此之前需要去memfire cloud创建一个新的公开bucket。
@@ -266,7 +271,7 @@ label{
 
 ```
 
-## 示例代码2
+### ② 手机号授权登录
 
 使用手机号授权登录，用户初次进入小程序。
 场景：
@@ -282,9 +287,12 @@ label{
 ![微信认证](/docs/img/wechatauth1.png)
 
 图例
+<div className="image-flex">
 
 ![微信认证](/docs/img/wechatauth4.png)
 ![微信认证](/docs/img/wechatauth7.png)
+
+</div>
 
 html
 
@@ -293,7 +301,7 @@ html
 
 ```
 
-js
+
 首先需要通过signInWithWechat接口来帮助用户进行注册，成功之后再使用wechatBindPhone将手机号绑定到用户信息中，这样就实现了手机号授权登录。
 
 ```js
