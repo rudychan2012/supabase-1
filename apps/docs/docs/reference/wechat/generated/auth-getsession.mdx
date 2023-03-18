@@ -1,0 +1,40 @@
+---
+id: auth-getsession
+title: "getSession()"
+slug: /auth-getsession
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+返回会话，必要时刷新它。
+如果没有检测到会话，返回的会话可以是空的，这可能发生在用户没有登录或已经注销的情况下。
+
+```js
+const { data, error } = await supabase.auth.getSession()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 获取会话数据
+
+
+
+```js
+const { data, error } = await supabase.auth.getSession()
+```

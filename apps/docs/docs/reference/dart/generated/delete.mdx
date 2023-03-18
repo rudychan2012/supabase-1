@@ -1,0 +1,47 @@
+---
+id: delete
+title: "删除数据: delete()"
+slug: /delete
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+对表进行DELETE操作。
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .delete()
+  .match({ 'id': 666 });
+```
+
+
+
+
+
+
+## Notes
+
+- `delete()`应该总是与[Filters](/docs/reference/dart/using-filters)结合起来，以锁定你想删除的项目。
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 删除记录
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .delete()
+  .match({ 'id': 666 });
+```

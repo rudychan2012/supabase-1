@@ -1,0 +1,58 @@
+---
+id: order
+title: "order()"
+slug: /order
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+用指定的列对结果进行排序。
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .order('id',  ascending: false );
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 使用 `select()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .order('id',  ascending: false );
+```
+
+### 有嵌入式资源
+
+
+
+```dart
+final data = await supabase
+  .from('countries')
+  .select('name, cities(name)')
+  .eq('name', 'United States')
+  .order('name', foreignTable: 'cities');
+```

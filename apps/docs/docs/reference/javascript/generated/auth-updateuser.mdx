@@ -1,0 +1,189 @@
+---
+id: auth-updateuser
+title: "updateUser()"
+slug: /auth-updateuser
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+更新用户数据，如果有一个登录的用户。
+
+```js
+const { data, error } = await supabase.auth.updateUser({
+  data: { hello: 'world' }
+})
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      UserAttributes
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      data
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+
+`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      email
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+该用户的电子邮件。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      password
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用户的密码。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      phone
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用户的电话。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注释
+
+- 为了使用`updateUser()`方法，用户需要先登录。
+- 默认情况下，电子邮件更新会向用户的当前和新的电子邮件发送一个确认链接。
+要想只向用户的新邮箱发送确认链接，请在项目的[email auth provider settings](https://app.supabase.com/project/_/auth/settings)中禁用**安全的email变更**。
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 为一个已认证的用户更新电子邮件
+
+向新的电子邮件地址发送一封 "确认电子邮件变更 "的电子邮件。
+
+```js
+const { data, error } = await supabase.auth.updateUser({email: 'new@email.com'})
+```
+
+### 更新已认证用户的密码
+
+
+
+```js
+const { data, error } = await supabase.auth.updateUser({password: 'new password'})
+```
+
+### 更新用户的元数据
+
+
+
+```js
+const { data, error } = await supabase.auth.updateUser({
+  data: { hello: 'world' }
+})
+```
+
+
+### 设置微信用户昵称和头像
+
+场景：配合[微信登录](/docs/guides/wechatAuth)一起使用
+
+使用 SDK 操作如下：
+
+```js
+
+const { data, error } = await supabase.auth.updateUser({"data": {"nickname": "张三", "arvatar": "url_of_arvatar"}})
+
+```

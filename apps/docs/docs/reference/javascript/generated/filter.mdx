@@ -1,0 +1,245 @@
+---
+id: filter
+title: "filter()"
+slug: /filter
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+只匹配满足过滤器的行。这是一个逃生通道--你应该尽可能使用特定的过滤方法。
+应该尽可能地使用特定的过滤器方法。
+
+与大多数过滤器不同，`opearator`和 `value`是按原样使用的，需要遵循[PostgREST语法](https://postgrest.org/en/stable/api.html#operators)。你还需要确保它们被正确地消毒。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .select()
+  .filter('name', 'in', '("Algeria","Japan")')
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      列
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>ColumnName</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要过滤的列
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      operator
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>FilterOperator</code> | <code>not.eq</code> | <code>not.neq</code> | <code>not.gt</code> | <code>not.gte</code> | <code>not.lt</code> | <code>not.lte</code> | <code>not.like</code> | <code>not.ilike</code> | <code>not.is</code> | <code>not.in</code> | <code>not.cs</code> | <code>not.cd</code> | <code>not.sl</code> | <code>not.sr</code> | <code>not.nxl</code> | <code>not.nxr</code> | <code>not.adj</code> | <code>not.ov</code> | <code>not.fts</code> | <code>not.plfts</code> | <code>not.phfts</code> | <code>not.wfts</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来过滤的操作符，遵循PostgREST的语法
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      FilterOperator
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      值
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>unknown</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来过滤的值，遵循PostgREST的语法
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注意
+
+filter()希望你使用原始的PostgREST语法来表示过滤器的值。
+
+```ts
+.filter('id', 'in', '(5,6,7)')  // Use `()` for `in` filter
+.filter('arraycol', 'cs', '{"a","b"}')  // Use `cs` for `contains()`, `{}` for array values
+```
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 使用 `select()` 时
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select()
+    .filter('name', 'in', '("Algeria","Japan")')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 3,
+        "name": "Algeria"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 在一个外域表上
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+  create table
+    cities (
+      id int8 primary key,
+      country_id int8 not null references countries,
+      name text
+    );
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Germany'),
+    (2, 'Indonesia');
+  insert into
+    cities (id, country_id, name)
+  values
+    (1, 2, 'Bali'),
+    (2, 1, 'Munich');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select(`
+      name,
+      cities!inner (
+        name
+      )
+    `)
+    .filter('cities.name', 'eq', 'Bali')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "name": "Indonesia",
+        "cities": [
+          {
+            "name": "Bali"
+          }
+        ]
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

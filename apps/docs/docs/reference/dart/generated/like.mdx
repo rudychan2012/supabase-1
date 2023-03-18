@@ -1,0 +1,79 @@
+---
+id: like
+title: ".like()"
+slug: /like
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+查找所有在所述 `column`中的值与提供的 `pattern`相符的记录（区分大小写）。
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .like('name', '%la%');
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 使用 `select()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .like('name', '%la%');
+```
+
+### 使用 `update()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .update({ 'name': 'Mordor' })
+  .like('name', '%la%');
+```
+
+### 使用 `delete()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .delete()
+  .like('name', '%la%');
+```
+
+### 使用 `rpc()`
+
+
+
+```dart
+// Only valid if the Stored Procedure returns a table type.
+final data = await supabase
+  .rpc('echo_all_cities')
+  .like('name', '%la%');
+```

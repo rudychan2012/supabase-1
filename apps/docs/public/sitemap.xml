@@ -61,6 +61,24 @@
   </url>
 
   <url>
+    <loc>https://supabase.com/docs/handbook/contributing</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/handbook/introduction</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/handbook/supasquad</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
     <loc>https://supabase.com/docs/guides/api</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
@@ -229,19 +247,31 @@
   </url>
 
   <url>
-    <loc>https://supabase.com/docs/handbook/contributing</loc>
+    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-deep-dive-jwts</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
   </url>
 
   <url>
-    <loc>https://supabase.com/docs/handbook/introduction</loc>
+    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-google-oauth</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
   </url>
 
   <url>
-    <loc>https://supabase.com/docs/handbook/supasquad</loc>
+    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-gotrue</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-policies</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-row-level-security</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
   </url>
@@ -433,24 +463,6 @@
   </url>
 
   <url>
-    <loc>https://supabase.com/docs/guides/functions/auth</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/guides/functions/cicd-workflow</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/guides/functions/examples</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
     <loc>https://supabase.com/docs/guides/database/arrays</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
@@ -530,6 +542,24 @@
 
   <url>
     <loc>https://supabase.com/docs/guides/database/webhooks</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/guides/functions/auth</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/guides/functions/cicd-workflow</loc>
+    <changefreq>weekly</changefreq>
+    <changefreq>0.5</changefreq>
+  </url>
+
+  <url>
+    <loc>https://supabase.com/docs/guides/functions/examples</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
   </url>
@@ -776,36 +806,6 @@
 
   <url>
     <loc>https://supabase.com/docs/guides/storage/storage-sample</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-deep-dive-jwts</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-google-oauth</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-gotrue</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-policies</loc>
-    <changefreq>weekly</changefreq>
-    <changefreq>0.5</changefreq>
-  </url>
-
-  <url>
-    <loc>https://supabase.com/docs/learn/auth-deep-dive/auth-row-level-security</loc>
     <changefreq>weekly</changefreq>
     <changefreq>0.5</changefreq>
   </url>

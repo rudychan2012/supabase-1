@@ -1,0 +1,78 @@
+---
+id: maybesingle
+title: "maybeSingle()"
+slug: /maybesingle
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+将`data`作为一个对象而不是一个对象的数组返回。
+
+查询结果必须是0或1行（例如，使用`.limit(1)`），否则这将返回一个错误。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .select()
+  .eq('name', 'Singapore')
+  .maybeSingle()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 使用 `select()`
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select()
+    .eq('name', 'Singapore')
+    .maybeSingle()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

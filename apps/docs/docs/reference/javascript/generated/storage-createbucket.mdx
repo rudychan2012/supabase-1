@@ -1,0 +1,117 @@
+---
+id: storage-createbucket
+title: "createBucket()"
+slug: /storage-createbucket
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+创建一个新的存储桶
+
+```js
+const { data, error } = await supabase
+  .storage
+  .createBucket('avatars', { public: false })
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      id
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+你正在创建的桶的唯一标识符。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      public
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+桶的可见性。公有桶不需要授权令牌来下载对象，但仍然需要有效的令牌来进行所有其他操作。默认情况下，水桶是私有的。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 需要RLS策略权限:
+  - `buckets`表的权限: `insert`表权限
+  - `objects`表的权限：无
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 创建水桶
+
+
+
+```js
+const { data, error } = await supabase
+  .storage
+  .createBucket('avatars', { public: false })
+```

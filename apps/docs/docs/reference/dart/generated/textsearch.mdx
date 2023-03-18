@@ -1,0 +1,92 @@
+---
+id: textsearch
+title: ".textSearch()"
+slug: /textsearch
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+找到所有在所述`column`上的tsvector值与to_tsquery(query)匹配的记录。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 文本检索
+
+
+
+```dart
+final data = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', "'fat' & 'cat'", 
+    config: 'english' 
+  );
+```
+
+### 基本的规范化
+
+Uses PostgreSQL's `plainto_tsquery` function.
+
+```dart
+final data = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', "'fat' & 'cat'",  
+    type: TextSearchType.plain,
+    config: 'english' 
+  );
+```
+
+### 完全标准化
+
+使用PostgreSQL的`phraseto_tsquery`函数。
+
+```dart
+final data = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', "'fat' & 'cat'",  
+    type: TextSearchType.phrase,
+    config: 'english' 
+  );
+```
+
+### 完全标准化
+
+使用PostgreSQL的`websearch_to_tsquery`函数。
+这个函数不会引发语法错误，这使得使用用户提供的原始输入进行搜索成为可能，并且可以使用 
+与高级运算符一起使用。
+
+- `未加引号的文本`：不在引号内的文本将被转换为由&运算符分隔的术语，就像由plainto_tsquery处理一样。
+- `"带引号的文本"：带引号的文本将被转换为由<->运算符分隔的术语，就像由phraseto_tsquery处理的那样。
+- `OR`:“or”字将被转换为 | 操作符。
+- `-`：破折号将被转换为操作符！。
+
+
+```dart
+final data = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', "'fat or cat'",  
+    type: TextSearchType.websearch,
+    config: 'english'
+  );
+```

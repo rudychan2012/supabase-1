@@ -1,0 +1,131 @@
+---
+id: rangegt
+title: "rangeGt()"
+slug: /rangegt
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+只与范围列有关。只匹配行中的每个元素`column`中的每个元素都大于`range`中的任何元素。
+
+```ts
+const { data, error } = await supabase
+  .from('reservations')
+  .select()
+  .rangeGt('during', '[2000-01-02 08:00, 2000-01-02 09:00)')
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      列
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>ColumnName</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要过滤的范围列
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      range
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来过滤的范围
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 举例
+
+### 用 `select()`
+
+Postgres支持一系列的[范围类型](https://www.postgresql.org/docs/current/rangetypes.html)。你可以可以使用范围值的字符串表示对范围列进行过滤值。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    reservations (
+      id int8 primary key,
+      room_name text,
+      during tsrange
+    );
+
+  insert into
+    reservations (id, room_name, during)
+  values
+    (1, 'Emerald', '[2000-01-01 13:00, 2000-01-01 15:00)'),
+    (2, 'Topaz', '[2000-01-02 09:00, 2000-01-02 10:00)');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('reservations')
+    .select()
+    .rangeGt('during', '[2000-01-02 08:00, 2000-01-02 09:00)')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 2,
+        "room_name": "Topaz",
+        "during": "[\"2000-01-02 09:00:00\",\"2000-01-02 10:00:00\")"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

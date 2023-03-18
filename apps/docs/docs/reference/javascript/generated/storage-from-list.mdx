@@ -1,0 +1,252 @@
+---
+id: storage-from-list
+title: "from.list()"
+slug: /storage-from-list
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+列出桶内的所有文件。
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .list('folder', {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'asc' },
+  })
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      path
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+文件夹路径。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      SearchOptions
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      limit
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>number</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+你希望返回的文件数量。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      offset
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>number</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+起始位置。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      search
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来过滤文件的搜索字符串。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      sortBy
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>SortBy</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要排序的列。可以是FileObject中的任何列。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      FetchParameters
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      signal
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>AbortSignal</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+传入一个AbortController的信号来取消请求。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 需要RLS策略权限:
+  - `buckets`表的权限: 无
+  - `objects`表的权限: `select`.
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 在一个桶中列出文件
+
+
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .list('folder', {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'asc' },
+  })
+```
+
+### 在一个桶中搜索文件
+
+
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .list('folder', {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'asc' },
+    search: 'jon'
+  })
+```

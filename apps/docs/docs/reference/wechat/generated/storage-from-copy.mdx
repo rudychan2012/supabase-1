@@ -1,0 +1,94 @@
+---
+id: storage-from-copy
+title: "from.copy()"
+slug: /storage-from-copy
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+将一个现有的文件复制到同一桶中的新路径。
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .copy('public/avatar1.png', 'private/avatar2.png')
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      fromPath
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+原始文件路径，包括当前文件名。例如`folder/image.png`。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      toPath
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+新的文件路径，包括新的文件名。例如 `folder/image-copy.png`。
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 需要RLS策略权限:
+  - `buckets`表的权限: 无
+  - `objects`表的权限: `插入'和`选择'.
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 复制文件
+
+
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .copy('public/avatar1.png', 'private/avatar2.png')
+```

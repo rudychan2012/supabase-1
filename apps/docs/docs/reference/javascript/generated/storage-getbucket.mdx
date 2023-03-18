@@ -1,0 +1,71 @@
+---
+id: storage-getbucket
+title: "getBucket()"
+slug: /storage-getbucket
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+检索现有存储桶的详细信息。
+
+```js
+const { data, error } = await supabase
+  .storage
+  .getBucket('avatars')
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      id
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+你想检索的桶的唯一标识符。
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 需要RLS策略权限:
+  - `buckets`表权限: `选择'.
+  - `objects`表的权限：无
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 获取桶
+
+
+
+```js
+const { data, error } = await supabase
+  .storage
+  .getBucket('avatars')
+```

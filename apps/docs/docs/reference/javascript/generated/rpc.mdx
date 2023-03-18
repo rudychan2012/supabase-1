@@ -1,0 +1,315 @@
+---
+id: rpc
+title: "Postgres functions: rpc()"
+slug: /rpc
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+你可以把Postgres函数作为_远程过程调用，即你可以从任何地方执行数据库中的逻辑。
+当逻辑很少改变时，函数是非常有用的，比如密码重设和更新。
+
+```sql
+create or replace function hello_world() returns text as $$
+  select 'Hello world';
+$$ language sql;
+```
+
+
+```ts
+const { data, error } = await supabase.rpc('hello_world')
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      fn
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>FunctionName</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要调用的函数名称
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      args
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+传递给函数调用的参数
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+命名的参数
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      count
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>exact</code> | <code>planned</code> | <code>estimated</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+计数算法，用于计算函数返回的行数。
+函数返回的行数。只适用于[返回集合的函数](https://www.postgresql.org/docs/current/functions-srf.html)。
+
+`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
+引擎盖。
+
+`"planned"`: 近似但快速的计数算法。使用了Postgres
+的统计数据。
+
+`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
+数。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      head
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+当设置为 "true "时，"data "将不被返回。
+如果你只需要计数，则很有用。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 调用一个没有参数的Postgres函数
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create function hello_world() returns text as $$
+    select 'Hello world';
+  $$ language sql;
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase.rpc('hello_world')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": "Hello world",
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 调用一个带参数的Postgres函数
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create function echo(say text) returns text as $$
+    select say;
+  $$ language sql;
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase.rpc('echo', { say: '👋' })
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": "👋",
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 大量处理
+
+你可以通过传入一个数组作为参数来处理大型有效载荷。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create function add_one_each(arr int[]) returns int[] as $$
+    select array_agg(n + 1) from unnest(arr) as n;
+  $$ language sql;
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase.rpc('add_one_each', { arr: [1, 2, 3] })
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      2,
+      3,
+      4
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 调用带有过滤器的Postgres函数
+
+返回表格的Postgres函数也可以与
+[过滤器](/docs/reference/javascript/using-filters)和
+[修改器](/docs/reference/javascript/using-modifiers)。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'France'),
+    (2, 'United Kingdom');
+
+  create function list_stored_countries() returns setof countries as $$
+    select * from countries;
+  $$ language sql;
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .rpc('list_stored_countries')
+    .eq('id', 1)
+    .single()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": {
+      "id": 1,
+      "name": "France"
+    },
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

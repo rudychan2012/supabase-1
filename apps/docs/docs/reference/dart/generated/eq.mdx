@@ -1,0 +1,79 @@
+---
+id: eq
+title: ".eq()"
+slug: /eq
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+查找所有在所述 `column`上的值与指定的 `value`完全匹配的记录。
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .eq('name', 'The shire');
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 使用 `select()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .eq('name', 'The shire');
+```
+
+### 使用 `update()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .update({ 'name': 'Mordor' })
+  .eq('name', 'San Francisco');
+```
+
+### 使用 `delete()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .delete()
+  .eq('name', 'Mordor');
+```
+
+### 使用 `rpc()`
+
+
+
+```dart
+// Only valid if the Stored Procedure returns a table type.
+final data = await supabase
+  .rpc('echo_all_cities')
+  .eq('name', 'San Francisco');
+```

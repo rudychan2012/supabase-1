@@ -1,0 +1,79 @@
+---
+id: lt
+title: ".lt()"
+slug: /lt
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+查找所有在所述`column`上的值小于指定`value`的记录。
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .lt('country_id', 250);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 使用 `select()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .lt('country_id', 250);
+```
+
+### 使用 `update()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .update({ 'name': 'Mordor' })
+  .lt('country_id', 250);
+```
+
+### 使用 `delete()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .delete()
+  .lt('country_id', 250);
+```
+
+### 使用 `rpc()`
+
+
+
+```dart
+// Only valid if the Stored Procedure returns a table type.
+final data = await supabase
+  .rpc('echo_all_cities')
+  .lt('country_id', 250);
+```

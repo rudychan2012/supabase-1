@@ -1,0 +1,53 @@
+---
+id: storage-from-upload
+title: "from.upload()"
+slug: /storage-from-upload
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+将一个文件上传到一个现有的桶。
+
+
+```dart
+final avatarFile = File('path/to/file');
+final String path = await supabase.storage.from('avatars').upload(
+      'public/avatar1.png',
+      avatarFile,
+      fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
+    );
+```
+
+
+
+
+
+
+## Notes
+
+- 需要的政策权限。
+  - `buckets`权限: 无 
+  - `objects`的权限: `insert`
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 上传文件
+
+
+
+```dart
+final avatarFile = File('path/to/file');
+final String path = await supabase.storage.from('avatars').upload(
+      'public/avatar1.png',
+      avatarFile,
+      fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
+    );
+```

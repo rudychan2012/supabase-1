@@ -1,0 +1,129 @@
+---
+id: gte
+title: "gte()"
+slug: /gte
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+只匹配`column`大于或等于`value`的行。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .select()
+  .gte('id', 2)
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      列
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>ColumnName</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要过滤的列
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      值
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来过滤的值
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 举例
+
+### 用 `select()`
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select()
+    .gte('id', 2)
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 2,
+        "name": "Albania"
+      },
+      {
+        "id": 3,
+        "name": "Algeria"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

@@ -1,0 +1,64 @@
+---
+id: removechannel
+title: "removeChannel()"
+slug: /removechannel
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+取消订阅并从Realtime客户端删除Realtime频道。
+
+```js
+supabase.removeChannel(myChannel)
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      channel
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>default</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+实时通道的名称。
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 如果你在监听Postgres的变化，移除一个通道是保持你项目的Realtime服务以及数据库性能的一个好方法。Supabase会在客户端断开连接后的30秒内自动处理清理工作，但未使用的通道可能会因为同时订阅了更多的客户端而导致性能下降。
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 移除一个频道
+
+
+
+```js
+supabase.removeChannel(myChannel)
+```

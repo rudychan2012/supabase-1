@@ -1,0 +1,73 @@
+---
+id: storage-from-remove
+title: "from.remove()"
+slug: /storage-from-remove
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+删除同一桶中的文件
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .remove(['folder/avatar1.png'])
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      paths
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个要删除的文件数组，包括路径和文件名。例如[`folder/image.png`]。
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 需要RLS策略权限:
+  - `buckets`表的权限: 无
+  - `objects`表的权限: `删除`和`选择`.
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 删除文件
+
+
+
+```js
+const { data, error } = await supabase
+  .storage
+  .from('avatars')
+  .remove(['folder/avatar1.png'])
+```

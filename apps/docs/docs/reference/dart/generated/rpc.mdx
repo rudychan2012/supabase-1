@@ -1,0 +1,54 @@
+---
+id: rpc
+title: "存储程序: rpc()"
+slug: /rpc
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+你可以以 "远程程序调用"的方式调用存储程序。
+
+这是一种花哨的说法，即你可以把一些逻辑放入数据库，然后从任何地方调用它。
+当逻辑很少改变时，它特别有用--比如密码重设和更新。
+
+
+```dart
+final data = await supabase
+  .rpc('hello_world');
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 调用一个存储过程
+
+这是一个调用存储过程的例子。
+
+```dart
+final data = await supabase
+  .rpc('hello_world');
+```
+
+### 带有参数
+
+
+
+```dart
+final data = await supabase
+  .rpc('echo_city', params: { 'name': 'The Shire' });
+```

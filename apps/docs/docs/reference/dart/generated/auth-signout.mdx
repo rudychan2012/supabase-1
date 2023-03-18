@@ -1,0 +1,41 @@
+---
+id: auth-signout
+title: "signOut()"
+slug: /auth-signout
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+退出当前用户，如果有一个登录的用户。
+
+
+```dart
+await supabase.auth.signOut();
+```
+
+
+
+
+
+
+## Notes
+
+- 为了使用`signOut()`方法，用户需要先退出。
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### Sign out
+
+
+
+```dart
+await supabase.auth.signOut();
+```

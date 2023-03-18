@@ -1,0 +1,131 @@
+---
+id: invoke
+title: "invoke()"
+slug: /invoke
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+调用一个Supabase函数。
+
+
+```js
+const { data, error } = await supabase.functions.invoke('hello', {
+  body: { foo: 'bar' }
+})
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      functionName
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要调用的函数的名称
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      invokeOptions
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>FunctionInvokeOptions</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注释
+
+- 需要一个授权标头。
+- 调用参数通常符合[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)规范。
+- 当你向函数传递一个主体时，我们会自动附加 `Blob`、`ArrayBuffer`、`File`、`FormData`和 `String`的Content-Type标头。如果它不符合这些类型，我们会假定有效载荷是`json`，将其序列化并附加`Content-Type'头为`application/json`。你可以通过传递你自己的 `Content-Type`头来重写这一行为。
+- 回复会自动解析为`json`、`blob`和`form-data`，取决于你的函数发送的`Content-Type`头。默认情况下，响应被解析为`text`。
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 基本调用
+
+null
+
+```js
+const { data, error } = await supabase.functions.invoke('hello', {
+  body: { foo: 'bar' }
+})
+```
+
+### 错误处理
+
+如果你的函数抛出一个错误，将返回`FunctionsHttpError`；如果Supabase Relay在处理你的函数时出现错误，将返回`FunctionsRelayError`；如果调用你的函数时出现网络错误，将返回`FunctionsFetchError`。
+
+
+```js
+import { FunctionsHttpError, FunctionsRelayError, FunctionsFetchError } from "@supabase/supabase-js";
+
+const { data, error } = await supabase.functions.invoke('hello', {
+  headers: {
+    "my-custom-header": 'my-custom-header-value'
+  },
+  body: { foo: 'bar' }
+})
+
+if (error instanceof FunctionsHttpError) {
+  console.log('Function returned an error', error.message)
+} else if (error instanceof FunctionsRelayError) {
+  console.log('Relay error:', error.message)
+} else if (error instanceof FunctionsFetchError) {
+  console.log('Fetch error:', error.message)
+}
+```
+
+### 传递自定义头文件。
+
+你可以向你的函数传递自定义头信息。注意：supabase-js会自动将`授权`头与登录用户的JWT一起传递。
+
+
+```js
+const { data, error } = await supabase.functions.invoke('hello', {
+  headers: {
+    "my-custom-header": 'my-custom-header-value'
+  },
+  body: { foo: 'bar' }
+})
+```

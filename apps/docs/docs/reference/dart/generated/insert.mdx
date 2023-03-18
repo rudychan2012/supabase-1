@@ -1,0 +1,55 @@
+---
+id: insert
+title: "创建数据: insert()"
+slug: /insert
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+对表进行INSERT操作。
+
+
+```dart
+final data = await supabase
+    .from('cities')
+    .insert({'name': 'The Shire', 'country_id': 554});
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 创建一个记录
+
+
+
+```dart
+final data = await supabase
+    .from('cities')
+    .insert({'name': 'The Shire', 'country_id': 554});
+```
+
+### 批量创建
+
+
+
+```dart
+final res = await supabase.from('cities').insert([
+  {'name': 'The Shire', 'country_id': 554},
+  {'name': 'Rohan', 'country_id': 555},
+]);
+```

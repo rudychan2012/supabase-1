@@ -1,0 +1,216 @@
+---
+id: auth-admin-generatelink
+title: "generateLink()"
+slug: /auth-admin-generatelink
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+生成电子邮件链接和OTP，通过自定义的电子邮件供应商发送。
+
+```js
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'signup',
+  email: 'email@example.com',
+  options: {
+    'password': 'secret'
+  }
+})
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      GenerateLinkParams
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>GenerateSignupLinkParams</code> | <code>GenerateInviteOrMagiclinkParams</code> | <code>GenerateRecoveryLinkParams</code> | <code>GenerateEmailChangeLinkParams</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      GenerateSignupLinkParams
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      GenerateRecoveryLinkParams
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      GenerateInviteOrMagiclinkParams
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      GenerateEmailChangeLinkParams
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 生成一个注册链接
+
+
+
+```js
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'signup',
+  email: 'email@example.com',
+  options: {
+    'password': 'secret'
+  }
+})
+```
+
+### 生成一个邀请链接
+
+
+
+```js
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'invite',
+  email: 'email@example.com'
+})
+```
+
+### 生成一个 magic link
+
+
+
+```js
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'magiclink',
+  email: 'email@example.com'
+})
+```
+
+### 生成一个恢复链接
+
+
+
+```js
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'recovery',
+  email: 'email@example.com'
+})
+```
+
+### 产生改变当前电子邮件地址的链接
+
+
+
+```js
+// generate an email change link to be sent to the current email address
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'email_change_current',
+  email: 'current.email@example.com',
+  newEmail: 'new.email@example.com'
+})
+
+// generate an email change link to be sent to the new email address
+const { data, error } = await supabase.auth.admin.generateLink({
+  type: 'email_change_new',
+  email: 'current.email@example.com',
+  newEmail: 'new.email@example.com'
+})
+```

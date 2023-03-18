@@ -1,0 +1,81 @@
+---
+id: is_
+title: ".is_()"
+slug: /is_
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+检查是否完全相等(null, true, false),找到所有在所述`column`上的值与指定的`value`完全匹配的记录。
+
+`is_`和`in_`过滤方法的后缀是`_`，以避免与保留的关键字发生冲突。
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .is_('name', null);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 使用 `select()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .select('name, country_id')
+  .is_('name', null);
+```
+
+### 使用 `update()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .update({ 'name': 'Mordor' })
+  .is_('name', null);
+```
+
+### 使用 `delete()`
+
+
+
+```dart
+final data = await supabase
+  .from('cities')
+  .delete()
+  .is_('name', null);
+```
+
+### 使用 `rpc()`
+
+
+
+```dart
+// Only valid if the Stored Procedure returns a table type.
+final data = await supabase
+  .rpc('echo_all_cities')
+  .is_('name', null);
+```

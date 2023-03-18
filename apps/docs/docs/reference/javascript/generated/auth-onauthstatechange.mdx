@@ -1,0 +1,128 @@
+---
+id: auth-onauthstatechange
+title: "onAuthStateChange()"
+slug: /auth-onauthstatechange
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+每次发生认证事件时都会收到通知。
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  console.log(event, session)
+})
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      callback
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个回调函数，当一个认证事件发生时被调用。
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+## 注释
+
+- 认证事件的类型:`SIGNED_IN`, `SIGNED_OUT`, `TOKEN_REFRESHED`, `USER_UPDATED`, `USER_DELETED`, `PASSWORD_RECOVERY`
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 监听认证变化
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  console.log(event, session)
+})
+```
+
+### 监听登录
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+})
+```
+
+### 监听退出登录
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
+})
+```
+
+### 监听令牌刷新
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
+})
+```
+
+### 监听用户的更新信息
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event == 'USER_UPDATED') console.log('USER_UPDATED', session)
+})
+```
+
+### 监听用户删除的内容
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event == 'USER_DELETED') console.log('USER_DELETED', session)
+})
+```
+
+### 监听密码恢复事件
+
+
+
+```js
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event == 'PASSWORD_RECOVERY') console.log('PASSWORD_RECOVERY', session)
+})
+```

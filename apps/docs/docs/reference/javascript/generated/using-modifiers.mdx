@@ -1,0 +1,11 @@
+---
+id: using-modifiers
+title: "使用修改器"
+slug: /using-modifiers
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+过滤器是在行的层面上工作的--它们允许你在不改变行的形状的情况下，返回只符合特定条件的行。
+只符合某些条件的行，而不改变行的形状。修改器是不符合该定义的一切，允许你改变响应的格式（例如，返回一个CSV字符串）。
+
+修改器必须在过滤器之后指定。有些修改器只适用于一些修改器只适用于返回行的查询（例如，`select()`或`rpc()`在一个返回表的函数上返回表格响应的函数）。

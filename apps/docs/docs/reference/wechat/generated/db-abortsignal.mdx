@@ -1,0 +1,95 @@
+---
+id: db-abortsignal
+title: "abortSignal()"
+slug: /db-abortsignal
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+设置获取请求的AbortSignal。
+
+```ts
+const ac = new AbortController()
+ac.abort()
+const { data, error } = await supabase
+  .from('very_big_table')
+  .select()
+  .abortSignal(ac.signal)
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      signal
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>AbortSignal</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用于获取请求的AbortSignal
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 终止执行中的请求
+
+你可以使用一个[`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)来中止请求。请注意，`status`和`statusText`对中止的请求没有任何意义，因为请求没有得到满足。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="js">
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const ac = new AbortController()
+  ac.abort()
+  const { data, error } = await supabase
+    .from('very_big_table')
+    .select()
+    .abortSignal(ac.signal)
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "error": {
+      "message": "FetchError: The user aborted a request.",
+      "details": "",
+      "hint": "",
+      "code": ""
+    },
+    "status": 400,
+    "statusText": "Bad Request"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

@@ -1,0 +1,49 @@
+---
+id: storage-from-list
+title: "from.list()"
+slug: /storage-from-list
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+---
+
+列出一个桶内的所有文件。
+
+
+```dart
+final List<FileObject> objects = await supabase
+  .storage
+  .from('avatars')
+  .list();
+```
+
+
+
+
+
+
+## Notes
+
+- 需要的政策权限。
+  - `buckets`权限: 无 
+  - `objects`的权限: `select`
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+### 在一个桶中列出文件
+
+
+
+```dart
+final List<FileObject> objects = await supabase
+  .storage
+  .from('avatars')
+  .list();
+```

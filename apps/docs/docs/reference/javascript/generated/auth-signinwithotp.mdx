@@ -1,0 +1,382 @@
+---
+id: auth-signinwithotp
+title: "signInWithOtp()"
+slug: /auth-signinwithotp
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+使用magiclink或一次性密码（OTP）登录用户。
+如果在电子邮件模板中指定了`{{ .ConfirmationURL }}`变量，将发送一个magiclink。
+如果在电子邮件模板中指定了`{{ .Token }}`变量，将发送一个OTP。
+如果你使用电话签到，将只发送一个OTP。你将无法为电话签到发送一个魔法链接。
+
+```js
+const { data, error } = await supabase.auth.signInWithOtp({
+  email: 'example@email.com',
+})
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      SignInWithPasswordlessCredentials
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>reflection</code> | <code>reflection</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      <code>object</code>
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      phone
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+该用户的电话号码。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      验证码令牌
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+当用户完成网站上的验证码时收到的验证令牌。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      data
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+
+`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      shouldCreateUser
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+如果设置为false，该方法将不会创建一个新的用户。默认为true。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      <code>object</code>
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      email
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用户的电子邮件地址。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      验证码令牌
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+当用户完成网站上的验证码时收到的验证令牌。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      data
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+
+`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      emailRedirectTo
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+嵌入电子邮件链接中的重定向网址
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      shouldCreateUser
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+如果设置为false，该方法将不会创建一个新的用户。默认为true。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 备注
+
+- 需要有电子邮件或电话号码。
+- 这种方法用于无密码登录，OTP被发送到用户的电子邮件或电话号码。
+- 如果你使用电子邮件，你可以配置你是否希望用户收到一个magiclink或OTP。
+- 如果你使用电话，你可以配置你是否希望用户收到OTP。
+- 魔法链接的目标URL是由[`SITE_URL`](https://supabase.com/docs/reference/auth/config#site_url)决定的。你可以修改`SITE_URL`或在[你的项目](https://app.supabase.com/project/_/auth/settings)中添加额外的重定向url。
+
+
+
+
+
+
+
+
+
+
+## 例子
+
+### 用电子邮件登录。
+
+用户将被发送一封电子邮件，其中包含一个magiclink或一个OTP或两者。默认情况下，一个特定的用户每60秒只能请求一次OTP。
+
+```js
+const { data, error } = await supabase.auth.signInWithOtp({
+  email: 'example@email.com',
+})
+```
+
+### 用短信OTP登录。
+
+用户将被发送一条包含OTP的短信。默认情况下，一个特定的用户每60秒只能请求一次OTP。
+
+```js
+const { data, error } = await supabase.auth.signInWithOtp({
+  phone: '+13334445555',
+})
+```

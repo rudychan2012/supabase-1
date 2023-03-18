@@ -1,0 +1,394 @@
+---
+id: auth-signup
+title: "signUp()"
+slug: /auth-signup
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+创建一个新的用户。
+
+```js
+const { data, error } = await supabase.auth.signUp({
+  email: 'example@email.com',
+  password: 'example-password',
+})
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      SignUpWithPasswordCredentials
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>reflection</code> | <code>reflection</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      <code>object</code>
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      phone
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+该用户的电话号码。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      password
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用户的密码。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      验证码令牌
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+当用户完成网站上的验证码时收到的验证令牌。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      data
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+
+`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      <code>object</code>
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      password
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用户的密码。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      email
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用户的电子邮件地址。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      验证码令牌
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+当用户完成网站上的验证码时收到的验证令牌。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      data
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+
+`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      emailRedirectTo
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+嵌入电子邮件链接中的重定向网址
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 默认情况下，用户在登录前需要验证其电子邮件地址。要关闭这个功能，请在[你的项目](https://cloud.memfiredb.com)中禁用**确认电子邮件**。
+- **确认电子邮件**决定了用户在注册后是否需要确认他们的电子邮件地址。
+  - 如果**确认电子邮件**被启用，将返回一个`用户`，但`会话`为空。
+  - 如果**确认电子邮件**被禁用，则同时返回一个`用户`和一个`会话`。
+- 当用户确认他们的电子邮件地址时，他们默认会被重定向到`SITE_URL`。你可以修改你的`SITE_URL`或在[你的项目](https://cloud.memfiredb.com)中添加额外的重定向URL。
+- 如果为一个现有的确认用户调用signUp()。
+    - 如果在[你的项目](https://cloud.memfiredb.com)中启用了**确认邮件**，将返回一个混淆的/假的用户对象。
+    - 如果**确认电子邮件**被禁用，将返回错误信息 `用户已注册`。
+- 要获取当前登录的用户，请参考[`getUser()`](/docs/reference/javascript/auth-getuser)。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### Sign up.
+
+
+
+```js
+const { data, error } = await supabase.auth.signUp({
+  email: 'example@email.com',
+  password: 'example-password',
+})
+```
+
+### 用附加的用户元数据进行注册。
+
+
+
+```js
+const { data, error } = await supabase.auth.signUp(
+  {
+    email: 'example@email.com',
+    password: 'example-password',
+    options: {
+      data: {
+        first_name: 'John',
+        age: 27,
+      }
+    }
+  }
+)
+```

@@ -1,0 +1,167 @@
+---
+id: storage-from-getpublicurl
+title: "from.getPublicUrl()"
+slug: /storage-from-getpublicurl
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+检索公共水桶中的资产的URL。
+这个函数并不验证桶是否是公共的。如果为一个不公开的bucket创建一个公开的URL，你将无法下载资源。
+
+```js
+const { data } = supabase
+  .storage
+  .from('public-bucket')
+  .getPublicUrl('folder/avatar1.png')
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      path
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要生成公共URL的文件的路径和名称。例如`folder/image.png`。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      download
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code> | <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+如果设置为 "true"，就会触发该文件的下载。如果你想用不同的文件名来触发下载，将此参数设置为文件名。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      string
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      boolean
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 水箱需要被设置为公开，可以通过[updateBucket()](/docs/reference/javascript/storag-updatebucket)或者通过进入[app.supabase.com](https://app.supabase.com)的存储，点击水箱上的溢出菜单并选择 "Make public"
+- 需要RLS策略权限。
+  - `buckets`表权限：无
+  - `objects`表的权限：无
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方法
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 返回公共桶中的资源的URL
+
+
+
+```js
+const { data } = supabase
+  .storage
+  .from('public-bucket')
+  .getPublicUrl('folder/avatar1.png')
+```

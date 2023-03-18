@@ -1,0 +1,126 @@
+---
+id: db-modifiers-select
+title: "select()"
+slug: /db-modifiers-select
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+对查询结果执行SELECT。
+
+默认情况下，`.insert()`, `.update()`, `.upsert()`, 和 `.delete()`不会返回修改过的记录。通过调用这个方法，修改过的行会返回到`data`。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .upsert({ id: 1, name: 'Algeria' })
+  .select()
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      列
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>Query</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要检索的列，用逗号分隔
+
+  </div>
+  
+</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 使用`upsert()`时
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .upsert({ id: 1, name: 'Albania' })
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "status": 201,
+    "statusText": "Created"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="js">
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .upsert({ id: 1, name: 'Algeria' })
+    .select()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 1,
+        "name": "Algeria"
+      }
+    ],
+    "status": 201,
+    "statusText": "Created"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

@@ -1,0 +1,203 @@
+---
+id: textsearch
+title: "textSearch()"
+slug: /textsearch
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+只与文本和tsvector列有关。只匹配行，其中`column`与`query`中的查询字符串匹配。
+
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      列
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>ColumnName</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要过滤的文本或tsvector列
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      query
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要与之匹配的查询文本
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+命名的参数
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      config
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要使用的文本搜索配置
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      type
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>plain</code> | <code>phrase</code> | <code>websearch</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+改变 "查询 "文本的解释方式
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注释
+
+更多信息，请参见[Postgres全文搜索](/docs/guides/database/full-text-search)。
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 文本搜索
+
+
+
+```ts
+const { data, error } = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', `'fat' & 'cat'`, {
+    config: 'english'
+  })
+```
+
+### 基本规范化
+
+使用PostgreSQL的`plainto_tsquery`函数。
+
+```ts
+const { data, error } = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', `'fat' & 'cat'`, {
+    type: 'plain',
+    config: 'english'
+  })
+```
+
+### 全面规范化
+
+使用PostgreSQL的`phraseto_tsquery`功能。
+
+```ts
+const { data, error } = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', `'fat' & 'cat'`, {
+    type: 'phrase',
+    config: 'english'
+  })
+```
+
+### 网络搜索
+
+使用 PostgreSQL 的 `websearch_to_tsquery` 函数。
+这个函数永远不会引发语法错误，这使得它可以使用用户提供的原始输入进行搜索，并且可以使用
+与高级运算符一起使用。
+
+- `unquoted text`：不在引号内的文本将被转换为由&运算符分隔的术语，就像由plainto_tsquery处理一样。
+- `"quoted text"`：带引号的文本将被转换为由<->运算符分隔的术语，就像由phraseto_tsquery处理的那样。
+- `OR`："or"字将被转换为 | 操作符。
+- `-`：破折号将被转换为操作符!。
+
+
+```ts
+const { data, error } = await supabase
+  .from('quotes')
+  .select('catchphrase')
+  .textSearch('catchphrase', `'fat or cat'`, {
+    type: 'websearch',
+    config: 'english'
+  })
+```

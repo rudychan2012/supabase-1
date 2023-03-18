@@ -1,0 +1,389 @@
+---
+id: upsert
+title: "Upsert data: upsert()"
+slug: /upsert
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+对表或视图执行UPSERT。根据传递给`onConflict`的列`onConflict`所传递的列，`.upsert()`允许你执行等同于`.insert()`如果对应的`onConflict`列的记录不存在存在，或者如果它确实存在，则根据忽略重复数据。
+默认情况下，不返回被替换的行。要返回它，请在调用与`.select()'连锁调用。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .upsert({ id: 1, name: 'Albania' })
+  .select()
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      values
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>Row</code> | <code>array</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要用的值来upsert。传递一个对象来替换单行
+单一行，或者通过一个数组来插入多行。
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      <code>object</code>
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      行
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+未提供说明。 
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+命名的参数
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      count
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>exact</code> | <code>planned</code> | <code>estimated</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来计算倒置行的计数算法
+
+`"exact"`: 准确但缓慢的计数算法。执行 `COUNT(*)`。
+引擎盖。
+
+`"planned"`: 近似但快速的计数算法。使用了Postgres
+的统计数据。
+
+`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
+数。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      ignoreDuplicates
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+如果`true`，重复的行将被忽略。如果`false`，重复的行将与现有的行合并。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      onConflict
+    </span>
+    <span className="method-list-item-label-badge false">
+      optional
+    </span>
+    <span className="method-list-item-validation">
+      <code>string</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+逗号分隔的UNIQUE列，用于指定如何确定重复记录。重复的行是如何被确定的。如果所有的 `onConflict`列相等，那么两行就是重复的。`onConflict`列相等。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注释
+
+- 主键必须包含在 `values`中才能使用upsert。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 颠覆你的数据
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .upsert({ id: 1, name: 'Albania' })
+    .select()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 1,
+        "name": "Albania"
+      }
+    ],
+    "status": 201,
+    "statusText": "Created"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 批量上传你的数据
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .upsert([
+      { id: 1, name: 'Albania' },
+      { id: 2, name: 'Algeria' },
+    ])
+    .select()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 1,
+        "name": "Albania"
+      },
+      {
+        "id": 2,
+        "name": "Algeria"
+      }
+    ],
+    "status": 201,
+    "statusText": "Created"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 向有约束条件的表中插入数据
+
+在下面的查询中，`upsert()`隐含地使用`id`(主键)列来确定冲突。
+(主键)列来确定冲突。如果没有现有的行，`upsert()`就会插入一条新的记录，在这种情况下，会失败，因为已经有相同的`id`。
+在这种情况下会失败，因为已经有一条`handle``"saoirse "`的记录。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    users (
+      id int8 generated by default as identity primary key,
+      handle text not null unique,
+      display_name text
+    );
+
+  insert into
+    users (id, handle, display_name)
+  values
+    (1, 'saoirse', null);
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('users')
+    .upsert({ id: 42, handle: 'saoirse', display_name: 'Saoirse' })
+    .select()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "error": {
+      "code": "23505",
+      "details": "Key (handle)=(saoirse) already exists.",
+      "hint": null,
+      "message": "duplicate key value violates unique constraint \"users_handle_key\""
+    },
+    "status": 409,
+    "statusText": "Conflict"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+使用`onConflict`选项，你可以指示`upsert()`使用另一个具有唯一约束的列来确定冲突。
+另一个具有唯一约束的列来确定冲突。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="js">
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  await supabase
+    .from('users')
+    .upsert(
+      { id: 42, handle: 'saoirse', display_name: 'Saoirse' },
+      { onConflict: 'handle' },
+    )
+  const { data, error } = await supabase
+    .from('users')
+    .select()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 42,
+        "handle": "saoirse",
+        "display_name": "Saoirse"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

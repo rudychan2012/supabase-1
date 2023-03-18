@@ -1,0 +1,671 @@
+---
+id: select
+title: "获取数据：select()"
+slug: /select
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+在表或视图上执行SELECT查询。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .select()
+```
+
+
+## 参数
+
+
+<ul className="method-list-group">
+  
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      列
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>查询</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+要检索的列，用逗号分隔
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      options
+    </span>
+    <span className="method-list-item-label-badge required">
+      required
+    </span>
+    <span className="method-list-item-validation">
+      <code>object</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+命名的参数
+
+  </div>
+  
+<ul className="method-list-group">
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      count
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>exact</code> | <code>planned</code> | <code>estimated</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+用来计算表格或视图中的行数的算法。
+
+`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
+引擎盖。
+
+`"planned"`: 近似的但快速的计数算法。使用Postgres的
+统计数据。
+
+`"estimated"`: 对低数据使用精确计数，对高数据使用计划计数。
+数字。
+
+  </div>
+  
+</li>
+
+
+<li className="method-list-item">
+  <h4 className="method-list-item-label">
+    <span className="method-list-item-label-name">
+      head
+    </span>
+    <span className="method-list-item-label-badge false">
+      可选的
+    </span>
+    <span className="method-list-item-validation">
+      <code>boolean</code>
+    </span>
+  </h4>
+  <div class="method-list-item-description">
+
+当设置为 `true`时，`data`将不被返回。
+如果你只需要计数，则很有用。
+
+  </div>
+  
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+
+## 注意事项
+
+- 默认情况下，Supabase项目最多返回1,000行。这个设置可以在你的项目的[API设置](https://app.supabase.com/project/_/settings/api)中改变。建议你保持较低的设置，以限制意外或恶意请求的有效载荷大小。你可以使用`range()`查询来分页浏览你的数据。
+- `select()`可以与[Filters](/docs/reference/javascript/using-filters)相结合。
+- `select()`可以与[Modifiers](/docs/reference/javascript/using-modifiers)结合使用。
+- `apikey`是一个保留关键字，如果你使用的是[MemFire Cloud平台](/docs/guides/hosting/platform)，[应该避免作为列名](https://github.com/supabase/supabase/issues/5465)。
+
+
+
+
+
+
+
+
+
+
+## 实例
+
+### 获取你的数据
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 1,
+        "name": "Afghanistan"
+      },
+      {
+        "id": 2,
+        "name": "Albania"
+      },
+      {
+        "id": 3,
+        "name": "Algeria"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 选择特定的列
+
+你可以从你的表中选择特定的字段。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select('name')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "name": "Afghanistan"
+      },
+      {
+        "name": "Albania"
+      },
+      {
+        "name": "Algeria"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 查询外键表
+
+如果你的数据库有外键关系，你也可以查询相关表。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+  create table
+    cities (
+      id int8 primary key,
+      country_id int8 not null references countries,
+      name text
+    );
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Germany'),
+    (2, 'Indonesia');
+  insert into
+    cities (id, country_id, name)
+  values
+    (1, 2, 'Bali'),
+    (2, 1, 'Munich');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select(`
+      name,
+      cities (
+        name
+      )
+    `)
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "name": "Germany",
+        "cities": [
+          {
+            "name": "Munich"
+          }
+        ]
+      },
+      {
+        "name": "Indonesia",
+        "cities": [
+          {
+            "name": "Bali"
+          }
+        ]
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 通过连接表查询外域表
+
+如果你处于这样一种情况，即你的表不是***直接相关的，而是通过一个_连接表_连接起来的。
+直接相关，而是通过一个_连接表_连接起来的，你仍然可以使用
+`select()`方法来查询相关数据。这个连接表需要
+需要将外键作为其复合主键的一部分。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    users (
+      id int8 primary key,
+      name text
+    );
+  create table
+    teams (
+      id int8 primary key,
+      name text
+    );
+  -- join table
+  create table
+    users_teams (
+      user_id int8 not null references users,
+      team_id int8 not null references teams,
+      -- both foreign keys must be part of a composite primary key
+      primary key (user_id, team_id)
+    );
+
+  insert into
+    users (id, name)
+  values
+    (1, 'Kiran'),
+    (2, 'Evan');
+  insert into
+    teams (id, name)
+  values
+    (1, 'Green'),
+    (2, 'Blue');
+  insert into
+    users_teams (user_id, team_id)
+  values
+    (1, 1),
+    (1, 2),
+    (2, 2);
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('users')
+    .select(`
+      name,
+      teams (
+        name
+      )
+    `)
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "name": "Kiran",
+        "teams": [
+          {
+            "name": "Green"
+          },
+          {
+            "name": "Blue"
+          }
+        ]
+      },
+      {
+        "name": "Evan",
+        "teams": [
+          {
+            "name": "Blue"
+          }
+        ]
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 多次查询同一个外域表
+
+如果你需要两次查询同一个外域表，使用
+连接列的名称来确定使用哪个连接。你也可以给每个
+列一个别名。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    users (id int8 primary key, name text);
+
+  create table
+    messages (
+      sender_id int8 not null references users,
+      receiver_id int8 not null references users,
+      content text
+    );
+
+  insert into
+    users (id, name)
+  values
+    (1, 'Kiran'),
+    (2, 'Evan');
+
+  insert into
+    messages (sender_id, receiver_id, content)
+  values
+    (1, 2, '👋');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('messages')
+    .select(`
+      content,
+      from:sender_id(name),
+      to:receiver_id(name)
+    `)
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "content": "👋",
+        "from": {
+          "name": "Kiran"
+        },
+        "to": {
+          "name": "Evan"
+        }
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 通过外域表进行过滤
+
+如果一个外域表的列的过滤器不被满足，那么这个外域
+表返回"[]"或 "null"，但父表不会被过滤掉。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+  create table
+    cities (
+      id int8 primary key,
+      country_id int8 not null references countries,
+      name text
+    );
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Germany'),
+    (2, 'Indonesia');
+  insert into
+    cities (id, country_id, name)
+  values
+    (1, 2, 'Bali'),
+    (2, 1, 'Munich');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('cities')
+    .select('name, countries(*)')
+    .eq('countries.name', 'Estonia')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "name": "Bali",
+        "countries": null
+      },
+      {
+        "name": "Munich",
+        "countries": null
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+如果你想过滤掉父表的行，使用`!inner`提示。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="js">
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('cities')
+    .select('name, countries!inner(*)')
+    .eq('countries.name', 'Estonia')
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 使用计数选项进行查询
+
+你可以通过使用
+[count](/docs/reference/javascript/select#parameters)选项来获得。例如
+例如，在不返回所有行的情况下获得表的计数。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { count, error } = await supabase
+    .from('countries')
+    .select('*', { count: 'exact', head: true })
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "count": 3,
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
+
+### 查询JSON数据
+
+你可以选择和过滤以下内容的数据
+[JSON](/docs/guides/database/json) 列中的数据。Postgres提供了一些
+[操作符](/docs/guides/database/json#query-the-jsonb-data)用于
+查询JSON数据。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    users (
+      id int8 primary key,
+      name text,
+      address jsonb
+    );
+
+  insert into
+    users (id, name, address)
+  values
+    (1, 'Avdotya', '{"city":"Saint Petersburg"}');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+```ts
+const { data, error } = await supabase
+  .from('users')
+  .select(`
+    id, name,
+    address->city
+  `)
+```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 1,
+        "name": "Avdotya",
+        "city": "Saint Petersburg"
+      }
+    ],
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>

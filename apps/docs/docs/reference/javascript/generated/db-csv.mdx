@@ -1,0 +1,77 @@
+---
+id: db-csv
+title: "csv()"
+slug: /db-csv
+custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
+---
+
+返回`data`为CSV格式的字符串。
+
+```ts
+const { data, error } = await supabase
+  .from('countries')
+  .select()
+  .csv()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 示例
+
+### 以CSV格式返回数据
+
+默认情况下，数据以JSON格式返回，但也可以以逗号分隔值的形式返回。
+
+<Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
+<TabPanel id="schema" label="Schema">
+
+  ```sql
+  create table
+    countries (id int8 primary key, name text);
+
+  insert into
+    countries (id, name)
+  values
+    (1, 'Afghanistan'),
+    (2, 'Albania'),
+    (3, 'Algeria');
+  ```
+
+</TabPanel>
+<TabPanel id="js" label="JavaScript">
+
+  ```ts
+  const { data, error } = await supabase
+    .from('countries')
+    .select()
+    .csv()
+  ```
+
+</TabPanel>
+<TabPanel id="result" label="Result">
+
+  ```json
+  {
+    "data": "id,name\n1,Afghanistan\n2,Albania\n3,Algeria",
+    "status": 200,
+    "statusText": "OK"
+  }
+  ```
+
+</TabPanel>
+</Tabs>
