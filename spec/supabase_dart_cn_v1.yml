@@ -1,0 +1,2281 @@
+openref: 0.1
+
+info:
+  id: reference/dart
+  title: Getting started
+  description: |
+
+    Supabase Dart.
+
+  definition: ../../spec/enrichments/tsdoc_v2/combined.json
+  slugPrefix: '/'
+  specUrl: https://github.com/supabase/supabase/edit/master/spec/supabase_dart_v1.yml
+  libraries:
+    - name: 'Dart'
+      id: 'dart'
+      version: '0.0.1'
+
+pages:
+  auth.signUp():
+    title: 'signUp()'
+    description: |
+      创建一个新的用户。
+    notes: |
+      - 默认情况下，用户在登录前需要验证他们的电子邮件地址。要关闭这个功能，请在[你的项目](https://app.supabase.com/project/_/auth/settings)中禁用**确认电子邮件**。
+      - **确认电子邮件**决定了用户在注册后是否需要确认他们的电子邮件地址。
+        - 如果**确认电子邮件**被启用，将返回一个`用户`，但`会话`为空。
+        - 如果**确认电子邮件**被禁用，则同时返回一个`用户'和一个`会话`。
+      - 当用户确认他们的电子邮件地址时，他们默认会被重定向到[`SITE_URL`](https://supabase.com/docs/reference/auth/config#site_url)。你可以修改你的`SITE_URL`或在[你的项目](https://app.supabase.com/project/_/auth/settings)中添加额外的重定向URL。
+      - 如果为一个现有的确认用户调用signUp()。
+          - 如果在[你的项目](https://app.supabase.com/project/_/auth/settings)中启用了**确认邮件**，将返回一个混淆的/假的用户对象。
+          - 如果**确认电子邮件**被禁用，将返回错误信息 "用户已经注册"。
+    examples:
+      - name: Sign up.
+        isSpotlight: true
+        dart: |
+          ```dart
+          final AuthResponse res = await supabase.auth.signUp(
+            email: 'example@email.com',
+            password: 'example-password',
+          );
+          final Session? session = res.session;
+          final User? user = res.user;
+          ```
+      - name: 与第三方供应商签约。
+        hideCodeBlock: true
+        description: |
+          如果你使用Flutter，你可以使用`supabase_flutter`上的[signInWithOAuth()`](/docs/reference/dart/auth-signinwithoauth)方法与OAuth提供商签约。
+
+  auth.signInWithPassword():
+    title: 'signInWithPassword()'
+    description: |
+      使用电子邮件或电话号码与密码登录现有用户。
+    notes: |
+      - 需要电子邮件和密码或电话号码和密码。
+    examples:
+      - name: 用电子邮件和密码登录
+        isSpotlight: true
+        dart: |
+          ```dart
+          final AuthResponse res = await supabase.auth.signInWithPassword(
+            email: 'example@email.com',
+            password: 'example-password',
+          );
+          final Session? session = res.session;
+          final User? user = res.user;
+          ```
+      - name: 用电话和密码登录
+        dart: |
+          ```dart
+          final AuthResponse res = await supabase.auth.signInWithPassword(
+            phone: '+13334445555',
+            password: 'example-password',
+          );
+          final Session? session = res.session;
+          final User? user = res.user;
+          ```
+  auth.signInWithOtp():
+    title: 'signInWithOtp()'
+    notes: |
+      - 要求提供电子邮件或电话号码。
+      - 这种方法用于无密码登录，OTP被发送到用户的电子邮件或电话号码。
+      - 如果你使用电子邮件，你可以配置你是否想让用户收到一个魔术链接或OTP。
+      - 如果你使用电话，你可以配置你是否希望用户收到OTP。
+      - 魔法链接的目标URL是由[`SITE_URL`](https://supabase.com/docs/reference/auth/config#site_url)决定的。你可以修改`SITE_URL`或在[你的项目](https://app.supabase.com/project/_/auth/settings)中添加额外的重定向url。
+    examples:
+      - name: 用电子邮件登录。
+        isSpotlight: true
+        description: |
+          用户将被发送一封电子邮件，其中包含一个magiclink或OTP或两者。默认情况下，一个用户每60秒只能请求一次OTP。
+          你可以通过`emailRedirectTo`和动态链接，使用户在点击魔法链接后回到你的应用程序。
+        dart: |
+          ```dart
+          await supabase.auth.signInWithOtp(
+            email: 'example@email.com',
+            emailRedirectTo: kIsWeb ? null : 'io.supabase.flutter://signin-callback/',
+          );
+          ```
+      - name: 用短信OTP登录。
+        description: 用户将被发送一条包含OTP的短信。默认情况下，一个特定的用户只能每60秒请求一次OTP。
+        dart: |
+          ```dart
+          await supabase.auth.signInWithOtp(
+            phone: '+13334445555',
+          );
+          ```
+  auth.signInWithOAuth():
+    title: 'signInWithOAuth()'
+    description: |
+      使用第三方OAuth提供商对用户进行签名。
+    notes: |
+      - 这种方法用于使用第三方提供商进行登录。
+      - Supabase支持许多不同的[第三方提供商](https://supabase.com/docs/guides/auth#providers)。
+    examples:
+      - name: 使用第三方供应商登录
+        isSpotlight: true
+        dart: |
+          ```dart
+          await supabase.auth.signInWithOAuth(Provider.github);
+          ```
+      - name: 使用 `redirectTo`
+        description: |
+          指定重定向链接，通过深层链接把用户带回来。
+          注意，对于Flutter Web，`redirectTo`应该是空的。
+        dart: |
+          ```dart
+          await supabase.auth.signInWithOAuth(
+            Provider.github,
+            redirectTo: kIsWeb ? null : 'io.supabase.flutter://reset-callback/',
+          );
+          ```
+      - name: 使用 scopes
+        description: |
+          如果你需要OAuth提供商的额外数据，你可以在你的请求中包括一个空格分隔的范围列表，以获得OAuth提供商的令牌。
+          你可能还需要在提供者的OAuth应用设置中指定范围，这取决于提供者。
+        dart: |
+          ```dart
+          await supabase.auth.signInWithOAuth(
+            Provider.github,
+            scopes: 'repo gist notifications'
+          );
+          ...
+          // after user comes back from signin flow
+
+          final Session? session = supabase.auth.currentSession;
+          final String? oAuthToken = session?.providerToken;
+          ```
+  auth.signOut():
+    title: 'signOut()'
+    description: |
+      退出当前用户，如果有一个登录的用户。
+    notes: |
+      - 为了使用`signOut()`方法，用户需要先退出。
+    examples:
+      - name: Sign out
+        isSpotlight: true
+        dart: |
+          ```dart
+          await supabase.auth.signOut();
+          ```
+  auth.verifyOtp():
+    title: 'verifyOtp()'
+    notes: |
+      - `verifyOtp`方法接受不同的验证类型。如果使用电话号码，类型可以是`sms`或`phone_change`。如果使用的是电子邮件地址，类型可以是下列之一。`signup`, `magiclink`, `recovery`, `invite` 或 `email_change`.
+      - 使用的验证类型应该根据在`verifyOtp`之前调用的相应的auth方法来确定，以注册/登录一个用户。
+    examples:
+      - name: 验证短信一次性密码(OTP)
+        isSpotlight: true
+        dart: |
+          ```dart
+          final AuthResponse res = await supabase.auth.verifyOTP(
+            type: OtpType.sms,
+            token: '111111',
+            phone: '+13334445555',
+          );
+          final Session? session = res.session;
+          final User? user = res.user;
+          ```
+      - name: 验证注册 一次性密码(OTP)
+        isSpotlight: false
+        dart: |
+          ```dart
+          final AuthResponse res = await supabase.auth.verifyOTP(
+            type: OtpType.signup,
+            token: token,
+            phone: '+13334445555',
+          );
+          final Session? session = res.session;
+          final User? user = res.user;
+          ```
+  auth.currentSession:
+    title: 'currentSession'
+    description: |
+      如果有一个活动的会话，返回会话数据。
+    examples:
+      - name: 获取会话数据
+        isSpotlight: true
+        dart: |
+          ```dart
+          final Session? session = supabase.auth.currentSession;
+          ```
+  auth.currentUser:
+    title: 'currentUser'
+    description: |
+      返回用户数据，如果有一个登录的用户。
+    examples:
+      - name: 获取登录的用户
+        isSpotlight: true
+        dart: |
+          ```dart
+          final User? user = supabase.auth.currentUser;
+          ```
+  auth.updateUser():
+    title: 'updateUser()'
+    description: |
+      更新用户数据，如果有一个登录的用户。
+    notes: |
+      - 为了使用`updateUser()`方法，用户需要先登录。
+      - 默认情况下，电子邮件更新会向用户的当前和新的电子邮件发送一个确认链接。
+      要想只向用户的新邮箱发送确认链接，请在你的项目的[email auth provider settings](https://app.supabase.com/project/_/auth/settings)中禁用**安全的邮件变更**。
+    examples:
+      - name: 更新已认证用户的电子邮件
+        description: 向新的电子邮件地址发送一封 "确认电子邮件变更 "的电子邮件。
+        isSpotlight: true
+        dart: |
+          ```dart
+          final UserResponse res = await supabase.auth.updateUser(
+            UserAttributes(
+              email: 'example@email.com',
+            ),
+          );
+          final User? updatedUser = res.user;
+          ```
+      - name: 更新一个已认证用户的密码
+        isSpotlight: false
+        dart: |
+          ```dart
+          final UserResponse res = await supabase.auth.updateUser(
+            UserAttributes(
+              password: 'new password',
+            ),
+          );
+          final User? updatedUser = res.user;
+          ```
+      - name: 更新用户的元数据
+        isSpotlight: true
+        dart: |
+          ```dart
+          final UserResponse res = await supabase.auth.updateUser(
+            UserAttributes(
+              data: { 'hello': 'world' },
+            ),
+          );
+          final User? updatedUser = res.user;
+          ```
+  auth.onAuthStateChange():
+    title: 'onAuthStateChange()'
+    description: |
+      每次发生认证事件时都会收到通知。
+    notes: |
+      - 认证事件的类型: `AuthChangeEvent.passwordRecovery`, `AuthChangeEvent.signedIn`, `AuthChangeEvent.signedOut`, `AuthChangeEvent.tokenRefreshed`, `AuthChangeEvent.userUpdated`and `AuthChangeEvent.userDeleted`
+    examples:
+      - name: 监听认证变化
+        isSpotlight: true
+        dart: |
+          ```dart
+          final authSubscription = supabase.auth.onAuthStateChange.listen((data) {
+            final AuthChangeEvent event = data.event;
+            final Session? session = data.session;
+          });
+          ```
+      - name: 监听一个特定的事件
+        dart: |
+          ```dart
+          final authSubscription = supabase.auth.onAuthStateChange.listen((data) {
+            final AuthChangeEvent event = data.event;
+            if (event == AuthChangeEvent.signedIn) {
+              // handle signIn
+            }
+          });
+          ```
+      - name: 退订自动订阅
+        dart: |
+          ```dart
+          final authSubscription = supabase.auth.onAuthStateChange((event, session) {});
+
+          authSubscription.cancel();
+          ```
+  auth.resetPasswordForEmail:
+    title: 'resetPasswordForEmail()'
+    description: |
+      向电子邮件地址发送重置请求。
+    notes: |
+      向一个电子邮件地址发送一个密码重置请求。当用户点击邮件中的重置链接时，他们会被重定向到你的应用程序。提示用户输入新的密码并调用auth.updateUser()。
+
+      ```dart
+      await supabase.auth.resetPasswordForEmail(
+        'sample@email.com',
+        redirectTo: kIsWeb ? null : 'io.supabase.flutter://reset-callback/',
+      );
+      ```
+    examples:
+      - name: 重置Flutter的密码
+        isSpotlight: true
+        dart: |
+          `redirectTo` is used to open the app via deeplink when user opens the password reset email. 
+          ```dart
+          await supabase.auth.resetPasswordForEmail(
+            'sample@email.com',
+            redirectTo: kIsWeb ? null : 'io.supabase.flutter://reset-callback/',
+          );
+          ```
+  invoke():
+    title: 'invoke()'
+    description: |
+      调用一个Supabase函数。请参阅[指南](/docs/guides/functions)，了解关于编写函数的详细信息。
+    notes: |
+      - 需要一个授权标头。
+      - 调用参数通常符合[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)规范。
+    examples:
+      - name: 基本调用。
+        isSpotlight: true
+        dart: |
+          ```dart
+          final res = await supabase.functions.invoke('hello', body: {'foo': 'baa'});
+          final data = res.data;
+          ```
+      - name: 指定响应类型。
+        description: |
+          默认情况下，`invoke()`将把响应解析为JSON。你可以用以下格式解析响应。`json`, `blob`, `text`, 和`arrayBuffer`.
+        isSpotlight: true
+        dart: |
+          ```dart
+          final res = await supabase.functions.invoke(
+            'hello',
+            body: {'foo': 'baa'},
+            responseType: ResponseType.text,
+          );
+          final data = res.data;
+          ```
+      - name: 解析自定义头信息。
+        description: |
+          任何 `headers信息`都将被传递给该函数。一个常见的模式是将登录用户的JWT令牌作为授权标头传递。
+        isSpotlight: true
+        dart: |
+          ```dart
+          final res = await supabase.functions.invoke(
+            'hello',
+            body: {'foo': 'baa'},
+            headers: {
+              'Authorization': 'Bearer ${supabase.auth.currentSession?.accessToken}'
+            },
+          );
+          ```
+  select():
+    description: |
+      用SELECT执行垂直过滤。
+    title: '获取数据:select()'
+    notes: |
+      - 默认情况下，Supabase 项目将最多返回 1,000 行。这个设置可以在项目 API 设置中改变。建议你保持较低的设置，以限制意外或恶意请求的有效载荷大小。你可以使用`range()`查询来分页浏览你的数据。
+      - `select()`可以与[Modifiers](/docs/reference/dart/using-modifiers)相结合。
+      - `select()`可以与[过滤器](/docs/reference/dart/using-filters)结合使用。
+      - 如果使用Supabase托管平台，`apikey`在技术上是一个保留关键词，因为API网关会把它拔出来进行认证。[应避免将其作为列名](https://github.com/supabase/supabase/issues/5465)。
+    examples:
+      - name: 获取数据
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name');
+          ```
+      - name: 选择特定列
+        description: 你可以从你的表中选择特定的字段。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('''
+              name,
+              cities (
+                name
+              )
+            ''');
+          ```
+      - name: 查询外域表
+        description: 如果你的数据库有关系，你也可以查询相关的表。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('products')
+            .select('''
+              id,
+              supplier:supplier_id ( name ),
+              purchaser:purchaser_id ( name )
+            ''');
+          ```
+      - name: 多次查询同一个外域表
+        description: |
+          有时你需要查询同一个外域表两次。
+          在这种情况下，你可以使用连接列的名称来识别 
+          你打算使用哪个连接。为了方便起见，你也可以给每个列一个 
+          的别名。例如，如果我们有一个产品的商店。
+          我们想同时获得供应商和购买者的信息 
+          (都在用户)表中。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('messages')
+            .select('*, users!inner(*)')
+            .eq('users.username', 'Jane');
+          ```
+      - name: 用内部连接进行过滤
+        description: |
+          如果你想根据一个子表的值来过滤一个表，你可以使用`!inner()`函数。例如，如果你想 
+          在`message`表中选择所有属于`用户名`为 "Jane"的用户的记录。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('messages')
+            .select('*, users!inner(*)')
+            .eq('users.username', 'Jane');
+          ```
+      - name: 使用计数选项进行查询
+        description: |
+          你可以通过使用count选项来获得行的数量。
+          count选项的允许值是[exact](https://postgrest.org/en/stable/api.html#exact-count)，[planned](https://postgrest.org/en/stable/api.html#planned-count)和[estimated](https://postgrest.org/en/stable/api.html#estimated-count)。
+        dart: |
+          ```dart
+          final res = await supabase.from('cities').select(
+                'name',
+                const FetchOptions(
+                  count: CountOption.exact,
+                ),
+              );
+
+          final count = res.count;
+          ```
+      - name: 查询JSON数据
+        description: |
+          如果你有一个JSONB列内的数据，你可以对数据值应用选择 
+          和查询过滤器到数据值。Postgres提供了一个 
+          [操作数](https://www.postgresql.org/docs/current/functions-json.html) 
+          用于查询JSON数据。还可以看到 
+          [PostgREST docs](http://postgrest.org/en/v7.0.0/api.html#json-columns) 了解更多细节。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('users')
+            .select('''
+              id, name,
+              address->street
+            ''')
+            .eq('address->postcode', 90210);
+          ```
+      - name: 以CSV形式返回数据
+        description: |
+          默认情况下，数据以JSON格式返回，但你也可以要求以逗号分隔值的形式返回。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('users')
+            .select()
+            .csv();
+          ```
+
+  insert():
+    description: |
+      对表进行INSERT操作。
+    title: '创建数据: insert()'
+    examples:
+      - name: 创建一个记录
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+              .from('cities')
+              .insert({'name': 'The Shire', 'country_id': 554});
+          ```
+      - name: 批量创建
+        dart: |
+          ```dart
+          final res = await supabase.from('cities').insert([
+            {'name': 'The Shire', 'country_id': 554},
+            {'name': 'Rohan', 'country_id': 555},
+          ]);
+          ```
+
+  update():
+    description: |
+      对表进行UPDATE操作。
+    title: '修改数据: update()'
+    notes: |
+      - `update()`应该总是与[Filters](/docs/reference/dart/using-filters)结合起来，以锁定你想更新的项目。
+    examples:
+      - name: 更新数据
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Middle Earth' })
+            .match({ 'name': 'Auckland' });
+          ```
+      - name: 更新JSON数据
+        description: |
+          Postgres提供了一个 
+          [运算符的数量](https://www.postgresql.org/docs/current/functions-json.html) 
+          用于处理JSON数据。现在，它只能更新整个JSON文档。
+          但我们正在[研究更新单个键的想法](https://github.com/PostgREST/postgrest/issues/465)。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('users')
+            .update({
+              'address': {
+                'street': 'Melrose Place',
+                'postcode': 90210
+              }
+            })
+            .eq('address->postcode', 90210);
+          ```
+
+  upsert():
+    description: |
+      对表进行UPSERT操作。
+    title: '上传数据: upsert()'
+    notes: |
+      - 主键应该包括在数据的有效载荷中，以便更新能够正常工作。
+      - 主键必须是自然的，而不是代用的。然而，对于代用主键有[变通办法](https://github.com/PostgREST/postgrest/issues/1118)。
+    examples:
+      - name: 重新插入你的数据
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('messages')
+            .upsert({ 'id': 3, 'message': 'foo', 'username': 'supabot' });
+          ```
+      - name: 向有约束条件的表上移位
+        description: |
+          运行下面的程序将导致supabase向`users`表上传数据。
+          如果用户名 `supabot`已经存在，`onConflict`参数告诉supabase覆盖该行 
+          基于传递到`onConflict 的列。
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('users')
+            .upsert({ 'username': 'supabot' }, { 'onConflict': 'username' });
+          ```
+      - name: 返回确切的行数
+        description: |
+          Count选项的允许值是 `exact`, `planned` 和 `estimated`.
+        dart: |
+          ```dart
+          final res = await supabase.from('users').upsert(
+            {'id': 3, 'message': 'foo', 'username': 'supabot'},
+            options: const FetchOptions(count: CountOption.exact),
+          );
+
+          final data = res.data;
+          final count = res.count;
+          ```
+
+  delete():
+    description: |
+      对表进行DELETE操作。
+    title: '删除数据: delete()'
+    notes: |
+      - `delete()`应该总是与[Filters](/docs/reference/dart/using-filters)结合起来，以锁定你想删除的项目。
+    examples:
+      - name: 删除记录
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .match({ 'id': 666 });
+          ```
+
+  rpc():
+    title: '存储程序: rpc()'
+    description: |
+      你可以以 "远程程序调用"的方式调用存储程序。
+
+      这是一种花哨的说法，即你可以把一些逻辑放入数据库，然后从任何地方调用它。
+      当逻辑很少改变时，它特别有用--比如密码重设和更新。
+    examples:
+      - name: 调用一个存储过程
+        isSpotlight: true
+        description: 这是一个调用存储过程的例子。
+        dart: |
+          ```dart
+          final data = await supabase
+            .rpc('hello_world');
+          ```
+      - name: 带有参数
+        dart: |
+          ```dart
+          final data = await supabase
+            .rpc('echo_city', params: { 'name': 'The Shire' });
+          ```
+
+  subscribe():
+    description: |
+      订阅你的数据库中的实时变化。
+    title: 'on().subscribe()'
+    notes: |
+      - 为了提高数据库性能和安全性，新项目的实时性默认是禁用的。你可以通过[管理复制](/docs/guides/api#managing-realtime)打开它。
+      - 如果你想在更新和删除时接收 "以前的"数据，你需要将`REPLICA IDENTITY`设置为`FULL`，像这样。`ALTER TABLE your_table REPLICA IDENTITY FULL;`。
+    examples:
+      - name: 监听所有的数据库变化
+        isSpotlight: true
+        dart: |
+          ```dart
+          supabase.channel('*').on(
+            RealtimeListenTypes.postgresChanges,
+            ChannelFilter(event: '*', schema: '*'),
+            (payload, [ref]) {
+              print('Change received: ${payload.toString()}');
+            },
+          ).subscribe();
+          ```
+      - name: 监听一个特定的表
+        dart: |
+          ```dart
+          supabase.channel('public:countries').on(
+            RealtimeListenTypes.postgresChanges,
+            ChannelFilter(event: '*', schema: 'public', table: 'countries'),
+            (payload, [ref]) {
+              print('Change received: ${payload.toString()}');
+            },
+          ).subscribe();
+          ```
+      - name: 监听插入
+        dart: |
+          ```dart
+          supabase.channel('public:countries').on(
+            RealtimeListenTypes.postgresChanges,
+            ChannelFilter(event: 'INSERT', schema: 'public', table: 'countries'),
+            (payload, [ref]) {
+              print('Change received: ${payload.toString()}');
+            },
+          ).subscribe();
+          ```
+      - name: 监听修改
+        description: |
+          默认情况下，Supabase 将只发送更新的记录。如果你想同时接收以前的值，你可以 
+          为你监听的表启用完全复制。
+
+          ```sql
+          alter table "your_table" replica identity full;
+          ```
+        dart: |
+          ```dart
+          supabase.channel('public:countries').on(
+            RealtimeListenTypes.postgresChanges,
+            ChannelFilter(event: 'UPDATE', schema: 'public', table: 'countries'),
+            (payload, [ref]) {
+              print('Change received: ${payload.toString()}');
+            },
+          ).subscribe();
+          ```
+      - name: 监听删除
+        description: |
+          默认情况下，Supabase 不发送已删除的记录。如果你想接收删除的记录，你可以 
+          为你所监听的表启用完全复制功能。
+
+          ```sql
+          alter table "your_table" replica identity full;
+          ```
+        dart: |
+          ```dart
+          supabase.channel('public:countries').on(
+            RealtimeListenTypes.postgresChanges,
+            ChannelFilter(event: 'DELETE', schema: 'public', table: 'countries'),
+            (payload, [ref]) {
+              print('Change received: ${payload.toString()}');
+            },
+          ).subscribe();
+          ```
+      - name: 监听多个事件
+        description: 如果你想监听每个表的多个事件，你可以用链式监听器。
+        dart: |
+          ```dart
+          supabase.channel('public:countries').on(RealtimeListenTypes.postgresChanges,
+              ChannelFilter(event: 'INSERT', schema: 'public', table: 'countries'),
+              (payload, [ref]) {
+            print('Change received: ${payload.toString()}');
+          }).on(RealtimeListenTypes.postgresChanges,
+              ChannelFilter(event: 'DELETE', schema: 'public', table: 'countries'),
+              (payload, [ref]) {
+            print('Change received: ${payload.toString()}');
+          }).subscribe();
+          ```
+      - name: 监听行级变化
+        description: 你可以使用`{table}:{col}=eq.{val}`的格式来监听单个行，其中`{col}`是列名，`{val}`是你想要匹配的值。
+        dart: |
+          ```dart
+          supabase.channel('public:countries:id=eq.200').on(
+              RealtimeListenTypes.postgresChanges,
+              ChannelFilter(
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'countries',
+                filter: 'id=eq.200',
+              ), (payload, [ref]) {
+            print('Change received: ${payload.toString()}');
+          }).subscribe();
+          ```
+
+  removeChannel():
+    description: |
+      取消订阅并从Realtime客户端删除Realtime频道。
+    title: 'removeChannel()'
+    notes: |
+      - 如果你在监听Postgres的变化，删除一个通道是保持你项目的Realtime服务以及你的数据库性能的一个好方法。Supabase会在客户端断开连接后的30秒内自动处理清理工作，但未使用的通道可能会因为更多的客户端同时订阅而导致性能下降。
+    examples:
+      - name: 删除一个通道
+        isSpotlight: true
+        dart: |
+          ```dart
+          final status = await supabase.removeChannel(channel);
+          ```
+
+  removeAllChannels():
+    description: |
+      取消订阅并从Realtime客户端删除所有Realtime频道。
+    title: 'removeAllChannels()'
+    notes: |
+      - 如果你在监听Postgres的变化，移除通道是保持你项目的Realtime服务以及数据库性能的一个好方法。Supabase会在客户端断开连接后的30秒内自动处理清理工作，但未使用的通道可能会因为更多的客户端同时订阅而导致性能下降。
+    examples:
+      - name: 删除所有通道
+        isSpotlight: true
+        dart: |
+          ```dart
+          final statuses = await supabase.removeAllChannels();
+          ```
+
+  getChannels():
+    description: |
+      返回所有的Realtime通道。
+    title: 'getChannels()'
+    examples:
+      - name: 获取所有通道
+        isSpotlight: true
+        dart: |
+          ```dart
+          final channels = supabase.getChannels();
+          ```
+
+  stream():
+    description: |
+      通知被查询表的数据。
+    title: 'stream()'
+    notes: |
+      - `stream()`通过结合Postgrest和Realtime，将初始数据以及数据库上的任何进一步变化作为`List<Map<String, dynamic>`的`Stream`发出。
+      - 接受一个主键列的列表作为其参数。
+    examples:
+      - name: 监听一个特定的表
+        isSpotlight: true
+        dart: |
+          ```dart
+          supabase.from('countries')
+            .stream(primaryKey: ['id'])
+            .listen((List<Map<String, dynamic>> data) {
+            // Do something awesome with the data
+          });
+          ```
+      - name: 监听表格中的特定行数
+        description: |
+          你可以使用`{table}:{col}=eq.{val}`的格式来监听个别行，其中`{col}`是列名，`{val}`是你想要匹配的值。
+          这种语法与你在Realtime中过滤数据的方式相同
+        dart: |
+          ```dart
+          supabase.from('countries')
+            .stream(primaryKey: ['id'])
+            .eq('id', '120')
+            .listen((List<Map<String, dynamic>> data) {
+            // Do something awesome with the data
+          });
+          ```
+      - name: 使用 `order()`
+        dart: |
+          ```dart
+          supabase.from('countries')
+            .stream(primaryKey: ['id'])
+            .order('name', ascending: true)
+            .listen((List<Map<String, dynamic>> data) {
+            // Do something awesome with the data
+          });
+          ```
+      - name: 使用 `limit()`
+        dart: |
+          ```dart
+          supabase.from('countries')
+            .stream(primaryKey: ['id'])
+            .order('name', ascending: true)
+            .limit(10)
+            .listen((List<Map<String, dynamic>> data) {
+            // Do something awesome with the data
+          });
+          ```
+      - name: 使用 `stream()`与 `StreamBuilder`的关系
+        description: |
+          当在你的Flutter应用程序中使用`stream()`与`StreamBuilder`时，确保将你的流存储在一个变量中，以防止重建时重新获取。
+        dart: |
+          ```dart
+          final supabase = Supabase.instance.client;
+
+          class MyWidget extends StatefulWidget {
+            const MyWidget({Key? key}) : super(key: key);
+
+            @override
+            State<MyWidget> createState() => _MyWidgetState();
+          }
+
+          class _MyWidgetState extends State<MyWidget> {
+            // Persist the stream in a local variable to prevent refetching upon rebuilds
+            final _stream = supabase.from('countries').stream(primaryKey: ['id']);
+
+            @override
+            Widget build(BuildContext context) {
+              return StreamBuilder(
+                stream: _stream,
+                builder: (context, snapshot) {
+                  // Return your widget with the data from the snapshot
+                },
+              );
+            }
+          }
+          ```
+
+  storage.listBuckets():
+    description: |
+      检索一个现有产品中所有存储桶的详细信息。
+    title: 'listBuckets()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`的权限。`select`的权限 
+        - `objects`权限: 无
+    examples:
+      - name: 列表中的桶
+        isSpotlight: true
+        dart: |
+          ```dart
+          final List<Bucket> buckets = await supabase
+            .storage
+            .listBuckets();
+          ```
+
+  storage.getBucket():
+    description: |
+      检索现有存储桶的详细信息。
+    title: 'getBucket()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`的权限。`select` 的权限 
+        - `objects`权限: 无
+    examples:
+      - name: 获取桶
+        isSpotlight: true
+        dart: |
+          ```dart
+          final Bucket bucket = await supabase
+            .storage
+            .getBucket('avatars');
+          ```
+
+  storage.createBucket():
+    description: |
+      创建一个新的存储桶
+    title: 'createBucket()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`的权限。`insert`的权限 
+        -  `objects`的权限: 没有
+    examples:
+      - name: 创建桶
+        isSpotlight: true
+        dart: |
+          ```dart
+          final String bucketId = await supabase
+            .storage
+            .createBucket('avatars');
+          ```
+
+  storage.emptyBucket():
+    description: |
+      删除单个桶内的所有对象。
+    title: 'emptyBucket()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`的权限。 `select` 的权限 
+        - `objects`的权限: `select`和`delete`的权限
+    examples:
+      - name: 清空存储桶
+        isSpotlight: true
+        dart: |
+          ```dart
+          final String result = await supabase
+            .storage
+            .emptyBucket('avatars');
+          ```
+  storage.updateBucket():
+    description: |
+      更新一个新的存储桶
+    title: 'updateBucket()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`的权限。`update`的权限
+        - `objects` 的权限: 没有
+    examples:
+      - name: 更新桶
+        isSpotlight: true
+        dart: |
+          ```dart
+          final res = await supabase
+            .storage
+            .updateBucket('avatars', const BucketOptions(public: false));
+          ```
+
+  storage.deleteBucket():
+    description: |
+      删除一个现有的桶。一个桶不能在其内部存在对象的情况下被删除。你必须首先`empty()`该桶。
+    title: 'deleteBucket()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`的权限。`select` and `delete`。
+        - `objects`的权限: 没有
+    examples:
+      - name: 删除桶
+        isSpotlight: true
+        dart: |
+          ```dart
+          final String result = await supabase
+            .storage
+            .deleteBucket('avatars');
+          ```
+
+  storage.from.upload():
+    description: |
+      将一个文件上传到一个现有的桶。
+    title: 'from.upload()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects`的权限: `insert`
+    examples:
+      - name: 上传文件
+        isSpotlight: true
+        dart: |
+          ```dart
+          final avatarFile = File('path/to/file');
+          final String path = await supabase.storage.from('avatars').upload(
+                'public/avatar1.png',
+                avatarFile,
+                fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
+              );
+          ```
+
+  storage.from.update():
+    description: |
+      用一个新的文件替换指定路径下的一个现有文件。
+    title: 'from.update()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects` 的权限: `update` and `select`
+    examples:
+      - name: 更新文件
+        isSpotlight: true
+        dart: |
+          ```dart
+          final avatarFile = File('path/to/local/file');
+          final String path = await supabase.storage.from('avatars').update(
+                'public/avatar1.png',
+                avatarFile,
+                fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
+              );
+          ```
+
+  storage.from.move():
+    description: |
+      移动一个现有的文件，同时也可以选择重命名。
+    title: 'from.move()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects`的权限: `update`和 `select`的权限
+    examples:
+      - name: 移动文件
+        isSpotlight: true
+        dart: |
+          ```dart
+          final String result = await supabase
+            .storage
+            .from('avatars')
+            .move('public/avatar1.png', 'private/avatar2.png');
+          ```
+
+  storage.from.createSignedUrl():
+    description: |
+      创建签名的网址，下载文件而不需要权限。这个URL可以在设定的秒数内有效。
+    title: 'from.createSignedUrl()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects`的权限: `select`
+    examples:
+      - name: 创建签名的URL
+        isSpotlight: true
+        dart: |
+          ```dart
+            final String signedUrl = await supabase
+              .storage
+              .from('avatars')
+              .createSignedUrl('avatar1.png', 60);
+          ```
+
+  storage.from.createSignedUrls():
+    title: 'from.createSignedUrls()'
+    notes: |
+      - 需要RLS策略权限。
+        - `buckets`表的权限: 没有
+        - `objects`表的权限: `select`.
+      - 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方法
+    examples:
+      - name: 创建签名的URL
+        isSpotlight: true
+        dart: |
+          ```dart
+            final List<String> signedUrls = await supabase
+              .storage
+              .from('avatars')
+              .createSignedUrls(['folder/avatar1.png', 'folder/avatar2.png'], 60);
+          ```
+
+  storage.from.getPublicUrl():
+    description: |
+      检索公共资源库中资产的URL
+    title: 'from.getPublicUrl()'
+    notes: |
+      - 水桶需要被设置为公开，可以通过[updateBucket()](/docs/reference/javascript/storag-updatebucket)或通过进入[app.supabase.com](https://app.supabase.com)的存储，点击水桶上的溢出菜单并选择 "Make public"
+      - 需要的策略权限。
+        - `buckets`权限: 无 
+        - `objects`权限: 无
+    examples:
+      - name: 返回公共桶中资产的URL。
+        isSpotlight: true
+        dart: |
+          ```dart
+            final String publicUrl = supabase
+              .storage
+              .from('public-bucket')
+              .getPublicUrl('avatar1.png');
+          ```
+
+  storage.from.download():
+    description: |
+      下载文件
+    title: 'from.download()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects`的权限: `select`
+    examples:
+      - name: 下载文件
+        isSpotlight: true
+        dart: |
+          ```dart
+          final Uint8List file = await supabase
+            .storage
+            .from('avatars')
+            .download('avatar1.png');
+          ```
+
+  storage.from.remove():
+    description: |
+      删除同一桶内的文件
+    title: 'from.remove()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects`的权限: `delete`和  `select`权限
+    examples:
+      - name: 删除文件
+        isSpotlight: true
+        dart: |
+          ```dart
+          final List<FileObject> objects = await supabase
+            .storage
+            .from('avatars')
+            .remove(['avatar1.png']);
+          ```
+
+  storage.from.list():
+    description: |
+      列出一个桶内的所有文件。
+    title: 'from.list()'
+    notes: |
+      - 需要的政策权限。
+        - `buckets`权限: 无 
+        - `objects`的权限: `select`
+    examples:
+      - name: 在一个桶中列出文件
+        isSpotlight: true
+        dart: |
+          ```dart
+          final List<FileObject> objects = await supabase
+            .storage
+            .from('avatars')
+            .list();
+          ```
+  Using Modifiers:
+    description: |
+      过滤器在行的层面上工作--它们允许你返回只符合某些条件的行，而不改变行的形状。
+      只符合某些条件的行，而不改变行的形状。
+      修改器是不符合该定义的一切，允许你
+      改变响应的格式（例如，返回一个CSV字符串）。
+
+      修改器必须在过滤器之后指定。有些修改器只适用于
+      一些修改器只适用于返回行的查询（例如，`select()`或`rpc()`在一个返回表的函数上
+      返回表格响应的函数）。
+
+  limit():
+    description: |
+      用指定的计数来限制结果。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .limit(1);
+          ```
+      - name: 有嵌入式资源
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, cities(name)')
+            .eq('name', 'United States')
+            .limit(1,  foreignTable: 'cities' );
+          ```
+
+  order():
+    description: |
+      用指定的列对结果进行排序。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .order('id',  ascending: false );
+          ```
+      - name: 有嵌入式资源
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, cities(name)')
+            .eq('name', 'United States')
+            .order('name', foreignTable: 'cities');
+          ```
+
+  range():
+    description: |
+      将结果限制在指定范围内的行，包括在内。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .range(0,3);
+          ```
+
+  single():
+    description: |
+      只从结果中检索一条记录。结果必须是一行(例如,使用limit)，否则会导致错误。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .single();
+          ```
+
+  Using Filters:
+    description: |
+      过滤器允许你只返回符合某些条件的记录。
+
+      过滤器可以用于`选择()`、`更新()`和`删除()`查询。
+
+      如果一个数据库函数返回一个表的响应，你也可以应用过滤器。
+
+      ### 应用过滤器
+
+      过滤器必须在任何`select()`, `update()`, `upsert()`,
+      `删除()`和`rpc()`之后，并在
+      [修改器](/docs/reference/dart/using-modifiers)。
+
+
+      ```dart
+      final data = await supabase
+        .from('cities')
+        .select('name, country_id')
+        .eq('name', 'The Shire');    // Correct
+
+      final data = await supabase
+        .from('cities')
+        .eq('name', 'The Shire')    // Incorrect
+        .select('name, country_id');
+      ```
+
+      ### 链式
+
+      过滤器可以串联起来，产生高级查询。例如。
+      来查询人口在1,000和10,000之间的城市。
+
+      ```dart
+      final data = await supabase
+        .from('cities')
+        .select('name, country_id')
+        .gte('population', 1000)
+        .lt('population', 10000);
+      ```
+
+      ### 条件链
+
+      过滤器可以一步步建立起来，然后执行。比如说。
+
+      ```dart
+      final filterByName = null;
+      final filterPopLow = 1000;
+      final filterPopHigh = 10000;
+
+      var query = supabase
+        .from('cities')
+        .select('name, country_id');
+
+      if (filterByName != null)  { query = query.eq('name', filterByName); }
+      if (filterPopLow != null)  { query = query.gte('population', filterPopLow); }
+      if (filterPopHigh != null) { query = query.lt('population', filterPopHigh); }
+
+      final data = await query;
+      ```
+
+      ### 按JSON列中的值过滤
+
+      <Tabs>
+      <TabItem value="schema" label="Schema">
+
+        ```sql
+        create table
+          users (
+            id int8 primary key,
+            name text,
+            address jsonb
+          );
+
+        insert into
+          users (id, name, address)
+        values
+          (1, 'Michael', '{ "postcode": 90210 }'),
+          (2, 'Jane', null);
+        ```
+
+      </TabItem>
+      <TabItem default value="dart" label="Flutter">
+
+        ```dart
+        final data = await supabase
+          .from('users')
+          .select()
+          .eq('address->postcode', 90210);
+        ```
+
+      </TabItem>
+      <TabItem value="result" label="Result">
+
+        ```json
+        {
+          "data": [
+            {
+              "id": 1,
+              "name": "Michael",
+              "address": {
+                "postcode": 90210
+              }
+            }
+          ],
+          "status": 200,
+          "statusText": "OK"
+        }
+        ```
+
+      </TabItem>
+      </Tabs>
+
+      ### 过滤外来表
+
+      你可以在你的 `select()`查询中使用点来过滤外域表。
+      符号。
+
+      <Tabs>
+      <TabItem value="schema" label="Schema">
+
+        ```sql
+        create table
+          countries (id int8 primary key, name text);
+        create table
+          cities (
+            id int8 primary key,
+            country_id int8 not null references countries,
+            name text
+          );
+
+        insert into
+          countries (id, name)
+        values
+          (1, 'Germany'),
+          (2, 'Indonesia');
+        insert into
+          cities (id, country_id, name)
+        values
+          (1, 2, 'Bali'),
+          (2, 1, 'Munich');
+        ```
+
+      </TabItem>
+      <TabItem default value="dart" label="Flutter">
+
+        ```dart
+        final data = await supabase
+          .from('countries')
+          .select('''
+            name,
+            cities!inner (
+              name
+            )
+          ''')
+          .eq('cities.name', 'Bali');
+        ```
+
+      </TabItem>
+      <TabItem value="result" label="Result">
+
+        ```json
+        {
+          "data": [
+            {
+              "name": "Indonesia",
+              "cities": [
+                {
+                  "name": "Bali"
+                }
+              ]
+            }
+          ],
+          "status": 200,
+          "statusText": "OK"
+        }
+        ```
+
+      </TabItem>
+      </Tabs>
+
+  .or():
+    description: |
+      找到所有满足至少一个过滤器的行。
+    notes: |
+      - `.or()`希望你使用原始的[PostgREST语法](https://postgrest.org/en/stable/api.html#horizontal-filtering-rows)作为过滤器的名称和值。
+
+        ```dart
+        .or('id.in.(6,7),arraycol.cs.{"a","b"}')  // Use Postgres list () and 'in' for in_ filter. Array {} and 'cs' for contains.
+        .or('id.in.(${mylist.join(',')}),arraycol.cs.{${mylistArray.join(',')}}')	// You can insert a Dart list for list or array column.
+        .or('id.in.(${mylist.join(',')}),rangecol.cs.(${mylistRange.join(',')}]')	// You can insert a Dart list for list or range column.
+        ```
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .or('id.eq.20,id.eq.30');
+          ```
+      - name: 使用 `or`与 `and`。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .or('id.gt.20,and(name.eq.New Zealand,name.eq.France)');
+          ```
+
+  .not():
+    description: |
+      找到所有不符合过滤器要求的行。
+    notes: |
+      - `.not()`希望你使用原始的[PostgREST语法](https://postgrest.org/en/stable/api.html#horizontal-filtering-rows)作为过滤器的名称和值。
+
+        ```dart
+        .not('name','eq','Paris')
+        .not('arraycol','cs','{"a","b"}') // Use Postgres array {} for array column and 'cs' for contains.
+        .not('rangecol','cs','(1,2]') // Use Postgres range syntax for range column.
+        .not('id','in','(6,7)')  // Use Postgres list () and 'in' for in_ filter.
+        .not('id','in','(${mylist.join(',')})')  // You can insert a Dart list array.
+        ```
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .not('name', 'eq', 'Paris');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .not('name', 'eq', 'Paris');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .not('name', 'eq', 'Paris');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities)
+            .not('name', 'eq', 'Paris');
+          ```
+
+  .match():
+    description: |
+      查找所有列与指定的`query`对象相匹配的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .match({'name': 'Beijing', 'country_id': 156});
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .match({'name': 'Beijing', 'country_id': 156});
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .match({'name': 'Beijing', 'country_id': 156});
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .match({'name': 'Beijing', 'country_id': 156});
+          ```
+
+  .eq():
+    description: |
+      查找所有在所述 `column`上的值与指定的 `value`完全匹配的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .eq('name', 'The shire');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .eq('name', 'San Francisco');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .eq('name', 'Mordor');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .eq('name', 'San Francisco');
+          ```
+
+  .neq():
+    description: |
+      查找所有在所述 `column`上的值与指定的 `value`不一致的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .neq('name', 'The shire');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .neq('name', 'San Francisco');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .neq('name', 'Mordor');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .neq('name', 'Lagos');
+          ```
+
+  .gt():
+    description: |
+      查找所有在所述`column`上的值大于指定`value`的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .gt('country_id', 250);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .gt('country_id', 250);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .gt('country_id', 250);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .gt('country_id', 250);
+          ```
+
+  .gte():
+    description: |
+      查找所有在所述 `column`上的值大于或等于指定 `value`的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .gte('country_id', 250);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .gte('country_id', 250);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .gte('country_id', 250);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .gte('country_id', 250);
+          ```
+
+  .lt():
+    description: |
+      查找所有在所述`column`上的值小于指定`value`的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .lt('country_id', 250);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .lt('country_id', 250);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .lt('country_id', 250);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .lt('country_id', 250);
+          ```
+
+  .lte():
+    description: |
+      查找所有在所述 `column`上的值小于或等于指定 `value`的记录。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .lte('country_id', 250);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .lte('country_id', 250);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .lte('country_id', 250);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .lte('country_id', 250);
+          ```
+
+  .like():
+    description: |
+      查找所有在所述 `column`中的值与提供的 `pattern`相符的记录（区分大小写）。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .like('name', '%la%');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .like('name', '%la%');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .like('name', '%la%');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .like('name', '%la%');
+          ```
+
+  .ilike():
+    description: |
+      查找所有在所述 `column`中的值与提供的 `pattern`相符的记录（不区分大小写）。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .ilike('name', '%la%');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .ilike('name', '%la%');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .ilike('name', '%la%');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .ilike('name', '%la%');
+          ```
+
+  .is_():
+    description: |
+      检查是否完全相等(null, true, false),找到所有在所述`column`上的值与指定的`value`完全匹配的记录。
+
+      `is_`和`in_`过滤方法的后缀是`_`，以避免与保留的关键字发生冲突。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .is_('name', null);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .is_('name', null);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .is_('name', null);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .is_('name', null);
+          ```
+
+  .in_():
+    description: |
+      查找所有在所述`column`上的值在指定`values`上找到的记录。
+
+      `is_`和`in_`过滤方法的后缀是`_`，以避免与保留的关键字发生冲突。
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .in_('name', ['Rio de Janeiro', 'San Francisco']);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .in_('name', ['Rio de Janeiro', 'San Francisco']);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .in_('name', ['Rio de Janeiro', 'San Francisco']);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .in_('name', ['Rio de Janeiro', 'San Francisco']);
+          ```
+
+  .contains():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, main_exports')
+            .contains('main_exports', ['oil']);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .contains('main_exports', ['oil']);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .contains('main_exports', ['oil']);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .contains('main_exports', ['oil']);
+          ```
+
+  .containedBy():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, main_exports')
+            .containedBy('main_exports', ['cars', 'food', 'machine']);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .containedBy('main_exports', ['orks', 'surveillance', 'evil']);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .containedBy('main_exports', ['cars', 'food', 'machine']);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .containedBy('main_exports', ['cars', 'food', 'machine']);
+          ```
+
+  .rangeLt():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, population_range_millions')
+            .rangeLt('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .rangeLt('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .rangeLt('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .rangeLt('population_range_millions', '[150, 250]');
+          ```
+
+  .rangeGt():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, population_range_millions')
+            .rangeGt('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .rangeGt('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .rangeGt('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .rangeGt('population_range_millions', '[150, 250]');
+          ```
+
+  .rangeGte():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, population_range_millions')
+            .rangeGte('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .rangeGte('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .rangeGte('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .rangeGte('population_range_millions', '[150, 250]');
+          ```
+
+  .rangeLte():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, population_range_millions')
+            .rangeLte('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .rangeLte('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .rangeLte('population_range_millions', '[150, 250]');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .rangeLte('population_range_millions', [150, 250]);
+          ```
+
+  .rangeAdjacent():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, population_range_millions')
+            .rangeAdjacent('population_range_millions', '[70, 185]');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .rangeAdjacent('population_range_millions', '[70, 185]');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .rangeAdjacent('population_range_millions', '[70, 185]');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .rangeAdjacent('population_range_millions', '[70, 185]');
+          ```
+
+  .overlaps():
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .select('name, id, main_exports')
+            .overlaps('main_exports', ['computers', 'minerals']);
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .update({ 'name': 'Mordor' })
+            .overlaps('main_exports', ['computers', 'minerals']);
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('countries')
+            .delete()
+            .overlaps('main_exports', ['computers', 'minerals']);
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_countries')
+            .overlaps('main_exports', ['computers', 'minerals']);
+          ```
+
+  .textSearch():
+    description: |
+      找到所有在所述`column`上的tsvector值与to_tsquery(query)匹配的记录。
+    examples:
+      - name: 文本检索
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('quotes')
+            .select('catchphrase')
+            .textSearch('catchphrase', "'fat' & 'cat'", 
+              config: 'english' 
+            );
+          ```
+      - name: 基本的规范化
+        description: Uses PostgreSQL's `plainto_tsquery` function.
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('quotes')
+            .select('catchphrase')
+            .textSearch('catchphrase', "'fat' & 'cat'",  
+              type: TextSearchType.plain,
+              config: 'english' 
+            );
+          ```
+      - name: 完全标准化
+        description: 使用PostgreSQL的`phraseto_tsquery`函数。
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('quotes')
+            .select('catchphrase')
+            .textSearch('catchphrase', "'fat' & 'cat'",  
+              type: TextSearchType.phrase,
+              config: 'english' 
+            );
+          ```
+      - name: 完全标准化
+        description: |
+          使用PostgreSQL的`websearch_to_tsquery`函数。
+          这个函数不会引发语法错误，这使得使用用户提供的原始输入进行搜索成为可能，并且可以使用 
+          与高级运算符一起使用。
+
+          - `未加引号的文本`：不在引号内的文本将被转换为由&运算符分隔的术语，就像由plainto_tsquery处理一样。
+          - `"带引号的文本"：带引号的文本将被转换为由<->运算符分隔的术语，就像由phraseto_tsquery处理的那样。
+          - `OR`:“or”字将被转换为 | 操作符。
+          - `-`：破折号将被转换为操作符！。
+
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('quotes')
+            .select('catchphrase')
+            .textSearch('catchphrase', "'fat or cat'",  
+              type: TextSearchType.websearch,
+              config: 'english'
+            );
+          ```
+
+  .filter():
+    description: |
+      找到所有`column`符合过滤器的记录。
+    notes: |
+      - `.filter()`希望你使用原始的[PostgREST语法](https://postgrest.org/en/stable/api.html#horizontal-filtering-rows)来表示过滤器的名称和值，所以它只能作为其他过滤器不工作时的一个转义。
+        ```dart
+          .filter('arraycol','cs','{"a","b"}') // Use Postgres array {} and 'cs' for contains.
+          .filter('rangecol','cs','(1,2]') // Use Postgres range syntax for range column.
+          .filter('id','in','(6,7)')  // Use Postgres list () and 'in' for in_ filter.
+          .filter('id','cs','{${mylist.join(',')}}')  // You can insert a Dart array list.
+        ```
+    examples:
+      - name: 使用 `select()`
+        isSpotlight: true
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, country_id')
+            .filter('name', 'in', '("Paris","Tokyo")');
+          ```
+      - name: 使用 `update()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .update({ 'name': 'Mordor' })
+            .filter('name', 'in', '("Paris","Tokyo")');
+          ```
+      - name: 使用 `delete()`
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .delete()
+            .filter('name', 'in', '("Paris","Tokyo")');
+          ```
+      - name: 使用 `rpc()`
+        dart: |
+          ```dart
+          // Only valid if the Stored Procedure returns a table type.
+          final data = await supabase
+            .rpc('echo_all_cities')
+            .filter('name', 'in', '("Paris","Tokyo")');
+          ```
+      - name: Filter embedded resources
+        dart: |
+          ```dart
+          final data = await supabase
+            .from('cities')
+            .select('name, countries ( name )')
+            .filter('countries.name', 'in', '("France","Japan")');
+          ```

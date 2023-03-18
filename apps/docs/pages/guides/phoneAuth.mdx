@@ -1,0 +1,142 @@
+import Layout from '~/layouts/DefaultGuideLayout'
+
+export const meta = {
+  id: 'functions',
+  title: '手机认证',
+  description: '手机认证',
+  sidebar_label: '手机认证',
+}
+
+
+## 前言
+
+为了顺应国内用户的使用习惯，MemFire Cloud提供了手机号码验证的登录方式，可以兼容国内的阿里云服务商，用户可以采用手机号+短信的放式进行用户身份认证。
+
+## 使用步骤
+
+### 1.MemFire Cloud配置
+
+进入“用户认证”->“服务商”页面，启用手机号码验证，短信（SMS）服务商选择“阿里云”，依次填写好阿里云配置后点击保存。
+
+![手机认证](/docs/img/phoneauth1.png)
+
+当启用“短信验证”时，说明您需要发送短信验证码来进行手机认证，您需要填写正确的阿里云短信签名名称和短信模板CODE
+
+### 2.代码示例
+
+- 手机号+验证码登录
+
+用户使用手机号获取验证码。
+
+![手机认证](/docs/img/phoneauth2.png)
+
+![手机认证](/docs/img/phoneauth3.png)
+
+![手机认证](/docs/img/phoneauth4.png)
+
+
+js代码
+
+```js
+
+//获取验证码
+async function getQRcode(){
+    let { data, error } = await _supabase.auth.signInWithOtp({
+            phone: phone,
+        })
+        if(error){
+          alert(error)
+        }
+        alert('短信已发送至您的手机中，请注意查收。')
+ }
+ //登录
+async function sigin(){
+    let { data, error } = await _supabase.auth.verifyOtp({
+        phone: phone,
+        token: QRcode,
+        type: 'sms',
+    })
+    if(error){
+        alert(error)
+        return;
+    }
+       alert('登录成功！') 
+ }
+
+
+```
+
+- 手机号+密码+验证码方式
+
+图示
+
+先用手机号+密码获取验证码
+
+![手机认证](/docs/img/phoneauth5.png)
+
+随后会在用户列表里刚刚那条等待验证的用户信息
+
+![手机认证](/docs/img/phoneauth6.png)
+
+输入验证码，点击登录，会发现用户列表的用户已经认证成功。
+
+![手机认证](/docs/img/phoneauth7.png)
+
+![手机认证](/docs/img/phoneauth8.png)
+
+js代码
+
+1.用户使用手机号+密码先来获取验证码进行注册。
+
+```js
+
+ //获取验证码（注册）
+async function getQRcode(){
+ let { data, error } = await _supabase.auth.signUp({
+        phone: phone,
+        password: passowrd
+    })
+    if(data){
+        alert('短信已发送至您的手机中，请注意查收。')
+    }
+ }
+ //使用验证码方式进行一次性登录
+async function sigin(){
+    let { data, error } = await _supabase.auth.verifyOtp({
+        phone: phone,
+        token: QRcode,
+        type: 'sms',
+    })
+    if(data){
+        alert('登录成功')
+    }else if(error){
+        alert('登录失败')
+    }
+}
+
+
+```
+
+2.手机号+密码登录（第一步相当于注册，这一步是登录）
+
+```js
+
+ //使用验证码方式登录
+async function sigin(){
+    let { data, error } = await _supabase.auth.signInWithPassword({
+        phone: phone,
+        password: passowrd
+    })
+    if(data){
+        alert('登录成功')
+    }else if(error){
+        alert('登录失败')
+    }
+}
+
+```
+
+
+export const Page = ({ children }) => <Layout meta={meta} children={children} />
+
+export default Page

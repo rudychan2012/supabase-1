@@ -5,7 +5,7 @@ import FooterLinks from 'data/footer.json'
 import DarkModeToggle from './DarkModeToggle'
 import { useTheme } from '../Providers'
 import * as supabaseLogoWordmarkLight from 'common/assets/images/memfirecloud.png'
-import * as forerver from 'common/assets/images/forerver.png'
+import * as forerver from '../../public/img/forerver.png'
 import * as public_qr from 'common/assets/images/public-qr.jpg'
 
 const Footer = () => {
@@ -25,7 +25,7 @@ const Footer = () => {
             <Link href="#" as="/">
               <a className="w-40">
                 <Image
-                  src={supabaseLogoWordmarkLight}
+                  src='/docs/img/memfirecloud.png'
                   width={160}
                   height={30}
                   alt="Supabase"
@@ -133,7 +133,7 @@ const Footer = () => {
             </div>
             <div className="x:col-span-2 x:mt-0">
             <Image
-                  src={public_qr}
+                  src='/docs/img/public-qr.jpg'
                   width={92}
                   height={92}
                   alt="Supabase"

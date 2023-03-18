@@ -266,6 +266,14 @@ export const menuItems: NavMenu = {
         // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
       ],
     },
+    {
+      label: '教程',
+      items: [
+        { name: '手机认证', url: '/guides/phoneAuth', items: [] },
+        { name: '微信小程序登录', url: '/guides/wechatAuth', items: [] },
+        // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
+      ],
+    },
     // {
     //   label: 'Platform',
     //   items: [

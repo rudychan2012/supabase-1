@@ -17,6 +17,10 @@ const Nav = [
   {
     label: 'Auth',
     items: [
+      { name: 'signInWithWechat()', url: '/reference/wechat/auth-signInWithWechat', items: [] },
+      { name: 'wechatBindPhone()', url: '/reference/wechat/auth-wechatBindPhone', items: [] },
+      { name: 'getUnlimitedQRCode()', url: '/reference/wechat/auth-getUnlimitedQRCode', items: [] },
+      { name: 'wechatBindAccount()', url: '/reference/wechat/auth-wechatBindAccount', items: [] },
       { name: 'signUp()', url: '/reference/wechat/auth-signup', items: [] },
       {
         name: 'signInWithPassword()',

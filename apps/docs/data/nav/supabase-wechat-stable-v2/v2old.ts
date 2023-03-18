@@ -17,6 +17,11 @@ const Nav = [
     {
       label: '认证',
       items: [
+        { name: 'signInWithWechat()', url: '/reference/wechat/auth-signInWithWechat', items: [] },
+        { name: 'wechatBindPhone()', url: '/reference/wechat/auth-wechatBindPhone', items: [] },
+        { name: 'getUnlimitedQRCode()', url: '/reference/wechat/auth-getUnlimitedQRCode', items: [] },
+        { name: 'wechatBindAccount()', url: '/reference/wechat/auth-wechatBindAccount', items: [] },
+        { name: 'updateUser()', url: '/reference/wechat/auth-updateuser', items: [] },
         { name: 'signUp()', url: '/reference/wechat/auth-signup', items: [] },
         {
           name: 'signInWithPassword()',
@@ -30,7 +35,6 @@ const Nav = [
         { name: 'getSession()', url: '/reference/wechat/auth-getsession', items: [] },
         { name: 'refreshSession()', url: '/reference/wechat/auth-refreshsession', items: [] },
         { name: 'getUser()', url: '/reference/wechat/auth-getuser', items: [] },
-        { name: 'updateUser()', url: '/reference/wechat/auth-updateuser', items: [] },
         { name: 'setSession()', url: '/reference/wechat/auth-setsession', items: [] },
         {
           name: 'onAuthStateChange()',
