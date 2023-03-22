@@ -89,11 +89,14 @@ export const menuItems: NavMenu = {
         { name: '概述', url: '/guides/auth', items: [] },
         {
           name: '身份验证',
-          url: undefined,
+          url: undefined, 
           items: [
             { name: '使用电子邮件登录', url: '/guides/auth/auth-email', items: [] },
+            { name: '使用手机登录', url: '/guides/auth/phoneAuth', items: [] },
+            { name: '使用微信小程序登录', url: '/guides/auth/wechatAuth', items: [] },
             { name: '使用Magic Link登录', url: '/guides/auth/auth-magic-link', items: [] },
             { name: '使用Apple登录', url: '/guides/auth/auth-apple', items: [] },
+
             // { name: '使用Azure登录', url: '/guides/auth/auth-azure', items: [] },
             // { name: '使用Bitbucket登录', url: '/guides/auth/auth-bitbucket', items: [] },
             // { name: '使用 Discord 登录', url: '/guides/auth/auth-discord', items: [] },
@@ -260,20 +263,20 @@ export const menuItems: NavMenu = {
     {
       label: 'SDK文档',
       items: [
-        { name: 'JavaScript客户端', url: '/reference/javascript', items: [] },
-        { name: 'Flutter客户端', url: '/reference/dart', items: [] },
-        { name: '微信小程序客户端', url: '/reference/wechat', items: [] },
+        { name: 'JavaScript', url: '/reference/javascript', items: [] },
+        { name: 'Flutter', url: '/reference/dart', items: [] },
+        { name: '微信小程序', url: '/reference/wechat', items: [] },
         // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
       ],
     },
-    {
-      label: '教程',
-      items: [
-        { name: '手机登录认证', url: '/guides/phoneAuth', items: [] },
-        { name: '微信小程序登录认证', url: '/guides/wechatAuth', items: [] },
-        // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
-      ],
-    },
+    // {
+    //   label: '教程',
+    //   items: [
+    //     { name: '手机登录认证', url: '/guides/phoneAuth', items: [] },
+    //     { name: '微信小程序登录认证', url: '/guides/wechatAuth', items: [] },
+    //     // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
+    //   ],
+    // },
     // {
     //   label: 'Platform',
     //   items: [
