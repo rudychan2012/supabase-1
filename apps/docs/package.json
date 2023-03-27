@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "npm run generate:all && next build",
-    "start": "next start",
+    "start": "next start --port 3333",
     "lint": "next lint",
     "build:sitemap": "node ./internals/generate-sitemap.mjs",
     "postbuild": "node ./scripts/build-search.js && node ./internals/generate-sitemap.mjs",
@@ -53,7 +53,7 @@
     "lodash": "^4.17.21",
     "markdown-toc": "^1.2.0",
     "mdx-mermaid": "2.0.0-rc3",
-    "next": "12.1.0",
+    "next": "12.2.4",
     "next-compose-plugins": "^2.2.1",
     "next-mdx-remote": "^3.0.8",
     "next-seo": "^5.14.1",
