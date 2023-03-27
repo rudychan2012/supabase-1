@@ -1,0 +1,304 @@
+import Layout from '~/layouts/DefaultGuideLayout'
+
+export const meta = {
+  id: 'BBS',
+  title: 'BBS论坛小程序',
+  description: 'BBS论坛小程序',
+}
+
+
+helloBBS是一个发布个人心情，查看别人发表的论坛，可以评论回复点赞的论坛小程序。论坛小程序后端服务使用了MemFire Cloud，其中使用到的MemFire Cloud功能包括：
+
+- 云数据库：存储论坛小程序数据表的信息。
+
+- 用户验证：论坛小程序使用MemFire Cloud提供的用户认证的API接口，快速完成用户注册登录操作。
+
+- 即时API：创建数据表时会自动生成 API。
+
+- 云存储：存储用户发布帖子中的图片。
+
+![img](/docs/img/样例-helloBBS-1.gif)
+
+
+## 创建应用
+
+目的：通过创建的一个MemFire Cloud应用来获得数据库、云存储等一系列资源，并将获得该应用专属的API访问链接和访问密钥，用户可以轻松的调用API接口与以上资源进行交互。
+
+登录https://cloud.MemFiredb.com/auth/login，  在“我的应用”页面创建一个新应用
+
+![img](/docs/img/样例-helloBBS-2.png)
+
+## 创建数据表
+
+第一种：点击进入应用详情页面，在“数据表”页面可视化建表。
+
+第二种：在首页的数据库管理找到该应用的数据库的"SQL查询"，用MemFire Cloud 自带的sql编辑器进行建表。
+
+
+### 1.创建post_list表
+
+在数据表页面，点击“新建数据表”，创建post_list表。post_list表主要记录发表的帖子的列表，表结构字段如下：
+
+| 名称         | 类型       | 描述                   |
+| ------------ | ---------- | ---------------------- |
+| id           | int8       | 主键，自增，唯一标识ID |
+| userName     | text       | 用户名                 |
+| times        | timetamptz | 创建时间               |
+| content      | text       | 内容                   |
+| avatar       | text       | 头像资料               |
+| content_imgs | text       | 发表的图片资源         |
+| tag_val      | text       | 帖子类型               |
+
+建表页面配置：
+
+![img](/docs/img/样例-helloBBS-4.png)
+
+sql操作如下:
+
+```SQL
+CREATE TABLE "public"."post_list" ( 
+  "id" SERIAL,
+  "times" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2022-09-20 11:10:55.482198+08'::timestamp with time zone ,
+  "userName" TEXT NOT NULL,
+  "content" TEXT NOT NULL,
+  "avatar" TEXT NULL,
+  "content_imgs" TEXT NULL,
+  "tag_val" TEXT NULL,
+  CONSTRAINT "post_list_pkey" PRIMARY KEY ("id")
+);
+```
+
+### 2.创建comment表
+
+在数据表页面，点击“新建数据表”，创建comment表。comment表主要记录评论的数据，表结构字段如下：
+
+| 名称            | 类型       | 描述                   |
+| --------------- | ---------- | ---------------------- |
+| id              | int8       | 主键，自增，唯一标识ID |
+| commentator     | text       | 评论者                 |
+| created_at      | timetamptz | 创建时间               |
+| responder       | text       | 回复者（可空）         |
+| comment_content | text       | 评论内容               |
+| reply_content   | text       | 回复内容（可空）       |
+| post_id         | int8       | 帖子id                 |
+
+建表页面配置：
+
+![img](/docs/img/样例-helloBBS-5.png)
+
+sql操作如下
+
+```SQL
+CREATE TABLE "public"."comment" ( 
+  "id" SERIAL,
+  "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2022-09-20 11:22:08.683506+08'::timestamp with time zone ,
+  "commentator" TEXT NOT NULL,
+  "responder" TEXT NOT NULL,
+  "comment_content" TEXT NOT NULL,
+  "reply_content" TEXT NULL,
+  "post_id" BIGINT NULL,
+  "comment_id" BIGINT NULL,
+  CONSTRAINT "comment_pkey" PRIMARY KEY ("id")
+);
+```
+
+### 3.创建reply表
+
+在数据表页面，点击“新建数据表”，创建reply表，reply表主要记录回复的数据，表结构字段如下：
+
+| 名称          | 类型        | 描述                   |
+| ------------- | ----------- | ---------------------- |
+| id            | int8        | 主键，自增，唯一标识ID |
+| post_id       | int8        | 帖子id                 |
+| created_at    | timeatamptz | 创建时间               |
+| commentator   | text        | 评论者                 |
+| responder     | text        | 回复者                 |
+| reply_content | text        | 回复内容               |
+| comment_id    | int8        | 评论的id               |
+
+建表页面配置：
+
+![img](/docs/img/样例-helloBBS-6.png)
+
+sql操作如下
+
+```SQL
+CREATE TABLE "public"."reply" ( 
+  "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2022-09-21 17:35:18.564232+08'::timestamp with time zone ,
+  "reply_content" TEXT NOT NULL,
+  "commentator" TEXT NOT NULL,
+  "post_id" BIGINT NOT NULL,
+  "id" SERIAL,
+  "comment_id" BIGINT NOT NULL,
+  "responder" TEXT NULL,
+  CONSTRAINT "reply_pkey" PRIMARY KEY ("id")
+);
+```
+
+### 4.创建like表
+
+在数据表页面，点击“新建数据表”，创建like表，like表主要记录点赞的数据，表结构字段如下：
+
+| 名称       | 类型        | 描述                   |
+| ---------- | ----------- | ---------------------- |
+| id         | int8        | 主键，自增，唯一标识ID |
+| like_val   | int8        | 点赞的个数             |
+| created_at | timeatamptz | 创建时间               |
+| likers     | text        | 点赞的人               |
+| post_id    | int8        | 帖子的id               |
+
+建表页面配置：
+
+![img](/docs/img/样例-helloBBS-7.png)
+
+sql操作如下
+
+```SQL
+CREATE TABLE "public"."like" ( 
+  "id" SERIAL,
+  "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2022-09-20 11:25:30.462556+08'::timestamp with time zone ,
+  "like_val" BIGINT NOT NULL,
+  "likers" TEXT NOT NULL,
+  "post_id" BIGINT NULL,
+  CONSTRAINT "like_pkey" PRIMARY KEY ("id")
+);
+```
+
+### 5.创建page_views表
+
+在数据表页面，点击“新建数据表”，创建page_views表，page_views表主要记录浏览量的数据，表结构字段如下：
+
+| 名称       | 类型        | 描述                            |
+| ---------- | ----------- | ------------------------------- |
+| id         | int8        | 主键，自增，唯一标识ID          |
+| views      | int8        | 浏览的次数                      |
+| created_at | timeatamptz | 创建时间                        |
+| post_id    | int8        | 帖子的id，外键关联post_list的id |
+
+建表页面配置：
+
+![img](/docs/img/样例-helloBBS-8.png)
+
+sql操作如下
+
+```SQL
+CREATE TABLE "public"."page_views" ( 
+  "id" SERIAL,
+  "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT '2022-09-20 17:16:09.362364+08'::timestamp with time zone ,
+  "views" BIGINT NOT NULL,
+  "post_id" BIGINT NULL,
+  CONSTRAINT "page_views_pkey" PRIMARY KEY ("id"),
+  CONSTRAINT "page_views_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "public"."post_list" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+```
+
+## 创建avatar存储桶
+
+创建云存储的存储桶，用来存储用户发布帖子中的图片，涉及操作包括：
+
+1.创建一个存储桶avatar
+
+在该应用的云存储导航栏，点击“新建Bucket”按钮，创建存储桶avatar，并选为公开。
+
+![img](/docs/img/样例-helloBBS-9.png)
+
+2.允许每个用户可以下载发布帖子里的图片
+
+选中存储桶avatar，切换到**权限设置**栏，点击“新规则”按钮，弹出策略编辑弹框，选择“自定义”，如下图所示：
+
+![img](/docs/img/样例-helloBBS-10.png)
+
+ 选择SELECT操作，输入策略名称，点击“生成策略”按钮，如下图所示。
+
+![img](/docs/img/样例-helloBBS-11.png)
+
+3.允许用户发布帖子时可以上传图片到存储桶；
+
+选中存储桶avatar，切换到**权限设置**栏，点击“新规则”按钮，弹出策略编辑弹框，选择“自定义”，如下图所示：
+
+![img](/docs/img/样例-helloBBS-12.png)
+
+选择INSERT操作，输入策略名称，点击“生成策略”按钮，如下图所示。
+
+![img](/docs/img/样例-helloBBS-13.png)
+
+查看结果：
+
+![img](/docs/img/样例-helloBBS-14.png)
+
+## 注册论坛小程序
+
+以上是我们在MemFire Cloud上配置的全部步骤，接下来是在微信开发者工具上操作了。
+
+如果您还未注册过论坛小程序，请参考[官方步骤](https://developers.weixin.qq.com/miniprogram/dev/framework/quickstart/getstart.html#申请帐号)注册论坛小程序(只需要通过您的邮箱注册一个论坛小程序获得一个appid,然后下载一个微信开发工具即可)
+
+## 下载代码
+
+https://github.com/LucaRao/helloBBS.git
+
+ Node.js (>=14.x <=16.x) 。
+
+## 开发环境配置
+
+选择目录是下载好的论坛小程序项目的目录，AppID为您在微信公众平台注册论坛小程序获得的专属appid。
+
+![img](/docs/img/样例-helloBBS-15.png)
+
+在右侧详情里面的本地设置把“使用npm模块”和“不校验合法域名”勾上。
+
+![img](/docs/img/样例-helloBBS-16.png)
+
+打开终端，在项目根目录下执行如下命令 。
+
+```JavaScript
+npm init
+npm install
+```
+
+![img](/docs/img/样例-helloBBS-17.png)
+
+接下来，下载论坛小程序需要的MemFire Cloud的微信论坛小程序SDK。
+
+```JavaScript
+npm install supabase-wechat-stable
+```
+
+点击开发者工具中的菜单栏：工具 /构建 npm
+
+![img](/docs/img/样例-helloBBS-18.png)
+
+这一步npm就构建完成了，我们需要的依赖也已经下载好了,根目录下会多出两个文件，如下图。
+
+![img](/docs/img/样例-helloBBS-19.png)
+
+## 获取 API密钥
+
+接下来需要创建一个可以访问应用程序数据的客户端，论坛小程序使用了Supabase 微信小程序SDK包，使用他生态里提供的功能（登录、注册、增删改查等）去进行交互。创建一个可以访问微信小程序数据的客户端需要接口的地址（URL）和一个数据权限的令牌（ANON_KEY）,我们需要去应用的概览里面去获取这两个参数然后配置到lib/supabase.ts里面去。
+
+lib/supabase.js
+
+```JavaScript
+import { createClient } from 'supabase-wechat-stable'
+const url = ""
+const key = ""
+
+export const supabase = createClient(url, key)
+```
+
+回到MemFire Cloud首页，在应用/概括页面，获取服务地址以及token信息，只需要从总览中获取URL接口地址和anon的密钥。
+
+![img](/docs/img/样例-helloBBS-20.png)
+
+Anon（公开）密钥是客户端API密钥。它允许“匿名访问”您的数据库，直到用户登录。登录后，密钥将切换到用户自己的登录令牌。这将为数据启用行级安全性。 
+
+注意：service_role密钥可以绕过任何安全策略完全访问您的数据。这些密钥必须保密，并且要在服务器环境中使用，绝不能在客户端或浏览器上使用。 在后续示例代码中，需要提供supabaseUrl和supabaseKey。
+
+## 编译论坛小程序
+
+![img](/docs/img/样例-helloBBS-21.png)
+
+以上就是使用**微信小程序**和 **MemFire Cloud** 构建的一个完整论坛小程序的具体流程。一起来试试吧
+
+export const Page = ({ children }) => <Layout meta={meta} children={children} />
+
+export default Page

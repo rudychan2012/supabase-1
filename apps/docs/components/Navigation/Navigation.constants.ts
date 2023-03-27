@@ -89,7 +89,7 @@ export const menuItems: NavMenu = {
         { name: '概述', url: '/guides/auth', items: [] },
         {
           name: '身份验证',
-          url: undefined, 
+          url: undefined,
           items: [
             { name: '使用电子邮件登录', url: '/guides/auth/auth-email', items: [] },
             { name: '使用手机登录', url: '/guides/auth/phoneAuth', items: [] },
@@ -266,6 +266,16 @@ export const menuItems: NavMenu = {
         { name: 'JavaScript', url: '/reference/javascript', items: [] },
         { name: 'Flutter', url: '/reference/dart', items: [] },
         { name: '微信小程序', url: '/reference/wechat', items: [] },
+      ],
+    },
+    {
+      label: '最佳实践',
+      items: [
+        { name: 'Posts论坛', url: '/guides/example/PostsForum', items: [] },
+        { name: 'Discussbase论坛', url: '/guides/example/DiscussbaseForum', items: [] },
+        { name: 'Super课表小程序', url: '/guides/example/timetable', items: [] },
+        { name: 'BBS论坛小程序', url: '/guides/example/helloBBS', items: [] },
+        { name: '别踩白块游戏小程序', url: '/guides/example/notClickWhite', items: [] },
         // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
       ],
     },

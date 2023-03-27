@@ -1,0 +1,269 @@
+import Layout from '~/layouts/DefaultGuideLayout'
+
+export const meta = {
+  id: 'Discussbase',
+  title: 'Discussbase论坛',
+  description: 'Discussbase论坛',
+}
+
+
+**Discussbase**是一个开源的简单论坛。使用“技术栈”（MemFire Cloud 、 Nextjs）构建和运行。
+
+![img](/docs/img/样例-discuss-1.jpeg)
+
+## 下载代码
+
+执行如下命令，获取Discussbase论坛应用的代码。
+
+git clone   https://github.com/LucaRao/discussbase
+
+## 创建应用
+
+下载**Discussbase**代码后，登录[memfire cloud](https://memfiredb.com/),创建一个MemFire Cloud应用，为Discussbase提供后端服务，包括云数据库、对象存储、授权认证等。
+
+![img](/docs/img/样例-discuss-2.png)
+
+在应用->概括页面，获取服务地址以及token信息。
+
+![img](/docs/img/样例-discuss-3.png)
+
+Anon（公开）密钥是客户端API密钥。它允许“匿名访问”您的数据库，直到用户登录。登录后，密钥将切换到用户自己的登录令牌。这将为数据启用行级安全性。 
+
+注意：service_role（秘密）密钥可以绕过任何安全策略完全访问您的数据。这些密钥必须保密，并且要在服务器环境中使用，决不能在客户端或浏览器上使用。 在后续示例代码中，需要提供supabaseUrl和supabaseKey。
+
+## 配置访问密钥
+
+在根目录下创建新的 .env文件，在 .env 中添加您的 MemFire Cloud 配置；将上一步中获取的Anon（公开）密钥、service_role和网址、以及JWT密钥分别设置到该文件中，如下图所示：
+
+```Plaintext
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+JWT_SECRET=
+NEXT_PUBLIC_SUPABASE_SERVICE_KEY=
+```
+
+如图样例所示。
+
+![img](/docs/img/样例-discuss-4.png)
+
+## 创建数据表
+
+接下来我们会创建三张表，包括
+
+- profiles (用户信息表)
+
+- posts (帖子)
+
+- replies (回复信息表)
+
+### 创建profiles表
+
+你可以在MemFire Cloud的Discussbase_db的SQL编辑器运行如下SQL语法，涉及操作包括：
+
+1、创建profiles表, 开启Profiles的RLS数据安全访问规则;
+
+其中profiles表字段id和auth.users表中的uuid外键关联。
+
+相关操作的SQL命令：
+
+```SQL
+-- Create a table for Public Profiles
+create table profiles (
+  id uuid references auth.users not null,
+  updated_at timestamp with time zone,
+  username text unique not null,
+  avatar_url text,
+  website text,
+  point INTEGER DEFAULT 0,
+  primary key (id),
+  unique(username),
+  constraint username_length check (char_length(username) >= 3)
+);
+
+alter table profiles enable row level security;
+
+
+```
+
+2、允许每个用户可以查看公共的个人信息资料, 仅允许用户增删改查本人的个人资料信息；   
+
+相关操作的SQL命令：
+
+```SQL
+
+create policy "Public profiles are viewable by everyone."
+  on profiles for select
+  using ( true );
+
+create policy "Users can insert their own profile."
+  on profiles for insert
+  with check ( auth.uid() = id );
+
+create policy "Users can update own profile."
+  on profiles for update
+  using ( auth.uid() = id );
+```
+
+### 创建avatars存储桶
+
+创建云存储的存储桶，用来存储用户的头像图片，涉及操作包括：
+
+1、创建一个存储桶avatars
+
+在该应用的云存储导航栏，点击“新建Bucket”按钮，创建存储桶avatars。
+
+![img](/docs/img/样例-discuss-10.png)
+
+2、允许每个用户可以查看、上传、更新存储桶avatars；
+
+相关操作的SQL命令：
+
+```SQL
+-- Set up Storage!
+insert into storage.buckets (id, name)
+values ('avatars', 'avatars');
+
+create policy "Avatar are public accessible."
+  on storage.objects for select
+  using ( bucket_id = 'avatars' );
+
+create policy "Everyone can upload an avatar."
+  on storage.objects for insert
+  with check ( bucket_id = 'avatars' );
+
+create policy "Everyone can update an avatar."
+  on storage.objects for update
+  with check ( bucket_id = 'avatars' );
+```
+
+### 创建posts表
+
+你可以在MemFire Cloud的Discussbase_db的SQL编辑器运行如下SQL语法，涉及操作包括：
+
+1、 创建posts表，开启posts的RLS数据安全访问规则；
+
+其中posts表字段user_id和public.profiles表中的id外键关联。
+
+```SQL
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  user_id uuid not null,
+  title text not null,
+  body text not null,
+  slug text not null,
+  tag text not null,
+  vote INTEGER DEFAULT 0,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT fk_user
+      FOREIGN KEY(user_id) 
+      REFERENCES profiles(id)
+      ON DELETE SET NULL
+);
+
+alter table posts enable row level security;
+
+```
+
+2、允许每个用户增删改查帖子；允许所有的用户都可以查看全部的帖子；
+
+相关操作的SQL命令：
+
+```SQL
+
+create policy "Individuals can create posts." on posts for
+    insert with check (auth.uid() = user_id);
+
+create policy "Individuals can update their own posts." on posts for
+    update using (auth.uid() = user_id);
+
+create policy "Individuals can delete their own posts." on posts for
+    delete using (auth.uid() = user_id);
+
+create policy "Posts are public." on posts for
+    select using (true);
+```
+
+### 创建replies表
+
+你可以在MemFire Cloud的Discussbase_db的SQL编辑器运行如下SQL语法，涉及操作包括：
+
+1、创建replies表；开启replies的RLS数据安全访问规则；
+
+其中replies表字段user_id和public.profiles表中的id外键关联。
+
+其中replies表字段post_id和public.posts表中的id外键关联。
+
+相关操作的SQL命令：
+
+```SQL
+CREATE TABLE replies (
+  id SERIAL PRIMARY KEY,
+  body text,
+  user_id uuid not null,
+  post_id int8,
+  vote INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_post
+      FOREIGN KEY(post_id) 
+      REFERENCES posts(id)
+      ON DELETE SET NULL,
+        CONSTRAINT fk_user
+      FOREIGN KEY(user_id) 
+      REFERENCES profiles(id)
+      ON DELETE SET NULL
+);
+
+alter table replies enable row level security;
+
+```
+
+2、允许每个用户增删改查回复信息；允许所有的用户都可以查看全部的帖子回复信息；
+
+
+相关操作的SQL命令：
+
+```SQL
+
+create policy "Individuals can create replies." on replies for
+    insert with check (auth.uid() = user_id);
+
+create policy "Individuals can update their own replies." on replies for
+    update using (auth.uid() = user_id);
+
+create policy "Individuals can delete their own replies." on replies for
+    delete using (auth.uid() = user_id);
+
+create policy "replies are public." on replies for
+    select using (true);
+```
+
+## 运行程序
+
+```SQL
+node -v  #v16.15.1
+npm config set registry https://registry.npm.taobao.org
+npm install
+npm run dev
+```
+
+在浏览器中打开链接，即可查看如下页面。
+
+![img](/docs/img/样例-discuss-28.png)
+
+认证设置，使用本地的IP地址来替换认证设置中的网址。 
+
+![img](/docs/img/样例-discuss-29.png)
+
+点击登录页面，如下图所示，输入注册邮箱，应用会发送确认注册邮件。登录注册邮箱后，打开最新收到的确认注册邮件，点击链接，完成注册操作，即可登录论坛。
+
+![img](/docs/img/样例-discuss-30.png)
+
+登录论坛后，完成个人资料的填写后，即可点击“新增+”，来发布不同类型的帖子。
+
+![img](/docs/img/样例-discuss-31.png)
+
+export const Page = ({ children }) => <Layout meta={meta} children={children} />
+
+export default Page
