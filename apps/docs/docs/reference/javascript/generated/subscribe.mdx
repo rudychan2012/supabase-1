@@ -5,7 +5,7 @@ slug: /subscribe
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-监听信息
+Listen to messages.
 
 ```js
 supabase
@@ -17,7 +17,7 @@ supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -36,7 +36,7 @@ supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
@@ -57,12 +57,12 @@ supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -78,7 +78,7 @@ supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
@@ -103,7 +103,7 @@ supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
@@ -112,15 +112,13 @@ supabase
 </ul>
 
 
-## 注释
+## Notes
 
-- 为了提高数据库性能和安全性，新项目的实时性默认是禁用的。你可以通过[管理复制](/docs/guides/api#managing-realtime)打开它。
-- 行级安全不应用于删除语句。
-- 如果你想接收更新和删除的 `先前`数据，你需要将`REPLICA IDENTITY`设置为`FULL`，像这样。`ALTER TABLE your_table REPLICA IDENTITY FULL;`。
-- 当删除发生时，old_record的内容将被广播给该表的所有订阅者，所以确保每个表的复制身份只包含可以安全公开的信息。
-- 通道名称必须与你想监听的模式/表/过滤器完全匹配，用冒号分隔。请看下面的例子以了解更多情况。
-
-
+- Realtime is disabled by default for new Projects for better database performance and security. You can turn it on by [managing replication](/docs/guides/api#managing-realtime).
+- Row level security is not applied to delete statements.
+- If you want to receive the "previous" data for updates and deletes, you will need to set `REPLICA IDENTITY` to `FULL`, like this: `ALTER TABLE your_table REPLICA IDENTITY FULL;`
+- When a delete occurs, the contents of old_record will be broadcast to all subscribers to that table so ensure that each table's replica identity only contains information that is safe to expose publicly.
+- The channel name must exactly match the schema/table/filter you want to listen to separated by colons. See below examples for additional context.
 
 
 
@@ -129,9 +127,11 @@ supabase
 
 
 
-## 实例
 
-### 听取所有的数据库变化
+
+## Examples
+
+### Listen to all database changes
 
 
 
@@ -144,7 +144,7 @@ supabase
   .subscribe()
 ```
 
-### 监听一个特定的表
+### Listening to a specific table
 
 
 
@@ -157,7 +157,7 @@ supabase
   .subscribe()
 ```
 
-### 监听插入数据
+### Listening to inserts
 
 
 
@@ -170,9 +170,10 @@ supabase
   .subscribe()
 ```
 
-### 监听修改数据
+### Listening to updates
 
-默认情况下，Supabase 将只发送更新的记录。如果你想同时接收以前的值，你可以为你所监听的表启用完全复制。
+By default, Supabase will send only the updated record. If you want to receive the previous values as well you can
+enable full replication for the table you are listening to:
 
 ```sql
 alter table "your_table" replica identity full;
@@ -188,9 +189,10 @@ supabase
   .subscribe()
 ```
 
-### 监听删除数据
+### Listening to deletes
 
-默认情况下，Supabase 不发送已删除的记录。如果你想接收删除的记录，你可以为你所监听的表启用完全复制功能。
+By default, Supabase does not send deleted records. If you want to receive the deleted record you can
+enable full replication for the table you are listening too:
 
 ```sql
 alter table "your_table" replica identity full;
@@ -206,9 +208,9 @@ supabase
   .subscribe()
 ```
 
-### 监听多个事件
+### Listening to multiple events
 
-如果你想监听每个表的多个事件，你可以使用连锁监听器。
+You can chain listeners if you want to listen to multiple events for each table.
 
 ```js
 supabase
@@ -218,9 +220,9 @@ supabase
   .subscribe()
 ```
 
-### 监听行级变化
+### Listening to row level changes
 
-你可以使用`{table}:{col}=eq.{val}`的格式来监听单个行 - 其中`{col}`是列名，`{val}`是你想要匹配的值。
+You can listen to individual rows using the format `{table}:{col}=eq.{val}` - where `{col}` is the column name, and `{val}` is the value which you want to match.
 
 ```js
 supabase

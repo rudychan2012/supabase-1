@@ -5,14 +5,14 @@ slug: /auth-getuser
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-如果有一个现有的会话，获取当前用户的详细信息。
+Gets the current user details if there is an existing session.
 
 ```js
 const { data: { user } } = await supabase.auth.getUser()
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -23,7 +23,7 @@ const { data: { user } } = await supabase.auth.getUser()
       jwt
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -31,7 +31,7 @@ const { data: { user } } = await supabase.auth.getUser()
   </h4>
   <div class="method-list-item-description">
 
-接收一个可选的访问令牌jwt。如果没有提供jwt，getUser()将试图从当前会话中获取jwt。
+Takes in an optional access token jwt. If no jwt is provided, getUser() will attempt to get the jwt from the current session.
 
   </div>
   
@@ -40,12 +40,10 @@ const { data: { user } } = await supabase.auth.getUser()
 </ul>
 
 
-## 注释
+## Notes
 
-- 该方法从当前会话中获取用户对象。
-- 从数据库而不是本地会话中获取用户对象。
-
-
+- This method gets the user object from the current session.
+- Fetches the user object from the database instead of local session.
 
 
 
@@ -54,9 +52,11 @@ const { data: { user } } = await supabase.auth.getUser()
 
 
 
-## 示例
 
-### 获取当前已有会话的登录用户
+
+## Examples
+
+### Get the logged in user with the current existing session
 
 
 
@@ -64,7 +64,7 @@ const { data: { user } } = await supabase.auth.getUser()
 const { data: { user } } = await supabase.auth.getUser()
 ```
 
-### 获得带有自定义访问令牌的登录用户jwt。
+### Get the logged in user with a custom access token jwt.
 
 
 

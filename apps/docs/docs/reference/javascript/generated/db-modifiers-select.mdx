@@ -5,9 +5,11 @@ slug: /db-modifiers-select
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-对查询结果执行SELECT。
+Perform a SELECT on the query result.
 
-默认情况下，`.insert()`, `.update()`, `.upsert()`, 和 `.delete()`不会返回修改过的记录。通过调用这个方法，修改过的行会返回到`data`。
+By default, `.insert()`, `.update()`, `.upsert()`, and `.delete()` do not
+return modified rows. By calling this method, modified rows are returned in
+`data`.
 
 ```ts
 const { data, error } = await supabase
@@ -17,7 +19,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -25,7 +27,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      列
+      columns
     </span>
     <span className="method-list-item-label-badge false">
       optional
@@ -36,7 +38,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要检索的列，用逗号分隔
+The columns to retrieve, separated by commas
 
   </div>
   
@@ -57,9 +59,9 @@ const { data, error } = await supabase
 
 
 
-## 示例
+## Examples
 
-### 使用`upsert()`时
+### With `upsert()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

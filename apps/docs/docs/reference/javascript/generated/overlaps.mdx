@@ -5,7 +5,8 @@ slug: /overlaps
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Postgres支持一系列的[范围类型](https://www.postgresql.org/docs/current/rangetypes.html)。你可以可以使用范围值的字符串表示对范围列进行过滤值。
+Only relevant for array and range columns. Match only rows where
+`column` and `value` have an element in common.
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +16,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -23,7 +24,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      列
+      column
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -34,7 +35,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要过滤的数组或范围列
+The array or range column to filter on
 
   </div>
   
@@ -44,7 +45,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      值
+      value
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -55,12 +56,12 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用来过滤的数组或范围值
+The array or range value to filter with
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -76,7 +77,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
@@ -97,7 +98,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -122,9 +123,9 @@ const { data, error } = await supabase
 
 
 
-## 举例
+## Examples
 
-### 关于数组列
+### On array columns
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -172,9 +173,12 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 关于范围列
+### On range columns
 
-Postgres支持一系列的[范围类型](https://www.postgresql.org/docs/current/rangetypes.html)。你可以可以使用范围值的字符串表示对范围列进行过滤值。
+Postgres supports a number of [range
+types](https://www.postgresql.org/docs/current/rangetypes.html). You
+can filter on range columns using the string representation of range
+values.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

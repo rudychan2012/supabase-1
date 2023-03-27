@@ -1,11 +1,11 @@
 ---
 id: select
-title: "获取数据：select()"
+title: "Fetch data: select()"
 slug: /select
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-在表或视图上执行SELECT查询。
+Perform a SELECT query on the table or view.
 
 ```ts
 const { data, error } = await supabase
@@ -14,7 +14,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -22,18 +22,18 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      列
+      columns
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
-      <code>查询</code>
+      <code>Query</code>
     </span>
   </h4>
   <div class="method-list-item-description">
 
-要检索的列，用逗号分隔
+The columns to retrieve, separated by commas
 
   </div>
   
@@ -54,12 +54,12 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-命名的参数
+Named parameters
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -67,7 +67,7 @@ const { data, error } = await supabase
       count
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>exact</code> | <code>planned</code> | <code>estimated</code>
@@ -75,16 +75,16 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用来计算表格或视图中的行数的算法。
+Count algorithm to use to count rows in the table or view.
 
-`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
-引擎盖。
+`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+hood.
 
-`"planned"`: 近似的但快速的计数算法。使用Postgres的
-统计数据。
+`"planned"`: Approximated but fast count algorithm. Uses the Postgres
+statistics under the hood.
 
-`"estimated"`: 对低数据使用精确计数，对高数据使用计划计数。
-数字。
+`"estimated"`: Uses exact count for low numbers and planned count for high
+numbers.
 
   </div>
   
@@ -97,7 +97,7 @@ const { data, error } = await supabase
       head
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>boolean</code>
@@ -105,8 +105,8 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-当设置为 `true`时，`data`将不被返回。
-如果你只需要计数，则很有用。
+When set to `true`, `data` will not be returned.
+Useful if you only need the count.
 
   </div>
   
@@ -119,14 +119,12 @@ const { data, error } = await supabase
 </ul>
 
 
-## 注意事项
+## Notes
 
-- 默认情况下，Supabase项目最多返回1,000行。这个设置可以在你的项目的[API设置](https://app.supabase.com/project/_/settings/api)中改变。建议你保持较低的设置，以限制意外或恶意请求的有效载荷大小。你可以使用`range()`查询来分页浏览你的数据。
-- `select()`可以与[Filters](/docs/reference/javascript/using-filters)相结合。
-- `select()`可以与[Modifiers](/docs/reference/javascript/using-modifiers)结合使用。
-- `apikey`是一个保留关键字，如果你使用的是[MemFire Cloud平台](/docs/guides/hosting/platform)，[应该避免作为列名](https://github.com/supabase/supabase/issues/5465)。
-
-
+- By default, Supabase projects return a maximum of 1,000 rows. This setting can be changed in your project's [API settings](https://app.supabase.com/project/_/settings/api). It's recommended that you keep it low to limit the payload size of accidental or malicious requests. You can use `range()` queries to paginate through your data.
+- `select()` can be combined with [Filters](/docs/reference/javascript/using-filters)
+- `select()` can be combined with [Modifiers](/docs/reference/javascript/using-modifiers)
+- `apikey` is a reserved keyword if you're using the [Supabase Platform](/docs/guides/hosting/platform) and should be avoided as a column name](https://github.com/supabase/supabase/issues/5465).
 
 
 
@@ -135,9 +133,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
 
-### 获取你的数据
+
+## Examples
+
+### Getting your data
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -190,9 +190,9 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 选择特定的列
+### Selecting specific columns
 
-你可以从你的表中选择特定的字段。
+You can select specific fields from your tables.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -242,9 +242,9 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 查询外键表
+### Query foreign tables
 
-如果你的数据库有外键关系，你也可以查询相关表。
+If your database has foreign key relationships, you can query related tables too.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -316,12 +316,12 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 通过连接表查询外域表
+### Query foreign tables through a join table
 
-如果你处于这样一种情况，即你的表不是***直接相关的，而是通过一个_连接表_连接起来的。
-直接相关，而是通过一个_连接表_连接起来的，你仍然可以使用
-`select()`方法来查询相关数据。这个连接表需要
-需要将外键作为其复合主键的一部分。
+If you're in a situation where your tables are **NOT** directly
+related, but instead are joined by a _join table_, you can still use
+the `select()` method to query the related data. The join table needs
+to have the foreign keys as part of its composite primary key.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -412,11 +412,11 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 多次查询同一个外域表
+### Query the same foreign table multiple times
 
-如果你需要两次查询同一个外域表，使用
-连接列的名称来确定使用哪个连接。你也可以给每个
-列一个别名。
+If you need to query the same foreign table twice, use the name of the
+joined column to identify which join to use. You can also give each
+column an alias.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -481,10 +481,10 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 通过外域表进行过滤
+### Filtering through foreign tables
 
-如果一个外域表的列的过滤器不被满足，那么这个外域
-表返回"[]"或 "null"，但父表不会被过滤掉。
+If the filter on a foreign table's column is not satisfied, the foreign
+table returns `[]` or `null` but the parent table is not filtered out.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -544,7 +544,7 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-如果你想过滤掉父表的行，使用`!inner`提示。
+If you want to filter out the parent table rows, use the `!inner` hint:
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="js">
 <TabPanel id="js" label="JavaScript">
@@ -570,11 +570,11 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 使用计数选项进行查询
+### Querying with count option
 
-你可以通过使用
-[count](/docs/reference/javascript/select#parameters)选项来获得。例如
-例如，在不返回所有行的情况下获得表的计数。
+You can get the number of rows by using the
+[count](/docs/reference/javascript/select#parameters) option. For
+example, to get the table count without returning all rows:
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -614,12 +614,12 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 查询JSON数据
+### Querying JSON data
 
-你可以选择和过滤以下内容的数据
-[JSON](/docs/guides/database/json) 列中的数据。Postgres提供了一些
-[操作符](/docs/guides/database/json#query-the-jsonb-data)用于
-查询JSON数据。
+You can select and filter data inside of
+[JSON](/docs/guides/database/json) columns. Postgres offers some
+[operators](/docs/guides/database/json#query-the-jsonb-data) for
+querying JSON data.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

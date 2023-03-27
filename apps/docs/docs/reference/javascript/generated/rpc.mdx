@@ -5,8 +5,8 @@ slug: /rpc
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-你可以把Postgres函数作为_远程过程调用，即你可以从任何地方执行数据库中的逻辑。
-当逻辑很少改变时，函数是非常有用的，比如密码重设和更新。
+You can call Postgres functions as _Remote Procedure Calls_, logic in your database that you can execute from anywhere.
+Functions are useful when the logic rarely changes—like for password resets and updates.
 
 ```sql
 create or replace function hello_world() returns text as $$
@@ -20,7 +20,7 @@ const { data, error } = await supabase.rpc('hello_world')
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -39,7 +39,7 @@ const { data, error } = await supabase.rpc('hello_world')
   </h4>
   <div class="method-list-item-description">
 
-要调用的函数名称
+The function name to call
 
   </div>
   
@@ -60,7 +60,7 @@ const { data, error } = await supabase.rpc('hello_world')
   </h4>
   <div class="method-list-item-description">
 
-传递给函数调用的参数
+The arguments to pass to the function call
 
   </div>
   
@@ -81,12 +81,12 @@ const { data, error } = await supabase.rpc('hello_world')
   </h4>
   <div class="method-list-item-description">
 
-命名的参数
+Named parameters
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -102,17 +102,18 @@ const { data, error } = await supabase.rpc('hello_world')
   </h4>
   <div class="method-list-item-description">
 
-计数算法，用于计算函数返回的行数。
-函数返回的行数。只适用于[返回集合的函数](https://www.postgresql.org/docs/current/functions-srf.html)。
+Count algorithm to use to count rows returned by the
+function. Only applicable for [set-returning
+functions](https://www.postgresql.org/docs/current/functions-srf.html).
 
-`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
-引擎盖。
+`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+hood.
 
-`"planned"`: 近似但快速的计数算法。使用了Postgres
-的统计数据。
+`"planned"`: Approximated but fast count algorithm. Uses the Postgres
+statistics under the hood.
 
-`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
-数。
+`"estimated"`: Uses exact count for low numbers and planned count for high
+numbers.
 
   </div>
   
@@ -133,8 +134,8 @@ const { data, error } = await supabase.rpc('hello_world')
   </h4>
   <div class="method-list-item-description">
 
-当设置为 "true "时，"data "将不被返回。
-如果你只需要计数，则很有用。
+When set to `true`, `data` will not be returned.
+Useful if you only need the count.
 
   </div>
   
@@ -159,9 +160,9 @@ const { data, error } = await supabase.rpc('hello_world')
 
 
 
-## 示例
+## Examples
 
-### 调用一个没有参数的Postgres函数
+### Call a Postgres function without arguments
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -193,7 +194,7 @@ const { data, error } = await supabase.rpc('hello_world')
 </TabPanel>
 </Tabs>
 
-### 调用一个带参数的Postgres函数
+### Call a Postgres function with arguments
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -225,9 +226,9 @@ const { data, error } = await supabase.rpc('hello_world')
 </TabPanel>
 </Tabs>
 
-### 大量处理
+### Bulk processing
 
-你可以通过传入一个数组作为参数来处理大型有效载荷。
+You can process large payloads by passing in an array as an argument:
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -263,11 +264,11 @@ const { data, error } = await supabase.rpc('hello_world')
 </TabPanel>
 </Tabs>
 
-### 调用带有过滤器的Postgres函数
+### Call a Postgres function with filters
 
-返回表格的Postgres函数也可以与
-[过滤器](/docs/reference/javascript/using-filters)和
-[修改器](/docs/reference/javascript/using-modifiers)。
+Postgres functions that return tables can also be combined with
+[Filters](/docs/reference/javascript/using-filters) and
+[Modifiers](/docs/reference/javascript/using-modifiers).
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

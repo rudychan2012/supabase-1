@@ -5,7 +5,7 @@ slug: /in
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-只匹配`column`包含在`values`数组中的行。
+Match only rows where `column` is included in the `values` array.
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -23,7 +23,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      列
+      column
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要过滤的列
+The column to filter on
 
   </div>
   
@@ -44,7 +44,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      值
+      values
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -55,7 +55,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用来过滤的值数组
+The values array to filter with
 
   </div>
   
@@ -76,9 +76,9 @@ const { data, error } = await supabase
 
 
 
-## 举例
+## Examples
 
-### 用 `select()`
+### With `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

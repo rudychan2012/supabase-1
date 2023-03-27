@@ -5,11 +5,12 @@ slug: /order
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-按 `column`对查询结果进行排序。
+Order the query result by `column`.
 
-你可以多次调用这个方法来按多列排序。
+You can call this method multiple times to order by multiple columns.
 
-你可以对外域表进行排序，但这并不影响对当前表的排序。
+You can order foreign tables, but it doesn't affect the ordering of the
+current table.
 
 ```ts
 const { data, error } = await supabase
@@ -19,7 +20,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -27,7 +28,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      列
+      column
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -38,7 +39,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-列的排序方式
+The column to order by
 
   </div>
   
@@ -59,12 +60,12 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-命名的参数
+Named parameters
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -80,7 +81,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-如果 "true"，结果将按升序排列。
+If `true`, the result will be in ascending order
 
   </div>
   
@@ -101,7 +102,8 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-设置此选项以按外域表的列
+Set this to order a foreign table by foreign
+columns
 
   </div>
   
@@ -122,7 +124,8 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-如果 `true`，`null`首先出现。如果 `false`,则 `null`出现在最后。
+If `true`, `null`s appear first. If `false`,
+`null`s appear last.
 
   </div>
   
@@ -147,9 +150,9 @@ const { data, error } = await supabase
 
 
 
-## 示例
+## Examples
 
-### 使用 `select()`时
+### With `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -203,9 +206,10 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 在外域表上
+### On a foreign table
 
-对外表的排序不影响父表的排序。
+Ordering on foreign tables doesn't affect the ordering of
+the parent table.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

@@ -5,7 +5,7 @@ slug: /storage-listbuckets
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-检索现有项目中所有存储桶的详细信息。
+Retrieves the details of all Storage buckets within an existing project.
 
 ```js
 const { data, error } = await supabase
@@ -18,14 +18,12 @@ const { data, error } = await supabase
 
 
 
-## 注意事项
+## Notes
 
-- 需要RLS策略权限:
-  - `buckets`表权限: `选择'.
-  - `objects`表的权限：无
-- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
-
-
+- RLS policy permissions required:
+  - `buckets` table permissions: `select`
+  - `objects` table permissions: none
+- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
 
 
 
@@ -34,9 +32,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
 
-## 列出桶
+
+## Examples
+
+### List buckets
 
 
 

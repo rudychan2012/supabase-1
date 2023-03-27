@@ -5,7 +5,7 @@ slug: /storage-getbucket
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-检索现有存储桶的详细信息。
+Retrieves the details of an existing Storage bucket.
 
 ```js
 const { data, error } = await supabase
@@ -14,7 +14,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -33,7 +33,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-你想检索的桶的唯一标识符。
+The unique identifier of the bucket you would like to retrieve.
 
   </div>
   
@@ -42,14 +42,12 @@ const { data, error } = await supabase
 </ul>
 
 
-## 注意事项
+## Notes
 
-- 需要RLS策略权限:
-  - `buckets`表权限: `选择'.
-  - `objects`表的权限：无
-- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
-
-
+- RLS policy permissions required:
+  - `buckets` table permissions: `select`
+  - `objects` table permissions: none
+- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
 
 
 
@@ -58,9 +56,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
 
-### 获取桶
+
+## Examples
+
+### Get bucket
 
 
 
