@@ -5,7 +5,7 @@ slug: /storage-from-copy
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Copies an existing file to a new path in the same bucket.
+将一个现有的文件复制到同一桶中的新路径。
 
 ```js
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The original file path, including the current file name. For example `folder/image.png`.
+原始文件路径，包括当前文件名。例如`folder/image.png`。
 
   </div>
   
@@ -55,7 +55,7 @@ The original file path, including the current file name. For example `folder/ima
   </h4>
   <div class="method-list-item-description">
 
-The new file path, including the new file name. For example `folder/image-copy.png`.
+新的文件路径，包括新的文件名。例如 `folder/image-copy.png`。
 
   </div>
   
@@ -64,14 +64,12 @@ The new file path, including the new file name. For example `folder/image-copy.p
 </ul>
 
 
-## Notes
+## 注意事项
 
-- RLS policy permissions required:
-  - `buckets` table permissions: none
-  - `objects` table permissions: `insert` and `select`
-- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
-
-
+- 需要RLS策略权限:
+  - `buckets`表的权限: 无
+  - `objects`表的权限: `插入'和`选择'.
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
 
 
 
@@ -80,9 +78,11 @@ The new file path, including the new file name. For example `folder/image-copy.p
 
 
 
-## Examples
 
-### Copy file
+
+## 实例
+
+### 复制文件
 
 
 

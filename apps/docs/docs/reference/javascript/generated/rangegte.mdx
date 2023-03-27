@@ -5,9 +5,7 @@ slug: /rangegte
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Only relevant for range columns. Match only rows where every element in
-`column` is either contained in `range` or greater than any element in
-`range`.
+只与范围列有关。只匹配那些在栏目中的每个元素都包含在 `range`中，或者大于 `range`中的任何元素。`range`中的任何元素。
 
 ```ts
 const { data, error } = await supabase
@@ -17,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -25,7 +23,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -36,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The range column to filter on
+要过滤的范围列
 
   </div>
   
@@ -57,7 +55,7 @@ The range column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The range to filter with
+用来过滤的范围
 
   </div>
   
@@ -78,14 +76,11 @@ The range to filter with
 
 
 
-## Examples
+## 举例
 
-### With `select()`
+### 用 `select()`
 
-Postgres supports a number of [range
-types](https://www.postgresql.org/docs/current/rangetypes.html). You
-can filter on range columns using the string representation of range
-values.
+Postgres支持一系列的[范围类型](https://www.postgresql.org/docs/current/rangetypes.html)。你可以可以使用范围值的字符串表示对范围列进行过滤值。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

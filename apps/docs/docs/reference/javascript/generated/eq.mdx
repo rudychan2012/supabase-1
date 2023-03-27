@@ -5,9 +5,9 @@ slug: /eq
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Match only rows where `column` is equal to `value`.
+只匹配 `column`等于 `value`的记录。
 
-To check if the value of `column` is NULL, you should use `.is()` instead.
+要检查`column`的值是否为NULL，你应该使用`.is()`来代替。
 
 ```ts
 const { data, error } = await supabase
@@ -17,7 +17,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -25,7 +25,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -36,7 +36,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The column to filter on
+要过滤的列
 
   </div>
   
@@ -46,7 +46,7 @@ The column to filter on
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      value
+      值
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -57,7 +57,7 @@ The column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The value to filter with
+用来过滤的值
 
   </div>
   
@@ -78,9 +78,9 @@ The value to filter with
 
 
 
-## Examples
+## 例子
 
-### With `select()`
+### 用 `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

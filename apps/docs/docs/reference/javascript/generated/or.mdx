@@ -5,13 +5,11 @@ slug: /or
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Match only rows which satisfy at least one of the filters.
+只匹配满足至少一个过滤器的记录。
 
-Unlike most filters, `filters` is used as-is and needs to follow [PostgREST
-syntax](https://postgrest.org/en/stable/api.html#operators). You also need
-to make sure it's properly sanitized.
+与大多数过滤器不同，`filters`是按原样使用的，需要遵循[PostgREST语法](https://postgrest.org/en/stable/api.html#operators)。你还需要你还需要确保它被正确地消毒。
 
-It's currently not possible to do an `.or()` filter across multiple tables.
+目前不可能在多个表中做一个`.or()`过滤器。
 
 ```ts
 const { data, error } = await supabase
@@ -21,7 +19,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -40,7 +38,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The filters to use, following PostgREST syntax
+使用的过滤器，遵循PostgREST的语法
 
   </div>
   
@@ -61,13 +59,12 @@ The filters to use, following PostgREST syntax
   </h4>
   <div class="method-list-item-description">
 
-Set this to filter on foreign tables instead of the
-current table
+设置为过滤外域表而不是当前表
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -83,7 +80,7 @@ current table
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -96,9 +93,9 @@ No description provided.
 </ul>
 
 
-## Notes
+## 注意
 
-or() expects you to use the raw PostgREST syntax for the filter names and values.
+or()希望你使用原始的PostgREST语法来表达过滤器的名称和值。
 
 ```ts
 .or('id.in.(5,6,7), arraycol.cs.{"a","b"}')  // Use `()` for `in` filter, `{}` for array values and `cs` for `contains()`.
@@ -114,9 +111,9 @@ or() expects you to use the raw PostgREST syntax for the filter names and values
 
 
 
-## Examples
+## 示例
 
-### With `select()`
+### 使用 `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -164,7 +161,7 @@ or() expects you to use the raw PostgREST syntax for the filter names and values
 </TabPanel>
 </Tabs>
 
-### Use `or` with `and`
+## 使用`or`与`and`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -210,7 +207,7 @@ or() expects you to use the raw PostgREST syntax for the filter names and values
 </TabPanel>
 </Tabs>
 
-### Use `or` on foreign tables
+### 在外域表中使用`or`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

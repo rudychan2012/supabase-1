@@ -5,10 +5,10 @@ slug: /insert
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Perform an INSERT into the table or view.
+向表或视图执行INSERT操作。
 
-By default, inserted rows are not returned. To return it, chain the call
-with `.select()`.
+默认情况下，插入的行不会被返回。要返回它，请在调用
+与`.select()`连锁调用。
 
 ```ts
 const { error } = await supabase
@@ -17,7 +17,7 @@ const { error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -36,13 +36,12 @@ const { error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The values to insert. Pass an object to insert a single row
-or an array to insert multiple rows.
+要插入的值。传递一个对象来插入单一行或一个数组来插入多行。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -58,7 +57,7 @@ or an array to insert multiple rows.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -68,7 +67,7 @@ No description provided.
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      Row
+      行
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -79,7 +78,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。 
 
   </div>
   
@@ -104,12 +103,12 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -117,7 +116,7 @@ Named parameters
       count
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>exact</code> | <code>planned</code> | <code>estimated</code>
@@ -125,16 +124,16 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-Count algorithm to use to count inserted rows.
+用来计算插入行的计数算法。
 
-`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
-hood.
+`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
+引擎盖。
 
-`"planned"`: Approximated but fast count algorithm. Uses the Postgres
-statistics under the hood.
+`"planned"`: 近似但快速的计数算法。使用了Postgres
+的统计数据。
 
-`"estimated"`: Uses exact count for low numbers and planned count for high
-numbers.
+`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
+数。
 
   </div>
   
@@ -159,9 +158,9 @@ numbers.
 
 
 
-## Examples
+## 示例
 
-### Create a record
+### 创建一个记录
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -220,7 +219,7 @@ numbers.
 </TabPanel>
 </Tabs>
 
-### Create a record and return it
+### 创建一个记录并返回
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -259,10 +258,10 @@ numbers.
 </TabPanel>
 </Tabs>
 
-### Bulk create
+### 批量创建
 
-A bulk create operation is handled in a single transaction.
-If any of the inserts fail, none of the rows are inserted.
+批量创建操作是在一个单一的事务中处理的。
+如果任何一个插入操作失败，则不插入任何行。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

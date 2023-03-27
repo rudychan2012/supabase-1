@@ -5,7 +5,7 @@ slug: /storage-from-createsignedurls
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Creates multiple signed URLs. Use a signed URL to share a file for a fixed amount of time.
+创建多个签名的URL。使用签名的URL在固定的时间内分享一个文件。
 
 ```js
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The file paths to be downloaded, including the current file names. For example `['folder/image.png', 'folder2/image2.png']`.
+要下载的文件路径，包括当前的文件名。例如`['folder/image.png', 'folder2/image2.png']`。
 
   </div>
   
@@ -55,7 +55,7 @@ The file paths to be downloaded, including the current file names. For example `
   </h4>
   <div class="method-list-item-description">
 
-The number of seconds until the signed URLs expire. For example, `60` for URLs which are valid for one minute.
+离签名的URL过期的秒数。例如，`60`代表有效期为1分钟的URL。
 
   </div>
   
@@ -76,12 +76,12 @@ The number of seconds until the signed URLs expire. For example, `60` for URLs w
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -97,12 +97,12 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.
+如果设置为 `true`，就会触发该文件的下载。如果你想用不同的文件名来触发下载，将此参数设置为文件名。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -118,7 +118,7 @@ triggers the file as a download if set to true. Set this parameter as the name o
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -139,7 +139,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -156,14 +156,12 @@ No description provided.
 </ul>
 
 
-## Notes
+## 注意事项
 
-- RLS policy permissions required:
-  - `buckets` table permissions: none
-  - `objects` table permissions: `select`
-- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
-
-
+- 需要RLS策略权限:
+  - `buckets`表的权限: 无
+  - `objects`表的权限: `select`.
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
 
 
 
@@ -172,9 +170,11 @@ No description provided.
 
 
 
-## Examples
 
-### Create Signed URLs
+
+## 实例
+
+### 创建签名的URLs
 
 
 

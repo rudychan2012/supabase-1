@@ -5,8 +5,7 @@ slug: /containedby
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Only relevant for jsonb, array, and range columns. Match only rows where
-every element appearing in `column` is contained by `value`.
+只与jsonb、数组和范围列有关。只匹配那些每一个出现在`column`中的元素都被`value`所包含。
 
 ```ts
 const { data, error } = await supabase
@@ -16,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -24,7 +23,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -35,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The jsonb, array, or range column to filter on
+要过滤的jsonb、数组或范围列
 
   </div>
   
@@ -45,7 +44,7 @@ The jsonb, array, or range column to filter on
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      value
+      值
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -56,12 +55,12 @@ The jsonb, array, or range column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The jsonb, array, or range value to filter with
+用来过滤的jsonb、数组或范围值
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -77,7 +76,7 @@ The jsonb, array, or range value to filter with
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -98,7 +97,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -119,7 +118,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -144,9 +143,9 @@ No description provided.
 
 
 
-## Examples
+## 举例
 
-### On array columns
+### 关于数组列
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -194,12 +193,9 @@ No description provided.
 </TabPanel>
 </Tabs>
 
-### On range columns
+### 关于范围列
 
-Postgres supports a number of [range
-types](https://www.postgresql.org/docs/current/rangetypes.html). You
-can filter on range columns using the string representation of range
-values.
+Postgres支持一系列的[范围类型](https://www.postgresql.org/docs/current/rangetypes.html)。你可以可以使用范围值的字符串表示对范围列进行过滤值。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -249,7 +245,7 @@ values.
 </TabPanel>
 </Tabs>
 
-### On `jsonb` columns
+### 关于`jsonb`列
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

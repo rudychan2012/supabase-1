@@ -5,12 +5,11 @@ slug: /textsearch
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Only relevant for text and tsvector columns. Match only rows where
-`column` matches the query string in `query`.
+只与文本和tsvector列有关。只匹配行，其中`column`与`query`中的查询字符串匹配。
 
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -18,7 +17,7 @@ Only relevant for text and tsvector columns. Match only rows where
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -29,7 +28,7 @@ Only relevant for text and tsvector columns. Match only rows where
   </h4>
   <div class="method-list-item-description">
 
-The text or tsvector column to filter on
+要过滤的文本或tsvector列
 
   </div>
   
@@ -50,7 +49,7 @@ The text or tsvector column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The query text to match with
+要与之匹配的查询文本
 
   </div>
   
@@ -71,12 +70,12 @@ The query text to match with
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -92,7 +91,7 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-The text search configuration to use
+要使用的文本搜索配置
 
   </div>
   
@@ -113,7 +112,7 @@ The text search configuration to use
   </h4>
   <div class="method-list-item-description">
 
-Change how the `query` text is interpreted
+改变 "查询 "文本的解释方式
 
   </div>
   
@@ -126,11 +125,9 @@ Change how the `query` text is interpreted
 </ul>
 
 
-## Notes
+## 注释
 
-For more information, see [Postgres full text search](/docs/guides/database/full-text-search).
-
-
+更多信息，请参见[Postgres全文搜索](/docs/guides/database/full-text-search)。
 
 
 
@@ -138,9 +135,11 @@ For more information, see [Postgres full text search](/docs/guides/database/full
 
 
 
-## Examples
 
-### Text search
+
+## 实例
+
+### 文本搜索
 
 
 
@@ -153,9 +152,9 @@ const { data, error } = await supabase
   })
 ```
 
-### Basic normalization
+### 基本规范化
 
-Uses PostgreSQL's `plainto_tsquery` function.
+使用PostgreSQL的`plainto_tsquery`函数。
 
 ```ts
 const { data, error } = await supabase
@@ -167,9 +166,9 @@ const { data, error } = await supabase
   })
 ```
 
-### Full normalization
+### 全面规范化
 
-Uses PostgreSQL's `phraseto_tsquery` function.
+使用PostgreSQL的`phraseto_tsquery`功能。
 
 ```ts
 const { data, error } = await supabase
@@ -181,16 +180,16 @@ const { data, error } = await supabase
   })
 ```
 
-### Websearch
+### 网络搜索
 
-Uses PostgreSQL's `websearch_to_tsquery` function.
-This function will never raise syntax errors, which makes it possible to use raw user-supplied input for search, and can be used
-with advanced operators.
+使用 PostgreSQL 的 `websearch_to_tsquery` 函数。
+这个函数永远不会引发语法错误，这使得它可以使用用户提供的原始输入进行搜索，并且可以使用
+与高级运算符一起使用。
 
-- `unquoted text`: text not inside quote marks will be converted to terms separated by & operators, as if processed by plainto_tsquery.
-- `"quoted text"`: text inside quote marks will be converted to terms separated by <-> operators, as if processed by phraseto_tsquery.
-- `OR`: the word “or” will be converted to the | operator.
-- `-`: a dash will be converted to the ! operator.
+- `unquoted text`：不在引号内的文本将被转换为由&运算符分隔的术语，就像由plainto_tsquery处理一样。
+- `"quoted text"`：带引号的文本将被转换为由<->运算符分隔的术语，就像由phraseto_tsquery处理的那样。
+- `OR`："or"字将被转换为 | 操作符。
+- `-`：破折号将被转换为操作符!。
 
 
 ```ts

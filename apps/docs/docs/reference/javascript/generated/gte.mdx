@@ -5,7 +5,7 @@ slug: /gte
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Match only rows where `column` is greater than or equal to `value`.
+只匹配`column`大于或等于`value`的行。
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -23,7 +23,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The column to filter on
+要过滤的列
 
   </div>
   
@@ -44,7 +44,7 @@ The column to filter on
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      value
+      值
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -55,7 +55,7 @@ The column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The value to filter with
+用来过滤的值
 
   </div>
   
@@ -76,9 +76,9 @@ The value to filter with
 
 
 
-## Examples
+## 举例
 
-### With `select()`
+### 用 `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

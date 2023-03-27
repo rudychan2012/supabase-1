@@ -5,14 +5,14 @@ slug: /auth-verifyotp
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Log in a user given a User supplied OTP received via mobile.
+通过手机收到的用户提供的OTP来登录用户。
 
 ```js
 const { data, error } = await supabase.auth.verifyOtp({ phone, token, type: 'sms'})
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -31,12 +31,12 @@ const { data, error } = await supabase.auth.verifyOtp({ phone, token, type: 'sms
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -52,7 +52,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -73,7 +73,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -86,12 +86,10 @@ No description provided.
 </ul>
 
 
-## Notes
+## 注释
 
-- The `verifyOtp` method takes in different verification types. If a phone number is used, the type can either be `sms` or `phone_change`. If an email address is used, the type can be one of the following: `signup`, `magiclink`, `recovery`, `invite` or `email_change`.
-- The verification type used should be determined based on the corresponding auth method called before `verifyOtp` to sign up / sign-in a user.
-
-
+- `verifyOtp`方法接受不同的验证类型。如果使用的是电话号码，类型可以是`sms`或`phone_change`。如果使用的是电子邮件地址，类型可以是以下其中之一。`signup`, `magiclink`, `recovery`, `invite` 或 `email_change`.
+- 使用的验证类型应该根据在`verifyOtp'之前调用的相应的auth方法来确定，以注册/登录一个用户。
 
 
 
@@ -100,9 +98,11 @@ No description provided.
 
 
 
-## Examples
 
-### Verify Sms One-Time Password (OTP)
+
+## 例子
+
+### 验证短信一次性密码(OTP)
 
 
 
@@ -110,7 +110,7 @@ No description provided.
 const { data, error } = await supabase.auth.verifyOtp({ phone, token, type: 'sms'})
 ```
 
-### Verify Signup One-Time Password (OTP)
+### 验证注册的一次性密码（OTP）。
 
 
 

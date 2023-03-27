@@ -5,7 +5,7 @@ slug: /storage-from-update
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Replaces an existing file at the specified path with a new one.
+用一个新文件替换指定路径下的现有文件。.
 
 ```js
 const avatarFile = event.target.files[0]
@@ -19,7 +19,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -38,7 +38,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The relative file path. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to update.
+相对文件路径。应该是`folder/subfolder/filename.png`的格式。在尝试更新之前，该桶必须已经存在。
 
   </div>
   
@@ -59,12 +59,12 @@ The relative file path. Should be of the format `folder/subfolder/filename.png`.
   </h4>
   <div class="method-list-item-description">
 
-The body of the file to be stored in the bucket.
+要存储在桶中的文件的主体。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -80,7 +80,7 @@ The body of the file to be stored in the bucket.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -101,7 +101,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -122,7 +122,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -143,7 +143,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -164,7 +164,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -185,7 +185,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -206,7 +206,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -227,7 +227,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -248,7 +248,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -269,7 +269,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
@@ -294,12 +294,12 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -315,7 +315,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-The number of seconds the asset is cached in the browser and in the Supabase CDN. This is set in the `Cache-Control: max-age=<seconds>` header. Defaults to 3600 seconds.
+资产在浏览器和 Supabase CDN 中被缓存的秒数。这是在 `Cache-Control: max-age=<seconds>`头中设置的。默认为3600秒。
 
   </div>
   
@@ -336,7 +336,7 @@ The number of seconds the asset is cached in the browser and in the Supabase CDN
   </h4>
   <div class="method-list-item-description">
 
-the `Content-Type` header value. Should be specified if using a `fileBody` that is neither `Blob` nor `File` nor `FormData`, otherwise will default to `text/plain;charset=UTF-8`.
+`Content-Type`头的值。如果使用的 `fileBody `既不是 `Blob`也不是 `File`也不是 `FormData`，则应指定该类型，否则将默认为  `text/plain;charset=UTF-8`。
 
   </div>
   
@@ -357,7 +357,7 @@ the `Content-Type` header value. Should be specified if using a `fileBody` that 
   </h4>
   <div class="method-list-item-description">
 
-When upsert is set to true, the file is overwritten if it exists. When set to false, an error is thrown if the object already exists. Defaults to false.
+`Content-Type`头的值。如果使用的 `fileBody`既不是 `Blob`也不是 `File`也不是 `FormData`，则应指定该类型，否则将默认为 `text/plain;charset=UTF-8`。
 
   </div>
   
@@ -370,15 +370,13 @@ When upsert is set to true, the file is overwritten if it exists. When set to fa
 </ul>
 
 
-## Notes
+## 注意事项
 
-- RLS policy permissions required:
-  - `buckets` table permissions: none
-  - `objects` table permissions: `update` and `select`
-- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
-- For React Native, using either `Blob`, `File` or `FormData` does not work as intended. Update file using `ArrayBuffer` from base64 file data instead, see example below.
-
-
+- 需要RLS策略权限:
+  - `buckets`表的权限: 没有
+  - `objects`表的权限: `更新`和`选择`.
+- 请参考[Storage guide](/docs/guides/storage#access-control)中关于访问控制的工作方式。
+- 对于React Native，使用`Blob`、`File`或`FormData`都不能达到预期效果。使用`ArrayBuffer`从base64文件数据中更新文件，见下面的例子。
 
 
 
@@ -387,9 +385,11 @@ When upsert is set to true, the file is overwritten if it exists. When set to fa
 
 
 
-## Examples
 
-### Update file
+
+## 实例
+
+### 更新文件
 
 
 
@@ -404,7 +404,7 @@ const { data, error } = await supabase
   })
 ```
 
-### Update file using `ArrayBuffer` from base64 file data
+### 使用`ArrayBuffer`从base64文件数据更新文件
 
 
 
