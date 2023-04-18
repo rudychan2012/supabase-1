@@ -236,6 +236,25 @@ export const menuItems: NavMenu = {
     //     { name: 'CI/CD工作流程', url: '/guides/functions/cicd-workflow', items: [] },
     //   ],
     // },
+
+    {
+      label: '云函数',
+      items: [
+        { name: '概述', url: '/guides/functions/overview', items: [] },
+        { name: '函数管理', url: '/guides/functions/function-management', items: [] },
+        { name: '代码开发', url: '/guides/functions/code-development', items: [] },
+        { name: '环境变量', url: '/guides/functions/variable', items: [] },
+        {
+          name: '函数示例',
+          url: undefined,
+          items: [
+            { name: 'HelloWorld', url: '/guides/functions/helloworld', items: [] },
+            { name: '抽奖', url: '/guides/functions/raffle', items: [] },
+            { name: '微信支付', url: '/guides/functions/wechatpay', items: [] },
+          ],
+        },
+      ],
+    },
     {
       label: 'Realtime',
       items: [
