@@ -35,20 +35,32 @@ const Layout: FC<Props> = ({ meta, children }) => {
   const [tocList, setTocList] = useState([])
 
   useEffect(() => {
+    
     const articleEl = articleRef.current as HTMLElement
 
     if (!articleRef.current) return
     const headings = Array.from(articleEl.querySelectorAll('h2, h3'))
+    if (headings.length === 0) return
+    headings.forEach((heading, index) => {
+      heading.id = heading.textContent;
+    })
     const newHeadings = headings
       .filter((heading) => heading.id)
       .map((heading) => {
         const text = heading.textContent.replace('#', '')
+        const aTag = document.createElement('a');
+        aTag.href = heading.textContent;
+        aTag.textContent = '';
+        heading.appendChild(aTag);
         const link = heading.querySelector('a').getAttribute('href')
         const level = heading.tagName === 'H2' ? 2 : 3
         return { text, link, level }
       })
     setTocList(newHeadings)
   }, [])
+
+
+
 
   const hasTableOfContents = tocList.length > 0
 
