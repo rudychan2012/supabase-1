@@ -1,12 +1,751 @@
 import Layout from '~/layouts/DefaultGuideLayout'
 
 export const meta = {
-  id: 'overview',
+  id: 'echatpay',
   title: 'wechatpay',
-  sidebar_label: 'Overview',
-  description: 'Getting started with Self Hosting.',
+  sidebar_label: 'wechatpay',
+  description: 'Getting started with wechatpay.',
 }
 
+
+基于MemFire云函数实现微信支付
+
+> 通过MemFire BaaS将原本后端的业务逻辑迁移到前端完成，的确会提高效率，但也不可避免的带来了一些安全隐患。
+
+## 背景
+
+现在假设要求你使用MemFire的BaaS服务实现一个“极简的卖书”应用，你该怎么设计？本文会讲解如何简单又安全的实现这个应用。
+
+## 业务分析
+
+应用的核心业务逻辑是：**用户选择喜欢的图书，加入购物车后，能够通过微信完成支付。**
+
+我们将该业务逻辑的实体对象与操作拆解出来，分别是：**用户，图书，支付**
+
+- 如何区分用户：应用可以要求用户登录，通过登录的身份标识来区分。因此我们可以利用MemFire BaaS服务提供的认证管理工作快速实现。
+- 如何管理图书：应用创建后，可以通过新建一张图书的表，在该表中灌入图书的初始数据。
+- 用户如何支付：根据选择书籍的总金额，利用微信支付的接口完成支付调用。
+
+## 数据表设计
+
+  - 用户表：无需设计，BaaS服务自带
+  - 书籍表：***books***
+
+![云函数](/docs/img/wechatpay-1.png)
+
+- 我们将用户下单这个操作形成的结果叫做“创建交易”。交易表：***transactions***
+
+![云函数](/docs/img/wechatpay-2.png)
+
+ 该表中的**uid**关联的是**auth.user**表中的**id**字段，标识用户；表中的**open_id**代表微信用户，一样是标识用户的，不过只有使用微信小程序完成微信支付时才需要；**status**标识支付状态，默认为**READY**。
+
+ ##  支付接口实现
+
+ 首先思考一个问题，如何保证支付信息是不可被恶意篡改的。简单点说，如果我们直接通过前端调用微信支付，那么支付金额可能被用户通过页面调试或网络劫持的方式篡改，那如何保证用户无法修改支付信息呢（包括支付金额，支付状态）。
+
+ 再思考一个问题，类似于微信支付等许多第三方接口都是异步的，它们通过你提供的回调地址将异步操作的结果返回给你，那现在你的接口都是由BaaS服务提供的，你怎么创建回调函数呢？
+
+ 为了解决上述说的两个问题，MemFire提供了云函数这个模块，它允许你通过编写JavaScript函数，实现接口服务的部署。
+
+![云函数](/docs/img/wechatpay-3.png)
+
+  通过上传你的代码包，配置环境变量即可快速实现微信支付的接口部署。
+
+  我们打开微信支付代码包中的**index.js**文件，进行分析：
+
+ ```JavaScript
+  const { v4: uuidv4 } = require('uuid');
+  const WxPay = require('wechatpay-node-v3')
+  const sup = require('@supabase/supabase-js')
+  
+  // 支付客户端和supabase客户端
+  let pay
+  let supabase
+  
+  // 云函数生命周期，初始化时，初始化supabase和pay
+  exports.initializer = (context, callback) => {
+      const publicKeyPem = process.env.publicKey
+      const privateKeyPem = process.env.privateKey
+  
+      try {
+  
+          // 初始化支付客户端
+          pay = new WxPay({
+            appid: process.env.appId,
+            mchid: process.env.mchId,
+            publicKey: formatPublicKey(publicKeyPem),
+            privateKey: formatPrivateKey(privateKeyPem),
+          })
+  
+          // 初始化supabase客户端
+          supabase = sup.createClient(process.env.API_URL, process.env.SERVICE_ROLE_KEY)
+  
+      } catch (e) {
+  
+          console.log('initializing failed')
+          callback(e)
+  
+      }
+  
+      // 如果不执行如下行，会导致无法退出initialize
+      callback(null, 'successful');
+  
+  }
+  
+  // 云函数入口文件
+  exports.handler = async (req, resp, context) => {
+  
+      // 解决跨域问题
+      resp.setHeader('Access-Control-Allow-Origin', '*') // *可以改成你的服务域名
+      resp.setHeader('Access-Control-Allow-Methods', '*');
+      resp.setHeader('Access-Control-Allow-Headers', '*');
+      resp.setHeader('Access-Control-Max-Age', '3600');
+  
+      /** 请求参数
+       * method: 请求方法
+       * queries: 请求参数
+       * headers: 请求头
+       * body: 请求体， 为 Buffer 类型
+     */
+      const { method, queries, headers, body } = req
+  
+      const { action } = queries
+  
+      // 定义用户的id
+      let userId
+  
+      // OPTIONS的时候不检查
+      if (req.method !== 'OPTIONS' && !headers['wechatpay-timestamp']) {
+  
+          // 利用用户的令牌创建一个匿名的supabase client
+          const anonClient = sup.createClient(
+              process.env.API_URL,
+              process.env.ANON_KEY,
+              { global: { headers: { Authorization: req.headers.authorization }}}
+              )
+              // 获取请求用户信息
+              const { data: { user }, error} = await anonClient.auth.getUser();
+  
+              // 获取用户错误，说明token无效
+              if (error) {
+              resp.setStatusCode(401)
+              resp.setHeader('Content-Type', 'application/json')
+              resp.send(JSON.stringify({code: 401, msg: 'forbidden'}))
+              }
+  
+              // 请求中绑定用户的id
+              userId = user.id
+      }
+  
+      // 解决跨域问题
+      if (req.method === 'OPTIONS') {
+          resp.setStatusCode(204)
+          resp.send('');
+      } else if (method === 'GET' && action === 'prepay') {
+  
+          // 获取请求参数
+          const {  tradeId, openId } = queries
+  
+          const { data, error} = await supabase
+              .from('transactions')
+              .select('books')
+              .eq('id', tradeId)
+              .eq('uid', userId) // 这里就限制了用户只能操作自己的订单
+              .single()
+  
+          const bookIds = data.books.map(item => item.id)
+        if (error) {
+          // 返回响应
+          resp.setStatusCode(403)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify({
+            status: 403
+          }))
+        }
+  
+        const { data: books, error: err } = await supabase
+          .from('books')
+          .select('price')
+          .in('id', bookIds)
+  
+          const amount = books.reduce((sum, book) => sum + book.price, 0)
+          const description = '发起支付时间-' + new Date().toISOString()
+          const notifyUrl = process.env.notifyUrl // 通过环境变量传进来
+  
+          // 下单
+          const tradeNo = convertTradeID(tradeId)
+          const result = await getOrder(description, tradeNo, notifyUrl, amount, openId)
+  
+          resp.setStatusCode(result.status)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify(result))
+  
+      } else if (method === 'POST' && headers['wechatpay-timestamp']) {
+  
+          let isSuccessed = false
+          let tradeId = ''
+  
+          try {
+              const result = JSON.parse(req.body.toString())
+  
+              const { ciphertext, associated_data, nonce } = result.resource
+  
+              const decodeContent = pay.decipher_gcm(ciphertext, associated_data, nonce, process.env.apiKey)
+  
+              tradeId = str2UUID(decodeContent.out_trade_no)
+              console.log(decodeContent.trade_state)
+              console.log(tradeId)
+  
+              const { data, error } = await supabase.from('transactions').update({ status: decodeContent.trade_state }).eq('id', tradeId)
+  
+          } catch (err) {
+  
+              resp.setStatusCode(500)
+              resp.setHeader('Content-Type', 'application/json')
+              resp.send(JSON.stringify({
+                  code: 'FAIL',
+                  message: '失败'
+              }))
+          }
+  
+          resp.setStatusCode(200)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify({
+              code: 'SUCCESS',
+          }))
+  
+      } else if (method === 'GET' && action === 'querypay') {
+          // 获取请求参数
+          const { tradeId, tag } = queries
+  
+          // 查询订单
+          const tradeNo = convertTradeID(tradeId)
+          const result = await queryOrder(tradeNo, tag)
+  
+          // 返回响应
+          resp.setStatusCode(result.status)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify(result))
+  
+      } else if (method === 'GET' && action === 'closepay') {
+          // 获取请求参数
+          const { tradeId } = queries
+  
+          // 关闭订单
+          const tradeNo = convertTradeID(tradeId)
+          const result = await closeOrder(tradeNo)
+  
+          // 标记数据库交易状态
+          await supabase.from('transactions').update({ status: 'CLOSED' }).eq('id', tradeId)
+  
+          // 返回响应
+          resp.setStatusCode(result.status)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify(result))
+      }
+  
+      // ---------------------------------------- start 退款流程: 按需开启 -------------------------
+      // 申请退款
+      else if (method === 'GET' && action === 'refund') {
+          // 获取请求参数
+          const { tradeId, refund } = queries
+  
+          // const refundId = 'refundId' // 退款单号, 需要自己生成
+          const { data, error} = await supabase
+          .from('transactions')
+          .select('books')
+          .eq('id', tradeId)
+          .eq('uid', userId) // 这里就限制了用户只能操作自己的订单
+          .single()
+  
+          if (error) {
+              resp.setStatusCode(403)
+              resp.setHeader('Content-Type', 'application/json')
+              resp.send(JSON.stringify({
+                status: 403
+              }))
+          }
+  
+          const total = data.books.reduce((sum, i) => i.price + sum, 0)
+          const refundId = uuidv4()
+  
+          // 退款
+          const tradeNo = convertTradeID(tradeId)
+          const result = await refunds(tradeNo, refundId, Number(refund), total)
+  
+          await supabase.from('refunds').insert({ id: refundId, transaction_id: tradeId, status: 1, refund: refund, reason: '退款'})
+  
+          // 返回响应
+          resp.setStatusCode(200)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify(result))
+  
+      // 查询退款
+      } else if (method === 'GET' && action === 'queryrefund') {
+          // 获取请求参数
+          const { refundId } = queries
+  
+          // 查询退款
+          const result = await queryRefund(refundId)
+  
+          // 返回响应
+          resp.setStatusCode(result.status)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify(result))
+  
+      // 其他请求,均返回错误消息
+      }
+      // ---------------------------------------- end 退款流程 -------------------------
+      else {
+          resp.setStatusCode(200)
+          resp.setHeader('Content-Type', 'application/json')
+          resp.send(JSON.stringify({
+              code: 404,
+              msg: 'not found'
+          }))
+      }
+  
+  }
+  
+  // 创建于支付订单，支付链接（native模式可以将其生成二维码供用户扫码支付）,传入openId，则是小程序支付
+  async function getOrder(description, tradeNo, notifyUrl, amount, openId = undefined) {
+      const params = {
+          description,
+          out_trade_no: tradeNo,
+          notify_url: notifyUrl,
+          amount: {
+              total: amount
+          }
+      }
+  
+      let result
+  
+      if (openId) {
+          result = await pay.transactions_jsapi({...params, payer: { openid: openId }})
+      } else {
+          result = await pay.transactions_native(params)
+      }
+  
+      console.log(result)
+      return result
+  
+  }
+  
+  // 查询订单，通过商户订单号查询或者微信订单号查询，通过tag区分，默认通过订单号查询
+  async function queryOrder(tradeNo) {
+      const result = await pay.query({out_trade_no: tradeNo })
+  
+      console.log(result)
+      return result
+  
+  }
+  
+  // 关闭订单
+  async function closeOrder(tradeNo) {
+      const result = await pay.close(tradeNo)
+  
+      console.log(result)
+      return result
+  
+  }
+  
+  // 申请退款
+  async function refunds(tradeNo, refundId, refund, total) {
+      const params = {
+          out_trade_no: tradeNo,
+          out_refund_no: refundId, // 自己传一个进来，存起来，后续用来查
+          reason: 'refund',
+          amount: {
+              refund,
+              total,
+              currency: 'CNY'
+          }
+      }
+  
+      const result = await pay.refunds(params)
+  
+      console.log(result)
+      return result
+  
+  }
+  
+  // 查询单笔退款
+  async function queryRefund(refundId) {
+      const result = await pay.find_refunds(refundId)
+  
+      console.log(result)
+      return result
+  
+  }
+  
+  function convertTradeID(tradeId) {
+      const regex = /-/g
+      return tradeId.replace(regex, '')
+  }
+  
+  function str2UUID(str) {
+      if (str.length !== 32) {
+        throw new Error('Input string must be 32 characters long.');
+      }
+  
+      const uuid = [
+        str.slice(0, 8),
+        str.slice(8, 12),
+        str.slice(12, 16),
+        str.slice(16, 20),
+          str.slice(20),
+      ].join('-');
+  
+      return uuid;
+  }
+  
+  function formatPublicKey(rawPublicKey) {
+    const keyHeader = '-----BEGIN CERTIFICATE-----';
+    const keyFooter = '-----END CERTIFICATE-----';
+  
+      const regex = /\s/g;
+    const str = rawPublicKey.replace(regex, '')
+    // 按64个字符一行分割密钥
+    const formattedKey = str.match(/.{1,64}/g).join('\n');
+  
+    return `${keyHeader}\n${formattedKey}\n${keyFooter}`;
+  }
+  
+  function formatPrivateKey(rawPrivateKey) {
+    const keyHeader = '-----BEGIN PRIVATE KEY-----';
+    const keyFooter = '-----END PRIVATE KEY-----';
+  
+    const regex = /\s/g;
+    const str = rawPrivateKey.replace(regex, '')
+    // 按64个字符一行分割密钥
+    const formattedKey = str.match(/.{1,64}/g).join('\n');
+  
+    return `${keyHeader}\n${formattedKey}\n${keyFooter}`;
+  }
+  
+  // 申请交易账单 date的格式是yyyy-MM-dd
+  // async function applyTradeBill(date) {
+  //     const result = await pay.tradebill({
+  //         bill_date: date,
+  //         bill_type: 'ALL'
+  //     })
+  //
+  //     console.log(result)
+  //     return result
+  //
+  // }
+  
+  // 申请资金账单
+  // async function applyFundBill(date) {
+  //     const result = await pay.fundflowbill({
+  //         bill_date: date,
+  //         account_type: 'BASIC'
+  //     })
+  //
+  //     console.log(result)
+  //     return result
+  //
+  // }
+  
+  // 下载账单, 这个url是上两个接口返回的
+  // async function downloadBill(url) {
+  //     const result = await pay.downloadbill(url)
+  //
+  //     console.log(result)
+  //     return result
+  //
+  // }
+  ```
+
+该代码的注释已经表明了代码块的用途。针对该云函数，你需注意如下几个问题的解决手段：
+
+- 云函数一旦部署，会生成一个可调用的url给用户，但是如何保证请求该URL时，接口不会报跨域错误：
+```JavaScript
+          // 解决跨域问题
+          resp.setHeader('Access-Control-Allow-Origin', '*') // *可以改成你的服务域名
+          resp.setHeader('Access-Control-Allow-Methods', '*');
+          resp.setHeader('Access-Control-Allow-Headers', '*');
+          resp.setHeader('Access-Control-Max-Age', '3600');
+      ```
+
+然后当接口遇到options请求方法时，返回204
+
+ - 云函数是如何判断用户的？通过请求头来获取用户信息
+```JavaScript
+      // 利用用户的令牌创建一个匿名的supabase client
+      const anonClient = sup.createClient(
+          process.env.API_URL,
+          process.env.ANON_KEY,
+          { global: { headers: { Authorization: req.headers.authorization }}}
+          )
+          // 获取请求用户信息
+          const { data: { user }, error} = await anonClient.auth.getUser();
+      ```
+  - 云函数怎么判断支付金额？通过查询交易ID得到书籍ID，然后通过书籍ID得到了金额，并进行了加总。这样就避免了前端窜改金额。
+
+```JavaScript
+  const { data, error} = await supabase
+      .from('transactions')
+      .select('books')
+      .eq('id', tradeId)
+      .eq('uid', userId) // 这里就限制了用户只能操作自己的订单
+      .single()
+  
+  const bookIds = data.books.map(item => item.id)
+  if (error) {
+      // 返回响应
+      resp.setStatusCode(403)
+      resp.setHeader('Content-Type', 'application/json')
+      resp.send(JSON.stringify({
+        status: 403
+      }))
+  }
+  
+  const { data: books, error: err } = await supabase
+  .from('books')
+  .select('price')
+  .in('id', bookIds)
+  
+  const amount = books.reduce((sum, book) => sum + book.price, 0)
+  ```
+
+自己的应用调用上述云函数，间接实现了微信支付的调用，同时保证了调用安全性。在代码中，你会看到很多`process.env.xxx`的写法，这其实是配置的云函数环境变量。
+
+![云函数](/docs/img/wechatpay-4.png)
+
+有了环境变量，可以更方便的修改服务，而无需重新部署。
+
+针对上图环境变量的含义，在此做出解释：
+
+  - apiKey: 验证微信支付调用的密钥，从微信商户后台获得
+  - appId：小程序ID
+  - mchId：商户ID
+  - notifyUrl：微信回调地址
+  - privateKey：微信商户的APIv3私钥
+  - publicKey：微信商户的APIv3公钥
+
+这里要重点说明的是**notifyUrl**，由于只有部署了云函数，才能获得云函数的调用地址，因此notifyUrl只能在部署云函数之后，才能填写可用地址。
+
+## 小程序应用实现
+
+通过前文的描述，小程序需要实现认证登录、图书选择、下单支付等逻辑。
+
+### 微信认证实现
+
+申请小程序之后，会得到小程序的ID和密钥，将其天蝎在服务上这里即可。
+
+![云函数](/docs/img/wechatpay-5.png)
+
+那么在微信小程序这边只需要调用一个函数即可实现
+
+```JavaScript
+// index.js
+import { supabase } from '../../lib/supabase'
+
+// 获取应用实例
+const app = getApp()
+
+Page({
+  data: {},
+
+  onLoad() {
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
+  },
+
+  login() {
+    wx.login({
+        success: async res => {
+            // 通过这一行代码，即可实现微信认证，着实方便
+            const { data, error } = await supabase.auth.signInWithWechat({ code: res.code })
+
+            if (error) {
+                wx.showToast({
+                  title: '微信认证失败',
+                  icon: 'none',
+                  duration: 2000
+                })
+            } else if (data) {
+                wx.navigateTo({
+                  url: '/pages/books/index',
+                })
+            }
+        },
+        fail: (err) => {
+            wx.showToast({
+              title: err.errMsg,
+              icon: 'none',
+              duration: 2000
+            })
+        }
+    })
+  }
+})
+```
+
+### 图书选择实现
+
+通过MemFire BaaS服务自动生成的Restful接口，可以很方便的获取数据表中的数据（这里指的是图书列表）
+
+```JavaScript
+import { supabase } from "../../lib/supabase"
+
+// pages/books/index.js
+Page({
+
+    /**
+     * 页面的初始数据
+     */
+    data: {
+        books: [],
+        bookIds: [],
+        selectedBooks: []
+    },
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    async onLoad(options) {
+        const { data, error } = await supabase.from('books').select('*')
+        const bookIds = data.data.map((i) => i.id)
+        this.setData({ books: data.data, bookIds: bookIds })
+
+    },
+
+    onChange(e) {
+        this.setData({ selectedBooks: e.detail.value })
+    },
+
+    async goToPay() {
+
+        const uid = JSON.parse(wx.getStorageSync('sb-cgj3qoi5g6h9k9li2g30-auth-token')).user.id
+
+        const goods = this.data.books.filter(item => this.data.selectedBooks.indexOf(item.id) > -1)
+
+        const { data, error } = await supabase.from('transactions')
+            .insert({ uid, books: goods, updated_at: new Date().toISOString() })
+            .select()
+            .single()
+
+        if (error) {
+            wx.showToast({
+              title: '暂时无法创建订单',
+            })
+        } else {
+            wx.navigateTo({
+              url: `/pages/trade/index?tradeid=${data.data.id}`
+            })
+        }
+        
+    }
+})
+```
+
+### 交易支付
+
+在支付页面，只需要调用前面部署好的实现了微信支付接口调用的云函数即可
+
+```JavaScript
+import { supabase } from "../../lib/supabase"
+
+// pages/trade/index.js
+Page({
+
+    /**
+     * 页面的初始数据
+     */
+    data: {
+        books: [],
+        total: 0,
+        tradeId: ''
+    },
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    async onLoad(options) {
+        let trade_id
+
+        try {
+            trade_id = options.tradeid
+            this.setData({tradeId: trade_id})
+        } catch (error) {
+            wx.showToast({
+              title: '无法获取交易订单，请重新下单',
+            })
+
+            setTimeout(() => {
+                wx.navigateTo({
+                  url: '/pages/books/index',
+                })
+            }, 2000)
+        }
+
+        const { data, error } = await supabase.from('transactions').select('books').eq('id', trade_id).single()
+
+        if (error) {
+            wx.showToast({
+                title: '无法获取交易订单，请重新下单',
+              })
+  
+              setTimeout(() => {
+                  wx.navigateTo({
+                    url: '/pages/books/index',
+                  })
+              }, 2000)
+        }
+
+        this.setData({books: data.data.books})
+        const sum = data.data.books.reduce((sum, i) => sum + i.price, 0)
+        this.setData({total: sum/100})
+    },
+
+    async goPay() {
+        // 从本地session中获取openId信息和token信息
+        const openId = JSON.parse(wx.getStorageSync('sb-xxxx-auth-token')).user.wechat_id
+        const token = JSON.parse(wx.getStorageSync('sb-xxxx-auth-token')).access_token
+        wx.request({
+          url: 'https://your_cloud_function_url/pay',
+          method: 'GET',
+          data: {
+              openId,
+              tradeId: this.data.tradeId.replace(/-/g, ''),
+              action: 'prepay'
+          },
+          header: {
+              'Authorization': 'Bearer ' + token
+          },
+          success:  (res) => {
+              console.log(res)
+              const { timeStamp, nonceStr, signType, paySign } = res.data
+              wx.requestPayment({
+                timeStamp: timeStamp,
+                nonceStr: nonceStr,
+                package: res.data.package,
+                signType: signType,
+                paySign: paySign,
+                success (res) { 
+                    console.log(res)
+                },
+                fail (res) { 
+                    console.log(res)
+                }
+              })
+          },
+          fail: (err) => {
+              console.log(err)
+          }
+        })
+    }
+})
+```
+
+## 总结
+
+云函数的使用是极其灵活的，这里演示了如何利用云函数实现微信支付的调用，通过这种方式，提高了支付的安全性，也展示了基于MemFire BaaS做应用开发的更多可能。
 
 
 export const Page = ({ children }) => <Layout meta={meta} children={children} />

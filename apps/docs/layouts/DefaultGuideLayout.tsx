@@ -39,22 +39,22 @@ const Layout: FC<Props> = ({ meta, children }) => {
 
     if (!articleRef.current) return
     const headings = Array.from(articleEl.querySelectorAll('h2, h3'))
-    headings.forEach(item =>{
-      if(!item.id){
-        item.id = item.textContent
-      }
-    })
+    // headings.forEach(item => {
+    //   if (!item.id) {
+    //     item.id = item.textContent
+    //   }
+    // })
     const newHeadings = headings
       .filter((heading) => heading.id)
       .map((heading) => {
         const text = heading.textContent.replace('#', '')
-        if(/[a-zA-Z]/.test(heading.textContent) === false){
-        const aTag = document.createElement('a');
-        aTag.href = heading.textContent.replace('#', '');
-        aTag.textContent = '';
-        heading.appendChild(aTag);
-        }
-        const link = heading.querySelector('a').getAttribute('href')
+        // if (/[a-zA-Z]/.test(heading.textContent) === false) {
+        //   const aTag = document.createElement('a');
+        //   aTag.href = heading.textContent.replace('#', '');
+        //   aTag.textContent = '';
+        //   heading.appendChild(aTag);
+        // }
+        const link = heading.querySelector('a').getAttribute('href');
         const level = heading.tagName === 'H2' ? 2 : 3
         return { text, link, level }
       })
@@ -86,17 +86,15 @@ const Layout: FC<Props> = ({ meta, children }) => {
           <SideBar menuItems={menuItems[page]} />
           <div className="main-content-pane docs-width grid md:grid-cols-12 gap-4 justify-between p-4 pb-8 w-full">
             <div
-              className={`${
-                meta?.hide_table_of_contents || !hasTableOfContents
-                  ? 'col-span-12 xl:col-start-2 xl:col-span-10 2xl:col-start-3 2xl:col-span-8'
-                  : 'col-span-12 lg:col-span-9'
-              } py-2 lg:py-4 px-2 lg:px-8 mx-auto`}
+              className={`${meta?.hide_table_of_contents || !hasTableOfContents
+                ? 'col-span-12 xl:col-start-2 xl:col-span-10 2xl:col-start-3 2xl:col-span-8'
+                : 'col-span-12 lg:col-span-9'
+                } py-2 lg:py-4 px-2 lg:px-8 mx-auto`}
             >
               <article
                 ref={articleRef}
-                className={`${
-                  meta?.hide_table_of_contents || !hasTableOfContents ? 'xl:min-w-[880px]' : ''
-                } doc-content-container prose dark:prose-dark dark:bg-scale-200 width-full mt-8 2xl:max-w-[880px]`}
+                className={`${meta?.hide_table_of_contents || !hasTableOfContents ? 'xl:min-w-[880px]' : ''
+                  } doc-content-container prose dark:prose-dark dark:bg-scale-200 width-full mt-8 2xl:max-w-[880px]`}
               >
                 {meta?.title && <h1>{meta.title}</h1>}
                 <MDXProvider components={components}>{children}</MDXProvider>
