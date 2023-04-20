@@ -249,8 +249,8 @@ export const menuItems: NavMenu = {
           url: undefined,
           items: [
             { name: 'HelloWorld', url: '/guides/functions/helloworld', items: [] },
-            { name: '抽奖', url: '/guides/functions/raffle', items: [] },
             { name: '微信支付', url: '/guides/functions/wechatpay', items: [] },
+            { name: '抽奖', url: '/guides/functions/raffle', items: [] },
           ],
         },
       ],

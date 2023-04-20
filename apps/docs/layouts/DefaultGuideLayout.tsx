@@ -39,21 +39,22 @@ const Layout: FC<Props> = ({ meta, children }) => {
 
     if (!articleRef.current) return
     const headings = Array.from(articleEl.querySelectorAll('h2, h3'))
-    // headings.forEach(item => {
-    //   if (!item.id) {
-    //     item.id = item.textContent
-    //   }
-    // })
+    headings.forEach(item => {
+      if (!item.id) {
+        item.id = item.textContent
+      }
+    })
     const newHeadings = headings
       .filter((heading) => heading.id)
       .map((heading) => {
         const text = heading.textContent.replace('#', '')
         // if (/[a-zA-Z]/.test(heading.textContent) === false) {
-        //   const aTag = document.createElement('a');
-        //   aTag.href = heading.textContent.replace('#', '');
-        //   aTag.textContent = '';
-        //   heading.appendChild(aTag);
+          const aTag = document.createElement('a');
+          aTag.href = heading.textContent.replace('#', '');
+          aTag.textContent = '';
+          heading.appendChild(aTag);
         // }
+        // debugger
         const link = heading.querySelector('a').getAttribute('href');
         const level = heading.tagName === 'H2' ? 2 : 3
         return { text, link, level }
