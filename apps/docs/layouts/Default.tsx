@@ -20,7 +20,7 @@ const Layout: FC<Props> = ({ meta, children, toc, menuItems, currentPage }) => {
       // Default to dark mode if no preference config
       document.documentElement.className = ''
     } else {
-      document.documentElement.className = key === 'true' ? 'dark' : ''
+      document.documentElement.className = key === 'true' ? '' : ''
     }
   }, [])
 
@@ -38,7 +38,7 @@ const Layout: FC<Props> = ({ meta, children, toc, menuItems, currentPage }) => {
           url: `https://supabase.com/docs/${currentPage}`,
           images: [
             {
-              url: `https://supabase.com/docs/img/supabase-og-image.png`,
+              url: `https://base.memfiredb.com/assets/img/logo.top.svg`,
             },
           ],
         }}
@@ -59,7 +59,7 @@ const Layout: FC<Props> = ({ meta, children, toc, menuItems, currentPage }) => {
               <article
                 className={`${
                   meta?.hide_table_of_contents || !hasTableOfContents ? 'xl:min-w-[880px]' : ''
-                } doc-content-container prose dark:prose-dark dark:bg-scale-200 width-full mt-8 2xl:max-w-[880px]`}
+                } doc-content-container prose width-full mt-8 2xl:max-w-[880px]`}
               >
                 {children}
               </article>
@@ -67,7 +67,7 @@ const Layout: FC<Props> = ({ meta, children, toc, menuItems, currentPage }) => {
             {hasTableOfContents && !meta?.hide_table_of_contents && (
               <div
                 className={[
-                  'border-scale-400 dark:bg-scale-200 table-of-contents-height border-l',
+                  'border-scale-400  table-of-contents-height border-l',
                   'thin-scrollbar overflow-y-auto sticky hidden xl:block md:col-span-3 px-2',
                 ].join(' ')}
               >

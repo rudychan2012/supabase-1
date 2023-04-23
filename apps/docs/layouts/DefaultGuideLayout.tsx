@@ -27,7 +27,7 @@ const Layout: FC<Props> = ({ meta, children }) => {
       // Default to dark mode if no preference config
       document.documentElement.className = ''
     } else {
-      document.documentElement.className = key === 'true' ? 'dark' : ''
+      document.documentElement.className = key === 'true' ? '' : ''
     }
   }, [])
 
@@ -75,7 +75,7 @@ const Layout: FC<Props> = ({ meta, children }) => {
           url: `https://supabase.com/docs${asPath}`,
           images: [
             {
-              url: `https://supabase.com/docs/img/supabase-og-image.png`,
+              url: `https://base.memfiredb.com/assets/img/logo.top.svg`,
             },
           ],
         }}
@@ -95,7 +95,7 @@ const Layout: FC<Props> = ({ meta, children }) => {
               <article
                 ref={articleRef}
                 className={`${meta?.hide_table_of_contents || !hasTableOfContents ? 'xl:min-w-[880px]' : ''
-                  } doc-content-container prose dark:prose-dark dark:bg-scale-200 width-full mt-8 2xl:max-w-[880px]`}
+                  } doc-content-container prose  width-full mt-8 2xl:max-w-[880px]`}
               >
                 {meta?.title && <h1>{meta.title}</h1>}
                 <MDXProvider components={components}>{children}</MDXProvider>
@@ -104,7 +104,7 @@ const Layout: FC<Props> = ({ meta, children }) => {
             {hasTableOfContents && !meta?.hide_table_of_contents && (
               <div
                 className={[
-                  'border-scale-400 dark:bg-scale-200 table-of-contents-height border-l',
+                  'border-scale-400  table-of-contents-height border-l',
                   'thin-scrollbar overflow-y-auto sticky hidden xl:block md:col-span-3 px-2',
                 ].join(' ')}
               >
