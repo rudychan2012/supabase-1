@@ -5,7 +5,7 @@ slug: /storage-from-remove
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-删除同一桶中的文件
+Deletes files within the same bucket
 
 ```js
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-一个要删除的文件数组，包括路径和文件名。例如[`folder/image.png`]。
+An array of files to delete, including the path and file name. For example [`'folder/image.png'`].
 
   </div>
   
@@ -43,14 +43,12 @@ const { data, error } = await supabase
 </ul>
 
 
-## 注意事项
+## Notes
 
-- 需要RLS策略权限:
-  - `buckets`表的权限: 无
-  - `objects`表的权限: `删除`和`选择`.
-- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
-
-
+- RLS policy permissions required:
+  - `buckets` table permissions: none
+  - `objects` table permissions: `delete` and `select`
+- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
 
 
 
@@ -59,9 +57,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
 
-### 删除文件
+
+## Examples
+
+### Delete file
 
 
 

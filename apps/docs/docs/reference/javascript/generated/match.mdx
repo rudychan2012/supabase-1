@@ -5,7 +5,8 @@ slug: /match
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-只匹配那些在`query`键中的每一列都等于其相关值的行。相关的值是多个`.eq()`的简写。
+Match only rows where each column in `query` keys is equal to its
+associated value. Shorthand for multiple `.eq()`s.
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +16,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -34,7 +35,8 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要过滤的对象，列名作为键被映射到到它们的过滤值
+The object to filter with, with column names as keys mapped
+to their filter values
 
   </div>
   
@@ -55,9 +57,9 @@ const { data, error } = await supabase
 
 
 
-## 参数
+## Examples
 
-### 用 `select()`
+### With `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

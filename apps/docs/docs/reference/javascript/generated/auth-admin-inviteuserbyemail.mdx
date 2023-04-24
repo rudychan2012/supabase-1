@@ -5,14 +5,14 @@ slug: /auth-admin-inviteuserbyemail
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-向一个电子邮件地址发送一个邀请链接。
+Sends an invite link to an email address.
 
 ```js
 const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@example.com')
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -31,7 +31,7 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
   </h4>
   <div class="method-list-item-description">
 
-用户的电子邮件地址。
+The email address of the user.
 
   </div>
   
@@ -52,12 +52,12 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -65,7 +65,7 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
       data
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -73,7 +73,7 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
   </h4>
   <div class="method-list-item-description">
 
-可选的用户元数据
+Optional user metadata
 
   </div>
   
@@ -86,7 +86,7 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
       redirectTo
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -94,7 +94,7 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
   </h4>
   <div class="method-list-item-description">
 
-一个URL或移动深层链接，在用户被确认后发送给他们。
+A URL or mobile deeplink to send the user to after they are confirmed.
 
   </div>
   
@@ -107,11 +107,9 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
 </ul>
 
 
-## 注释
+## Notes
 
-- 向用户的电子邮件地址发送一个邀请链接。
-
-
+- Sends an invite link to the user's email address.
 
 
 
@@ -120,9 +118,11 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
 
 
 
-## 示例
 
-### 邀请一个用户
+
+## Examples
+
+### Invite a user
 
 
 

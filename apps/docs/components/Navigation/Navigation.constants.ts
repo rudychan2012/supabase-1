@@ -177,6 +177,7 @@ export const menuItems: NavMenu = {
         { name: '数据库函数', url: '/guides/database/functions', items: [] },
         // { name: '数据库Webhooks', url: '/guides/database/webhooks', items: [] },
         { name: '全文检索', url: '/guides/database/full-text-search', items: [] },
+        { name: '关联查询', url: '/guides/database/associated-query', items: [] },
         // { name: '数据库测试', url: '/guides/database/testing', items: [] },
         {
           name: '无服务器API',

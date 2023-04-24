@@ -5,7 +5,7 @@ slug: /storage-createbucket
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-创建一个新的存储桶
+Creates a new Storage bucket
 
 ```js
 const { data, error } = await supabase
@@ -14,7 +14,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -33,7 +33,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-你正在创建的桶的唯一标识符。
+A unique identifier for the bucket you are creating.
 
   </div>
   
@@ -54,12 +54,12 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -75,7 +75,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-桶的可见性。公有桶不需要授权令牌来下载对象，但仍然需要有效的令牌来进行所有其他操作。默认情况下，水桶是私有的。
+The visibility of the bucket. Public buckets don't require an authorization token to download objects, but still require a valid token for all other operations. By default, buckets are private.
 
   </div>
   
@@ -88,14 +88,12 @@ const { data, error } = await supabase
 </ul>
 
 
-## 注意事项
+## Notes
 
-- 需要RLS策略权限:
-  - `buckets`表的权限: `insert`表权限
-  - `objects`表的权限：无
-- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
-
-
+- RLS policy permissions required:
+  - `buckets` table permissions: `insert`
+  - `objects` table permissions: none
+- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
 
 
 
@@ -104,9 +102,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
 
-### 创建水桶
+
+## Examples
+
+### Create bucket
 
 
 

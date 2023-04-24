@@ -5,9 +5,9 @@ slug: /auth-admin-listusers
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-获取一个用户列表。
+Get a list of users.
 
-这个函数应该只在服务器上调用。不要在浏览器中暴露你的`service_role`键。
+This function should only be called on a server. Never expose your `service_role` key in the browser.
 
 ```js
 const { data: { users }, error } = await supabase.auth.admin.listUsers()
@@ -30,9 +30,9 @@ const { data: { users }, error } = await supabase.auth.admin.listUsers()
 
 
 
-## 例子
+## Examples
 
-### 获得完整的用户列表。
+### Get a full list of users.
 
 
 

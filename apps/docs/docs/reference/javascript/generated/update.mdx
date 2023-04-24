@@ -5,10 +5,10 @@ slug: /update
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-对表或视图进行UPDATE操作。
+Perform an UPDATE on the table or view.
 
-默认情况下，更新的行不会被返回。要返回它，请在过滤器后用`.select()`连锁调用
-与`.select()`在过滤器之后的调用。
+By default, updated rows are not returned. To return it, chain the call
+with `.select()` after filters.
 
 ```ts
 const { error } = await supabase
@@ -18,7 +18,7 @@ const { error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -32,12 +32,12 @@ const { error } = await supabase
       required
     </span>
     <span className="method-list-item-validation">
-      <code>行</code>
+      <code>Row</code>
     </span>
   </h4>
   <div class="method-list-item-description">
 
-要更新的值
+The values to update with
 
   </div>
   
@@ -58,12 +58,12 @@ const { error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-命名的参数
+Named parameters
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -71,7 +71,7 @@ const { error } = await supabase
       count
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>exact</code> | <code>planned</code> | <code>estimated</code>
@@ -79,16 +79,16 @@ const { error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用来计算更新行的计数算法。
+Count algorithm to use to count updated rows.
 
-`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
-引擎盖。
+`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+hood.
 
-`"planned"`: 近似但快速的计数算法。使用了Postgres
-的统计数据。
+`"planned"`: Approximated but fast count algorithm. Uses the Postgres
+statistics under the hood.
 
-`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
-数。
+`"estimated"`: Uses exact count for low numbers and planned count for high
+numbers.
 
   </div>
   
@@ -101,11 +101,9 @@ const { error } = await supabase
 </ul>
 
 
-## 注意
+## Notes
 
-- `update()`应该总是与[Filters](/docs/reference/javascript/using-filters)结合起来，以确定你希望更新的项目。
-
-
+- `update()` should always be combined with [Filters](/docs/reference/javascript/using-filters) to target the item(s) you wish to update.
 
 
 
@@ -114,9 +112,11 @@ const { error } = await supabase
 
 
 
-## 实例
 
-### 更新你的数据
+
+## Examples
+
+### Updating your data
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -182,7 +182,7 @@ const { error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 更新一条记录并返回
+### Update a record and return it
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -227,9 +227,11 @@ const { error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 更新JSON数据
+### Updating JSON data
 
-Postgres提供了一些[操作符](/docs/guides/database/json#query-thejsonb-data)来处理JSON数据。
+Postgres offers some
+[operators](/docs/guides/database/json#query-the-jsonb-data) for
+working with JSON data.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -287,4 +289,4 @@ Postgres提供了一些[操作符](/docs/guides/database/json#query-thejsonb-dat
 </TabPanel>
 </Tabs>
 
-目前，只可能更新整个JSON文档。
+Currently, it is only possible to update the entire JSON document.

@@ -5,7 +5,7 @@ slug: /auth-admin-updateuserbyid
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-更新用户数据。
+Updates the user data.
 
 ```js
 const { data: user, error } = await supabase.auth.admin.updateUserById(
@@ -15,7 +15,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -55,12 +55,12 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -68,7 +68,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
       app_metadata
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -76,12 +76,12 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
   </h4>
   <div class="method-list-item-description">
 
-一个自定义的数据对象，用于存储用户的特定应用元数据。这映射到`auth.users.app_metadata`列。
+A custom data object to store the user's application specific metadata. This maps to the `auth.users.app_metadata` column.
 
-只有服务角色可以修改。
+Only a service role can modify.
 
-`app_metadata`应该是一个JSON对象，包括应用特定的信息，如身份提供者、角色和其他
-访问控制信息。
+The `app_metadata` should be a JSON object that includes app-specific info, such as identity providers, roles, and other
+access control information.
 
   </div>
   
@@ -94,7 +94,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
       ban_duration
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -104,12 +104,12 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 
 Determines how long a user is banned for.
 
-禁令持续时间的格式遵循带有单位后缀的十进制数字的严格序列。
-有效的时间单位是 "ns"、"us"（或 "µs"）、"ms"、"s"、"m"、"h"。
+The format for the ban duration follows a strict sequence of decimal numbers with a unit suffix.
+Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 
-例如，一些可能的持续时间包括。'300ms'，'2h45m'。
+For example, some possible durations include: '300ms', '2h45m'.
 
-将禁止期限设置为 "无 "可以解除对该用户的禁止。
+Setting the ban duration to 'none' lifts the ban on the user.
 
   </div>
   
@@ -122,7 +122,7 @@ Determines how long a user is banned for.
       data
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -130,9 +130,9 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+A custom data object to store the user's metadata. This maps to the `auth.users.user_metadata` column.
 
-`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+The `data` should be a JSON object that includes user-specific info, such as their first and last name.
 
   </div>
   
@@ -145,7 +145,7 @@ Determines how long a user is banned for.
       email
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -153,7 +153,7 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-该用户的电子邮件。
+The user's email.
 
   </div>
   
@@ -166,7 +166,7 @@ Determines how long a user is banned for.
       email_confirm
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>boolean</code>
@@ -174,9 +174,9 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-确认用户的电子邮件地址，如果设置为真。
+Confirms the user's email address if set to true.
 
-只有服务角色可以修改。
+Only a service role can modify.
 
   </div>
   
@@ -189,7 +189,7 @@ Determines how long a user is banned for.
       password
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -197,7 +197,7 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-用户的密码。
+The user's password.
 
   </div>
   
@@ -210,7 +210,7 @@ Determines how long a user is banned for.
       phone
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -218,7 +218,7 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-用户的电话。
+The user's phone.
 
   </div>
   
@@ -231,7 +231,7 @@ Determines how long a user is banned for.
       phone_confirm
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>boolean</code>
@@ -239,9 +239,9 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-确认用户的电话号码，如果设置为真。
+Confirms the user's phone number if set to true.
 
-只有服务角色可以修改。
+Only a service role can modify.
 
   </div>
   
@@ -254,7 +254,7 @@ Determines how long a user is banned for.
       user_metadata
     </span>
     <span className="method-list-item-label-badge false">
-      可选的
+      optional
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -262,14 +262,14 @@ Determines how long a user is banned for.
   </h4>
   <div class="method-list-item-description">
 
-一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
+A custom data object to store the user's metadata. This maps to the `auth.users.user_metadata` column.
 
-只有服务角色可以修改。
+Only a service role can modify.
 
-`user_metadata`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
+The `user_metadata` should be a JSON object that includes user-specific info, such as their first and last name.
 
-注意：当使用GoTrueAdminApi并希望修改用户的元数据时。
-这个属性被用来代替UserAttributes数据。
+Note: When using the GoTrueAdminApi and wanting to modify a user's metadata,
+this attribute is used instead of UserAttributes data.
 
   </div>
   
@@ -294,9 +294,9 @@ Determines how long a user is banned for.
 
 
 
-## 示例
+## Examples
 
-### 更新一个用户的电子邮件。
+### Updates a user's email.
 
 
 
@@ -307,7 +307,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 )
 ```
 
-### 更新用户的密码。
+### Updates a user's password.
 
 
 
@@ -318,7 +318,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 )
 ```
 
-### 更新用户的元数据。
+### Updates a user's metadata.
 
 
 
@@ -329,7 +329,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 )
 ```
 
-### 更新用户的app_metadata。
+### Updates a user's app_metadata.
 
 
 
@@ -340,7 +340,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 )
 ```
 
-### 确认用户的电子邮件地址。
+### Confirms a user's email address.
 
 
 
@@ -351,7 +351,7 @@ const { data: user, error } = await supabase.auth.admin.updateUserById(
 )
 ```
 
-### 确认用户的电话号码。
+### Confirms a user's phone number.
 
 
 

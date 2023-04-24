@@ -1,11 +1,15 @@
 ---
 id: using-modifiers
-title: "使用修改器"
+title: "Using Modifiers"
 slug: /using-modifiers
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-过滤器是在行的层面上工作的--它们允许你在不改变行的形状的情况下，返回只符合特定条件的行。
-只符合某些条件的行，而不改变行的形状。修改器是不符合该定义的一切，允许你改变响应的格式（例如，返回一个CSV字符串）。
+Filters work on the row level—they allows you to return rows that
+only match certain conditions without changing the shape of the rows.
+Modifiers are everything that don't fit that definition—allowing you to
+change the format of the response (e.g., returning a CSV string).
 
-修改器必须在过滤器之后指定。有些修改器只适用于一些修改器只适用于返回行的查询（例如，`select()`或`rpc()`在一个返回表的函数上返回表格响应的函数）。
+Modifiers must be specified after filters. Some modifiers only apply for
+queries that return rows (e.g., `select()` or `rpc()` on a function that
+returns a table response).

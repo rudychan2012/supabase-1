@@ -5,13 +5,13 @@ slug: /is
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-只匹配`column`是`value`的行。
+Match only rows where `column` IS `value`.
 
-对于非boolean型列，这只与检查`column`的值是否为NULL有关。
-`column`的值是NULL，通过设置`value`为`null`。
+For non-boolean columns, this is only relevant for checking if the value of
+`column` is NULL by setting `value` to `null`.
 
-对于boolean型列，你也可以将`value`设置为`true`或`false`，它的行为与
-它的行为与`.eq()`相同。
+For boolean columns, you can also set `value` to `true` or `false` and it
+will behave the same way as `.eq()`.
 
 ```ts
 const { data, error } = await supabase
@@ -21,7 +21,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -29,7 +29,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      列
+      column
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -40,7 +40,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要过滤的列
+The column to filter on
 
   </div>
   
@@ -50,7 +50,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      值
+      value
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -61,7 +61,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用来过滤的值
+The value to filter with
 
   </div>
   
@@ -82,11 +82,11 @@ const { data, error } = await supabase
 
 
 
-## 举例
+## Examples
 
-### 检查无效性
+### Checking nullness
 
-当过滤 `null`时，使用`eq()`过滤器不起作用。
+Using the `eq()` filter doesn't work when filtering for `null`:
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -131,7 +131,7 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-相反，你需要使用`is()`：
+Instead, you need to use `is()`:
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="js">
 <TabPanel id="js" label="JavaScript">

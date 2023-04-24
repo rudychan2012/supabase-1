@@ -5,7 +5,7 @@ slug: /db-abortsignal
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-设置获取请求的AbortSignal。
+Set the AbortSignal for the fetch request.
 
 ```ts
 const ac = new AbortController()
@@ -17,7 +17,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -36,7 +36,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用于获取请求的AbortSignal
+The AbortSignal to use for the fetch request
 
   </div>
   
@@ -57,11 +57,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
+## Examples
 
-### 终止执行中的请求
+### Aborting requests in-flight
 
-你可以使用一个[`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)来中止请求。请注意，`status`和`statusText`对中止的请求没有任何意义，因为请求没有得到满足。
+You can use an [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) to abort requests. Note that `status` and `statusText` don't mean anything for aborted requests as the request wasn't fulfilled.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="js">
 <TabPanel id="js" label="JavaScript">

@@ -5,7 +5,7 @@ slug: /auth-admin-generatelink
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-生成电子邮件链接和OTP，通过自定义的电子邮件供应商发送。
+Generates email links and OTPs to be sent via a custom email provider.
 
 ```js
 const { data, error } = await supabase.auth.admin.generateLink({
@@ -18,7 +18,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -37,12 +37,12 @@ const { data, error } = await supabase.auth.admin.generateLink({
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -58,7 +58,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -79,7 +79,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -100,7 +100,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -121,7 +121,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -146,9 +146,9 @@ const { data, error } = await supabase.auth.admin.generateLink({
 
 
 
-## 示例
+## Examples
 
-### 生成一个注册链接
+### Generate a signup link
 
 
 
@@ -162,7 +162,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
 })
 ```
 
-### 生成一个邀请链接
+### Generate an invite link
 
 
 
@@ -173,7 +173,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
 })
 ```
 
-### 生成一个 magic link
+### Generate a magic link
 
 
 
@@ -184,7 +184,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
 })
 ```
 
-### 生成一个恢复链接
+### Generate a recovery link
 
 
 
@@ -195,7 +195,7 @@ const { data, error } = await supabase.auth.admin.generateLink({
 })
 ```
 
-### 产生改变当前电子邮件地址的链接
+### Generate links to change current email address
 
 
 

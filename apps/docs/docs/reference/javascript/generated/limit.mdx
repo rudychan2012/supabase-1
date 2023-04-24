@@ -5,7 +5,7 @@ slug: /limit
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-通过`count`限制查询结果。
+Limit the query result by `count`.
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要返回的最大行数
+The maximum number of rows to return
 
   </div>
   
@@ -55,12 +55,12 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-命名的参数
+Named parameters
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -76,7 +76,8 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-设置此选项以限制外域表的行数而不是当前的表
+Set this to limit rows of foreign tables
+instead of the current table
 
   </div>
   
@@ -101,9 +102,9 @@ const { data, error } = await supabase
 
 
 
-## 示例
+## Examples
 
-### 使用 `select()`时
+### With `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -148,7 +149,7 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 在一个外域表中
+### On a foreign table
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

@@ -5,16 +5,16 @@ slug: /auth-setsession
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-设置当前会话的会话数据。如果当前会话已经过期，setSession将负责刷新它以获得一个新的会话。
-如果当前会话中的刷新令牌无效，并且当前会话已经过期，将产生一个错误。
-如果当前会话不包含expires_at字段，setSession将使用访问令牌中定义的exp claim。
+Sets the session data from the current session. If the current session is expired, setSession will take care of refreshing it to obtain a new session.
+If the refresh token in the current session is invalid and the current session has expired, an error will be thrown.
+If the current session does not contain at expires_at field, setSession will use the exp claim defined in the access token.
 
 ```js
   const { data, error } = supabase.auth.setSession({refresh_token, access_token})
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -33,12 +33,12 @@ custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_
   </h4>
   <div class="method-list-item-description">
 
-当前的会话，它至少包含一个访问令牌和刷新令牌。
+The current session that minimally contains an access token and refresh token.
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -54,7 +54,7 @@ custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
@@ -75,7 +75,7 @@ custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。
+No description provided. 
 
   </div>
   
@@ -88,15 +88,13 @@ custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_
 </ul>
 
 
-##注意
+## Notes
 
-- `setSession()`需要一个刷新令牌和访问令牌来获得一个新的会话。
-- 刷新令牌只能使用一次，以获得一个新的会话。
-- [刷新令牌](/docs/reference/auth/config#refresh_token_rotation_enabled)在所有项目中默认启用，以防止重放攻击。
-- 你可以配置[`REFRESH_TOKEN_REUSE_INTERVAL`](https://supabase.com/docs/reference/auth/config#refresh_token_reuse_interval)，它提供了一个短暂的窗口，在发生并发或离线问题时，同一个刷新令牌可以被多次使用。
-- 如果你使用React Native，你需要通过[rn-nodeify](https://github.com/tradle/rn-nodeify)等库安装一个Buffer polyfill，以正确使用该库。
-
-
+- `setSession()` takes in a refresh token and access token to get a new session.
+- The refresh token can only be used once to obtain a new session.
+- [Refresh token rotation](/docs/reference/auth/config#refresh_token_rotation_enabled) is enabled by default on all projects to guard against replay attacks.
+- You can configure the [`REFRESH_TOKEN_REUSE_INTERVAL`](https://supabase.com/docs/reference/auth/config#refresh_token_reuse_interval) which provides a short window in which the same refresh token can be used multiple times in the event of concurrency or offline issues.
+- If you are using React Native, you will need to install a Buffer polyfill via a library such as [rn-nodeify](https://github.com/tradle/rn-nodeify) to properly use the library.
 
 
 
@@ -105,11 +103,13 @@ custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_
 
 
 
-## 示例
 
-### 设置会话
 
-从`refresh_token`和`access_token`中设置会话数据，并返回当前会话，如果令牌无效则返回错误。
+## Examples
+
+### Set the session
+
+Sets the session data from a `refresh_token` and `access_token` and returns the current session or an error if the tokens are invalid.
 
 ```js
   const { data, error } = supabase.auth.setSession({refresh_token, access_token})

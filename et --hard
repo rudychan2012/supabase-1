@@ -1,0 +1,586 @@
+[33mcommit c89c9df45faf05f39bf4605559bc1dd07e90522e[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m)[m
+Author: 274514873@qq.com <274514873@qq.com>
+Date:   Thu Apr 20 14:47:34 2023 +0800
+
+    图片打马赛克
+
+[33mcommit 94d8c34ec6cd0209e7303a64e51b2526b0ffa29f[m
+Author: unknown <lucarao@163.com>
+Date:   Thu Apr 20 10:11:54 2023 +0800
+
+    修改导航位置
+
+[33mcommit 266667c9b19dbbcc536d75ffacaf49eed2b0c88c[m
+Author: 274514873@qq.com <274514873@qq.com>
+Date:   Wed Apr 19 20:05:57 2023 +0800
+
+    云函数微信支付
+
+[33mcommit 854ef16727219d18b19ed2235b8e1236b81db578[m
+Author: unknown <lucarao@163.com>
+Date:   Tue Apr 18 17:07:49 2023 +0800
+
+    导航修改
+
+[33mcommit efa98409073981d71d564edf79268e21b5dfbbdf[m
+Author: unknown <lucarao@163.com>
+Date:   Tue Apr 18 16:09:38 2023 +0800
+
+    导航修改
+
+[33mcommit ab1e44c9d20c945ad67658fcd3eb369f9beeffe1[m
+Author: 274514873@qq.com <274514873@qq.com>
+Date:   Tue Apr 18 14:08:28 2023 +0800
+
+    云函数
+
+[33mcommit 026c26a0afa89bb704ebb707d2b85c63e1b7fe9a[m
+Author: unknown <lucarao@163.com>
+Date:   Mon Mar 27 10:56:28 2023 +0800
+
+    备份接口文件夹
+
+[33mcommit 911c0e76865b721c485165b073afaa26fe36f446[m
+Author: LucaRao <56021673+LucaRao@users.noreply.github.com>
+Date:   Mon Mar 27 10:48:28 2023 +0800
+
+    Update package.json
+
+[33mcommit cb831b701e0aa34dc9c0773a0593427a1666e8e4[m
+Author: 274514873@qq.com <274514873@qq.com>
+Date:   Mon Mar 27 10:15:07 2023 +0800
+
+    新增教程
+
+[33mcommit e9011b4e5575b97d31c090dcd160d0e9a7cd2e92[m
+Author: 274514873@qq.com <274514873@qq.com>
+Date:   Mon Mar 27 09:39:22 2023 +0800
+
+    新增教程
+
+[33mcommit a83322caf6a062f8b899c883c1538ba857667879[m
+Author: unknown <lucarao@163.com>
+Date:   Wed Mar 22 09:29:27 2023 +0800
+
+    SDK文档子标题名称修改，将微信登录和手机登录文档移到认证目录下
+
+[33mcommit b9335922430677ab4188815e5ed8cabb5ffdc243[m
+Author: unknown <lucarao@163.com>
+Date:   Sat Mar 18 17:41:41 2023 +0800
+
+    修改忽略打包文件
+
+[33mcommit b9de61028d6954662443c5229d07180831a15bff[m
+Author: unknown <lucarao@163.com>
+Date:   Sat Mar 18 17:31:52 2023 +0800
+
+    微信接口内容修改
+
+[33mcommit 02691c0d5c45b501aa65a8dcaca85df94f0883c6[m
+Author: unknown <lucarao@163.com>
+Date:   Sat Mar 18 17:07:07 2023 +0800
+
+    微信接口内容修改
+
+[33mcommit 911bdda64fdf5e69bc2f0a2a9aa896a3eb1d9630[m
+Author: unknown <lucarao@163.com>
+Date:   Sat Mar 18 16:56:01 2023 +0800
+
+    微信接口内容修改
+
+[33mcommit 2f8a79c9790ad500c6852fa1a5c77041fbfb4d33[m
+Author: unknown <lucarao@163.com>
+Date:   Sat Mar 18 16:51:04 2023 +0800
+
+    微信接口内容修改
+
+[33mcommit 27de20b856ee1fe395c52da5c24506d25154fa95[m
+Author: unknown <lucarao@163.com>
+Date:   Sat Mar 18 15:28:47 2023 +0800
+
+    新增微信接口和教程
+
+[33mcommit 2e8ae4fd5f066dab21232864399afcff402c7903[m
+Author: unknown <lucarao@163.com>
+Date:   Thu Mar 2 09:30:53 2023 +0800
+
+    v2文档
+
+[33mcommit 4d9943e8a0961f423d7acf2a192d3aa0badf2a39[m
+Merge: 4668e14a3 9c29491ae
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Mon Jan 30 18:03:16 2023 +0800
+
+    Merge pull request #12 from sh47dow/dev
+    
+    样式修改
+
+[33mcommit 9c29491aefc69b88585b6e11d17b747e54e079c9[m
+Author: longsummer <long_summer@126.com>
+Date:   Mon Jan 30 17:13:06 2023 +0800
+
+    修改样式
+
+[33mcommit 9f1aa6c39746a22ac24f8cbc66fc961b72c95112[m
+Author: longsummer <long_summer@126.com>
+Date:   Mon Jan 30 17:08:48 2023 +0800
+
+    样式修改
+
+[33mcommit 4668e14a314be5c5c375e5088df16e51c566403d[m
+Merge: 179a8ef34 3c6b3294e
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Mon Jan 30 12:42:37 2023 +0800
+
+    Merge pull request #11 from sh47dow/dev
+    
+    更改主题和商标
+
+[33mcommit 3c6b3294e6e791b3c9231e51548edb44e2cc664b[m
+Author: longsummer <long_summer@126.com>
+Date:   Mon Jan 16 18:23:30 2023 +0800
+
+    更改主题和商标
+
+[33mcommit 179a8ef34b460b374e71bb3f6a48e2d20285bf3a[m
+Author: key7men <key7men@gmail.com>
+Date:   Sat Jan 14 15:51:16 2023 +0800
+
+    基于访问域名来设置cookie的domain
+
+[33mcommit 7f98054ef116f05ca2cf481675b4f29e7768e424[m
+Merge: 51c0b0679 e8bb1cc06
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Sat Jan 14 15:45:24 2023 +0800
+
+    Merge pull request #10 from sh47dow/dev
+    
+    fix bugs
+
+[33mcommit e8bb1cc06a583031a13039d59c3021d8ec271a6e[m
+Author: longsummer <long_summer@126.com>
+Date:   Sat Jan 14 14:51:49 2023 +0800
+
+    fix bugs
+
+[33mcommit 51c0b0679521ae60986fa7281572ec2e9c5dce89[m
+Author: key7men <key7men@gmail.com>
+Date:   Wed Jan 11 15:40:00 2023 +0800
+
+    refact the logo redirect url
+
+[33mcommit 9db824d08807f8befe733f7c1a8825c9905430a1[m
+Merge: a6b032c70 ad8121af6
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Wed Jan 11 15:13:52 2023 +0800
+
+    Merge pull request #9 from sh47dow/dev
+    
+    fix bugs
+
+[33mcommit ad8121af63a7b609ad6554d33b75e54674fc8144[m
+Author: longsummer <long_summer@126.com>
+Date:   Tue Jan 10 18:45:28 2023 +0800
+
+    fix bugs
+
+[33mcommit a6b032c70d745d7591fe4e65135a2ac9b0f3a06a[m
+Merge: 94ee7a16c 4d9a9fa62
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Mon Jan 9 15:06:56 2023 +0800
+
+    Merge pull request #8 from sh47dow/dev
+    
+    汉化
+
+[33mcommit 4d9a9fa62ba5ebe0b4676ec3cfa49814980f5aba[m
+Merge: e082d6340 94ee7a16c
+Author: longsummer <long_summer@126.com>
+Date:   Mon Jan 9 14:53:43 2023 +0800
+
+    Merge branch 'dev' of github.com:key7men/supabase into dev
+
+[33mcommit 94ee7a16c7618f025554b81be767e7afa2ca4fdb[m
+Author: key7men <key7men@gmail.com>
+Date:   Mon Jan 9 14:51:24 2023 +0800
+
+    fix(auth by user id): using jwt for paring user id
+
+[33mcommit e082d6340936273cbb6452be397f24e4609787f3[m
+Merge: 01d740d4f 2b39ba6b5
+Author: longsummer <long_summer@126.com>
+Date:   Mon Jan 9 14:27:25 2023 +0800
+
+    Merge branch 'dev' of github.com:key7men/supabase into dev
+
+[33mcommit 01d740d4f941b874546399c5a32fbd2916e5949b[m
+Author: longsummer <long_summer@126.com>
+Date:   Mon Jan 9 14:27:15 2023 +0800
+
+    增补汉化
+
+[33mcommit 2b39ba6b5719f507b1893736d9b47056ad81210d[m
+Merge: 1ba0dc7e0 66758b616
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Mon Jan 9 09:25:39 2023 +0800
+
+    Merge pull request #7 from sh47dow/dev
+    
+    汉化
+
+[33mcommit 66758b61617f60ee254dd0027b8fa32a720a4c87[m
+Author: longsummer <long_summer@126.com>
+Date:   Sat Jan 7 18:38:23 2023 +0800
+
+    fix bugs
+
+[33mcommit 3412fe121fa7880b18185768eebf4b80bd2e9ee2[m
+Author: longsummer <long_summer@126.com>
+Date:   Thu Jan 5 17:00:32 2023 +0800
+
+    修复404，500页面跳转问题
+
+[33mcommit 2801c22500aee0c933736b7cfdfc82fad6083b81[m
+Merge: 7b7e89fc7 1ba0dc7e0
+Author: longsummer <long_summer@126.com>
+Date:   Thu Jan 5 14:43:00 2023 +0800
+
+    Merge branch 'dev' of github.com:key7men/supabase into dev
+
+[33mcommit 1ba0dc7e0a23f4c6bddf8b0d1f27ec16623cec32[m
+Author: key7men <key7men@gmail.com>
+Date:   Wed Jan 4 22:32:29 2023 +0800
+
+    feat(refresh token): refresh token when token expired
+
+[33mcommit a54e73f301664c6dd464623da1ed7b0d58398d3e[m
+Author: key7men <key7men@gmail.com>
+Date:   Mon Jan 2 22:30:31 2023 +0800
+
+    fix(auth): execute jwt check before every request
+
+[33mcommit 7b7e89fc7774aa8929b1418708897d4a89c0aea4[m
+Merge: 2ae810553 bf8f1d99a
+Author: longsummer <long_summer@126.com>
+Date:   Fri Dec 30 17:09:10 2022 +0800
+
+    Merge branch 'dev' of github.com:key7men/supabase into dev
+
+[33mcommit 2ae8105532330cf05315a2e16017b8a9787005ab[m
+Author: longsummer <long_summer@126.com>
+Date:   Fri Dec 30 17:08:58 2022 +0800
+
+    汉化修正
+
+[33mcommit bf8f1d99a7587014a293ced52366fa4f48aa2c3a[m
+Author: key7men <key7men@gmail.com>
+Date:   Fri Dec 30 12:34:25 2022 +0800
+
+    fix(change response status): use error code as  response status
+
+[33mcommit 5d72d6935c86f6ee9a39b5fd8255f5cb25f34bd8[m
+Merge: 6311791a9 832781cf6
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Wed Dec 28 09:00:37 2022 +0800
+
+    Merge pull request #6 from sh47dow/dev
+    
+    修复bug
+
+[33mcommit 832781cf638778a8cc5f7f3187b107bf99bed6b7[m
+Author: longsummer <long_summer@126.com>
+Date:   Tue Dec 27 16:37:41 2022 +0800
+
+    解决SWR缓存问题
+
+[33mcommit 2bf6ef2658442b05c2820636a5a7df29d6971210[m
+Author: longsummer <long_summer@126.com>
+Date:   Tue Dec 27 16:37:11 2022 +0800
+
+    解决SWR缓存问题
+
+[33mcommit 38fd5b857dc560329650e3f135674c23e1e067fa[m
+Merge: 7e370d1b6 6311791a9
+Author: longsummer <long_summer@126.com>
+Date:   Tue Dec 27 15:14:16 2022 +0800
+
+    Merge branch 'dev' of github.com:key7men/supabase into dev
+
+[33mcommit 7e370d1b65bda312dc1997dfd67d79dff4b49cad[m
+Merge: cb6ba8cd8 28ccf0559
+Author: longsummer <long_summer@126.com>
+Date:   Tue Dec 27 11:58:52 2022 +0800
+
+    Merge branch 'dev' of github.com:key7men/supabase into dev
+
+[33mcommit cb6ba8cd8f9a8e7274c21bc55745c6d0f03c2f4e[m
+Author: longsummer <long_summer@126.com>
+Date:   Tue Dec 27 11:58:40 2022 +0800
+
+    更新环境变量
+
+[33mcommit 6311791a9988e778a50f050ac6f555b7b506b943[m
+Author: key7men <key7men@gmail.com>
+Date:   Mon Dec 26 15:51:15 2022 +0800
+
+    update api feature
+
+[33mcommit 28ccf05596d1d4e47947659c4316ca9cab2681fc[m
+Author: key7men <key7men@gmail.com>
+Date:   Sun Dec 25 21:36:41 2022 +0800
+
+    fix(change authenticate method): use Authorization
+
+[33mcommit c52ac36cfb635f0a25a2c120691be4a21f1ca29a[m
+Merge: 7b81b1cfe f9ad06025
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Fri Dec 23 16:43:53 2022 +0800
+
+    Merge pull request #5 from sh47dow/dev
+    
+    翻译修订
+
+[33mcommit f9ad06025e37fb077ec60c97c2d5f797c0ab613e[m
+Author: longsummer <long_summer@126.com>
+Date:   Fri Dec 23 16:36:58 2022 +0800
+
+    翻译修订
+
+[33mcommit d0e4e77607207d5c77e48e2c4eab2ca5963bf722[m
+Author: longsummer <long_summer@126.com>
+Date:   Thu Dec 22 15:54:53 2022 +0800
+
+    翻译修订
+
+[33mcommit 7b81b1cfee5571889a7a9aaf0b0644061ee0890e[m
+Author: key7men <key7men@gmail.com>
+Date:   Thu Dec 22 11:43:33 2022 +0800
+
+    recover sentry
+
+[33mcommit e51f08256351fbdd33b01bc1d65211b8d89ddbe2[m
+Author: key7men <key7men@gmail.com>
+Date:   Thu Dec 22 00:15:20 2022 +0800
+
+    fix(translate & api): docs translate and api call
+
+[33mcommit f1cae711c1f5c6c5f83e4b02255ab153e5237a10[m
+Merge: 0ab3dcd97 cacbc012d
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Wed Dec 21 22:35:47 2022 +0800
+
+    Merge pull request #4 from sh47dow/dev
+    
+    翻译修订
+
+[33mcommit cacbc012d581c2f63a620cd22f8e45b8fb0c1c3d[m
+Author: longsummer <long_summer@126.com>
+Date:   Wed Dec 21 20:29:17 2022 +0800
+
+    翻译修订
+
+[33mcommit 0ab3dcd97d6384306149ebfb191660dc62c15773[m
+Author: key7men <key7men@gmail.com>
+Date:   Sun Dec 18 16:18:45 2022 +0800
+
+    fix conflict
+
+[33mcommit 056d14c42bc93589afa9bd5ecef05547ca8ae92c[m
+Merge: 0d8d21129 bbaed32ee
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Sun Dec 18 16:14:53 2022 +0800
+
+    Merge pull request #3 from sh47dow/dev
+    
+    翻译
+
+[33mcommit bbaed32ee1d6916482979f586393fcc8818d303a[m
+Author: longsummer <long_summer@126.com>
+Date:   Sun Dec 18 16:11:50 2022 +0800
+
+    翻译
+
+[33mcommit 8b90f1a4ab76c41b0da26290679860b34bf37729[m
+Author: longsummer <long_summer@126.com>
+Date:   Sun Dec 18 16:09:03 2022 +0800
+
+    翻译
+
+[33mcommit 0d8d2112952b4a7883d640e239442b786c95857b[m
+Merge: 72056c91b f344f7640
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Wed Dec 14 16:30:22 2022 +0800
+
+    Merge pull request #2 from sh47dow/dev
+    
+    阉割功能
+
+[33mcommit f344f7640257bb856e84e4c1c28f4bb681df1034[m
+Author: longsummer <long_summer@126.com>
+Date:   Tue Dec 13 20:03:05 2022 +0800
+
+    阉割功能
+
+[33mcommit 72056c91b75edf3e692a5f835f34dc2467ced395[m
+Author: key7men <key7men@gmail.com>
+Date:   Mon Dec 12 23:00:08 2022 +0800
+
+    feat(remove unnecessary feature): remove unnecessary features which no need
+
+[33mcommit 54bd3bbaf746f5eaad2d80199f8b2626e466bef6[m
+Merge: 36bbe4a97 f089c9319
+Author: k7m <66654074+key7men@users.noreply.github.com>
+Date:   Mon Dec 12 23:00:33 2022 +0800
+
+    Merge pull request #1 from sh47dow/dev
+    
+    add mock data
+
+[33mcommit f089c9319cd54f850bab3a30a23ba99ec827368f[m
+Author: longsummer <long_summer@126.com>
+Date:   Mon Dec 12 15:29:01 2022 +0800
+
+    add mock data
+
+[33mcommit 36bbe4a9795d06db3c1b71f504c65fe4f258f7e8[m
+Author: key7men <key7men@gmail.com>
+Date:   Mon Dec 12 15:24:22 2022 +0800
+
+    fix(router): 重定向无需使用的页面到应用根目录
+
+[33mcommit 7f285ed240644c510010285f99e114c2229e8d77[m
+Author: key7men <key7men@gmail.com>
+Date:   Mon Dec 5 17:50:10 2022 +0800
+
+    make supabase run in platform mode
+
+[33mcommit 211fd49d20de19c3487245394d1d0fee98ccf4c7[m
+Author: key7men <key7men@gmail.com>
+Date:   Fri Dec 2 11:16:51 2022 +0800
+
+    refactor(lib and env): change .env/Dockerfile/base.ts/apiWrapper for self hosting
+
+[33mcommit 51830d711da59225425c3d3204b0f078bee6ec78[m
+Merge: f8ea1c8aa d66d52e46
+Author: Isaiah Hamilton <isaiah7hamilton@gmail.com>
+Date:   Tue Nov 29 20:49:08 2022 -0500
+
+    Merge pull request #10629 from adyatlov/patch-1
+    
+    Update README.md
+
+[33mcommit d66d52e4663a4ef7926924972964b27203ab816f[m
+Author: Andrey Dyatlov <adyatlov@posteo.net>
+Date:   Wed Nov 30 02:12:01 2022 +0100
+
+    Update README.md
+    
+    Fix wrong URL to Browserless
+
+[33mcommit f8ea1c8aa3cb4947ce3b43ae93a32122ef2e494b[m
+Merge: 329c27815 7690f0336
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 16:33:35 2022 -0800
+
+    Merge pull request #10627 from supabase/dannykng-patch-1
+    
+    Fix typo
+
+[33mcommit 7690f03361e2f5319f2aa25e2f81be6f9b3e5b82[m
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 16:24:30 2022 -0800
+
+    Fix typo
+
+[33mcommit 329c2781590e8ff305019df5f970649b85118284[m
+Merge: 92239e42f d140a737a
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 14:37:35 2022 -0800
+
+    Merge pull request #10626 from supabase/dannykng-patch-1
+    
+    Fix build
+
+[33mcommit d140a737a62956b740ae3eec7bb32d487ab1e996[m
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 14:09:47 2022 -0800
+
+    Fix build
+
+[33mcommit 92239e42f737f34287d7ecf23bd3f0925f2535c9[m
+Merge: dd1c5bb9e 3fa18a399
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 12:54:27 2022 -0800
+
+    Merge pull request #10605 from tresende/patch-2
+    
+    Update README.pt-br.md
+
+[33mcommit dd1c5bb9e493e04513c88ca60f567486bb7f70cd[m
+Merge: db554333f a50acf524
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 12:50:00 2022 -0800
+
+    Merge pull request #10593 from supabase/docs/functions-ia
+    
+    Update Functions docs
+
+[33mcommit db554333f11822eb7910e02c8093e57e825e47ce[m
+Merge: 893931a65 cbe9564fd
+Author: dng <danny@supabase.io>
+Date:   Tue Nov 29 12:00:35 2022 -0800
+
+    Merge pull request #10608 from DaniDipp/patch-1
+    
+    Fix dead link to Kong documentation
+
+[33mcommit 893931a65d2a75b0054a91e8f974c5257c182f09[m
+Merge: 5db28158f 141bf0e5f
+Author: Alaister Young <alaister@users.noreply.github.com>
+Date:   Wed Nov 30 04:24:39 2022 +1100
+
+    Merge pull request #10616 from Hallidayo/studio-missing-tweet-image
+    
+    studio: added missing tweet image
+
+[33mcommit 5db28158f485508b55dfa2e41d1c11cf767b4c6a[m
+Merge: f5f42d04e e198aba00
+Author: Lakshan Perera <lakshan@supabase.io>
+Date:   Wed Nov 30 03:51:30 2022 +1100
+
+    Merge pull request #10615 from supabase/puppeteer-example
+    
+    added Puppeteer example
+
+[33mcommit 141bf0e5f47bf5ffa1dd25be20f64da0fdd23778[m
+Author: Ollie Halliday <22655069+Hallidayo@users.noreply.github.com>
+Date:   Tue Nov 29 16:49:42 2022 +0000
+
+    added missing tweet image
+
+[33mcommit e198aba00eb9e0f22c945309ddb30ffd5db8e4f4[m
+Author: Lakshan Perera <lakshan@laktek.com>
+Date:   Wed Nov 30 03:14:43 2022 +1100
+
+    added Puppeteer example
+
+[33mcommit f5f42d04e195ed6ab50fec78e3666d349eb001f1[m
+Merge: 448c85a41 7d7740532
+Author: Lakshan Perera <lakshan@supabase.io>
+Date:   Wed Nov 30 02:38:29 2022 +1100
+
+    Merge pull request #10612 from supabase/fix-stripe-import
+    
+    Fix Stripe import path
+
+[33mcommit 7d7740532aa14e99703dfa93ea109270db6c00c0[m
+Author: Lakshan Perera <lakshan@laktek.com>
+Date:   Wed Nov 30 02:33:31 2022 +1100
+
+    fix Stripe import path
+
+[33mcommit cbe9564fd348135ab4656f2dee26251bfbae6d05[m
+Author: Daniel <dippigames@gmail.com>
+Date:   Tue Nov 29 15:03:43 2022 +0100
+
+    fix kong docs link to correct product

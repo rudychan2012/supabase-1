@@ -5,8 +5,14 @@ slug: /upsert
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-对表或视图执行UPSERT。根据传递给`onConflict`的列`onConflict`所传递的列，`.upsert()`允许你执行等同于`.insert()`如果对应的`onConflict`列的记录不存在存在，或者如果它确实存在，则根据忽略重复数据。
-默认情况下，不返回被替换的行。要返回它，请在调用与`.select()'连锁调用。
+Perform an UPSERT on the table or view. Depending on the column(s) passed
+to `onConflict`, `.upsert()` allows you to perform the equivalent of
+`.insert()` if a row with the corresponding `onConflict` columns doesn't
+exist, or if it does exist, perform an alternative action depending on
+`ignoreDuplicates`.
+
+By default, upserted rows are not returned. To return it, chain the call
+with `.select()`.
 
 ```ts
 const { data, error } = await supabase
@@ -16,7 +22,7 @@ const { data, error } = await supabase
 ```
 
 
-## 参数
+## Parameters
 
 
 <ul className="method-list-group">
@@ -35,13 +41,13 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-要用的值来upsert。传递一个对象来替换单行
-单一行，或者通过一个数组来插入多行。
+The values to upsert with. Pass an object to upsert a
+single row or an array to upsert multiple rows.
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -57,7 +63,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -67,7 +73,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      行
+      Row
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -78,7 +84,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-未提供说明。 
+No description provided. 
 
   </div>
   
@@ -103,12 +109,12 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-命名的参数
+Named parameters
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -124,16 +130,16 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-用来计算倒置行的计数算法
+Count algorithm to use to count upserted rows.
 
-`"exact"`: 准确但缓慢的计数算法。执行 `COUNT(*)`。
-引擎盖。
+`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
+hood.
 
-`"planned"`: 近似但快速的计数算法。使用了Postgres
-的统计数据。
+`"planned"`: Approximated but fast count algorithm. Uses the Postgres
+statistics under the hood.
 
-`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
-数。
+`"estimated"`: Uses exact count for low numbers and planned count for high
+numbers.
 
   </div>
   
@@ -154,7 +160,8 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-如果`true`，重复的行将被忽略。如果`false`，重复的行将与现有的行合并。
+If `true`, duplicate rows are ignored. If
+`false`, duplicate rows are merged with existing rows.
 
   </div>
   
@@ -175,7 +182,9 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-逗号分隔的UNIQUE列，用于指定如何确定重复记录。重复的行是如何被确定的。如果所有的 `onConflict`列相等，那么两行就是重复的。`onConflict`列相等。
+Comma-separated UNIQUE column(s) to specify how
+duplicate rows are determined. Two rows are duplicates if all the
+`onConflict` columns are equal.
 
   </div>
   
@@ -188,11 +197,9 @@ const { data, error } = await supabase
 </ul>
 
 
-## 注释
+## Notes
 
-- 主键必须包含在 `values`中才能使用upsert。
-
-
+- Primary keys must be included in `values` to use upsert.
 
 
 
@@ -201,9 +208,11 @@ const { data, error } = await supabase
 
 
 
-## 实例
 
-### 颠覆你的数据
+
+## Examples
+
+### Upsert your data
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -247,7 +256,7 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 批量上传你的数据
+### Bulk Upsert your data
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -298,11 +307,12 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-### 向有约束条件的表中插入数据
+### Upserting into tables with constraints
 
-在下面的查询中，`upsert()`隐含地使用`id`(主键)列来确定冲突。
-(主键)列来确定冲突。如果没有现有的行，`upsert()`就会插入一条新的记录，在这种情况下，会失败，因为已经有相同的`id`。
-在这种情况下会失败，因为已经有一条`handle``"saoirse "`的记录。
+In the following query, `upsert()` implicitly uses the `id`
+(primary key) column to determine conflicts. If there is no existing
+row with the same `id`, `upsert()` inserts a new row, which
+will fail in this case as there is already a row with `handle` `"saoirse"`.
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -350,8 +360,8 @@ const { data, error } = await supabase
 </TabPanel>
 </Tabs>
 
-使用`onConflict`选项，你可以指示`upsert()`使用另一个具有唯一约束的列来确定冲突。
-另一个具有唯一约束的列来确定冲突。
+Using the `onConflict` option, you can instruct `upsert()` to use
+another column with a unique constraint to determine conflicts:
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="js">
 <TabPanel id="js" label="JavaScript">

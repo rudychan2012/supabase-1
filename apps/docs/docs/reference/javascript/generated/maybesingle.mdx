@@ -5,9 +5,10 @@ slug: /maybesingle
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-将`data`作为一个对象而不是一个对象的数组返回。
+Return `data` as a single object instead of an array of objects.
 
-查询结果必须是0或1行（例如，使用`.limit(1)`），否则这将返回一个错误。
+Query result must be zero or one row (e.g. using `.limit(1)`), otherwise
+this returns an error.
 
 ```ts
 const { data, error } = await supabase
@@ -34,9 +35,9 @@ const { data, error } = await supabase
 
 
 
-## 示例
+## Examples
 
-### 使用 `select()`
+### With `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
