@@ -5,12 +5,11 @@ slug: /order
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Order the query result by `column`.
+按 `column`对查询结果进行排序。
 
-You can call this method multiple times to order by multiple columns.
+你可以多次调用这个方法来按多列排序。
 
-You can order foreign tables, but it doesn't affect the ordering of the
-current table.
+你可以对外域表进行排序，但这并不影响对当前表的排序。
 
 ```ts
 const { data, error } = await supabase
@@ -20,7 +19,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -28,7 +27,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -39,7 +38,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The column to order by
+列的排序方式
 
   </div>
   
@@ -60,12 +59,12 @@ The column to order by
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -81,7 +80,7 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-If `true`, the result will be in ascending order
+如果 "true"，结果将按升序排列。
 
   </div>
   
@@ -102,8 +101,7 @@ If `true`, the result will be in ascending order
   </h4>
   <div class="method-list-item-description">
 
-Set this to order a foreign table by foreign
-columns
+设置此选项以按外域表的列
 
   </div>
   
@@ -124,8 +122,7 @@ columns
   </h4>
   <div class="method-list-item-description">
 
-If `true`, `null`s appear first. If `false`,
-`null`s appear last.
+如果 `true`，`null`首先出现。如果 `false`,则 `null`出现在最后。
 
   </div>
   
@@ -150,9 +147,9 @@ If `true`, `null`s appear first. If `false`,
 
 
 
-## Examples
+## 示例
 
-### With `select()`
+### 使用 `select()`时
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -206,10 +203,9 @@ If `true`, `null`s appear first. If `false`,
 </TabPanel>
 </Tabs>
 
-### On a foreign table
+### 在外域表上
 
-Ordering on foreign tables doesn't affect the ordering of
-the parent table.
+对外表的排序不影响父表的排序。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

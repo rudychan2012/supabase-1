@@ -5,10 +5,10 @@ slug: /delete
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Perform a DELETE on the table or view.
+对表或视图执行DELETE操作。
 
-By default, deleted rows are not returned. To return it, chain the call
-with `.select()` after filters.
+默认情况下，删除的行不会被返回。要返回它，请在过滤器后用`.select()`连锁调用
+和`.select()`在过滤器之后。
 
 ```ts
 const { error } = await supabase
@@ -18,7 +18,7 @@ const { error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -37,12 +37,12 @@ const { error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -58,16 +58,16 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-Count algorithm to use to count deleted rows.
+用来计算删除行的计数算法。
 
-`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
-hood.
+`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
+引擎盖。
 
-`"planned"`: Approximated but fast count algorithm. Uses the Postgres
-statistics under the hood.
+`"planned"`: 近似但快速的计数算法。使用了Postgres
+的统计数据。
 
-`"estimated"`: Uses exact count for low numbers and planned count for high
-numbers.
+`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
+数。
 
   </div>
   
@@ -80,16 +80,14 @@ numbers.
 </ul>
 
 
-## Notes
+## 注意
 
-- `delete()` should always be combined with [filters](/docs/reference/javascript/using-filters) to target the item(s) you wish to delete.
-- If you use `delete()` with filters and you have
-  [RLS](/docs/learn/auth-deep-dive/auth-row-level-security) enabled, only
-  rows visible through `SELECT` policies are deleted. Note that by default
-  no rows are visible, so you need at least one `SELECT`/`ALL` policy that
-  makes the rows visible.
-
-
+- `delete()`应该总是和[filters](/docs/reference/javascript/using-filters)结合起来，以确定你想删除的项目。
+- 如果你使用`delete()`和过滤器，并且你有
+  [RLS](/docs/learn/auth-deep-dive/auth-row-level-security)已启用，则只有
+  通过`SELECT`策略可见的行被删除。注意，在默认情况下
+  没有行是可见的，所以你需要至少有一个`SELECT`/`ALL`策略来使行可见。
+  使得这些行可见。
 
 
 
@@ -98,9 +96,11 @@ numbers.
 
 
 
-## Examples
 
-### Delete records
+
+## 示例
+
+### 删除记录
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

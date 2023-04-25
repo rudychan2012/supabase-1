@@ -5,12 +5,9 @@ slug: /not
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Match only rows which doesn't satisfy the filter.
+只匹配不符合过滤器的行。
 
-Unlike most filters, `opearator` and `value` are used as-is and need to
-follow [PostgREST
-syntax](https://postgrest.org/en/stable/api.html#operators). You also need
-to make sure they are properly sanitized.
+与大多数过滤器不同，`opearator`和`value`是按原样使用的，需要遵循遵循[PostgREST语法](https://postgrest.org/en/stable/api.html#operators)。你还需要确保它们被正确地消毒。
 
 ```ts
 const { data, error } = await supabase
@@ -20,7 +17,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -28,7 +25,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -39,7 +36,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The column to filter on
+要过滤的列
 
   </div>
   
@@ -60,8 +57,7 @@ The column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The operator to be negated to filter with, following
-PostgREST syntax
+用来过滤的运算符，如下所示PostgREST语法
 
   </div>
   
@@ -71,7 +67,7 @@ PostgREST syntax
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      value
+      值
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -82,7 +78,7 @@ PostgREST syntax
   </h4>
   <div class="method-list-item-description">
 
-The value to filter with, following PostgREST syntax
+用来过滤的值，遵循PostgREST的语法
 
   </div>
   
@@ -91,9 +87,9 @@ The value to filter with, following PostgREST syntax
 </ul>
 
 
-## Notes
+## 注意
 
-not() expects you to use the raw PostgREST syntax for the filter values.
+not()希望你使用原始的PostgREST语法来表达过滤器的值。
 
 ```ts
 .not('id', 'in', '(5,6,7)')  // Use `()` for `in` filter
@@ -109,9 +105,9 @@ not() expects you to use the raw PostgREST syntax for the filter values.
 
 
 
-## Examples
+## 举例
 
-### With `select()`
+### 用 `select()`
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

@@ -5,7 +5,7 @@ slug: /storage-updatebucket
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Updates a Storage bucket
+更新存储桶
 
 ```js
 const { data, error } = await supabase
@@ -14,7 +14,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -33,7 +33,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-A unique identifier for the bucket you are updating.
+你要更新的桶的唯一标识符。
 
   </div>
   
@@ -54,12 +54,12 @@ A unique identifier for the bucket you are updating.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -75,7 +75,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-The visibility of the bucket. Public buckets don't require an authorization token to download objects, but still require a valid token for all other operations.
+桶的可见性。公用桶不需要授权令牌来下载对象，但仍然需要一个有效的令牌来进行所有其他操作。
 
   </div>
   
@@ -88,14 +88,12 @@ The visibility of the bucket. Public buckets don't require an authorization toke
 </ul>
 
 
-## Notes
+## 注意事项
 
-- RLS policy permissions required:
-  - `buckets` table permissions: `update`
-  - `objects` table permissions: none
-- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
-
-
+- 需要RLS策略权限:
+  - `buckets`表的权限: `更新'.
+  - `objects`表的权限：无
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
 
 
 
@@ -104,9 +102,11 @@ The visibility of the bucket. Public buckets don't require an authorization toke
 
 
 
-## Examples
 
-### Update bucket
+
+## 实例
+
+### 更新桶
 
 
 

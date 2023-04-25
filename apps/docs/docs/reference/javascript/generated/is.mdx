@@ -5,13 +5,13 @@ slug: /is
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Match only rows where `column` IS `value`.
+只匹配`column`是`value`的行。
 
-For non-boolean columns, this is only relevant for checking if the value of
-`column` is NULL by setting `value` to `null`.
+对于非boolean型列，这只与检查`column`的值是否为NULL有关。
+`column`的值是NULL，通过设置`value`为`null`。
 
-For boolean columns, you can also set `value` to `true` or `false` and it
-will behave the same way as `.eq()`.
+对于boolean型列，你也可以将`value`设置为`true`或`false`，它的行为与
+它的行为与`.eq()`相同。
 
 ```ts
 const { data, error } = await supabase
@@ -21,7 +21,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -29,7 +29,7 @@ const { data, error } = await supabase
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      column
+      列
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -40,7 +40,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The column to filter on
+要过滤的列
 
   </div>
   
@@ -50,7 +50,7 @@ The column to filter on
 <li className="method-list-item">
   <h4 className="method-list-item-label">
     <span className="method-list-item-label-name">
-      value
+      值
     </span>
     <span className="method-list-item-label-badge required">
       required
@@ -61,7 +61,7 @@ The column to filter on
   </h4>
   <div class="method-list-item-description">
 
-The value to filter with
+用来过滤的值
 
   </div>
   
@@ -82,11 +82,11 @@ The value to filter with
 
 
 
-## Examples
+## 举例
 
-### Checking nullness
+### 检查无效性
 
-Using the `eq()` filter doesn't work when filtering for `null`:
+当过滤 `null`时，使用`eq()`过滤器不起作用。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -131,7 +131,7 @@ Using the `eq()` filter doesn't work when filtering for `null`:
 </TabPanel>
 </Tabs>
 
-Instead, you need to use `is()`:
+相反，你需要使用`is()`：
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="js">
 <TabPanel id="js" label="JavaScript">

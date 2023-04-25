@@ -5,8 +5,8 @@ slug: /auth-admin-createuser
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Creates a new user.
-This function should only be called on a server. Never expose your `service_role` key in the browser.
+创建一个新的用户。
+这个函数应该只在服务器上调用。不要在浏览器中暴露你的`service_role`键。
 
 ```js
 const { data, error } = await supabase.auth.admin.createUser({
@@ -17,7 +17,7 @@ const { data, error } = await supabase.auth.admin.createUser({
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -36,12 +36,12 @@ const { data, error } = await supabase.auth.admin.createUser({
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。 
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -49,7 +49,7 @@ No description provided.
       app_metadata
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -57,12 +57,12 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-A custom data object to store the user's application specific metadata. This maps to the `auth.users.app_metadata` column.
+一个自定义的数据对象，用于存储用户的特定应用元数据。这映射到`auth.users.app_metadata`列。
 
-Only a service role can modify.
+只有服务角色可以修改。
 
-The `app_metadata` should be a JSON object that includes app-specific info, such as identity providers, roles, and other
-access control information.
+`app_metadata`应该是一个JSON对象，包括应用特定的信息，如身份提供者、角色和其他
+访问控制信息。
 
   </div>
   
@@ -75,7 +75,7 @@ access control information.
       ban_duration
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -83,14 +83,14 @@ access control information.
   </h4>
   <div class="method-list-item-description">
 
-Determines how long a user is banned for.
+决定一个用户被禁止多长时间。
 
-The format for the ban duration follows a strict sequence of decimal numbers with a unit suffix.
-Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
+禁令持续时间的格式遵循严格的十进制数字序列和单位后缀。
+有效的时间单位是 "ns"、"us"（或 "µs"）、"ms"、"s"、"m"、"h"。
 
-For example, some possible durations include: '300ms', '2h45m'.
+例如，一些可能的持续时间包括。'300ms'，'2h45m'。
 
-Setting the ban duration to 'none' lifts the ban on the user.
+将禁止期限设置为 "无 "可以解除对该用户的禁止。
 
   </div>
   
@@ -103,7 +103,7 @@ Setting the ban duration to 'none' lifts the ban on the user.
       data
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -111,9 +111,9 @@ Setting the ban duration to 'none' lifts the ban on the user.
   </h4>
   <div class="method-list-item-description">
 
-A custom data object to store the user's metadata. This maps to the `auth.users.user_metadata` column.
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
 
-The `data` should be a JSON object that includes user-specific info, such as their first and last name.
+`data`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
 
   </div>
   
@@ -126,7 +126,7 @@ The `data` should be a JSON object that includes user-specific info, such as the
       email
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -134,7 +134,7 @@ The `data` should be a JSON object that includes user-specific info, such as the
   </h4>
   <div class="method-list-item-description">
 
-The user's email.
+该用户的电子邮件。
 
   </div>
   
@@ -147,7 +147,7 @@ The user's email.
       email_confirm
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>boolean</code>
@@ -155,9 +155,9 @@ The user's email.
   </h4>
   <div class="method-list-item-description">
 
-Confirms the user's email address if set to true.
+确认用户的电子邮件地址，如果设置为真。
 
-Only a service role can modify.
+只有服务角色可以修改。
 
   </div>
   
@@ -170,7 +170,7 @@ Only a service role can modify.
       password
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -178,7 +178,7 @@ Only a service role can modify.
   </h4>
   <div class="method-list-item-description">
 
-The user's password.
+用户的密码。
 
   </div>
   
@@ -191,7 +191,7 @@ The user's password.
       phone
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -199,7 +199,7 @@ The user's password.
   </h4>
   <div class="method-list-item-description">
 
-The user's phone.
+用户的电话。
 
   </div>
   
@@ -212,7 +212,7 @@ The user's phone.
       phone_confirm
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>boolean</code>
@@ -220,9 +220,9 @@ The user's phone.
   </h4>
   <div class="method-list-item-description">
 
-Confirms the user's phone number if set to true.
+确认用户的电话号码，如果设置为真。
 
-Only a service role can modify.
+只有服务角色可以修改。
 
   </div>
   
@@ -235,7 +235,7 @@ Only a service role can modify.
       user_metadata
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -243,14 +243,14 @@ Only a service role can modify.
   </h4>
   <div class="method-list-item-description">
 
-A custom data object to store the user's metadata. This maps to the `auth.users.user_metadata` column.
+一个自定义的数据对象来存储用户的元数据。这映射到`auth.users.user_metadata`列。
 
-Only a service role can modify.
+只有服务角色可以修改。
 
-The `user_metadata` should be a JSON object that includes user-specific info, such as their first and last name.
+`user_metadata`应该是一个JSON对象，包括用户的具体信息，如他们的名字和姓氏。
 
-Note: When using the GoTrueAdminApi and wanting to modify a user's metadata,
-this attribute is used instead of UserAttributes data.
+注意：当使用GoTrueAdminApi并希望修改用户的元数据时。
+这个属性被用来代替UserAttributes数据。
 
   </div>
   
@@ -263,11 +263,9 @@ this attribute is used instead of UserAttributes data.
 </ul>
 
 
-## Notes
+## 注释
 
-- To confirm the user's email address or phone number, set `email_confirm` or `phone_confirm` to true. Both arguments default to false.
-
-
+- 要确认用户的电子邮件地址或电话号码，请将`email_confirm`或`phone_confirm`设为true。这两个参数默认为false。
 
 
 
@@ -276,9 +274,11 @@ this attribute is used instead of UserAttributes data.
 
 
 
-## Examples
 
-### Create a new user with custom user metadata
+
+## 示例
+
+### 创建一个具有自定义用户元数据的新用户
 
 
 
@@ -290,7 +290,7 @@ const { data, error } = await supabase.auth.admin.createUser({
 })
 ```
 
-### Auto-confirm the user's email
+### 自动确认用户的电子邮件
 
 
 
@@ -301,7 +301,7 @@ const { data, error } = await supabase.auth.admin.createUser({
 })
 ```
 
-### Auto-confirm the user's phone number
+### 自动确认用户的电话号码
 
 
 

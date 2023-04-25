@@ -5,11 +5,11 @@ slug: /auth-signout
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Inside a browser context, `signOut()` will remove the logged in user from the browser session
-and log them out - removing all items from localstorage and then trigger a `"SIGNED_OUT"` event.
+在浏览器上下文中，`signOut()`将把登录的用户从浏览器会话中移出
+并注销 - 从本地存储中删除所有项目，然后触发一个`"SIGNED_OUT"`事件。
 
-For server-side management, you can revoke all refresh tokens for a user by passing a user's JWT through to `auth.api.signOut(JWT: string)`.
-There is no way to revoke a user's access token jwt until it expires. It is recommended to set a shorter expiry on the jwt for this reason.
+对于服务器端的管理，你可以通过将用户的JWT传递给`auth.api.signOut(JWT: string)`来撤销一个用户的所有刷新令牌。
+在用户的访问令牌jwt过期之前，没有办法撤销它。出于这个原因，建议在jwt上设置一个较短的到期时间。
 
 ```js
 const { error } = await supabase.auth.signOut()
@@ -20,11 +20,9 @@ const { error } = await supabase.auth.signOut()
 
 
 
-## Notes
+## 注释
 
-- In order to use the `signOut()` method, the user needs to be signed in first.
-
-
+- 为了使用`signOut()`方法，用户需要先登录。
 
 
 
@@ -33,9 +31,11 @@ const { error } = await supabase.auth.signOut()
 
 
 
-## Examples
 
-### Sign out
+
+## 例子
+
+### 退出登录
 
 
 

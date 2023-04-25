@@ -5,7 +5,7 @@ slug: /storage-emptybucket
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Removes all objects inside a single bucket.
+移除单个桶内的所有对象。
 
 ```js
 const { data, error } = await supabase
@@ -14,7 +14,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -33,7 +33,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The unique identifier of the bucket you would like to empty.
+你想清空的桶的唯一标识符。
 
   </div>
   
@@ -42,14 +42,12 @@ The unique identifier of the bucket you would like to empty.
 </ul>
 
 
-## Notes
+## 注意事项
 
-- RLS policy permissions required:
-  - `buckets` table permissions: `select`
-  - `objects` table permissions: `select` and `delete`
-- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
-
-
+- 需要RLS策略权限:
+  - `buckets`表权限: `选择'.
+  - `objects`表的权限: `select`和`delete`.
+- 请参考[存储指南](/docs/guides/storage#access-control)关于访问控制的工作方式
 
 
 
@@ -58,9 +56,11 @@ The unique identifier of the bucket you would like to empty.
 
 
 
-## Examples
 
-### Empty bucket
+
+## 例子
+
+### 空桶
 
 
 

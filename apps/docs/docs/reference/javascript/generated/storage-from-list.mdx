@@ -5,7 +5,7 @@ slug: /storage-from-list
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Lists all the files within a bucket.
+列出桶内的所有文件。
 
 ```js
 const { data, error } = await supabase
@@ -19,7 +19,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -38,7 +38,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The folder path.
+文件夹路径。
 
   </div>
   
@@ -59,12 +59,12 @@ The folder path.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -80,7 +80,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-The number of files you want to be returned.
+你希望返回的文件数量。
 
   </div>
   
@@ -101,7 +101,7 @@ The number of files you want to be returned.
   </h4>
   <div class="method-list-item-description">
 
-The starting position.
+起始位置。
 
   </div>
   
@@ -122,7 +122,7 @@ The starting position.
   </h4>
   <div class="method-list-item-description">
 
-The search string to filter files by.
+用来过滤文件的搜索字符串。
 
   </div>
   
@@ -143,7 +143,7 @@ The search string to filter files by.
   </h4>
   <div class="method-list-item-description">
 
-The column to sort by. Can be any column inside a FileObject.
+要排序的列。可以是FileObject中的任何列。
 
   </div>
   
@@ -168,12 +168,12 @@ The column to sort by. Can be any column inside a FileObject.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -189,7 +189,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-Pass in an AbortController's signal to cancel the request.
+传入一个AbortController的信号来取消请求。
 
   </div>
   
@@ -202,14 +202,12 @@ Pass in an AbortController's signal to cancel the request.
 </ul>
 
 
-## Notes
+## 注意事项
 
-- RLS policy permissions required:
-  - `buckets` table permissions: none
-  - `objects` table permissions: `select`
-- Refer to the [Storage guide](/docs/guides/storage#access-control) on how access control works
-
-
+- 需要RLS策略权限:
+  - `buckets`表的权限: 无
+  - `objects`表的权限: `select`.
+- 请参考[存储指南](/docs/guides/storage#access-control)中关于访问控制的工作方式。
 
 
 
@@ -218,9 +216,11 @@ Pass in an AbortController's signal to cancel the request.
 
 
 
-## Examples
 
-### List files in a bucket
+
+## 示例
+
+### 在一个桶中列出文件
 
 
 
@@ -235,7 +235,7 @@ const { data, error } = await supabase
   })
 ```
 
-### Search files in a bucket
+### 在一个桶中搜索文件
 
 
 

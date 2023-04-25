@@ -5,14 +5,14 @@ slug: /removechannel
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Unsubscribes and removes Realtime channel from Realtime client.
+取消订阅并从Realtime客户端删除Realtime频道。
 
 ```js
 supabase.removeChannel(myChannel)
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -31,7 +31,7 @@ supabase.removeChannel(myChannel)
   </h4>
   <div class="method-list-item-description">
 
-The name of the Realtime channel.
+实时通道的名称。
 
   </div>
   
@@ -40,11 +40,9 @@ The name of the Realtime channel.
 </ul>
 
 
-## Notes
+## 注意事项
 
-- Removing a channel is a great way to maintain the performance of your project's Realtime service as well as your database if you're listening to Postgres changes. Supabase will automatically handle cleanup 30 seconds after a client is disconnected, but unused channels may cause degradation as more clients are simultaneously subscribed.
-
-
+- 如果你在监听Postgres的变化，移除一个通道是保持你项目的Realtime服务以及数据库性能的一个好方法。Supabase会在客户端断开连接后的30秒内自动处理清理工作，但未使用的通道可能会因为同时订阅了更多的客户端而导致性能下降。
 
 
 
@@ -53,9 +51,11 @@ The name of the Realtime channel.
 
 
 
-## Examples
 
-### Removes a channel
+
+## 示例
+
+### 移除一个频道
 
 
 
