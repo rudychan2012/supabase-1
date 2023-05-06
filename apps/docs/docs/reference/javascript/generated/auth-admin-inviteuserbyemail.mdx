@@ -5,14 +5,14 @@ slug: /auth-admin-inviteuserbyemail
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Sends an invite link to an email address.
+向一个电子邮件地址发送一个邀请链接。
 
 ```js
 const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@example.com')
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -31,7 +31,7 @@ const { data, error } = await supabase.auth.admin.inviteUserByEmail('email@examp
   </h4>
   <div class="method-list-item-description">
 
-The email address of the user.
+用户的电子邮件地址。
 
   </div>
   
@@ -52,12 +52,12 @@ The email address of the user.
   </h4>
   <div class="method-list-item-description">
 
-No description provided. 
+未提供说明。
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -65,7 +65,7 @@ No description provided.
       data
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>object</code>
@@ -73,7 +73,7 @@ No description provided.
   </h4>
   <div class="method-list-item-description">
 
-Optional user metadata
+可选的用户元数据
 
   </div>
   
@@ -86,7 +86,7 @@ Optional user metadata
       redirectTo
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>string</code>
@@ -94,7 +94,7 @@ Optional user metadata
   </h4>
   <div class="method-list-item-description">
 
-A URL or mobile deeplink to send the user to after they are confirmed.
+一个URL或移动深层链接，在用户被确认后发送给他们。
 
   </div>
   
@@ -107,11 +107,9 @@ A URL or mobile deeplink to send the user to after they are confirmed.
 </ul>
 
 
-## Notes
+## 注释
 
-- Sends an invite link to the user's email address.
-
-
+- 向用户的电子邮件地址发送一个邀请链接。
 
 
 
@@ -120,9 +118,11 @@ A URL or mobile deeplink to send the user to after they are confirmed.
 
 
 
-## Examples
 
-### Invite a user
+
+## 示例
+
+### 邀请一个用户
 
 
 

@@ -5,7 +5,7 @@ slug: /auth-onauthstatechange
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Receive a notification every time an auth event happens.
+每次发生认证事件时都会收到通知。
 
 ```js
 supabase.auth.onAuthStateChange((event, session) => {
@@ -14,7 +14,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -33,7 +33,7 @@ supabase.auth.onAuthStateChange((event, session) => {
   </h4>
   <div class="method-list-item-description">
 
-A callback function to be invoked when an auth event happens.
+一个回调函数，当一个认证事件发生时被调用。
 
   </div>
   
@@ -42,11 +42,9 @@ A callback function to be invoked when an auth event happens.
 </ul>
 
 
-## Notes
+## 注释
 
-- Types of auth events: `SIGNED_IN`, `SIGNED_OUT`, `TOKEN_REFRESHED`, `USER_UPDATED`, `USER_DELETED`, `PASSWORD_RECOVERY`
-
-
+- 认证事件的类型:`SIGNED_IN`, `SIGNED_OUT`, `TOKEN_REFRESHED`, `USER_UPDATED`, `USER_DELETED`, `PASSWORD_RECOVERY`
 
 
 
@@ -55,9 +53,11 @@ A callback function to be invoked when an auth event happens.
 
 
 
-## Examples
 
-### Listen to auth changes
+
+## 示例
+
+### 监听认证变化
 
 
 
@@ -67,7 +67,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-### Listen to sign in
+### 监听登录
 
 
 
@@ -77,7 +77,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-### Listen to sign out
+### 监听退出登录
 
 
 
@@ -87,7 +87,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-### Listen to token refresh
+### 监听令牌刷新
 
 
 
@@ -97,7 +97,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-### Listen to user updates
+### 监听用户的更新信息
 
 
 
@@ -107,7 +107,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-### Listen to user deleted
+### 监听用户删除的内容
 
 
 
@@ -117,7 +117,7 @@ supabase.auth.onAuthStateChange((event, session) => {
 })
 ```
 
-### Listen to password recovery events
+### 监听密码恢复事件
 
 
 

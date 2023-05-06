@@ -5,7 +5,7 @@ slug: /auth-admin-deleteuser
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Delete a user. Requires a `service_role` key.
+删除一个用户。需要一个`service_role`键。
 
 ```js
 const { data, error } = await supabase.auth.admin.deleteUser(
@@ -14,7 +14,7 @@ const { data, error } = await supabase.auth.admin.deleteUser(
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -33,9 +33,9 @@ const { data, error } = await supabase.auth.admin.deleteUser(
   </h4>
   <div class="method-list-item-description">
 
-The user id you want to remove.
+你想删除的用户ID。
 
-This function should only be called on a server. Never expose your `service_role` key in the browser.
+这个函数应该只在服务器上调用。不要在浏览器中暴露你的`service_role`键。
 
   </div>
   
@@ -44,11 +44,9 @@ This function should only be called on a server. Never expose your `service_role
 </ul>
 
 
-## Notes
+## 注释
 
-- The `deleteUser()` method requires the user's ID, which maps to the `auth.users.id` column.
-
-
+- `deleteUser()`方法需要用户的ID，它映射到`auth.users.id`列。
 
 
 
@@ -57,9 +55,11 @@ This function should only be called on a server. Never expose your `service_role
 
 
 
-## Examples
 
-### Removes a user
+
+## 示例
+
+### 移除一个用户
 
 
 

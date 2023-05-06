@@ -5,7 +5,7 @@ slug: /limit
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Limit the query result by `count`.
+通过`count`限制查询结果。
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The maximum number of rows to return
+要返回的最大行数
 
   </div>
   
@@ -55,12 +55,12 @@ The maximum number of rows to return
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -76,8 +76,7 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-Set this to limit rows of foreign tables
-instead of the current table
+设置此选项以限制外域表的行数而不是当前的表
 
   </div>
   
@@ -102,9 +101,9 @@ instead of the current table
 
 
 
-## Examples
+## 示例
 
-### With `select()`
+### 使用 `select()`时
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -149,7 +148,7 @@ instead of the current table
 </TabPanel>
 </Tabs>
 
-### On a foreign table
+### 在一个外域表中
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

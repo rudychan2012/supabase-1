@@ -1,21 +1,20 @@
 ---
 id: using-filters
-title: "Using Filters"
+title: "使用过滤器"
 slug: /using-filters
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Filters allow you to only return rows that match certain conditions.
+过滤器允许你只返回符合某些条件的记录。
 
-Filters can be used on `select()`, `update()`, `upsert()`, and `delete()` queries.
+过滤器可以用于`select()`, `update()`, `upsert()`, 和`delete()`查询。
 
-If a Postgres function returns a table response, you can also apply filters.
+如果一个Postgres函数返回一个表的响应，你也可以应用过滤器。
 
-### Applying Filters
+### 应用过滤器
 
-Filters must be applied after any of `select()`, `update()`, `upsert()`,
-`delete()`, and `rpc()` and before
-[modifiers](/docs/reference/javascript/using-modifiers).
+过滤器必须在`select()`, `update()`, `upsert()`的任何一项之后应用。
+`delete()`和`rpc()`之后，并在[修改器](/docs/reference/javascript/using-modifiers)。
 
 ```ts
 const { data, error } = await supabase
@@ -29,10 +28,10 @@ const { data, error } = await supabase
   .select('name, country_id')
 ```
 
-### Chaining
+### 链式
 
-Filters can be chained together to produce advanced queries. For example,
-to query cities with population between 1,000 and 10,000:
+过滤器可以串联起来，产生高级查询。例如。
+来查询人口在1,000和10,000之间的城市。
 
 ```ts
 const { data, error } = await supabase
@@ -42,9 +41,9 @@ const { data, error } = await supabase
   .lt('population', 10000)
 ```
 
-### Conditional Chaining
+### 条件链式
 
-Filters can be built up one step at a time and then executed. For example:
+过滤器可以一步步建立起来，然后执行。比如说。
 
 ```ts
 const filterByName = null
@@ -62,7 +61,7 @@ if (filterPopHigh) { query = query.lt('population', filterPopHigh) }
 const { data, error } = await query
 ```
 
-### Filter by values within a JSON column
+### 按JSON列中的值过滤
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -114,10 +113,9 @@ const { data, error } = await query
 </TabPanel>
 </Tabs>
 
-### Filter Foreign Tables
+### 过滤外来表
 
-You can filter on foreign tables in your `select()` query using dot
-notation:
+你可以在你的 `select()`查询中使用点来过滤外域表符号。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

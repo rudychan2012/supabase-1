@@ -5,7 +5,7 @@ slug: /range
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Limit the query result by `from` and `to` inclusively.
+通过 `from`和 `to`来限制查询结果。
 
 ```ts
 const { data, error } = await supabase
@@ -15,7 +15,7 @@ const { data, error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -34,7 +34,7 @@ const { data, error } = await supabase
   </h4>
   <div class="method-list-item-description">
 
-The starting index from which to limit the result
+用于限制结果的起始索引
 
   </div>
   
@@ -55,7 +55,7 @@ The starting index from which to limit the result
   </h4>
   <div class="method-list-item-description">
 
-The last index to which to limit the result
+限制结果的最后一个索引
 
   </div>
   
@@ -76,12 +76,12 @@ The last index to which to limit the result
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -97,8 +97,7 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-Set this to limit rows of foreign tables
-instead of the current table
+设置此选项以限制外域表的行数而不是当前的表
 
   </div>
   
@@ -123,9 +122,9 @@ instead of the current table
 
 
 
-## Examples
+## 示例
 
-### With `select()`
+### 使用 `select()`时
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">

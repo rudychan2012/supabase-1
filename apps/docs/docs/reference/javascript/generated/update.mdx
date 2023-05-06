@@ -5,10 +5,10 @@ slug: /update
 custom_edit_url: https://github.com/supabase/supabase/edit/master/spec/supabase_js_v2.yml
 ---
 
-Perform an UPDATE on the table or view.
+对表或视图进行UPDATE操作。
 
-By default, updated rows are not returned. To return it, chain the call
-with `.select()` after filters.
+默认情况下，更新的行不会被返回。要返回它，请在过滤器后用`.select()`连锁调用
+与`.select()`在过滤器之后的调用。
 
 ```ts
 const { error } = await supabase
@@ -18,7 +18,7 @@ const { error } = await supabase
 ```
 
 
-## Parameters
+## 参数
 
 
 <ul className="method-list-group">
@@ -32,12 +32,12 @@ const { error } = await supabase
       required
     </span>
     <span className="method-list-item-validation">
-      <code>Row</code>
+      <code>行</code>
     </span>
   </h4>
   <div class="method-list-item-description">
 
-The values to update with
+要更新的值
 
   </div>
   
@@ -58,12 +58,12 @@ The values to update with
   </h4>
   <div class="method-list-item-description">
 
-Named parameters
+命名的参数
 
   </div>
   
 <ul className="method-list-group">
-  <h5 class="method-list-title method-list-title-isChild expanded">Properties</h5>
+  <h5 class="method-list-title method-list-title-isChild expanded">特性</h5>
 
 <li className="method-list-item">
   <h4 className="method-list-item-label">
@@ -71,7 +71,7 @@ Named parameters
       count
     </span>
     <span className="method-list-item-label-badge false">
-      optional
+      可选的
     </span>
     <span className="method-list-item-validation">
       <code>exact</code> | <code>planned</code> | <code>estimated</code>
@@ -79,16 +79,16 @@ Named parameters
   </h4>
   <div class="method-list-item-description">
 
-Count algorithm to use to count updated rows.
+用来计算更新行的计数算法。
 
-`"exact"`: Exact but slow count algorithm. Performs a `COUNT(*)` under the
-hood.
+`"exact"`: 准确但缓慢的计数算法。执行 "COUNT(*)"。
+引擎盖。
 
-`"planned"`: Approximated but fast count algorithm. Uses the Postgres
-statistics under the hood.
+`"planned"`: 近似但快速的计数算法。使用了Postgres
+的统计数据。
 
-`"estimated"`: Uses exact count for low numbers and planned count for high
-numbers.
+`"estimated"`: 低数字使用精确计数，高数字使用计划计数。
+数。
 
   </div>
   
@@ -101,11 +101,9 @@ numbers.
 </ul>
 
 
-## Notes
+## 注意
 
-- `update()` should always be combined with [Filters](/docs/reference/javascript/using-filters) to target the item(s) you wish to update.
-
-
+- `update()`应该总是与[Filters](/docs/reference/javascript/using-filters)结合起来，以确定你希望更新的项目。
 
 
 
@@ -114,9 +112,11 @@ numbers.
 
 
 
-## Examples
 
-### Updating your data
+
+## 实例
+
+### 更新你的数据
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -182,7 +182,7 @@ numbers.
 </TabPanel>
 </Tabs>
 
-### Update a record and return it
+### 更新一条记录并返回
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -227,11 +227,9 @@ numbers.
 </TabPanel>
 </Tabs>
 
-### Updating JSON data
+### 更新JSON数据
 
-Postgres offers some
-[operators](/docs/guides/database/json#query-the-jsonb-data) for
-working with JSON data.
+Postgres提供了一些[操作符](/docs/guides/database/json#query-thejsonb-data)来处理JSON数据。
 
 <Tabs scrollable size="small" type="underlined" defaultActiveId="schema">
 <TabPanel id="schema" label="Schema">
@@ -289,4 +287,4 @@ working with JSON data.
 </TabPanel>
 </Tabs>
 
-Currently, it is only possible to update the entire JSON document.
+目前，只可能更新整个JSON文档。
