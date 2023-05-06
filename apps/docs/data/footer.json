@@ -4,19 +4,27 @@
     "links": [
       {
         "text": "数据库",
-        "url": "/database"
+        "url": "/docs/guides/database"
       },
       {
         "text": "认证",
-        "url": "/auth"
+        "url": "/docs/guides/auth"
       },
       {
         "text": "Realtime",
-        "url": "/realtime"
+        "url": "/docs/guides/realtime"
       },
       {
-        "text": "存储",
-        "url": "/storage"
+        "text": "云存储",
+        "url": "/docs/guides/storage"
+      },
+      {
+        "text": "静态托管",
+        "url": "/docs/guides/static-hosting"
+      },
+      {
+        "text": "云函数",
+        "url": "/docs/guides/functions/overview"
       }
     ]
   },

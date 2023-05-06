@@ -126,6 +126,7 @@ export const menuItems: NavMenu = {
           url: undefined,
           items: [
             { name: '行级安全性', url: '/guides/auth/row-level-security', items: [] },
+            { name: 'RLS使用教程', url: '/guides/auth/row-level-security2', items: [] },
             { name: '管理用户信息', url: '/guides/auth/managing-user-data', items: [] },
             { name: '启用验证码保护', url: '/guides/auth/auth-captcha', items: [] },
             { name: '服务器端渲染', url: '/guides/auth/server-side-rendering', items: [] },
@@ -185,6 +186,8 @@ export const menuItems: NavMenu = {
           items: [
             { name: '概述', url: '/guides/api', items: [] },
             { name: '生成类型', url: '/guides/api/generating-types', items: [] },
+            { name: 'Postman访问数据', url: '/guides/api/postman', items: [] },
+            { name: 'Curl访问数据', url: '/guides/api/curl', items: [] },
           ],
         },
         {
@@ -266,7 +269,7 @@ export const menuItems: NavMenu = {
       ],
     },
     {
-      label: '存储',
+      label: '云存储',
       items: [
         { name: '概述', url: '/guides/storage', items: [] },
         // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
@@ -296,6 +299,8 @@ export const menuItems: NavMenu = {
         { name: 'Super课表小程序', url: '/guides/example/timetable', items: [] },
         { name: 'BBS论坛小程序', url: '/guides/example/helloBBS', items: [] },
         { name: '别踩白块游戏小程序', url: '/guides/example/notClickWhite', items: [] },
+        { name: '微信聊天室小程序', url: '/guides/example/WechatRoom', items: [] },
+        { name: 'Web实时游戏场', url: '/guides/example/Playground', items: [] },
         // { name: 'CDN', url: '/guides/storage-cdn', items: [] },
       ],
     },
